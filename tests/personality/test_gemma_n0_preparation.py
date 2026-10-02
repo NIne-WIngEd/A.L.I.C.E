@@ -32,7 +32,9 @@ class GemmaN0PreparationTests(unittest.TestCase):
         self.source = self.root / "source"
         self.source.mkdir()
         config = {"architectures": ["Gemma4UnifiedForConditionalGeneration"],
-                  "model_type": "gemma4_unified"}
+                  "model_type": "gemma4_unified",
+                  "text_config": {"model_type": "gemma4_unified_text", "hidden_size": 4,
+                                  "num_hidden_layers": 2, "max_position_embeddings": 8}}
         contents = {
             ".gitattributes": b"public fixture lfs notice",
             "README.md": b"public fixture model notice",
@@ -43,6 +45,8 @@ class GemmaN0PreparationTests(unittest.TestCase):
             "tokenizer.json": b"{}",
             "tokenizer_config.json": b"{}",
         }
+        self.contents = contents
+        self.config = config
         for name, payload in contents.items():
             (self.source / name).write_bytes(payload)
         pins = {name: (len(data), sha256(data).hexdigest()) for name, data in contents.items()}
@@ -92,8 +96,48 @@ class GemmaN0PreparationTests(unittest.TestCase):
         self.assertFalse(receipt["feature_scope"]["personality_judgments"])
         self.assertFalse(receipt["feature_scope"]["text_generation"])
         self.assertFalse(receipt["feature_scope"]["upstream_tensor_mutation"])
+        self.assertTrue(receipt["feature_scope"]["all_hidden_states_required"])
+        self.assertEqual(receipt["model_geometry"], {
+            "model_type": "gemma4_unified", "text_model_type": "gemma4_unified_text",
+            "hidden_size": 4, "num_hidden_layers": 2,
+            "max_position_embeddings": 8, "hidden_state_count": 3})
         self.assertEqual(before, {path.name: path.read_bytes() for path in self.clone.iterdir()})
         self.assertEqual(self.prepared_receipt.read_bytes(), preparation._canonical(receipt) + b"\n")
+
+    def test_resealed_geometry_downgrade_or_missing_layers_is_rejected(self):
+        for field, changed in (("hidden_size", 640), ("num_hidden_layers", 17),
+                               ("hidden_state_count", 1), ("max_position_embeddings", 4),
+                               ("text_model_type", "other_text_model")):
+            with self.subTest(field=field):
+                path = self.root / f"geometry-{field}.json"
+                receipt = preparation.prepare(self.clone_receipt, path, runtime=RUNTIME)
+                self._reseal(path, lambda data: data.update(
+                    model_geometry={**receipt["model_geometry"], field: changed}))
+                with self.assertRaisesRegex(preparation.PreparationError, "geometry differs"):
+                    preparation.verify_prepared(path)
+
+    def test_publisher_geometry_must_be_explicit_positive_actual_schema(self):
+        changes = [{"num_hidden_layers": None}, {"num_hidden_layers": True},
+                   {"num_hidden_layers": 0}, {"hidden_size": "4"},
+                   {"max_position_embeddings": -1}, {"model_type": "gemma4_text"}]
+        for index, change in enumerate(changes):
+            with self.subTest(change=change):
+                source = self.root / f"invalid-source-{index}"
+                source.mkdir()
+                config = {**self.config, "text_config": {**self.config["text_config"], **change}}
+                contents = {**self.contents, "config.json": json.dumps(config).encode()}
+                for name, payload in contents.items():
+                    (source / name).write_bytes(payload)
+                pins = {name: (len(payload), sha256(payload).hexdigest())
+                        for name, payload in contents.items()}
+                clone_receipt = self.root / f"invalid-clone-{index}.json"
+                output = self.root / f"invalid-prepared-{index}.json"
+                with patch.dict(foundation.PINNED_FILES, pins, clear=True):
+                    foundation.clone_verified_source(source, self.root / f"invalid-clone-{index}",
+                                                     clone_receipt, role="personality")
+                    with self.assertRaises(preparation.PreparationError):
+                        preparation.prepare(clone_receipt, output, runtime=RUNTIME)
+                self.assertFalse(output.exists())
 
     def test_wrong_role_clone_is_rejected(self):
         self._reseal(self.clone_receipt, lambda receipt: receipt.update(role="mfm"))
@@ -199,7 +243,9 @@ class GemmaN0PreparationTests(unittest.TestCase):
         changes = [{"state": "APPROVED"}, {"behavior_qualification": "PASS"},
                    {"role": "mfm"},
                    {"feature_scope": {**preparation.FEATURE_SCOPE, "personality_judgments": True}},
-                   {"feature_scope": {**preparation.FEATURE_SCOPE, "personality_judgments": 0}}]
+                   {"feature_scope": {**preparation.FEATURE_SCOPE, "personality_judgments": 0}},
+                   {"feature_scope": {**preparation.FEATURE_SCOPE, "all_hidden_states_required": False}},
+                   {"schema": "alice-personality-gemma-n0-preparation-v1"}]
         for index, change in enumerate(changes):
             with self.subTest(change=change):
                 receipt_path = self.root / f"prepared-{index}.json"

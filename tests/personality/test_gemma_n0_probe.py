@@ -41,25 +41,45 @@ class _PublicTokenizer:
 class _FeatureAdapter:
     max_source_tokens = 512
     hidden_size = 3
+    num_hidden_layers = 2
+    hidden_state_count = 3
 
     def __init__(self):
         self.calls = 0
         self.nonfinite = False
         self.misaligned = False
+        self.nonfinite_intermediate = False
+        self.attached_intermediate = False
+        self.wrong_intermediate_shape = False
+        self.drop_intermediate = False
+        self.final_disagreement = False
         self.on_forward = None
 
     def extract_features(self, *, input_ids, attention_mask):
         self.calls += 1
         if self.on_forward is not None:
             self.on_forward()
-        states = torch.ones((*input_ids.shape, self.hidden_size), dtype=torch.float32)
+        all_states = [torch.full((*input_ids.shape, self.hidden_size), float(index + 1))
+                      for index in range(self.hidden_state_count)]
+        states = all_states[-1]
         if self.nonfinite:
             states[0, 0, 0] = float("nan")
+        if self.nonfinite_intermediate:
+            all_states[0][0, 0, 0] = float("inf")
+        if self.attached_intermediate:
+            all_states[1] = all_states[1].requires_grad_(True) * 2
+        if self.wrong_intermediate_shape:
+            all_states[1] = all_states[1][:, :-1]
+        if self.drop_intermediate:
+            all_states.pop(1)
+        if self.final_disagreement:
+            states = states + 1
         returned_mask = attention_mask.bool()
         if self.misaligned:
             returned_mask = returned_mask.clone()
             returned_mask[0, 0] = False
-        return SimpleNamespace(hidden_states=states, attention_mask=returned_mask)
+        return SimpleNamespace(hidden_states=states, all_hidden_states=tuple(all_states),
+                               attention_mask=returned_mask)
 
 
 class PublicProbeBoundaryTests(unittest.TestCase):
@@ -112,6 +132,23 @@ class PublicProbeBoundaryTests(unittest.TestCase):
         self.assertEqual(sum(len(batch["probe_ids"]) for batch in receipt["batches"]),
                          receipt["example_count"])
         self.assertTrue(all(batch["all_features_finite"] for batch in receipt["batches"]))
+        self.assertEqual(receipt["observed_hidden_state_counts"], [3])
+        self.assertEqual(receipt["expected_hidden_state_count"], 3)
+        self.assertEqual(receipt["expected_transformer_layer_count"], 2)
+        for batch in receipt["batches"]:
+            self.assertEqual(batch["observed_hidden_state_count"], 3)
+            self.assertEqual(batch["observed_transformer_layer_count"], 2)
+            self.assertTrue(batch["hidden_state_count_includes_embedding"])
+            self.assertTrue(batch["all_features_detached"])
+            self.assertTrue(batch["all_features_source_aligned"])
+            self.assertEqual(len(batch["layers"]), 3)
+            self.assertEqual([layer["hidden_state_index"] for layer in batch["layers"]], [0, 1, 2])
+            self.assertEqual([layer["transformer_layer_index"] for layer in batch["layers"]], [None, 0, 1])
+            self.assertTrue(all(layer["feature_shape"] == batch["feature_shape"]
+                                for layer in batch["layers"]))
+            self.assertEqual(batch["all_layer_feature_tensor_bytes"],
+                             sum(layer["feature_tensor_bytes"] for layer in batch["layers"]))
+            self.assertEqual(batch["all_layer_feature_tensor_bytes"], 3 * batch["feature_tensor_bytes"])
         self.assertIsNone(receipt["memory"]["cpu_process_peak_bytes"])
         self.assertTrue(receipt["code"]["current_files"])
         self.assertTrue(all(len(row["sha256"]) == 64 for row in receipt["code"]["current_files"]))
@@ -123,6 +160,8 @@ class PublicProbeBoundaryTests(unittest.TestCase):
         supplied_digest = stored.pop("receipt_sha256")
         self.assertEqual(supplied_digest, sha256(probe._canonical(stored)).hexdigest())
         self.assertNotIn("hidden_states", stored)
+        self.assertNotIn("all_hidden_states", stored)
+        self.assertNotIn("feature_values", self.output.read_text())
 
     def test_custom_private_text_label_cannot_enter_public_plan(self):
         altered = json.loads(probe.PLAN_PATH.read_bytes())
@@ -178,6 +217,56 @@ class PublicProbeBoundaryTests(unittest.TestCase):
         self.adapter.nonfinite = True
         with self.assertRaisesRegex(probe.ProbeError, "finite detached source alignment"):
             self.run_fixture()
+        self.assertFalse(self.output.exists())
+
+    def test_nonfinite_intermediate_layer_is_refused_even_when_final_is_finite(self):
+        self.adapter.nonfinite_intermediate = True
+        with self.assertRaisesRegex(probe.ProbeError, "hidden state 0.*finite detached source alignment"):
+            self.run_fixture()
+        self.assertFalse(self.output.exists())
+
+    def test_attached_intermediate_layer_is_refused(self):
+        self.adapter.attached_intermediate = True
+        with self.assertRaisesRegex(probe.ProbeError, "hidden state 1.*finite detached source alignment"):
+            self.run_fixture()
+        self.assertFalse(self.output.exists())
+
+    def test_intermediate_layer_cannot_omit_source_positions(self):
+        self.adapter.wrong_intermediate_shape = True
+        with self.assertRaisesRegex(probe.ProbeError, "hidden state 1.*source alignment"):
+            self.run_fixture()
+        self.assertFalse(self.output.exists())
+
+    def test_missing_intermediate_layer_is_refused(self):
+        self.adapter.drop_intermediate = True
+        with self.assertRaisesRegex(probe.ProbeError, "complete model-declared hidden-state layer chain"):
+            self.run_fixture()
+        self.assertFalse(self.output.exists())
+
+    def test_legacy_final_only_features_cannot_receive_complete_layer_receipt(self):
+        extract = self.adapter.extract_features
+
+        def final_only(**kwargs):
+            features = extract(**kwargs)
+            return SimpleNamespace(hidden_states=features.hidden_states,
+                                   attention_mask=features.attention_mask)
+
+        with patch.object(self.adapter, "extract_features", side_effect=final_only):
+            with self.assertRaisesRegex(probe.ProbeError, "complete model-declared hidden-state layer chain"):
+                self.run_fixture()
+        self.assertFalse(self.output.exists())
+
+    def test_final_features_must_equal_last_retained_layer(self):
+        self.adapter.final_disagreement = True
+        with self.assertRaisesRegex(probe.ProbeError, "disagree with the last detached hidden state"):
+            self.run_fixture()
+        self.assertFalse(self.output.exists())
+
+    def test_expected_count_is_bound_to_model_layers_and_embedding(self):
+        self.adapter.hidden_state_count = 4
+        with self.assertRaisesRegex(probe.ProbeError, "differs from embedding plus transformer layers"):
+            self.run_fixture()
+        self.assertEqual(self.adapter.calls, 0)
         self.assertFalse(self.output.exists())
 
     def test_returned_mask_must_match_complete_source_positions(self):

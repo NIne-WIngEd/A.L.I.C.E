@@ -53,8 +53,11 @@ is not a sufficient personality interface.
 
 The v1 preparation route therefore constructs a **features-only role interface**
 around the receipted source. It loads safely from local files, freezes the
-backbone in evaluation mode, invokes the representation path and returns
-detached hidden states and their validated attention mask. It does not expose
+backbone in evaluation mode, invokes the representation path and returns every
+actual text hidden layer, final states and their validated attention mask. It
+retains the original full-envelope access to depth rather than making final
+states a permanent capability ceiling. Gemma's dimensions and tokenizer govern
+this adapter; the retired custom-N0 layer/width assumptions do not. It does not expose
 Gemma logits, generation, a chat template or a Gemma-selected stance. No
 upstream gradients, tensor replacement, MFM decoder or formation target is part
 of this route. A separate fresh personal readout will own identity decisions.
@@ -192,6 +195,23 @@ yet been freshly hashed in an allocated job. The existing Rayan container and
 Slurm route are reused; setup controllers that migrate old files are not rerun.
 New code, logs and preparation receipts use a separate owner-only
 `/homes/01/mxrayan/rayan-compute/rayan-personality/` namespace and `rayan-*`
-job names under the owner's account. No new Magnolia job,
-full Gemma forward, private gradient, learned personality or N0 approval has
-been produced by the code and fixture tests alone.
+job names under the owner's account.
+
+Magnolia custody job **576596** completed `0:0` on node016 in 7m24s, with
+batch MaxRSS 36,384 KiB. It freshly hashed all eight source files and created a
+separate personality-role clone. Original source receipt digest:
+`ad081e28519961d72181815b7a74c65b42238e2c2ab0a65065acbc8e2be606df`.
+Returned source, clone and preparation receipts were independently checked for
+canonical digests, source pins and original code/contract bindings. The 24 GB
+weights were hashed on Magnolia; they were not downloaded to this workstation.
+
+That job used immutable code `92b3716fb767475030644bf0b0deb19958588ec7`
+with the first, final-layer-only interface. Its v1 preparation is preserved as
+historical `PREPARED_UNQUALIFIED`; it cannot admit the full all-layer v2 route.
+The new preparation can reuse the exact personality clone, bound by external
+file SHA, and rehash every file without creating another 24 GB copy. Its parent
+source digest preserves the original ancestry, not a new upstream verification.
+Fresh code, geometry and interface bindings remain mandatory.
+
+Source-custody success and fixture tests have not produced an actual full Gemma
+forward, private gradient, learned personality or N0 approval.

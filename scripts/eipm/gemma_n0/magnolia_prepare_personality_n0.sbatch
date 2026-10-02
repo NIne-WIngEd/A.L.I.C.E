@@ -31,6 +31,15 @@ case "$PERSONALITY_REPO_ROOT" in "$COMPUTE_ROOT"/*) ;; *) exit 2 ;; esac
 SOURCE="$(realpath -e "$COMPUTE_ROOT/mfm/gemma4-12b-023679ed352de9bb66cc873c9009ce3482585c08/source")"
 case "$SOURCE" in "$COMPUTE_ROOT"/*) ;; *) exit 3 ;; esac
 [[ -d "$SOURCE" && -f "$SOURCE/model.safetensors" ]] || exit 3
+REUSE_CLONE_RECEIPT="${PERSONALITY_CLONE_RECEIPT:-}"
+REUSE_CLONE_SHA256="${PERSONALITY_CLONE_RECEIPT_SHA256:-}"
+if [[ -n "$REUSE_CLONE_RECEIPT" || -n "$REUSE_CLONE_SHA256" ]]; then
+  [[ -n "$REUSE_CLONE_RECEIPT" && "$REUSE_CLONE_SHA256" =~ ^[0-9a-f]{64}$ ]]
+  [[ "$REUSE_CLONE_RECEIPT" == /* && ! -L "$REUSE_CLONE_RECEIPT" ]]
+  REUSE_CLONE_RECEIPT="$(realpath -e "$REUSE_CLONE_RECEIPT")"
+  case "$REUSE_CLONE_RECEIPT" in "$COMPUTE_ROOT"/*) ;; *) exit 3 ;; esac
+  printf '%s  %s\n' "$REUSE_CLONE_SHA256" "$REUSE_CLONE_RECEIPT" | sha256sum -c - >/dev/null
+fi
 # Check every existing ancestor before creating our own namespace.
 PERSONALITY_ROOT="$COMPUTE_ROOT/rayan-personality"
 if [[ -e "$PERSONALITY_ROOT" || -L "$PERSONALITY_ROOT" ]]; then
@@ -73,7 +82,8 @@ echo "run_root=$RUN_ROOT"
   --entrypoint=/bin/bash rayan-n0-base -c '
     set -euo pipefail
     umask 077
-    exec python - "$1" "$2" "$3" <<'\''PY'\''
+    exec python - "$1" "$2" "$3" "$4" "$5" "$6" <<'\''PY'\''
+from hashlib import sha256
 from importlib.metadata import version
 import json
 from pathlib import Path
@@ -86,10 +96,24 @@ runtime = {"backend": "transformers", "dtype": "bfloat16",
            "torch_version": version("torch"), "transformers_version": version("transformers")}
 if runtime["torch_version"] != "2.7.1+cu118" or runtime["transformers_version"] != "5.17.0":
     raise RuntimeError("existing scientific runtime differs from the observed Magnolia pin")
-source_receipt = foundation.seal_source(source, run_root / "source.json")
-clone = run_root / "personality-role-source"
-clone_receipt = run_root / "personality-clone.json"
-foundation.clone_verified_source(source, clone, clone_receipt, role="personality")
+if sys.argv[4]:
+    clone_receipt = Path(sys.argv[4])
+    if sha256(clone_receipt.read_bytes()).hexdigest() != sys.argv[5]:
+        raise RuntimeError("reused clone receipt differs from its external file pin")
+    metadata = foundation.read_receipt(clone_receipt, schemas={foundation.CLONE_SCHEMA})
+    clone = Path(metadata["snapshot_path"])
+    root = Path(sys.argv[6]).resolve(strict=True)
+    if clone.is_symlink() or not clone.resolve(strict=True).is_relative_to(root):
+        raise RuntimeError("reused public clone resolves outside the owner compute root")
+    # prepare() rehashes every publisher file and checks role/source pins. No
+    # earlier custody or preparation receipt grants behavioral admission.
+    source_receipt_sha256 = metadata["parent_source_receipt_sha256"]
+else:
+    source_receipt = foundation.seal_source(source, run_root / "source.json")
+    source_receipt_sha256 = source_receipt["receipt_sha256"]
+    clone = run_root / "personality-role-source"
+    clone_receipt = run_root / "personality-clone.json"
+    foundation.clone_verified_source(source, clone, clone_receipt, role="personality")
 prepared_path = run_root / "personality-prepared.json"
 contract_path = (Path.cwd() / "docs/eipm/GEMMA_PERSONALITY_FEATURE_INTERFACE_v1.md").resolve(strict=True)
 prepared = prepare(clone_receipt, prepared_path, snapshot=clone, runtime=runtime,
@@ -98,11 +122,13 @@ prepared = prepare(clone_receipt, prepared_path, snapshot=clone, runtime=runtime
 verified = verify_prepared(prepared_path, snapshot=clone, expected_runtime=runtime)
 assert prepared == verified
 print(json.dumps({"owner": "mxrayan", "source_commit": commit,
-                  "source_receipt_sha256": source_receipt["receipt_sha256"],
+                  "source_receipt_sha256": source_receipt_sha256,
+                  "publisher_clone_reused": bool(sys.argv[4]),
                   "prepared_receipt_sha256": verified["receipt_sha256"],
                   "prepared_receipt_path": str(prepared_path),
                   "state": verified["state"], "runtime": runtime,
                   "model_forward_performed": False, "private_gradient": False,
                   "n0_approved": False}, sort_keys=True))
 PY
-  ' rayan-personality-prep "$SOURCE" "$RUN_ROOT" "$PERSONALITY_EXPECTED_REVISION"
+  ' rayan-personality-prep "$SOURCE" "$RUN_ROOT" "$PERSONALITY_EXPECTED_REVISION" \
+  "$REUSE_CLONE_RECEIPT" "$REUSE_CLONE_SHA256" "$COMPUTE_ROOT"

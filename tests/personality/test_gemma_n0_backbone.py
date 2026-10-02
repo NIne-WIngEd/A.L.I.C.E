@@ -70,20 +70,28 @@ class FrozenRepresentationTests(unittest.TestCase):
             def __init__(self):
                 super().__init__()
                 self.embedding = torch.nn.Embedding(16, 4)
+                self.layers = torch.nn.ModuleList([torch.nn.Linear(4, 4) for _ in range(2)])
                 self.dropout = torch.nn.Dropout(0.9)
                 self.inputs = None
                 self.output_override = None
+                self.chain_override = None
 
             def forward(self, **inputs):
                 self.inputs = inputs
                 if self.output_override is not None:
                     return types.SimpleNamespace(last_hidden_state=self.output_override)
-                states = self.dropout(self.embedding(inputs["input_ids"]))
-                return types.SimpleNamespace(last_hidden_state=states)
+                states = self.embedding(inputs["input_ids"])
+                chain = [states]
+                for layer in self.layers:
+                    states = self.dropout(layer(states))
+                    chain.append(states)
+                return types.SimpleNamespace(last_hidden_state=states,
+                    hidden_states=tuple(chain) if self.chain_override is None else self.chain_override)
 
         self.representation = Representation()
         self.n0 = backbone._FrozenGemmaN0(self.representation, torch=torch,
-                                        hidden_size=4, max_source_tokens=5, device="cpu")
+                                        hidden_size=4, num_hidden_layers=2,
+                                        max_source_tokens=5, device="cpu")
         self.ids = torch.tensor([[1, 2, 3], [4, 5, 0]])
         self.mask = torch.tensor([[1, 1, 1], [1, 1, 0]])
 
@@ -97,7 +105,19 @@ class FrozenRepresentationTests(unittest.TestCase):
         self.assertTrue(torch.equal(self.representation.inputs["input_ids"], self.ids))
         self.assertIs(self.representation.inputs["use_cache"], False)
         self.assertIs(self.representation.inputs["return_dict"], True)
+        self.assertIs(self.representation.inputs["output_hidden_states"], True)
         self.assertEqual(self.n0.device, torch.device("cpu"))
+        self.assertEqual(self.n0.num_hidden_layers, 2)
+        self.assertEqual(self.n0.hidden_state_count, 3)
+        self.assertEqual(len(features.all_hidden_states), 3)
+        self.assertIs(features.hidden_states, features.all_hidden_states[-1])
+        self.assertTrue(torch.equal(features.all_hidden_states[0],
+                                    self.representation.embedding(self.ids)))
+        for state in features.all_hidden_states:
+            self.assertEqual(state.shape, (2, 3, 4))
+            self.assertTrue(torch.isfinite(state).all())
+            self.assertFalse(state.requires_grad)
+            self.assertIsNone(state.grad_fn)
 
     def test_caller_train_and_external_toggle_cannot_create_base_gradient_path(self):
         self.n0.train()
@@ -108,7 +128,9 @@ class FrozenRepresentationTests(unittest.TestCase):
         self.assertFalse(self.representation.training)
         self.assertTrue(all(not p.requires_grad for p in self.representation.parameters()))
         downstream = torch.nn.Linear(4, 2)
-        downstream(features.hidden_states).sum().backward()
+        # All semantic layers are available to a trainable downstream reader;
+        # no layer has a path back into frozen publisher tensors.
+        downstream(torch.stack(features.all_hidden_states)).sum().backward()
         self.assertIsNotNone(downstream.weight.grad)
         self.assertTrue(torch.isfinite(downstream.weight.grad).all())
         self.assertTrue(all(p.grad is None for p in self.representation.parameters()))
@@ -165,7 +187,8 @@ class FrozenRepresentationTests(unittest.TestCase):
     def test_no_decoder_or_string_configuration_passes_feature_boundary(self):
         for extra in ({"labels": self.ids}, {"inputs_embeds": torch.zeros(2, 3, 4)},
                       {"use_cache": True}, {"chat_template": "pretend to be Alice"},
-                      {"generation_config": self.ids}):
+                      {"generation_config": self.ids}, {"output_hidden_states": False},
+                      {"output_hidden_states": [0]}):
             with self.subTest(extra=tuple(extra)), self.assertRaises(backbone.BackboneError):
                 self.n0(input_ids=self.ids, attention_mask=self.mask, **extra)
         self.assertIsNone(self.representation.inputs)
@@ -179,6 +202,21 @@ class FrozenRepresentationTests(unittest.TestCase):
             with self.subTest(shape=output.shape), self.assertRaises(backbone.BackboneError):
                 self.n0(input_ids=self.ids, attention_mask=self.mask)
 
+    def test_incomplete_malformed_or_nonfinite_intermediate_chain_fails(self):
+        valid = self.n0(input_ids=self.ids, attention_mask=self.mask)
+        chain = valid.all_hidden_states
+        malformed = [(), chain[1:], list(chain),
+                     (chain[0], torch.zeros(2, 2, 4), chain[-1]),
+                     (chain[0], torch.zeros(2, 3, 4, dtype=torch.int64), chain[-1]),
+                     (chain[0], torch.full((2, 3, 4), float("nan")), chain[-1]),
+                     (chain[0], torch.full((2, 3, 4), float("inf")), chain[-1]),
+                     (chain[0], chain[1].double(), chain[-1]),
+                     (chain[0], chain[1], chain[-1] + 1)]
+        for value in malformed:
+            self.representation.chain_override = value
+            with self.subTest(kind=type(value).__name__), self.assertRaises(backbone.BackboneError):
+                self.n0(input_ids=self.ids, attention_mask=self.mask)
+
 
 @unittest.skipIf(torch is None, "install CPU Torch to verify prepared local loader")
 class PreparedLoaderTests(unittest.TestCase):
@@ -187,18 +225,33 @@ class PreparedLoaderTests(unittest.TestCase):
             def __init__(self):
                 super().__init__()
                 self.embedding = torch.nn.Embedding(16, 4)
+                self.layers = torch.nn.ModuleList([torch.nn.Linear(4, 4) for _ in range(2)])
+                self.config = types.SimpleNamespace(model_type="gemma4_unified_text",
+                    hidden_size=4, num_hidden_layers=2, max_position_embeddings=8)
 
             def forward(self, **inputs):
-                return types.SimpleNamespace(last_hidden_state=self.embedding(inputs["input_ids"]))
+                states = self.embedding(inputs["input_ids"])
+                chain = [states]
+                for layer in self.layers:
+                    states = layer(states)
+                    chain.append(states)
+                return types.SimpleNamespace(last_hidden_state=states, hidden_states=tuple(chain))
+
+        class UnifiedRepresentation(torch.nn.Module):
+            def __init__(self):
+                super().__init__()
+                self.language_model = Representation()
+
+            def forward(self, **inputs):
+                return self.language_model(**inputs)
 
         class FullModel(torch.nn.Module):
             def __init__(self):
                 super().__init__()
-                self.model = Representation()
+                self.model = UnifiedRepresentation()
                 self.lm_head = torch.nn.Linear(4, 16)
                 self.config = types.SimpleNamespace(
-                    model_type="gemma4_unified", text_config=types.SimpleNamespace(
-                        hidden_size=4, max_position_embeddings=8))
+                    model_type="gemma4_unified", text_config=self.model.language_model.config)
 
             def forward(self, *args, **kwargs):
                 raise AssertionError("publisher LM forward was used")
@@ -210,7 +263,10 @@ class PreparedLoaderTests(unittest.TestCase):
         self.calls = []
         self.transformers = types.SimpleNamespace(__version__="fixture-version",
             AutoModelForMultimodalLM=types.SimpleNamespace(from_pretrained=self.load))
-        self.receipt = {"snapshot_path": "/public/tiny-test-fixture", "runtime": {
+        self.receipt = {"snapshot_path": "/public/tiny-test-fixture", "model_geometry": {
+            "model_type": "gemma4_unified", "text_model_type": "gemma4_unified_text",
+            "hidden_size": 4, "num_hidden_layers": 2, "hidden_state_count": 3,
+            "max_position_embeddings": 8}, "runtime": {
             "backend": "transformers", "dtype": "float32",
             "torch_version": str(torch.__version__), "transformers_version": "fixture-version"}}
 
@@ -259,7 +315,9 @@ class PreparedLoaderTests(unittest.TestCase):
                 source = root / "source"
                 source.mkdir()
                 config = {"architectures": ["Gemma4UnifiedForConditionalGeneration"],
-                          "model_type": "gemma4_unified"}
+                          "model_type": "gemma4_unified", "text_config": {
+                              "model_type": "gemma4_unified_text", "hidden_size": 4,
+                              "num_hidden_layers": 2, "max_position_embeddings": 8}}
                 contents = {"config.json": json.dumps(config).encode(),
                             "model.safetensors": b"public fixture tensor bytes",
                             "README.md": b"public model notice", ".gitattributes": b"public lfs notice"}
@@ -316,6 +374,25 @@ class PreparedLoaderTests(unittest.TestCase):
         with patch.object(preparation, "verify_prepared", return_value=self.receipt), \
                 patch.object(backbone, "import_module", side_effect=self.imported):
             with self.assertRaisesRegex(backbone.BackboneError, "dimensions"):
+                backbone.load_prepared_gemma_n0("prepared.json")
+
+    def test_loaded_width_layer_count_or_text_schema_drift_fails(self):
+        for field, changed in (("hidden_size", 5), ("num_hidden_layers", 3),
+                               ("model_type", "other_text_model")):
+            with self.subTest(field=field):
+                original = getattr(self.full.config.text_config, field)
+                setattr(self.full.config.text_config, field, changed)
+                with patch.object(preparation, "verify_prepared", return_value=self.receipt), \
+                        patch.object(backbone, "import_module", side_effect=self.imported):
+                    with self.assertRaisesRegex(backbone.BackboneError, "geometry differs"):
+                        backbone.load_prepared_gemma_n0("prepared.json")
+                setattr(self.full.config.text_config, field, original)
+
+    def test_incomplete_actual_decoder_path_fails_admission(self):
+        self.full.model.language_model.layers = torch.nn.ModuleList([torch.nn.Linear(4, 4)])
+        with patch.object(preparation, "verify_prepared", return_value=self.receipt), \
+                patch.object(backbone, "import_module", side_effect=self.imported):
+            with self.assertRaisesRegex(backbone.BackboneError, "complete Gemma 4"):
                 backbone.load_prepared_gemma_n0("prepared.json")
 
 

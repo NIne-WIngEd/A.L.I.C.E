@@ -19,7 +19,7 @@ from typing import Mapping
 from src.alice_foundation import gemma4_v1 as foundation
 
 
-SCHEMA = "alice-personality-gemma-n0-preparation-v1"
+SCHEMA = "alice-personality-gemma-n0-preparation-v2"
 ROLE = "personality"
 STATE = "PREPARED_UNQUALIFIED"
 IMPLEMENTATION_PATHS = {
@@ -28,7 +28,9 @@ IMPLEMENTATION_PATHS = {
 }
 FEATURE_SCOPE = {
     "input": "source_token_ids_and_attention_mask_with_optional_processor_media",
-    "output": "token_aligned_semantic_hidden_states",
+    "output": "token_aligned_all_text_hidden_states_and_final_state",
+    "hidden_state_layout": "embedding_then_decoder_layers_with_final_normalized_state",
+    "all_hidden_states_required": True,
     "personality_judgments": False,
     "text_generation": False,
     "personality_authority": ["N1", "N2", "N3", "EIPM"],
@@ -40,7 +42,7 @@ _RUNTIME_KEYS = {"backend", "dtype", "torch_version", "transformers_version"}
 _RECEIPT_KEYS = {
     "schema", "repository", "revision", "role", "state", "snapshot_path",
     "clone_receipt_path", "clone_receipt_sha256", "files", "implementation",
-    "runtime", "interfaces", "feature_scope", "behavior_qualification",
+    "runtime", "interfaces", "feature_scope", "model_geometry", "behavior_qualification",
     "receipt_sha256",
 }
 
@@ -97,6 +99,35 @@ def _implementation() -> list[dict]:
     return [{"path": name, "sha256": _file_digest(
         _regular_file(path, label=f"implementation {name}"))}
         for name, path in sorted(IMPLEMENTATION_PATHS.items())]
+
+
+def _model_geometry(snapshot: str | Path) -> dict:
+    """Resolve the complete text-state geometry from verified publisher config.
+
+    No custom-backbone dimension or Transformers default substitutes for a
+    missing config field. The clone verifier is responsible for custody of
+    these config bytes; this binds their representation meaning as well.
+    """
+    config_path = _regular_file(Path(snapshot) / "config.json", label="publisher config")
+    try:
+        config = json.loads(config_path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, UnicodeError) as exc:
+        raise PreparationError("invalid publisher configuration JSON") from exc
+    if not isinstance(config, dict) or config.get("model_type") != "gemma4_unified":
+        raise PreparationError("publisher configuration lacks the Gemma 4 unified schema")
+    text = config.get("text_config")
+    if not isinstance(text, dict) or text.get("model_type") != "gemma4_unified_text":
+        raise PreparationError("publisher configuration lacks the Gemma 4 unified text schema")
+    geometry = {"model_type": config["model_type"], "text_model_type": text["model_type"]}
+    for field in ("hidden_size", "num_hidden_layers", "max_position_embeddings"):
+        value = text.get(field)
+        if type(value) is not int or value < 1:
+            raise PreparationError(f"publisher text configuration requires explicit positive {field}")
+        geometry[field] = value
+    # Transformers 5.17 text capture returns the layer-zero embedding input
+    # and every decoder layer, tying the last entry to normalized final state.
+    geometry["hidden_state_count"] = geometry["num_hidden_layers"] + 1
+    return geometry
 
 
 def _contract(value: Mapping | None) -> dict | None:
@@ -166,6 +197,7 @@ def prepare(clone_receipt_path: str | Path, output_receipt_path: str | Path, *,
         "runtime": selected_runtime,
         "interfaces": {"input": _contract(input_contract), "output": _contract(output_contract)},
         "feature_scope": json.loads(_canonical(FEATURE_SCOPE)),
+        "model_geometry": _model_geometry(clone["snapshot_path"]),
         "behavior_qualification": None,
     }
     receipt["receipt_sha256"] = sha256(_canonical(receipt)).hexdigest()
@@ -221,6 +253,8 @@ def verify_prepared(prepared_receipt_path: str | Path, *,
     checkpoint = Path(clone["snapshot_path"])
     if path == checkpoint or checkpoint in path.parents:
         raise PreparationError("preparation receipt must live outside the checkpoint snapshot")
+    if _canonical(raw["model_geometry"]) != _canonical(_model_geometry(checkpoint)):
+        raise PreparationError("prepared text representation geometry differs from publisher config")
     if raw["implementation"] != _implementation():
         raise PreparationError("personality implementation changed since preparation")
     interfaces = raw["interfaces"]

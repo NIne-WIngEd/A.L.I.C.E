@@ -31,29 +31,38 @@ class BackboneError(ValueError):
 
 @dataclass(frozen=True)
 class FrozenFeatures:
-    """Detached source states and their complete binary attention mask.
+    """Detached complete text-state chain, final state and binary source mask.
 
     These tensors carry licensed representation ancestry. They have no direct
     authority over the person's identity, memory or downstream judgment.
+    ``all_hidden_states`` follows upstream text capture: embedding input first,
+    each decoder layer next, with final layer output normalized. The last entry
+    equals ``hidden_states``; every entry retains every source position.
     """
 
     hidden_states: Any
     attention_mask: Any
+    all_hidden_states: tuple[Any, ...]
 
 
 class _FrozenGemmaN0:
     """Internal wrapper; only the verified loader admits a publisher artifact."""
 
     def __init__(self, representation: Any, *, torch: Any, hidden_size: int,
+                 num_hidden_layers: int,
                  max_source_tokens: int, device: Any):
         if type(hidden_size) is not int or hidden_size < 1:
             raise BackboneError("representation hidden size must be a positive integer")
         if type(max_source_tokens) is not int or max_source_tokens < 1:
             raise BackboneError("representation context budget must be a positive integer")
+        if type(num_hidden_layers) is not int or num_hidden_layers < 1:
+            raise BackboneError("representation layer count must be a positive integer")
         self._representation = representation
         self._torch = torch
         self._device = torch.device(device)
         self.hidden_size = hidden_size
+        self.num_hidden_layers = num_hidden_layers
+        self.hidden_state_count = num_hidden_layers + 1
         self.max_source_tokens = max_source_tokens
         self._freeze()
 
@@ -120,15 +129,33 @@ class _FrozenGemmaN0:
         # so neither publisher LM forward nor generate is reachable here.
         self._freeze()
         with torch.no_grad():
-            encoded = self._representation(**payload, use_cache=False, return_dict=True)
+            # Unified .model delegates this exact flag to its headless text
+            # .language_model. Transformers 5.17's capture_outputs preserves
+            # embedding + every layer and ties the last state to final norm.
+            encoded = self._representation(**payload, use_cache=False, return_dict=True,
+                                           output_hidden_states=True)
         states = getattr(encoded, "last_hidden_state", None)
+        all_states = getattr(encoded, "hidden_states", None)
         expected_shape = (*input_ids.shape, self.hidden_size)
         if not isinstance(states, torch.Tensor) or tuple(states.shape) != expected_shape:
             raise BackboneError("representation states do not preserve source positions and hidden size")
         if not states.is_floating_point() or not bool(torch.isfinite(states).all()):
             raise BackboneError("representation states must be finite floating-point features")
-        return FrozenFeatures(hidden_states=states.detach(),
-                              attention_mask=payload["attention_mask"].detach())
+        if not isinstance(all_states, tuple) or len(all_states) != self.hidden_state_count:
+            raise BackboneError("representation must return embedding and every actual text layer")
+        for index, state in enumerate(all_states):
+            if not isinstance(state, torch.Tensor) or tuple(state.shape) != expected_shape:
+                raise BackboneError(f"text state {index} does not preserve all source positions and width")
+            if not state.is_floating_point() or not bool(torch.isfinite(state).all()):
+                raise BackboneError(f"text state {index} must be finite floating-point features")
+            if state.device != states.device or state.dtype != states.dtype:
+                raise BackboneError(f"text state {index} differs from the final representation device or dtype")
+        if not torch.equal(all_states[-1], states):
+            raise BackboneError("final text state differs from the normalized complete-chain output")
+        detached = tuple(state.detach() for state in all_states)
+        return FrozenFeatures(hidden_states=detached[-1],
+                              attention_mask=payload["attention_mask"].detach(),
+                              all_hidden_states=detached)
 
     def __call__(self, *, input_ids: Any, attention_mask: Any,
                  **source_tensors: Any) -> FrozenFeatures:
@@ -175,9 +202,27 @@ def load_prepared_gemma_n0(receipt_path: str | Path, *, device: str = "cpu",
         raise BackboneError("prepared source lacks the expected Gemma 4 representation path")
     text_config = getattr(base.config, "text_config", None)
     hidden_size = getattr(text_config, "hidden_size", None)
+    num_hidden_layers = getattr(text_config, "num_hidden_layers", None)
     context_budget = getattr(text_config, "max_position_embeddings", None)
-    if type(hidden_size) is not int or hidden_size < 1 or type(context_budget) is not int or context_budget < 1:
+    if (type(hidden_size) is not int or hidden_size < 1
+            or type(num_hidden_layers) is not int or num_hidden_layers < 1
+            or type(context_budget) is not int or context_budget < 1):
         raise BackboneError("prepared source lacks explicit positive feature and context dimensions")
+    loaded_geometry = {
+        "model_type": base.config.model_type,
+        "text_model_type": getattr(text_config, "model_type", None),
+        "hidden_size": hidden_size, "num_hidden_layers": num_hidden_layers,
+        "max_position_embeddings": context_budget,
+        "hidden_state_count": num_hidden_layers + 1,
+    }
+    if loaded_geometry != prepared["model_geometry"]:
+        raise BackboneError("loaded representation geometry differs from prepared publisher config")
+    language_model = getattr(base.model, "language_model", None)
+    if (language_model is None
+            or getattr(getattr(language_model, "config", None), "model_type", None)
+            != "gemma4_unified_text"
+            or len(getattr(language_model, "layers", ())) != num_hidden_layers):
+        raise BackboneError("prepared source lacks the complete Gemma 4 unified text representation path")
     base.to(selected_device).requires_grad_(False).eval()
     if any(parameter.device != selected_device for parameter in base.parameters()):
         # CUDA without an explicit index resolves to the current CUDA device.
@@ -189,6 +234,7 @@ def load_prepared_gemma_n0(receipt_path: str | Path, *, device: str = "cpu",
     # The full language-model object goes out of scope. Keep only its source
     # representation module, whose features remain dependent on publisher priors.
     representation = _FrozenGemmaN0(base.model, torch=torch, hidden_size=hidden_size,
+                                    num_hidden_layers=num_hidden_layers,
                                     max_source_tokens=context_budget, device=selected_device)
     # Loading is an interval in which a persistent snapshot, receipt, interface
     # or code change could otherwise survive the initial custody check. Direct

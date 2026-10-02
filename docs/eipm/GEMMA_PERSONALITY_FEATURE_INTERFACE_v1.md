@@ -23,9 +23,14 @@ tensor-only backbone cannot infer how supplied IDs were packaged; future
 producers must implement and bind this input rule themselves.
 
 The representation module is frozen in evaluation mode and executes without
-gradients or cached decoding. Outputs are finite, detached floating-point hidden
-states with shape `[batch, source positions, publisher hidden size]`, together
-with the complete binary attention mask on the chosen device. Padding states
+gradients or cached decoding. Outputs retain the final finite, detached
+floating-point hidden states with shape
+`[batch, source positions, publisher hidden size]` and every text hidden state
+returned by the actual publisher representation path, in its original layer
+order. The complete layer count and width come from the admitted Gemma model,
+never the retired custom-N0 dimensions. Outputs also include the complete
+binary attention mask on the chosen device. Each layer must preserve source
+positions, floating-point finiteness and detachment. Padding states
 must be excluded by downstream consumers using that mask. The interface does
 not average the document into a single vector.
 
