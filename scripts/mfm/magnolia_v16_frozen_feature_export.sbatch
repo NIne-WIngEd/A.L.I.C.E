@@ -32,7 +32,9 @@ COMPUTE_ROOT="$(realpath -e /homes/01/mxrayan/rayan-compute)"
 export UDOCKER_DIR="$COMPUTE_ROOT/udocker-store"
 export UDOCKER_TMP="$COMPUTE_ROOT/udocker-tmp"
 UDOCKER="$COMPUTE_ROOT/tools/udocker-1.3.17/udocker/udocker"
-CONTAINER=rayan-n0-base
+: "${MFM_CONTAINER:?use a dedicated MFM CPU container}"
+CONTAINER="$MFM_CONTAINER"
+[[ "$CONTAINER" =~ ^rayan-mfm-source-cpu-[a-zA-Z0-9-]+$ ]]
 MFM_REPO_ROOT="$(realpath -e "$MFM_REPO_ROOT")"
 case "$MFM_REPO_ROOT" in "$COMPUTE_ROOT"/*) ;; *) exit 2 ;; esac
 [[ "$(cd "$MFM_REPO_ROOT" && git rev-parse HEAD)" == "$MFM_REPO_COMMIT" &&
