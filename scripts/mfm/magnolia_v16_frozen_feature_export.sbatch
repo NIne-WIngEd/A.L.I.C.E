@@ -81,10 +81,8 @@ output_parent="$(within_root "$(dirname "$MFM_FEATURE_OUTPUT")")"
 output_name="$(basename "$MFM_FEATURE_OUTPUT")"
 [[ "$output_name" =~ ^rayan-mfm-features-[a-zA-Z0-9-]+$ ]]
 [[ "$MFM_FEATURE_OUTPUT" == "$output_parent/$output_name" && ! -L "$MFM_FEATURE_OUTPUT" ]]
-resume=()
 if [[ "${MFM_FEATURE_RESUME:-0}" == 1 ]]; then
   [[ -d "$MFM_FEATURE_OUTPUT" && ! -e "$MFM_FEATURE_OUTPUT/bank.json" ]]
-  resume=(--resume)
 else
   [[ "${MFM_FEATURE_RESUME:-0}" == 0 && ! -e "$MFM_FEATURE_OUTPUT" ]]
 fi
@@ -117,10 +115,12 @@ assert transformers.__version__ == "5.17.0"
 assert PIL.__version__ == "11.3.0"
 print("exact_feature_runtime_verified", flush=True)
 PY
-python -m scripts.mfm.export_v16_frozen_features \
+command=(python -m scripts.mfm.export_v16_frozen_features \
   --teacher-training-manifest "$1" --input-sha256 "$2" \
   --owner-authorization-ref "$3" --prepared-base-dir "$4" \
-  --prepared-base-receipt "$5" --preflight-receipt "$6" --output-dir "$7" "${@:8}"
+  --prepared-base-receipt "$5" --preflight-receipt "$6" --output-dir "$7")
+if [[ "$8" == 1 ]]; then command+=(--resume); fi
+"${command[@]}"
 ' feature-export "$MFM_TEACHER_MANIFEST" "$MFM_TEACHER_MANIFEST_SHA256" \
   "$MFM_OWNER_AUTH_REF" "$MFM_PREPARED_BASE_DIR" "$MFM_PREPARED_BASE_RECEIPT" \
-  "$MFM_PREFLIGHT_RECEIPT" "$MFM_FEATURE_OUTPUT" "${resume[@]}"
+  "$MFM_PREFLIGHT_RECEIPT" "$MFM_FEATURE_OUTPUT" "${MFM_FEATURE_RESUME:-0}"

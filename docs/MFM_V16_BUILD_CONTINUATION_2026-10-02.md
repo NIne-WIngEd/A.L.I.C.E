@@ -136,6 +136,33 @@ acceptance requirements; no architectural replacement follows from them.
    FBM procedure traces and separately eligible input/target/authority/outcome
    cases. Procedure records alone are not supervised gold.
 
-Magnolia is first, Kaggle next after measured need, paid compute last after
-concrete free-route failures. No paid compute was purchased here. Every
+Magnolia is first; Kaggle and Hugging Face are retained as free-route candidates.
+Kaggle CLI authentication and existing owner notebooks were verified. Hugging
+Face is connected as `NineWinged`, currently non-PRO. Current official
+[ZeroGPU documentation](https://huggingface.co/docs/hub/spaces-zerogpu) allows
+eligible free personal accounts to host up to two Spaces with five daily GPU
+minutes. Account age/email eligibility, remaining quota, Gradio integration,
+runtime compatibility and isolated checkpointable training remain unverified
+for this project. This may support short probes, not an assumed full training
+allocation. [HF Jobs](https://huggingface.co/docs/hub/jobs-pricing) are billed
+compute requiring positive credits; no free Jobs balance is claimed. The Jobs
+skill's older paid-plan prerequisite is superseded by those current official
+docs. No HF workload, credits or subscription were purchased.
+
+Paid compute is the last fallback after concrete free-route failures. Every
 unresolved gate remains visible; this increment is not full MFM completion.
+
+## Continuation execution receipts
+
+Magnolia **576608 completed exit 0**, 104 relevant tests in 16.711s on the
+actual Torch 2.7.1 container, including Linux network/symlink and signed
+adjudication checks. Twelve new frozen-feature/restart tests also passed on
+local CPU Torch 2.14.1. The initial broader Windows run encountered existing
+Linux-only tests and a missing test-only crypto dependency; these were checked
+on Linux with job-local pinned dependencies, without weakening production guards.
+
+The first export launcher, **576609**, failed before running the exporter:
+Magnolia's older Bash treats an empty array as unbound under `set -u`. Use a
+nonempty command array and an explicit resume flag. Preserve its logs and
+job-local dependencies. A replacement export still requires its own actual
+completion receipt; no base-forward success is inferred from this failed job.
