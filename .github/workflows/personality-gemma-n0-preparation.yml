@@ -6,8 +6,9 @@ on:
   pull_request:
     paths:
       - "src/alice_foundation/**"
-      - "src/alice_personality/gemma_n0/**"
+      - "src/alice_personality/**"
       - "scripts/eipm/gemma_n0/**"
+      - "scripts/eipm/n1/**"
       - "evaluation/eipm/gemma_n0/**"
       - "tests/foundation/**"
       - "tests/personality/**"

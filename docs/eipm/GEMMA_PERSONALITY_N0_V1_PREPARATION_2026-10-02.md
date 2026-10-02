@@ -190,8 +190,8 @@ This workstation has no verified full checkpoint of the selected pretrained pin.
 The local older `MFM_Stage/gemma4-12b-it` is a different instruction-tuned
 revision and is ineligible. The recovered strict-key connection is
 `mxrayan@magnolia.usm.edu`; it returns host `magnolia01`. Read-only inspection
-confirmed the recorded source and MFM receipts exist. Source contents have not
-yet been freshly hashed in an allocated job. The existing Rayan container and
+confirmed the recorded source and MFM receipts exist. Fresh allocated-job
+source verification and actual forward results are recorded below. The Rayan container and
 Slurm route are reused; setup controllers that migrate old files are not rerun.
 New code, logs and preparation receipts use a separate owner-only
 `/homes/01/mxrayan/rayan-compute/rayan-personality/` namespace and `rayan-*`
@@ -213,5 +213,38 @@ file SHA, and rehash every file without creating another 24 GB copy. Its parent
 source digest preserves the original ancestry, not a new upstream verification.
 Fresh code, geometry and interface bindings remain mandatory.
 
-Source-custody success and fixture tests have not produced an actual full Gemma
-forward, private gradient, learned personality or N0 approval.
+All-layer preparation job **576597** completed `0:0` on node005 in 2m48s,
+batch MaxRSS 36,676 KiB. It reused that clone and freshly verified the publisher
+files under immutable code `4319c7e96e83ec3087b9ad3879acaa9ea48b7b05`.
+Returned v2 receipt digest:
+`39d230b2162813c4140bb64eda5c3da54acb3ebd9bcb9ca4b91f46acc372f935`;
+external file SHA-256:
+`06fc6cc55fd6255d649ad0678704e25f78d29ea6313dc20399cc039f4addac8d`.
+Independent local checks matched code/contracts, exact source pins and geometry:
+48 decoder layers plus the embedding state, width 3,840, source budget 262,144.
+This is declared publisher capacity, not measured full-context fit.
+
+Public actual-checkpoint forward job **576598** completed `0:0` under `mxrayan`
+on node013 in 10m30s. It used 4 CPUs/64 GB, the exact v2 receipt and all 13
+immutable public inputs, without private sources, gradients, truncation, chat
+templates or generation. All 677 checkpoint entries loaded. Each complete
+input produced all 49 genuine hidden states of width 3,840, finite, detached,
+source-aligned and BF16 on CPU. Input lengths ranged from 27 to 58 tokens.
+The receipt records 137.731s model loading and 218.643s total forward time;
+median input forward time was 16.093s. Hidden-state values were not retained.
+
+Returned receipt digest:
+`0ddb7ea643f8f6e01ec13712384b89fe64acff2e0e0cb963a355ce68666571c4`;
+external file SHA-256:
+`07bba725c7dc1bbea9316c51a2aa6c0c0283bbd81aa8a59bf1fc65be7402e830`.
+Independent checks matched canonical digests, all eight publisher pins, exact
+historical code bytes, preparation and public-plan bindings, every input ID,
+all layer indices/shapes, token counts and timings. CPU process peak was not
+measured; Slurm batch MaxRSS 702,592 KiB is accounting metadata and does not
+establish whole-model or container-child peak memory. No GPU-fit or full-context
+capacity result is inferred from the bounded CPU run.
+
+This establishes real-checkpoint execution through the personality feature
+boundary. It does not establish semantic competence, absence of inherited
+preferences, private teaching authority, learned personality or N0 approval.
+The preparation and forward receipts remain explicitly unqualified.
