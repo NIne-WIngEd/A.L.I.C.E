@@ -412,6 +412,18 @@ def run_private_compile() -> dict:
                        alternatives_are_unordered_not_negatives=True)
     except BaseException as exc:
         summary.update(failure_phase=phase, failure_type=type(exc).__name__, failure_reason=_safe_reason(exc))
+        if summary["failure_reason"] == "raw_lineage_missing_or_ambiguous_logical_member":
+            try:
+                from src.alice_personality.n1.raw_inference_lineage import audit_raw_inference_source_layout
+                with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+                    layout = audit_raw_inference_source_layout(raw_source, expected_archive_sha256=RAW_SOURCE_SHA256)
+                payload = _canonical(layout) + b"\n"
+                with os.fdopen(os.open(run / "raw-source-layout.json", os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), "wb") as stream:
+                    stream.write(payload)
+                # Artifact names remain in protected metadata, never public logs.
+                summary["raw_source_layout_file_sha256"] = sha256(payload).hexdigest()
+            except BaseException:
+                summary["raw_source_layout_diagnostic_refused"] = True
         if summary["failure_reason"] == "source_loss_role_conflict":
             try:
                 from src.alice_personality.n1.compiler import audit_loss_role_structure

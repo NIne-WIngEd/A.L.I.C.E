@@ -394,6 +394,79 @@ class RawInferenceLineageTests(unittest.TestCase):
                 with self.assertRaisesRegex(r.RawInferenceLineageError, "raw_lineage_source_unreadable"):
                     r.derive_raw_inference_registry(path, expected_archive_sha256=sha256(data).hexdigest())
 
+    def test_directory_only_layout_audit_opens_no_members_or_guesses_logical_names(self):
+        members = {"unknown-real-package/": b"", "unknown-real-package/README.txt": b"PUBLIC unread sentinel",
+                   "unknown-real-package/actual-different-name.jsonl": b"PUBLIC unread source sentinel",
+                   "unknown-real-package/nested/opaque.bin": b"PUBLIC unread binary sentinel"}
+        path, digest = self.archive(members)
+        before = path.read_bytes()
+        with patch.object(zipfile.ZipFile, "open", side_effect=AssertionError("must not open members")), \
+                patch.object(r, "_selected", side_effect=AssertionError("must not guess layout")):
+            receipt = r.audit_raw_inference_source_layout(path, expected_archive_sha256=digest)
+        self.assertEqual(receipt["schema"], "alice-personality-raw-inference-source-layout-v1")
+        self.assertEqual(receipt["state"], "UNQUALIFIED")
+        self.assertEqual(receipt["member_paths"], sorted(members))
+        self.assertEqual((receipt["member_count"], receipt["file_count"], receipt["directory_count"]), (4, 3, 1))
+        self.assertEqual(receipt["source_archive_sha256"], digest)
+        self.assertTrue(receipt["mechanical_fixture_only"])
+        for name in ("acceptance_authority", "private_gradient_authorized",
+                     "historical_authority_granted", "training_authorized"):
+            self.assertIs(receipt[name], False)
+        self.assertIsNone(receipt["behavior_qualification"])
+        seal = receipt.pop("receipt_sha256")
+        self.assertEqual(seal, sha256(canonical(receipt)).hexdigest())
+        self.assertNotIn("PUBLIC unread", json.dumps(receipt))
+        self.assertEqual(path.read_bytes(), before)
+        self.assertEqual(list(self.root.iterdir()), [path])
+
+    def test_directory_layout_pin_inventory_and_source_rechecks_fail_closed(self):
+        path, digest = self.archive()
+        with patch.object(r.zipfile, "ZipFile", side_effect=AssertionError("pin must precede ZIP")):
+            with self.assertRaisesRegex(r.RawInferenceLineageError, "source_archive_sha256_mismatch"):
+                r.audit_raw_inference_source_layout(path, expected_archive_sha256="0" * 64)
+        for name in ("../escape", "PUBLIC-PACKAGE/alias.txt", "public-package/einf_proposals.jsonl"):
+            with self.subTest(unsafe=name):
+                invalid, pin = self.archive(extra_entries=[(name, b"PUBLIC unread sentinel")])
+                with self.assertRaises(r.RawInferenceLineageError):
+                    r.audit_raw_inference_source_layout(invalid, expected_archive_sha256=pin)
+        original = r._hash_stream
+        calls = []
+
+        def changed(stream):
+            calls.append(True)
+            return original(stream) if len(calls) == 1 else "0" * 64
+
+        with patch.object(r, "_hash_stream", changed), self.assertRaisesRegex(
+                r.RawInferenceLineageError, "source_archive_changed"):
+            r.audit_raw_inference_source_layout(path, expected_archive_sha256=digest)
+        self.assertEqual(len(calls), 2)
+        replacement, _ = self.archive()
+        replacement.write_bytes(path.read_bytes())
+        actual_path = r._archive_path
+        path_calls = []
+
+        def changed_path(value):
+            path_calls.append(True)
+            return actual_path(value) if len(path_calls) == 1 else actual_path(replacement)
+
+        with patch.object(r, "_archive_path", changed_path), self.assertRaisesRegex(
+                r.RawInferenceLineageError, "source_archive_changed"):
+            r.audit_raw_inference_source_layout(path, expected_archive_sha256=digest)
+        original_bytes = Path.read_bytes
+        code_calls = []
+
+        def changed_code(value):
+            payload = original_bytes(value)
+            if value == Path(r.__file__):
+                code_calls.append(True)
+                if len(code_calls) == 2:
+                    return payload + b"PUBLIC code change"
+            return payload
+
+        with patch.object(Path, "read_bytes", changed_code), self.assertRaisesRegex(
+                r.RawInferenceLineageError, "lineage_reader_code_changed"):
+            r.audit_raw_inference_source_layout(path, expected_archive_sha256=digest)
+
 
 if __name__ == "__main__":
     unittest.main()

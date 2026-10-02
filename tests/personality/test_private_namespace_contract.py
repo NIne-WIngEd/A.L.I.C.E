@@ -334,6 +334,32 @@ def test_raw_source_and_supplied_registry_are_ambiguous_and_refused(public_stage
     assert json.loads((public_stage.run / "compile_summary.json").read_bytes())["failure_phase"] == "private_source_custody"
 
 
+def test_actual_source_layout_names_stay_in_protected_failure_metadata(public_stage, monkeypatch, capsys):
+    raw = public_stage.run.parent / "public-source.zip"
+    raw.write_bytes(b"independently pinned fixture source")
+    monkeypatch.setenv("PERSONALITY_RAW_SOURCE_PATH", str(raw))
+    error_type = type("RawInferenceLineageError", (ValueError,), {})
+    layout = {"schema": "alice-personality-raw-inference-source-layout-v1", "state": "UNQUALIFIED",
+              "source_archive_sha256": helper.RAW_SOURCE_SHA256,
+              "member_paths": ["PROTECTED_FIXTURE_ARTIFACT_NAME.jsonl"], "member_count": 1}
+    derive = Mock(side_effect=error_type("missing_or_ambiguous_logical_member"))
+    audit = Mock(return_value=layout)
+    monkeypatch.setitem(sys.modules, "src.alice_personality.n1.raw_inference_lineage",
+                        SimpleNamespace(derive_raw_inference_registry=derive, audit_raw_inference_source_layout=audit))
+    with pytest.raises(helper.PrivateStageError, match="sanitized"):
+        helper.run_private_compile()
+    assert capsys.readouterr().out == ""
+    public_stage.compile.assert_not_called()
+    audit.assert_called_once_with(raw, expected_archive_sha256=helper.RAW_SOURCE_SHA256)
+    summary_bytes = (public_stage.run / "compile_summary.json").read_bytes()
+    receipt = json.loads(summary_bytes)
+    protected = (public_stage.run / "raw-source-layout.json").read_bytes()
+    assert json.loads(protected) == layout
+    assert receipt["raw_source_layout_file_sha256"] == sha256(protected).hexdigest()
+    assert b"PROTECTED_FIXTURE_ARTIFACT_NAME" not in summary_bytes
+    assert receipt["failure_reason"] == "raw_lineage_missing_or_ambiguous_logical_member"
+
+
 def test_supplied_registry_change_during_compile_cannot_publish_success(public_stage, monkeypatch):
     path = public_stage.run.parent / "public-registry.json"
     payload = b'{"EINF":["PUBLIC_RAW_1"]}'

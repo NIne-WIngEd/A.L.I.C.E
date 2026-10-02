@@ -345,3 +345,56 @@ def derive_raw_inference_registry(raw_archive_path: str | Path, *,
             zlib.error, lzma.LZMAError, zipfile.BadZipFile, zipfile.LargeZipFile,
             NotImplementedError, RecursionError):
         raise RawInferenceLineageError("raw_lineage_source_unreadable") from None
+
+
+def audit_raw_inference_source_layout(raw_archive_path: str | Path, *,
+                                      expected_archive_sha256: str) -> dict:
+    """Return protected, unqualified directory metadata without opening members.
+
+    The caller MUST establish private-source isolation before any invocation.
+    Archive-relative artifact names are source metadata, not a public corpus
+    inventory: keep this receipt inside the protected source-audit boundary.
+    No logical filename mapping, row schema or proposal existence is inferred.
+    """
+    expected = _digest(expected_archive_sha256)
+    try:
+        path = _archive_path(raw_archive_path)
+        before = path.stat()
+        if before.st_size > MAX_ARCHIVE_BYTES:
+            _fail("source_archive_resource_bound")
+        code_sha = sha256(Path(__file__).read_bytes()).hexdigest()
+        descriptor = os.open(path, os.O_RDONLY | getattr(os, "O_BINARY", 0)
+                             | getattr(os, "O_NOFOLLOW", 0))
+        with os.fdopen(descriptor, "rb") as stream:
+            descriptor_before = os.fstat(stream.fileno())
+            if not stat.S_ISREG(descriptor_before.st_mode) \
+                    or _file_identity(descriptor_before) != _file_identity(before):
+                _fail("source_archive_changed")
+            if _hash_stream(stream) != expected:
+                _fail("source_archive_sha256_mismatch")
+            with zipfile.ZipFile(stream, "r") as archive:
+                files = _inventory(archive)
+                member_paths = sorted(entry.filename for entry in archive.infolist())
+            if _hash_stream(stream) != expected \
+                    or _file_state(os.fstat(stream.fileno())) != _file_state(descriptor_before) \
+                    or _file_state(_archive_path(path).stat()) != _file_state(before):
+                _fail("source_archive_changed")
+        if sha256(Path(__file__).read_bytes()).hexdigest() != code_sha:
+            _fail("lineage_reader_code_changed")
+        receipt = {"schema": "alice-personality-raw-inference-source-layout-v1",
+                   "state": "UNQUALIFIED", "source_archive_sha256": expected,
+                   "member_paths": member_paths, "member_count": len(member_paths),
+                   "file_count": len(files), "directory_count": len(member_paths) - len(files),
+                   "code_sha256": code_sha,
+                   "mechanical_fixture_only": expected != REVIEWED_RAW_V5_ARCHIVE_SHA256,
+                   "acceptance_authority": False, "private_gradient_authorized": False,
+                   "historical_authority_granted": False, "training_authorized": False,
+                   "behavior_qualification": None}
+        receipt["receipt_sha256"] = sha256(_canonical(receipt)).hexdigest()
+        return receipt
+    except RawInferenceLineageError:
+        raise
+    except (OSError, ValueError, UnicodeError, RuntimeError, KeyError, EOFError,
+            zlib.error, lzma.LZMAError, zipfile.BadZipFile, zipfile.LargeZipFile,
+            NotImplementedError, RecursionError):
+        raise RawInferenceLineageError("raw_lineage_source_unreadable") from None
