@@ -245,3 +245,76 @@ If a stage failed, diagnose it before any retry; use Kaggle/free HF options if
 actual Magnolia capacity or runtime fails. No paid allocation has been made.
 Independent gold, native modalities, accepted-memory feedback, sealed FINAL and
 second-consumer qualification remain the subsequent full-capability gates.
+
+## Completed-job audit and dedicated runtime recovery
+
+This section supersedes the running/queued snapshot above. **576610 FAILED
+exit 1 after 1h11m38s**, committing 17 cases. The traceback reports
+`FileNotFoundError` while creating the bank's `cases` directory. The same
+directory and its committed cases still exist in host custody with mode 700,
+UID 1905. The other job using `rayan-n0-base`, 576600, completed roughly two
+minutes before the failure. Concurrent shared-container mount visibility is
+the leading explanation, not a proven causal result. No file loss, corrupted
+case or numerical failure has been established from this traceback.
+
+**576619/576620/576621** each stopped exit 3 on a failed upstream job, as their
+TIMEOUT-only policy requires. Their logs are preserved. **576622** could never
+satisfy its dependency and was cancelled. **576614 TIMEOUT** after one hour,
+without completing even the first measured FP32 forward or writing a numerical
+receipt. That run does not support a switch from BF16; it is not an accuracy
+failure or a general proof that FP32 hardware execution is impossible.
+
+Recovery execution code is **01ad19de001b47604593e15661f2d4cd4af963f1**.
+Only the CPU batch launcher changed in the frozen-feature path: it now requires
+a dedicated `rayan-mfm-source-cpu-*` container. `formation_feature_bank.py`,
+`export_v16_frozen_features.py`, the production decoder and teacher corpus are
+unchanged, allowing the identical export binding and 17 committed cases to be
+reverified and resumed. All 17 existing feature/diagnostic tests passed locally
+after this operational change. Batch syntax was checked on Magnolia.
+
+Dedicated source job **576630** creates a fresh runtime from the already cached
+Python image and copies only installed libraries, excluding Python caches and
+unreadable kernel modules. It adds persistent empty bind-path ancestors, uses
+P2, holds a parent-process runtime lock and enters same-UID loopback-only
+isolation before inspecting private bank custody. It then repeats the original
+complete admission, publisher-base rehash, processor and case verification. The
+runtime is `rayan-mfm-source-cpu-20261002`; no shared N0 container setup or
+dependency changes are made. The lock stays in the parent because the namespace
+helper deliberately closes inherited nonstandard descriptors.
+
+Bounded TIMEOUT-only continuations are now **576631 → 576632 → 576633**.
+They share this dedicated runtime sequentially. The scheduler's
+`--kill-on-invalid-dep=yes` behavior was tested before submitting the new jobs.
+Recognized interrupted atomic staging directories remain preserved; unknown
+members and other failure states still stop execution. This is a diagnosed
+operational recovery, not a policy to retry arbitrary FAILED jobs.
+
+In parallel, **576629** runs the **full configured decoder** (3840 source
+width, 262144 vocabulary, specialist width 768, six layers/twelve heads) on
+synthetic BF16 source tensors at **3035 source / 1607 target tokens**, with FP32
+decoder arithmetic and 16-case gradient accumulation. It checks first/later
+optimizer steps, actual checkpoint reload and the next weights/moments on the
+dedicated P100 runtime. It opens only the externally pinned processor metadata,
+not teacher payloads or the backbone. These combined maxima are a conservative
+resource fixture, not a source-grounded teacher case. A completed result would
+prove only synthetic-tensor capacity/restart; the admitted-corpus stress probe
+remains mandatory. OOM, timeout or partial logs do not count as a pass.
+
+Replacement learning pipeline **576634** depends on **afterok:576633:576629**.
+It pins the complete bank from producer stdout for **576630/576631/576632/576633**
+and still runs the separate empirical corpus stress/reload before any fresh
+two-epoch fit or matched generated diagnostics. It uses execution code 01ad19de0
+and a dedicated GPU-runtime lock. Failed prerequisite dependencies now cancel
+the queued GPU job instead of leaving it pending forever.
+
+New source, capacity and pipeline recipes are
+`magnolia_v16_dedicated_export_20261002.sbatch`,
+`magnolia_v16_synthetic_capacity_20261002.sbatch`,
+`probe_v16_cached_capacity.py`, and
+`magnolia_v16_cached_pipeline_recovery_20261002.sbatch`, under `scripts/mfm/`.
+The remote submission receipt is
+`rayan-mfm/receipts/rayan-mfm-dedicated-submission-20261002.txt`. Capacity logs
+are `rayan-mfm/slurm/rayan-mfm-capacity-576629.{out,err}` and output custody
+`rayan-mfm/runs/rayan-mfm-synthetic-capacity-576629`. Revised learning logs and
+outputs use job ID 576634. At submission, these results remain pending and no
+bank digest or trained model is available.
