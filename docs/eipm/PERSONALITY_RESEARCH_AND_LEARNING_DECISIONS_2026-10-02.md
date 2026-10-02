@@ -117,8 +117,14 @@ evidence and independent review; this record invents none.
 ## Evidence and compute
 
 Actual publisher custody, full-layer forwarding and public source admission ran
-on Magnolia under the owner's account. Public experiment 576600 is running; no
-learned result is claimed. Exact isolated candidate diagnostics identified the
+on Magnolia under the owner's account. Public experiment 576600 completed with
+weak unqualified learning; diagnostic 576638 independently reproduced it and
+measured source dependence, familiar-description preference and near-uniform
+depth weights. Repair-specific primary research and a precommitted freshly fitted
+candidate-only control are recorded in
+`PERSONALITY_SEMANTIC_REPAIR_RESEARCH_AND_CONTROL_PLAN_2026-10-02.md`.
+No winning learning repair or N0 approval follows from those findings.
+Exact isolated candidate diagnostics identified the
 compiler's incorrect global-context/substr-name assumptions. The repair preserves
 declared lanes/masks and rejects explicit exclusion of known positive losses;
 successful compilation still does not accept source content or authorize training.
@@ -126,8 +132,9 @@ successful compilation still does not accept source content or authorize trainin
 Portable public feature custody requires a completed experiment, original
 unchanged receipts, complete banks and producer-side source closure. Import
 records a separate consumer binding; fixed inputs cannot answer new raw prompts
-or establish neutrality. The importer currently uses CPU RAM. No actual export,
-CUDA trainer, Kaggle job or GPU resume proof has run.
+or establish neutrality. Actual handoff 576635 completed, independently closing
+all 152 complete public banks and a separate CPU consumer. The importer uses CPU
+RAM. No CUDA trainer, Kaggle job or GPU resume proof has run.
 
 Magnolia and Kaggle remain the first compute routes. Paid GPUs are the last
 fallback after concrete free-route failures and a concrete workload/cost choice.

@@ -293,8 +293,10 @@ def test_actual_guard_precedes_all_private_path_operations(monkeypatch):
     monkeypatch.setattr(entry.namespace, "_clean_code", clean)
     # Even invalid/missing env paths must not be examined before guard refusal.
     monkeypatch.delenv("COMPUTE_ROOT", raising=False)
-    with pytest.raises(entry.namespace.PrivateStageError, match="public guard refusal"):
+    with pytest.raises(entry.SafeAuditFailure) as failure:
         entry.run_structure_audit()
+    assert failure.value.stage == "namespace_guard"
+    assert failure.value.category == "boundary_or_schema_refused"
     guard.assert_called_once()
     bounded.assert_not_called()
     clean.assert_not_called()
@@ -307,7 +309,11 @@ def test_entry_failure_logs_only_fixed_schema(monkeypatch, capsys):
     assert result.out == "" and "PRIVATE FIXTURE" not in result.err
     public = json.loads(result.err)
     assert public == {"state": "FAILED_UNQUALIFIED", "failure_reason": "manifest_structure_audit_refused",
-                      "link_compared": False, "acceptance_authority": False, "private_gradient_authorized": False}
+                      "failure_stage": "entry_invocation", "failure_category": "unclassified_refusal",
+                      "link_compared": False, "acceptance_authority": False, "private_gradient_authorized": False,
+                      "historical_authority_granted": False, "training_authorized": False,
+                      "source_admission": False, "original_source_independently_verified": False,
+                      "legacy_namespace_proven": False}
     assert audit.safe_reason(audit.ManifestStructureAuditError("PRIVATE FIXTURE ID")) == "audit_refused"
 
 
@@ -508,3 +514,118 @@ def test_public_target_pin_and_new_launcher_contract():
     if bash:
         checked = subprocess.run([bash, "-n", str(COMPARISON_SBATCH)], capture_output=True, text=True)
         assert checked.returncode == 0, checked.stderr
+
+
+def test_guard_passed_missing_boundary_env_is_reported_before_any_source_path(monkeypatch, capsys):
+    monkeypatch.setattr(entry.namespace, "_p2_guard", Mock(return_value={}))
+    monkeypatch.delenv("COMPUTE_ROOT", raising=False)
+    bounded, clean = Mock(), Mock()
+    monkeypatch.setattr(entry.namespace, "_bounded_path", bounded)
+    monkeypatch.setattr(entry.namespace, "_clean_code", clean)
+    assert entry.main(["--p2-source-hash-comparison-stage"]) == 3
+    output = capsys.readouterr()
+    value = json.loads(output.err)
+    assert value["failure_stage"] == "compute_boundary"
+    assert value["failure_category"] == "required_field_absent"
+    assert "COMPUTE_ROOT" not in output.err and output.out == ""
+    bounded.assert_not_called()
+    clean.assert_not_called()
+
+
+@pytest.mark.parametrize("exception, category", [
+    (PermissionError(13, "PRIVATE FIXTURE MESSAGE", "/PRIVATE-FIXTURE-PATH"), "permission_refused"),
+    (FileNotFoundError(2, "PRIVATE FIXTURE MESSAGE", "/PRIVATE-FIXTURE-PATH"), "required_input_absent"),
+    (FileExistsError(17, "PRIVATE FIXTURE MESSAGE", "/PRIVATE-FIXTURE-PATH"), "create_only_conflict"),
+    (KeyError("PRIVATE-FIXTURE-KEY"), "required_field_absent"),
+    (ModuleNotFoundError("PRIVATE-FIXTURE-MODULE"), "public_dependency_unavailable"),
+    (ValueError("audit_custody_refused"), "unclassified_refusal"),
+    (audit.ManifestStructureAuditError("audit_custody_refused"), "input_custody_refused"),
+    (audit.ManifestStructureAuditError("audit_metadata_refused"), "metadata_or_review_refused"),
+    (audit.ManifestStructureAuditError("PRIVATE-FIXTURE-KEY"), "unclassified_refusal"),
+])
+def test_fixed_failure_stage_category_never_echoes_errors_or_forges_module_reason(monkeypatch, capsys, exception, category):
+    def fails(*, compare_source_hashes, progress):
+        progress.mark("declared_hash_comparison")
+        raise exception
+
+    monkeypatch.setattr(entry, "_run_structure_audit", fails)
+    assert entry.main(["--p2-source-hash-comparison-stage"]) == 3
+    output = capsys.readouterr()
+    assert output.out == "" and "PRIVATE" not in output.err and "Traceback" not in output.err
+    value = json.loads(output.err)
+    assert value["failure_stage"] == "declared_hash_comparison"
+    assert value["failure_category"] == category
+    assert set(value) == {"state", "failure_reason", "failure_stage", "failure_category", "link_compared",
+                         "acceptance_authority", "private_gradient_authorized", "historical_authority_granted",
+                         "training_authorized", "source_admission", "original_source_independently_verified",
+                         "legacy_namespace_proven"}
+    assert all(value[name] is False for name in ("link_compared", *audit._FLAGS, "source_admission",
+                                                "original_source_independently_verified", "legacy_namespace_proven"))
+
+
+def test_failure_does_not_stringify_exception_or_expose_a_traceback(monkeypatch, capsys):
+    class PoisonedError(ValueError):
+        def __str__(self):
+            raise AssertionError("exception stringification must never occur")
+
+    def fails(*, compare_source_hashes, progress):
+        progress.mark("member_map_schema")
+        raise PoisonedError("PRIVATE FIXTURE PAYLOAD")
+
+    monkeypatch.setattr(entry, "_run_structure_audit", fails)
+    with pytest.raises(entry.SafeAuditFailure) as caught:
+        entry.run_structure_audit(compare_source_hashes=True)
+    assert str(caught.value) == "manifest_structure_audit_refused"
+    assert caught.value.__suppress_context__ is True and caught.value.__cause__ is None
+    assert entry.main(["--p2-source-hash-comparison-stage"]) == 3
+    output = capsys.readouterr()
+    assert output.out == "" and "PRIVATE" not in output.err and "PoisonedError" not in output.err
+    assert json.loads(output.err)["failure_stage"] == "member_map_schema"
+
+
+def test_forged_or_missing_failure_fields_collapse_to_static_defaults(monkeypatch, capsys):
+    failure = entry.SafeAuditFailure("PRIVATE-FIXTURE-STAGE", "PRIVATE-FIXTURE-CATEGORY")
+    failure.stage = "/PRIVATE-FIXTURE-PATH"
+    del failure.category
+    monkeypatch.setattr(entry, "run_structure_audit", Mock(side_effect=failure))
+    assert entry.main(["--p2-structure-stage"]) == 3
+    output = capsys.readouterr()
+    value = json.loads(output.err)
+    assert value["failure_stage"] == "entry_invocation" and value["failure_category"] == "unclassified_refusal"
+    assert "PRIVATE" not in output.err and output.out == ""
+
+
+def test_real_fixture_custody_failure_is_reported_and_cannot_publish(tmp_path, monkeypatch, capsys):
+    path = tmp_path / "public-fixture-map.json"
+    path.write_bytes(b"public fixture initial bytes")
+    original = digest(path.read_bytes())
+    publish = Mock()
+
+    def fails(*, compare_source_hashes, progress):
+        with audit._PinnedFile(path, original, 1024) as pinned:
+            path.write_bytes(b"changed public fixture bytes")
+            progress.mark("member_map_recheck")
+            pinned.verify()
+        publish()
+
+    monkeypatch.setattr(entry, "_run_structure_audit", fails)
+    assert entry.main(["--p2-source-hash-comparison-stage"]) == 3
+    value = json.loads(capsys.readouterr().err)
+    assert value["failure_stage"] == "member_map_recheck"
+    assert value["failure_category"] == "input_custody_refused"
+    publish.assert_not_called()
+
+
+def test_create_only_failure_stage_preserves_existing_evidence(tmp_path, monkeypatch, capsys):
+    path = tmp_path / "public-fixture-old-evidence.json"
+    path.write_bytes(b"old public fixture evidence")
+
+    def fails(*, compare_source_hashes, progress):
+        progress.mark("public_summary_write")
+        entry._write_new(path, b"must not replace old evidence")
+
+    monkeypatch.setattr(entry, "_run_structure_audit", fails)
+    assert entry.main(["--p2-structure-stage"]) == 3
+    value = json.loads(capsys.readouterr().err)
+    assert value["failure_stage"] == "public_summary_write" and value["failure_category"] == "create_only_conflict"
+    assert path.read_bytes() == b"old public fixture evidence"
