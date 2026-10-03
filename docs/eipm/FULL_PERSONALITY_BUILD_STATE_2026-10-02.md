@@ -263,17 +263,64 @@ The complete frozen banks and publisher weights remain unchanged. N1-N3/EIPM
 conditional meaning, judgment, calibration and expression still require their
 own governed teaching, reviewed targets and consumer behavior.
 
-Magnolia job 576651 was submitted under `mxrayan` for that comparison at
+Magnolia job 576651 completed `0:0` in 2h19m29s under `mxrayan` for that comparison at
 immutable `a0c5dbc68d8fa575c99d27a0d9960635888c90e7`, after independent code
 review and Linux CI: 618 tests plus 346 subtests and all five checks passed.
 It uses one existing P2 runtime session, four CPUs, 16 GiB and an eight-hour
 maximum. All nine fixture tests passed in that actual runtime in 32.742s;
-the production consumer then started. Its actual fit outcome remains pending.
+all three production fits completed their 256 updates. Fresh original scored
+18/42 training-fit and 0/14 pseudo-unseen; anchored full scored 2/42 and 0/14;
+anchored candidate-only scored 1/42 and 0/14. Fixed semantics scored 3/42 and
+4/14 in this same 56-description pool. Every learned winner was from a training
+family. Root independently replayed all 168 scorer records, six final aggregate
+groups, fold assignments and sampled exposure (256 positives, 10,496 negatives).
+No repair is selected. This result is not an identified cause of Gemma persona
+interference or a qualification failure for every possible personality design.
 Outputs are fresh `public-semantic-fold-576651/evidence/` beneath the owner's
 run directory, with `fold-plan.json`, `fold-fit.json` and variant-specific
 checkpoints/exports. Only the externally pinned closed PUBLIC package is used;
 no new publisher forward, dependency installation or private source is needed.
-Submission is not a completed fit, repair selection or N0 approval.
+Exact fit and plan receipts are preserved in
+`evaluation/eipm/gemma_n0/receipts/public_semantic_fold_{fit,plan}_576651.json`.
+File hashes and result limitations are in the existing semantic research record.
+The actual consumer performed source rehash, optimizer replay and export checks;
+root did not repeat these tensor operations locally. N0 approval remains false.
+
+## Owner-directed recalibration
+
+The owner identified a trial-and-error drift after this run. The auxiliary
+relation-readout experiment sequence is stopped; no further compute was
+submitted. Re-reading the original role/voice contracts and Fable storyboard
+confirms the destination: durable, source-grounded conditional interpretation,
+values, judgment and expression across replaceable language and speech engines.
+The stages are build phases with evaluation inside learning, not a standing
+qualification program. A one-context-per-family benchmark is not the governing
+personality curriculum and cannot determine the entire architecture.
+
+The build must be designed from the governing roles and actual teaching data:
+
+| Component | Required learned behavior | Present gap and next concrete work |
+| --- | --- | --- |
+| Personality N0 | General meaning, pragmatics, evidence/time/role separation, uncertainty and expressive meaning, with complete frozen Gemma features. | Role-specific source/interface preparation exists. Suitability remains unproved; evaluate the representations consumed by the actual cognitive-frame and identity path. Do not make another arbitrary relation scorer the personality base or declare the unchanged checkpoint approved. |
+| N1 | Apply source-grounded concepts and conditional tendencies to the current context, retaining support, disconfirmation, provenance and residual nuance. | Alignment/provenance objectives are auxiliary. Complete the conditional teaching design and reviewed source-to-case/target materialization before implementing a learning change. |
+| N2 / EIPM | Joint contextual judgment, values, stance, relationships, emotion, co-valid alternatives, evidence sufficiency, uncertainty and expressive intent. | A multidimensional trainable scaffold exists, but no governed full training path or trained behavior is established. Map every output to legitimate source-linked supervision and the consuming behavior; preserve partial targets and valid alternatives. |
+| N3 | Calibrate actual decisions and failure tails, then owner-reviewed identity and complete spoken fidelity. | Fit/calibration mechanics do not establish fidelity. Keep calibration families separate; confidence cannot repair incorrect N1/N2 meaning or judgment. |
+| Voice and downstream consumers | Enforce the same identity decisions in words and delivery across replaceable engines. | Numeric intent controls are not speech behavior. Define and exercise the actual IDP-to-response/delivery path and its reviewed outcomes. |
+
+Private source lineage is a real unresolved dependency: 448 mandatory support
+IDs remain unclosed. A Gemma readout cannot repair that. Source facts are also
+not automatically behavioral or multi-head targets. Existing source permissions
+and uncertainty remain intact; this reset grants no source admission or inferred
+labels. Eligible public mechanism construction may proceed with honestly
+separate provenance and no claim of Elaina identity qualification.
+
+Before more training, the next work is one coherent full-role learning design
+linking source categories, complete inputs, component representations, objectives,
+training/calibration splits and actual consumers. Research must resolve a named
+missing mechanism or demonstrated failure within that design. The failed score
+residual is preserved as a negative result; it is not followed by another
+architecture variation without that reassessment. The full ALICE/Fable objective
+and practical v1 Gemma-influence constraint remain unchanged.
 
 Kaggle's existing CLI successfully listed the owner's `mkrayanyan` notebooks.
 That observes working authentication, not current GPU quota or allocation.

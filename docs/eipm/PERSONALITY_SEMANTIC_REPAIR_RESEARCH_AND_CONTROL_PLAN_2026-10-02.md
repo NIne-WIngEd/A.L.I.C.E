@@ -203,3 +203,51 @@ interference requirements remain separate from this public relation comparison.
 The expanded candidate pool uses the benchmark's single reference class; it
 does not prove that every other description is false in natural language or
 authorize single-winner identity targets.
+
+## Completed comparison 576651 and owner-directed reset
+
+Job 576651 completed `0:0` in 2h19m29s under `mxrayan`, at immutable
+`a0c5dbc68d8fa575c99d27a0d9960635888c90e7`. All three variants completed 256
+updates, with exact final-update optimizer replay, exported full-forward score
+reload and 56-row candidate permutations recorded by the actual consumer.
+The unchanged feature package and artificial source passed closing checks.
+Slurm batch MaxRSS was 5,188,192 KiB. N0 approval, repair selection, personality
+qualification, private data, publisher forward and neutrality flags remain false.
+
+| Scorer | Training-fit correct / 42 | Pseudo-unseen correct / 14 |
+| --- | --- | --- |
+| Fresh original | 18 | 0 |
+| Anchored full | 2 | 0 |
+| Anchored candidate-only | 1 | 0 |
+| Fixed semantics | 3 | 4 |
+
+Anchored full matched fixed scores before learning but failed to retain their
+pseudo-unseen correctness. All learned winners were from training families.
+Original training-fit NLL was 2.112327 and pseudo-unseen NLL 5.371212; anchored
+full was 3.936766 and 4.019917, versus fixed 4.023935 and 4.023305. Lower NLL with
+zero correct decisions is not a retained-semantic success. These observations
+do not identify a single mechanism, prove inherited persona interference or
+justify a new regularizer, projection, capacity or update-count change.
+
+Original fit bytes: 924,043; SHA-256
+`2aa493f50129d430020d4879f0d27e05b246deb7b0a9654bfff2c97c2965b7af`;
+canonical receipt `b84b5f9b91c5ad8ec9354ecc8d0851409787ba66030bbeca517d3bbc3e8ab590`.
+Original plan bytes: 14,470; SHA-256
+`ae19f902b4aec5cb0112cc42c2d38339ec6f8cf2e2088371299d80762360779e`;
+canonical receipt `d72a7531455f36640e35443dfba9ed807e262f44ed525149e76ea9c8cb72f184`.
+Byte-identical originals are in
+`evaluation/eipm/gemma_n0/receipts/public_semantic_fold_{fit,plan}_576651.json`.
+Root independently verified seals, seven exact Git implementation hashes, fold
+assignment, all 168 logits/winners/ranks/margins/NLL records, six final aggregate
+groups and 256 positive/10,496 negative sampled slots. Actual family sampling
+ranged from 2 to 12 positive updates. Source rehash, original-runtime sampler,
+optimizer and export tensor operations were not repeated locally; their actual
+consumer evidence remains separately attributed.
+
+The owner explicitly called for recalibration rather than another trial-and-error
+cycle. This auxiliary experiment sequence is stopped, with no successor job or
+selected repair. The role/data/objective/consumer reassessment is recorded in
+`FULL_PERSONALITY_BUILD_STATE_2026-10-02.md`. Public relation classification covers
+only a small part of N0 and does not teach N1-N3/EIPM's governing identity. This
+negative result must not become a reason to expand a proxy optimization program
+while conditional identity teaching and integrated expression remain missing.
