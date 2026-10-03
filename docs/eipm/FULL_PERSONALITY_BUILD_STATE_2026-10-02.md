@@ -241,16 +241,27 @@ receipts and independently verified findings. Primary research and actual
 candidate-exposure accounting precede selection of a learning repair. DEV has
 already been observed and remains exploratory, not untouched confirmation.
 
-Research-backed, precommitted candidate-only diagnostic 576648 was submitted
-under `mxrayan` at immutable `7b82149b`. Its allocated existing-runtime fixture
-compatibility stage passed all 16 stdlib tests before the actual cache consumer.
-The fresh partial-input fit preserves original descriptions, pools, initialization
-and 256-step recipe, verifies original controls and midpoint sampler state, and
-replaces variable sources with one explicitly artificial zero bank. The actual
-56-TRAIN/16-DEV controls and original midpoint were verified; the 256-step fit
-started. Results remain pending; this is a learnable-prior diagnostic, not an
-adopted personality readout
-or a winning repair. No new publisher forward or private gradient is performed.
+Research-backed, precommitted candidate-only diagnostic 576648 completed `0:0`
+under `mxrayan` at immutable `7b82149b`. Its allocated fixture compatibility
+passed 16 tests; the actual original controls, midpoint sampler state and all
+256 updates were verified. Candidate-only scored 4/56 TRAIN, 0/16 DEV and 0/14
+sentence-unseen DEV, and selected a familiar description on all 16 DEV rows.
+Root independently replayed 216 scores and 204 aggregate/strata groups. Actual
+sampled exposure was 256 positives and 7,160 negatives, with zero DEV-description
+TRAIN exposure on either side. This weak prior fit does not explain the full
+model causally or select a winning repair. Exact evidence and limits are in
+`PERSONALITY_CANDIDATE_ONLY_RESULT_576648.md`.
+
+The next researched candidate preserves the stronger fixed semantic scores at
+initialization and learns one shared score correction. A predeclared original
+TRAIN-family fold excludes 14 descriptions from both positive and negative
+training. Fresh original, anchored full and anchored candidate-only models use
+matched 42-family training pools, seeds and update indices; evaluation uses all
+56 TRAIN-family descriptions. DEV is not scored or used for fit. This remains
+developmental method selection, not independent confirmation or N0 approval.
+The complete frozen banks and publisher weights remain unchanged. N1-N3/EIPM
+conditional meaning, judgment, calibration and expression still require their
+own governed teaching, reviewed targets and consumer behavior.
 
 Kaggle's existing CLI successfully listed the owner's `mkrayanyan` notebooks.
 That observes working authentication, not current GPU quota or allocation.

@@ -1,9 +1,10 @@
-# Research before semantic-readout repair: measured failure and next control
+# Research before semantic-readout repair: measured failures and bounded candidates
 
-The next experiment diagnoses the supervision prior before choosing a learning
-repair. It does not adopt a new personality architecture, increase training,
-modify Gemma or approve N0. Full ALICE personality and full Fable v1 FBM remain
-the purpose; public relation labels cannot become Alice identity targets.
+The completed candidate-only experiment diagnoses the supervision prior. The
+next comparison tests one researched semantic repair candidate without adopting
+it as the personality architecture, modifying Gemma or approving N0. Full ALICE
+personality and full Fable v1 FBM remain the purpose; public relation labels
+cannot become Alice identity targets.
 
 ## Actual observations and competing explanations
 
@@ -141,3 +142,64 @@ only part of N0's meaning/argument-role requirement. Full voice, pragmatics,
 uncertainty/plurality, source/host/self separation, inherited interference and
 complete grounding/scale remain separately evaluated. Practical residual Gemma
 influence is accepted for v1; upstream weight modification remains retired.
+
+## Completed control and predeclared TRAIN-family repair comparison
+
+Actual 576648 completed: candidate-only TRAIN/DEV/sentence-unseen DEV were
+4/56, 0/16 and 0/14, unchanged in top-1 from its initialization. It selected
+familiar descriptions on 16/16 DEV rows. Actual matched exposure was 256
+positives and 7,160 negatives; DEV descriptions had no positive or negative
+TRAIN exposure. Root replayed all 216 scorer records and 204 aggregate/strata
+groups. See `PERSONALITY_CANDIDATE_ONLY_RESULT_576648.md` for original evidence.
+This weak partial-input fit leaves conditional geometry, optimization and
+limited source coverage unresolved. No persona interference cause is asserted.
+
+The stronger fixed path is a useful measured starting point, while its absolute
+accuracy is still weak. [Generation-Augmented Retrieval, section 3.4](https://aclanthology.org/2025.findings-emnlp.974.pdf)
+and the [authors' implementation](https://github.com/lizehan1999/RE-GAR-AD/blob/main/retrieval_adjuster.py)
+use a shared residual MLP above frozen sentence/relation embeddings. We re-read
+that method and its source before implementing this candidate. It operates on
+different embeddings and generated triplets; its objectives, reported results,
+types, hyperparameters and data are not imported. Our candidate instead adds
+the existing shared readout's correction to the deterministic fixed **scores**.
+Zero initialization of its final layer preserves fixed scores exactly before
+updates. This is an adaptation hypothesis, not a replication, a post-training
+retention guarantee or a persona-suppression result.
+
+Before any production fold fit, choose the lowest hash-ranked quarter of the
+original 56 TRAIN families using fixed seed 20261003: 14 held out, 42 admitted.
+Each training row uses all and only the 42 admitted positive descriptions as
+its candidate pool. Held-out descriptions enter neither positive nor negative
+optimization. Score all 56 original TRAIN sources against the same pool of
+all 56 original TRAIN descriptions; report the 42 training-fit and 14
+pseudo-unseen families separately. DEV contributes neither fit nor scoring.
+IDs, family assignment, exposure, target and split are metadata, never model
+features or familiarity penalties. Complete 49-state token banks remain intact.
+
+Compare three freshly seeded models: original readout, fixed-score-plus-residual
+full model, and the same anchored model with one artificial zero source.
+Keep width 64, 256 updates, AdamW rate 0.0003/decay 0.01 and initialization seed
+20261002. All three consume the same precomputed TRAIN index sequence, drawn
+with seed 20261003. A sealed plan binds the fold and sampled exposure before
+updates. This pool/sampler differs from 576600; the old full-family-trained
+export is never a held-out comparator. Cached fixed training scores are purely
+deterministic; the learned correction and exported consumer use the real
+forward. Full reload scores, candidate permutation, final optimizer update
+replay, unchanged feature bytes and closing package/code checks are recorded.
+Both midpoint and last-step checkpoints are retained; only the last update is
+replayed, so no full midpoint-continuation claim is made. Receipt/export scoring
+uses inference without gradients, following the [PyTorch 2.7 API](https://docs.pytorch.org/docs/2.7/generated/torch.no_grad.html).
+
+Nine local fixture tests cover the exact initial fixed scores, downstream-only
+updates, invalid bank refusal, candidate permutation, fold exclusion, pointer
+consistency, executing-helper hash bindings, changed artificial-source refusal
+and all three complete consumer/export/checkpoint paths. Fixture
+mechanics do not establish model quality; actual runtime compatibility precedes
+the production fit. This is one already-observed-source developmental fold with
+one source per family, not an untouched confirmation set. No numeric acceptance
+threshold or automatic architecture approval is invented. The role's full
+identity, pragmatics, judgment, uncertainty, spoken fidelity and inherited
+interference requirements remain separate from this public relation comparison.
+The expanded candidate pool uses the benchmark's single reference class; it
+does not prove that every other description is false in natural language or
+authorize single-winner identity targets.
