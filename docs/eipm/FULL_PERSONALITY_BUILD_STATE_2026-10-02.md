@@ -350,6 +350,8 @@ gold. New schema/code bindings explicitly separate it from older checkpoints.
 
 Public mechanics verify the intended parameter updates and exact resumable
 state for all three phases; 92 affected tests passed after the review fixes.
+The exact a984e142 complete Linux check passed 631 tests and 359 subtests, plus
+foundation validation; all five GitHub checks succeeded.
 No private payload was read and no new Magnolia/Kaggle/paid job was launched.
 The 448 earlier-support dependency remains unresolved. A focused owner question
 asks for an original earlier inference input/delivery location; the known
@@ -362,6 +364,27 @@ consumer behavior. N0 approval, admitted identity source, trained ALICE
 personality, full voice fidelity and learned FBM transfer remain unclaimed.
 Details and original-method applicability are recorded in the governing-target
 review and `docs/superpowers/plans/2026-10-03-connected-personality-teaching.md`.
+
+The next source construction now has a bounded implementation:
+`n1/retained_inference_source.py` opens the exact member-pinned retained reserve
+inside the existing owner USER+NET/P2 boundary, profiles actual field types and
+tests the existing exact E-INF proposal contract. Conforming IDs are derived
+from real records, never from required references. Coverage uses the existing
+active-source diagnostic against an explicitly retained candidate namespace;
+nonconforming IDs or classes leave only the protected profile and no registry
+or coverage. No original-delivery proof, historical validity, source acceptance,
+compilation, training or private-gradient permission follows from inspection.
+The protected result contains field names and IDs, with no raw source-text copy;
+the public result contains only sealed fixed counts, digests and false authority.
+
+The guarded entry retains source descriptor custody through create-only output,
+checks exact clean executing code and actual same-owner loopback-only isolation,
+and uses one existing P2 runtime without setup/install/fallback. Construction
+review exposed producer/reader Unicode serialization disagreement and omitted
+count/Unicode-ID validity in the reusable verifier. Their counterexamples failed
+before fixes. The mechanism applies the existing compiler canonicalization and
+source contract, rather than inventing new source IDs or model architecture.
+Actual retained row counts and support closure still require the allocated run.
 
 ## Independent public semantics
 

@@ -41,7 +41,7 @@ Produces: concept applicability/uncertainty and independent source support/disco
 - [x] Write and observe failing tests proving reviewed conditional targets update intended N1 parameters, unknowns carry no gradient, provider/N2/N3 remain fixed during N1 and N2 consumes conditional signals.
 - [x] Implement shared context-conditioned readouts and sparse objectives, deterministic authority masks and complete output serialization.
 - [x] Exercise materialized cases through actual admitted N1, N2 and separate N3 optimizer steps and resumable state. These are public mechanics, not personality fidelity results.
-- [ ] Review the whole change, run affected and required repository checks, capture the concrete method/gaps in existing FBM/build state and PR100.
+- [x] Review the whole change, run affected and required repository checks, capture the concrete method/gaps in existing FBM/build state and PR100.
 
 ## Review focus
 
@@ -74,6 +74,43 @@ replace the lossy probability-only average. Source/annotation pin completeness
 is enforced both at case parsing and admitted materialization.
 
 The full pre-final-fix local check was 628 pass / 354 subtests / one unchanged
-Windows symlink privilege failure. Final Linux CI will run the complete check.
+Windows symlink privilege failure. Exact a984e142 Linux CI passed 631 tests and
+359 subtests, plus foundation validation; all five GitHub checks succeeded.
 This ledger records code construction, not learned identity capability. Source
 lineage, actual reviewed curriculum and training remain substantive next work.
+
+## Task 3: Resolve retained candidate records for actual teaching
+
+Purpose: inspect the exact member-pinned retained E-INF source under the existing
+Magnolia private boundary. Establish its real JSONL structure and whether its
+actual proposal IDs satisfy the already documented raw E-INF contract. Then
+measure current support-reference coverage against that explicitly retained
+candidate namespace. This constructs the data dependency; it is not model
+evaluation, original-input authentication, source acceptance or training.
+
+Produces: protected key/type counts and observed IDs (no raw text copy), a
+sealed fixed public summary, and one immutable guarded CPU run under mxrayan.
+Dependencies: PackagePin, strict raw JSON/inventory/proposal parser, descriptor
+custody, existing raw-lineage aggregate and original-owner USER+NET/P2 guard.
+No ID aliases, inferred IDs, registry installation, permissive compilation,
+new container setup, training or original-source claim.
+
+- [x] Write failing real-ZIP tests for exact IDs/coverage, nonconforming retained
+  rows, duplicate IDs, malformed JSON, pins/inventory/ledger/code changes,
+  public output privacy and guard-before-private-path refusal.
+- [x] Implement the bounded inspection and guarded entry; check Bash syntax and
+  affected source tests; review its private boundary and exact closing pins.
+- [ ] Publish tested code, stage the exact immutable revision and submit one
+  CPU job under mxrayan. Record exact job/output paths; stop if only it remains.
+
+Review focus: arbitrary keys/IDs/errors must never reach public output; no
+private path operations before the actual guard; retained candidate existence
+must not become historical authenticity or accepted gradient authority; all
+inputs and executing code must remain pinned through output publication.
+
+Task 3 ledger: 19 new tests and the complete affected source group passed
+195 tests / 172 subtests in 12.60s after the bounded independent review fixes.
+The review's Unicode-ID, inconsistent-count and forbidden-Unicode counterexamples
+were observed RED and fixed with the original compiler/parser contracts. No
+deferred findings or declined areas. Local Bash syntax checks passed. Source
+payload has not yet been inspected; full Linux CI will cover the new revision.

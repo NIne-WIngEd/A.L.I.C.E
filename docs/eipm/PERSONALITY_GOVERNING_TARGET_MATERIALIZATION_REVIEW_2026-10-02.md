@@ -135,8 +135,9 @@ the intended new parameter updates, all N2/calibration target families, sparse
 unknowns, named-order changes, permission/split/custody refusals and exact
 checkpoint reload. The affected 92 tests passed. The pre-final-fix full local
 suite had 628 passing tests and 354 passing subtests, plus the existing Windows
-symlink privilege failure in an unchanged foundation test. Linux CI is the
-complete final-code check. These results establish construction mechanics,
+symlink privilege failure in an unchanged foundation test. Exact a984e142 Linux
+CI passed 631 tests and 359 subtests, plus foundation validation; all five checks
+succeeded. These results establish construction mechanics,
 not learned ALICE identity, speech fidelity, N0 suitability or FBM transfer.
 
 This implements the missing learning interfaces; it is not a finished trained
