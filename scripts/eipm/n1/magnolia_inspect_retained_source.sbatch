@@ -25,6 +25,15 @@ export GIT_NO_LAZY_FETCH=1 GIT_TERMINAL_PROMPT=0 GIT_CONFIG_NOSYSTEM=1 GIT_CONFI
 # Private input stays an uninterpreted string until the actual P2 guard.
 [[ "$PRIVATE_PACKAGE_PATH" == /* && "$PRIVATE_PACKAGE_PATH" != *'/../'* && "$PRIVATE_PACKAGE_PATH" != *'/./'* ]] || exit 2
 case "$PRIVATE_PACKAGE_PATH" in "$PERSONALITY_REPO_ROOT"/*) exit 2 ;; esac
+layout_arguments=()
+if [[ -n "${PERSONALITY_RETAINED_LAYOUT_PATH:-}" || -n "${PERSONALITY_RETAINED_LAYOUT_SHA256:-}" || -n "${PERSONALITY_RETAINED_PROFILE_PATH:-}" ]]; then
+  [[ "${PERSONALITY_RETAINED_LAYOUT_SHA256:-}" =~ ^[0-9a-f]{64}$ ]] || exit 2
+  for value in "${PERSONALITY_RETAINED_LAYOUT_PATH:-}" "${PERSONALITY_RETAINED_PROFILE_PATH:-}"; do
+    [[ "$value" == /* && "$value" != *'/../'* && "$value" != *'/./'* ]] || exit 2
+    case "$value" in "$PERSONALITY_REPO_ROOT"/*) exit 2 ;; esac
+  done
+  export PERSONALITY_RETAINED_LAYOUT_PATH PERSONALITY_RETAINED_LAYOUT_SHA256 PERSONALITY_RETAINED_PROFILE_PATH
+fi
 for directory in "$COMPUTE_ROOT/rayan-personality" "$COMPUTE_ROOT/rayan-personality/private-compile"; do
   if [[ -e "$directory" || -L "$directory" ]]; then
     [[ ! -L "$directory" && -d "$directory" ]] || exit 2
@@ -53,7 +62,14 @@ if bash -lc 'set -euo pipefail; module load python/3.11.5; exec python3 -I "$@"'
       set -euo pipefail
       umask 077
       [[ "$(id -u)" == "$PERSONALITY_HOST_UID" && "$(id -g)" == "$PERSONALITY_HOST_GID" ]]
+      layout_arguments=()
+      if [[ -n "${PERSONALITY_RETAINED_LAYOUT_PATH:-}" ]]; then
+        layout_arguments=(--env="PERSONALITY_RETAINED_LAYOUT_PATH=$PERSONALITY_RETAINED_LAYOUT_PATH"
+          --env="PERSONALITY_RETAINED_LAYOUT_SHA256=$PERSONALITY_RETAINED_LAYOUT_SHA256"
+          --env="PERSONALITY_RETAINED_PROFILE_PATH=$PERSONALITY_RETAINED_PROFILE_PATH")
+      fi
       exec "$UDOCKER" run \
+        "${layout_arguments[@]}" \
         --volume="$COMPUTE_ROOT:$COMPUTE_ROOT" --workdir="$PERSONALITY_REPO_ROOT" \
         --env="COMPUTE_ROOT=$COMPUTE_ROOT" --env="PERSONALITY_REPO_ROOT=$PERSONALITY_REPO_ROOT" \
         --env="PERSONALITY_EXPECTED_REVISION=$PERSONALITY_EXPECTED_REVISION" \

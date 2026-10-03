@@ -1,7 +1,7 @@
 """Retained source inspection through the existing original-owner USER+NET/P2."""
 from __future__ import annotations
 
-from contextlib import redirect_stderr, redirect_stdout
+from contextlib import ExitStack, redirect_stderr, redirect_stdout
 from hashlib import sha256
 import importlib.util
 import io
@@ -99,9 +99,28 @@ def run_inspection() -> dict:
     if code in package.parents or run in package.parents:
         raise namespace.PrivateStageError("source overlaps public code or new outputs")
     # Keep the exact open source under custody through publication, not just parsing.
-    with _PinnedFile(package, pin.archive_sha256, raw.MAX_ARCHIVE_BYTES) as source:
+    with ExitStack() as inputs:
+        source = inputs.enter_context(_PinnedFile(package, pin.archive_sha256, raw.MAX_ARCHIVE_BYTES))
+        extra_names = ("PERSONALITY_RETAINED_LAYOUT_PATH", "PERSONALITY_RETAINED_LAYOUT_SHA256", "PERSONALITY_RETAINED_PROFILE_PATH")
+        extra_inputs, kwargs = [], {}
+        if any(os.environ.get(name) for name in extra_names):
+            if not all(os.environ.get(name) for name in extra_names):
+                raise namespace.PrivateStageError("reviewed layout inputs are incomplete")
+            layout_path = namespace._bounded_path(os.environ[extra_names[0]], root, file=True)
+            profile_path = namespace._bounded_path(os.environ[extra_names[2]], root, file=True)
+            if len({package, layout_path, profile_path}) != 3 or any(
+                    code in path.parents or run in path.parents or stat.S_IMODE(path.stat().st_mode) != 0o600 or
+                    path.stat().st_uid not in (0, namespace.HOST_UID) for path in (layout_path, profile_path)):
+                raise namespace.PrivateStageError("reviewed metadata boundary differs")
+            layout_file = inputs.enter_context(_PinnedFile(layout_path, os.environ[extra_names[1]], namespace.MAX_MEMBER_MAP_BYTES))
+            layout = raw._json(layout_file.bounded_bytes())
+            if type(layout) is not dict:
+                raise namespace.PrivateStageError("reviewed layout schema differs")
+            profile_file = inputs.enter_context(_PinnedFile(profile_path, layout["profile_file_sha256"], retained.MAX_PROFILE_BYTES))
+            kwargs = {"reviewed_layout": layout, "reviewed_profile": raw._json(profile_file.bounded_bytes())}
+            extra_inputs = [layout_file, profile_file]
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
-            protected, summary = retained.inspect_retained_source(source.path, pin=pin)
+            protected, summary = retained.inspect_retained_source(source.path, pin=pin, **kwargs)
             retained.verify_result(protected, summary)
             if summary["retained_candidate_coverage"] is not None:
                 namespace._lineage_coverage(summary["retained_candidate_coverage"], protected["candidate_registry"])
@@ -112,12 +131,16 @@ def run_inspection() -> dict:
         receipt["receipt_sha256"] = sha256(namespace._canonical(receipt)).hexdigest()
         _validate_receipt(receipt, summary, payload)
         source.verify()
+        for item in extra_inputs:
+            item.verify()
         namespace._clean_code(code, revision)
         if retained.implementation_hashes() != summary["implementation_sha256"] or entry_code != {
                 "entry.py": sha256(Path(__file__).read_bytes()).hexdigest(), "namespace.py": sha256(HELPER.read_bytes()).hexdigest()}:
             raise namespace.PrivateStageError("executing code changed")
         _write_new(run / "retained-source.protected.json", payload)
         source.verify()
+        for item in extra_inputs:
+            item.verify()
         _write_new(run / "retained-source-summary.json", namespace._canonical(receipt) + b"\n")
     return receipt
 
@@ -129,9 +152,11 @@ def main(argv=None) -> int:
     try:
         receipt = run_inspection()
         # run_inspection has validated every public field; no protected result is logged.
-        print(json.dumps({"state": receipt["state"], "receipt_sha256": receipt["receipt_sha256"],
-            **{key: receipt["inspection"][key] for key in ("row_count", "observed_proposal_count", "namespace_contract", *FLAGS)}},
-            sort_keys=True))
+        public = {"state": receipt["state"], "receipt_sha256": receipt["receipt_sha256"],
+            **{key: receipt["inspection"][key] for key in ("row_count", "observed_proposal_count", "namespace_contract", *FLAGS)}}
+        if receipt["inspection"]["schema"] == "alice-personality-retained-inference-inspection-v2":
+            public["observed_envelope_identifier_count"] = receipt["inspection"]["observed_envelope_identifier_count"]
+        print(json.dumps(public, sort_keys=True))
         return 0
     except BaseException:
         print(json.dumps({"state": "FAILED_UNQUALIFIED", "failure_reason": "retained_source_refused",

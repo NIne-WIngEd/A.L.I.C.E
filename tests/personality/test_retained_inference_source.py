@@ -204,3 +204,97 @@ def test_batch_script_parses():
     result = subprocess.run([bash, "-n", str(REPO / "scripts/eipm/n1/magnolia_inspect_retained_source.sbatch")],
                              capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
+
+
+def envelope_inputs(tmp_path, *, changes=None, cr_whitespace=False):
+    rows = [dict(declared_source=f"raw.einf.{index}", envelope_key=f"pool.{index}",
+        origin="E-INF", historical=False, trainable=False,
+        original={"legacy_detail": "PRIVATE_VALUE_SENTINEL", "conditions": ["PRIVATE_VALUE_SENTINEL"]})
+        for index in (1, 2)]
+    if changes:
+        changes(rows)
+    payload = b"".join(c._canonical(row).replace(b",", b",\r") + b"\n" for row in rows) if cr_whitespace else None
+    path, pin = package(tmp_path, rows=rows, payload=payload)
+    previous, prior = retained.inspect_retained_source(path, pin=pin)
+    profile_bytes = c._canonical(previous) + b"\n"
+    layout = {"schema": "alice-personality-retained-envelope-layout-review-v1", "state": "PROPOSED_UNQUALIFIED",
+        "source_archive_sha256": pin.archive_sha256,
+        "retained_member_sha256": pin.members_sha256[pin.package_root + "/" + retained.MEMBER],
+        "profile_file_sha256": sha256(profile_bytes).hexdigest(),
+        "profile_canonical_sha256": sha256(c._canonical(previous)).hexdigest(),
+        "pointers": {"declared_source_id": ["declared_source"], "pool_id": ["envelope_key"],
+                     "provenance": ["origin"], "historical_authority": ["historical"],
+                     "training_authority": ["trainable"], "original_record": ["original"]},
+        "review_id": "public-fixture-layout-review", "selection_basis": "Actual fixture envelope declaration, no aliasing.",
+        **{key: False for key in retained.FLAGS}}
+    return path, pin, previous, layout
+
+
+def test_reviewed_envelope_preserves_declared_namespace_and_nested_structure(tmp_path):
+    path, pin, profile, layout = envelope_inputs(tmp_path)
+    protected, summary = retained.inspect_retained_source(path, pin=pin, reviewed_layout=layout, reviewed_profile=profile)
+    retained.verify_result(protected, summary)
+    assert protected["candidate_registry"] == {"EINF": ["raw.einf.1", "raw.einf.2"]}
+    assert summary["observed_proposal_count"] == 0
+    assert summary["observed_envelope_identifier_count"] == 2
+    assert summary["namespace_provenance"] == "member_pinned_retained_envelope_declaration"
+    assert summary["namespace_contract"] == "reviewed_retained_envelope_contract"
+    assert summary["retained_candidate_coverage"]["global_counts"]["reference_registry_intersection_count"] == 1
+    variants = protected["nested_schema_variants"]
+    assert len(variants) == 1 and variants[0]["count"] == 2
+    assert variants[0]["structure"]["fields"]["original"]["fields"]["legacy_detail"] == {"type": "string"}
+    assert "PRIVATE_VALUE_SENTINEL" not in json.dumps(protected)
+    assert "pool.1" not in json.dumps(protected)
+    assert "declared_source" not in json.dumps(summary)
+    assert all(summary[key] is False for key in retained.FLAGS)
+
+
+@pytest.mark.parametrize("change", [
+    lambda layout: layout.update(profile_file_sha256="0" * 64),
+    lambda layout: layout.update(profile_canonical_sha256="0" * 64),
+    lambda layout: layout.update(source_archive_sha256="0" * 64),
+    lambda layout: layout.update(retained_member_sha256="0" * 64),
+    lambda layout: layout["pointers"].update(declared_source_id=["missing"]),
+    lambda layout: layout["pointers"].update(declared_source_id=["envelope_key"]),
+    lambda layout: layout.update(training_authorized=True)])
+def test_envelope_layout_requires_exact_reviewed_source_profile_and_roles(tmp_path, change):
+    path, pin, profile, layout = envelope_inputs(tmp_path)
+    change(layout)
+    with pytest.raises(retained.RetainedSourceError):
+        retained.inspect_retained_source(path, pin=pin, reviewed_layout=layout, reviewed_profile=profile)
+
+
+@pytest.mark.parametrize("change", [
+    lambda rows: rows[0].update(historical=True),
+    lambda rows: rows[0].update(trainable=True),
+    lambda rows: rows[0].update(origin="A-SYN"),
+    lambda rows: rows[0].update(declared_source="raw.einf.1\u0080"),
+    lambda rows: rows[1].update(declared_source="raw.einf.1"),
+    lambda rows: rows[1].update(envelope_key="pool.1"),
+    lambda rows: rows[0].update(original="PRIVATE_VALUE_SENTINEL")])
+def test_envelope_records_require_declared_candidate_rights_and_unique_identifiers(tmp_path, change):
+    path, pin, profile, layout = envelope_inputs(tmp_path, changes=change)
+    with pytest.raises(retained.RetainedSourceError):
+        retained.inspect_retained_source(path, pin=pin, reviewed_layout=layout, reviewed_profile=profile)
+
+
+def test_envelope_uses_same_lf_jsonl_contract_as_prior_profile(tmp_path):
+    path, pin, profile, layout = envelope_inputs(tmp_path, cr_whitespace=True)
+    protected, summary = retained.inspect_retained_source(path, pin=pin, reviewed_layout=layout, reviewed_profile=profile)
+    assert summary["observed_envelope_identifier_count"] == 2
+    assert protected["candidate_registry"] == {"EINF": ["raw.einf.1", "raw.einf.2"]}
+
+
+def test_nested_profile_refuses_before_accumulating_over_budget_variants(tmp_path, monkeypatch):
+    path, pin, profile, layout = envelope_inputs(tmp_path,
+        changes=lambda rows: rows[1]["original"]["conditions"].append("another fixture item"))
+    real_structure = retained.structural.manifest_structure
+    visits = []
+    def observe(row):
+        visits.append(1)
+        return real_structure(row)
+    monkeypatch.setattr(retained.structural, "manifest_structure", observe)
+    monkeypatch.setattr(retained, "MAX_PROFILE_BYTES", 300)
+    with pytest.raises(retained.RetainedSourceError):
+        retained.inspect_retained_source(path, pin=pin, reviewed_layout=layout, reviewed_profile=profile)
+    assert len(visits) == 1

@@ -386,6 +386,29 @@ before fixes. The mechanism applies the existing compiler canonicalization and
 source contract, rather than inventing new source IDs or model architecture.
 Actual retained row counts and support closure still require the allocated run.
 
+Allocated inspection576666 completed0:0 in5s under mxrayan on node023 using
+immutable cbcc0f3af38c0c7b039010134dbf9d731dd32b00. The actual retained member
+contains720rows and8top-level fields. It is an envelope format; the newer raw
+proposal-ID contract does not apply. No registry or coverage was created.
+Root independently verified both file hashes, protected/public canonical seals,
+all seven executing Git file hashes, exact archive/member/package pins and
+actual same-owner loopback-only isolation. Only the fixed summary is published;
+keys, ID values and source text remain protected. The complete cbcc Linux check
+passed650tests359subtests16.88s and all five GitHub checks succeeded.
+
+The reviewed envelope route now uses a separately pinned private field layout
+bound to the exact earlier protected profile and original archive/member. It
+keeps declared source IDs distinct from pool IDs, requires stable unique IDs,
+E-INF envelope class and explicit false historical/training flags, and retains
+the full nested type-only structure for subsequent case construction. Candidate
+coverage is explicitly against envelope declarations, not independently
+authenticated original proposals. V1 receipts remain immutable and verifiable.
+Source, layout and profile descriptors remain checked through create-only
+publication. The affected212tests172subtests passed after review fixes for
+consistent JSONL parsing and incremental nested-schema resource accounting.
+The actual declared namespace still requires the next allocated construction
+run; it grants no source admission, private gradients or personality approval.
+
 ## Independent public semantics
 
 Human-annotated FewRel TRAIN/DEV is the strongest independent relation-target

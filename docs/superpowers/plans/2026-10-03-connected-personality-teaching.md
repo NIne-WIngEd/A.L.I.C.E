@@ -100,7 +100,7 @@ new container setup, training or original-source claim.
   public output privacy and guard-before-private-path refusal.
 - [x] Implement the bounded inspection and guarded entry; check Bash syntax and
   affected source tests; review its private boundary and exact closing pins.
-- [ ] Publish tested code, stage the exact immutable revision and submit one
+- [x] Publish tested code, stage the exact immutable revision and submit one
   CPU job under mxrayan. Record exact job/output paths; stop if only it remains.
 
 Review focus: arbitrary keys/IDs/errors must never reach public output; no
@@ -114,3 +114,40 @@ The review's Unicode-ID, inconsistent-count and forbidden-Unicode counterexample
 were observed RED and fixed with the original compiler/parser contracts. No
 deferred findings or declined areas. Local Bash syntax checks passed. Source
 payload has not yet been inspected; full Linux CI will cover the new revision.
+
+Actual task 3 closure: published cbcc0f3a; all five checks succeeded, full Linux
+650 tests / 359 subtests in 16.88s. Magnolia 576666 completed0:0 in5s, mxrayan,
+node023. Exact file/code/source/guard/protected-result bindings independently
+verified locally. Actual720rows/8fields, newer proposal-ID contract refused,
+no registry or coverage created. Protected schema shows retained envelopes
+around original-record objects, with separate declared source and pool IDs.
+None of those field names/IDs are published in the method record. This is a
+format finding, not a failed personality model or an architecture repair.
+
+## Task 4: Bind the retained envelope's declared namespace
+
+Use the exact protected576666 profile to review a private field-pointer layout.
+The namespace represents the envelope's explicit source-ID declaration; it
+does not authenticate original delivery or infer IDs from required references.
+Keep pool IDs separate; require real stable unique identifiers, E-INF envelope
+class and explicit false historical/training flags. Inspect the complete nested
+key/type structure in the same run so subsequent teaching construction does not
+repeat one-level probes. Copy no raw source text.
+
+- [x] Write RED tests for explicit reviewed pointers, source/pool ID separation,
+  full nested value-free structure, layout/profile/archive pin mismatch and
+  rights/class/Unicode/duplicate refusal; preserve immutable v1 verification.
+- [x] Implement the reviewed envelope route through the same guarded entry;
+  review its public/private output and exact source/layout/profile closing pins.
+- [ ] Publish/test/stage exact source and submit one guarded CPU construction
+  run under mxrayan. Record results or stop if only its result remains.
+
+Task 4 ledger: 17 additional tests observed RED before implementation/fixes;
+final affected source group212pass172subtests14.42s, foundation validation and
+diff checks passed. Review found inconsistent CR/LF record splitting and a late
+aggregate nested-schema memory bound. Both reproduced RED; the route now uses
+the existing LF-only JSONL contract and accounts for unique trees before
+retention. The actual protected layout is separately pinned and kept out of
+public Git. V1 verification still independently accepts the exact576666 receipt.
+No deferred findings or declined areas. This is source construction, not model
+evaluation or a new personality architecture.
