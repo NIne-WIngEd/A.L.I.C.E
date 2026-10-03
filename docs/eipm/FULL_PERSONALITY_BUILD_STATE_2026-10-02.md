@@ -263,6 +263,18 @@ The complete frozen banks and publisher weights remain unchanged. N1-N3/EIPM
 conditional meaning, judgment, calibration and expression still require their
 own governed teaching, reviewed targets and consumer behavior.
 
+Magnolia job 576651 was submitted under `mxrayan` for that comparison at
+immutable `a0c5dbc68d8fa575c99d27a0d9960635888c90e7`, after independent code
+review and Linux CI: 618 tests plus 346 subtests and all five checks passed.
+It uses one existing P2 runtime session, four CPUs, 16 GiB and an eight-hour
+maximum. All nine fixture tests passed in that actual runtime in 32.742s;
+the production consumer then started. Its actual fit outcome remains pending.
+Outputs are fresh `public-semantic-fold-576651/evidence/` beneath the owner's
+run directory, with `fold-plan.json`, `fold-fit.json` and variant-specific
+checkpoints/exports. Only the externally pinned closed PUBLIC package is used;
+no new publisher forward, dependency installation or private source is needed.
+Submission is not a completed fit, repair selection or N0 approval.
+
 Kaggle's existing CLI successfully listed the owner's `mkrayanyan` notebooks.
 That observes working authentication, not current GPU quota or allocation.
 Magnolia and Kaggle remain the first compute routes; paid GPUs are the last
