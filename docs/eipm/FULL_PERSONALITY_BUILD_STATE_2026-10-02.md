@@ -182,6 +182,16 @@ no aliases or arbitrary digest search are permitted. See
 `PERSONALITY_PROVENANCE_MANIFEST_INSPECTION_576640.md`. All authority flags
 remain false. The initial submission-path error is preserved separately.
 
+Comparison attempts 576645--576647 refused the declared-digest format. Completed
+format-only diagnostic 576649 matched the original reviewed metadata and found
+all 30 declarations are exact 64-digit hexadecimal strings containing uppercase
+letters, with zero empty/other values. Our lowercase-only comparison restriction
+caused the refusal. A separately versioned strict ASCII-hex-to-digest-byte
+comparison corrects that representation assumption without changing source text,
+source custody or lineage requirements. See
+`PERSONALITY_DECLARED_SOURCE_HASH_FORMAT_RESULT_576649.md`. No completed digest
+comparison, legacy namespace closure or private source admission is claimed yet.
+
 The independent data-to-role audit found that current N1 supervision is only
 source alignment and provenance. Metadata/source-graph shortcuts can satisfy
 those losses without learning conditional identity meaning. A reviewed
@@ -190,6 +200,14 @@ evidence-pointer abstention semantics, full spoken review and generator
 enforcement remain substantive work. See
 `PERSONALITY_RESEARCH_AND_LEARNING_DECISIONS_2026-10-02.md` for source-grounded
 method choices, alternatives and measured best-effort repair criteria.
+
+The further independent governing-target review identifies a concrete missing
+source-linked case document and named-pointer materializer, closed versus partial
+target comparisons, directional conditional teaching and evidence abstention.
+Singleton reviewed distributions and supplied provenance/support graphs alone
+can give nondiscriminating auxiliary success. See
+`PERSONALITY_GOVERNING_TARGET_MATERIALIZATION_REVIEW_2026-10-02.md`. No private
+gold or conditional identity competence is fabricated by that review.
 
 Public semantic experiment 576600 completed on Magnolia under `mxrayan` with
 immutable tested code `f85a9833c5f5af6b8359bd63f4391be7e4db1744`.
@@ -218,6 +236,15 @@ See `PERSONALITY_PUBLIC_FEATURE_DIAGNOSTICS_RESULT_576638.md` for exact original
 receipts and independently verified findings. Primary research and actual
 candidate-exposure accounting precede selection of a learning repair. DEV has
 already been observed and remains exploratory, not untouched confirmation.
+
+Research-backed, precommitted candidate-only diagnostic 576648 was submitted
+under `mxrayan` at immutable `7b82149b`. Its allocated existing-runtime fixture
+compatibility stage passed all 16 stdlib tests before the actual cache consumer.
+The fresh partial-input fit preserves original descriptions, pools, initialization
+and 256-step recipe, verifies original controls and midpoint sampler state, and
+replaces variable sources with one explicitly artificial zero bank. Results remain
+pending; this is a learnable-prior diagnostic, not an adopted personality readout
+or a winning repair. No new publisher forward or private gradient is performed.
 
 Kaggle's existing CLI successfully listed the owner's `mkrayanyan` notebooks.
 That observes working authentication, not current GPU quota or allocation.

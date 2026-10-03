@@ -32,6 +32,7 @@ _FAILURE_STAGES = frozenset({
     "public_dependencies", "public_pin_custody", "archive_input_admission",
     "member_map_admission", "reviewed_structure_admission", "member_map_custody",
     "member_map_schema", "manifest_discovery", "declared_hash_comparison", "declared_hash_format_diagnostic",
+    "declared_hash_bytes_comparison",
     "result_schema", "member_map_recheck", "code_commit_recheck", "implementation_recheck",
     "result_binding", "receipt_seal", "member_map_close_recheck", "protected_structure_write",
     "public_summary_write"})
@@ -158,14 +159,15 @@ def _validate_final_summary(summary: dict, initial: dict, protected_payload: byt
         raise namespace.PrivateStageError("fixed audit summary binding differs")
 
 
-def _run_structure_audit(*, compare_source_hashes: bool, progress: _Progress, diagnose_hash_formats: bool = False) -> dict:
+def _run_structure_audit(*, compare_source_hashes: bool, progress: _Progress, diagnose_hash_formats: bool = False,
+                         compare_hash_bytes: bool = False) -> dict:
     # REQUIRED FIRST OPERATION: actual namespace/identity, before private paths.
     # Recording a fixed literal stage performs no path/environment/source work.
     progress.mark("namespace_guard")
     isolation = namespace._p2_guard()
     progress.mark("mode_validation")
     if type(compare_source_hashes) is not bool or type(diagnose_hash_formats) is not bool or \
-            (compare_source_hashes and diagnose_hash_formats):
+            type(compare_hash_bytes) is not bool or sum((compare_source_hashes, diagnose_hash_formats, compare_hash_bytes)) > 1:
         raise namespace.PrivateStageError("audit mode differs")
     os.umask(0o077)
     progress.mark("compute_boundary")
@@ -208,7 +210,7 @@ def _run_structure_audit(*, compare_source_hashes: bool, progress: _Progress, di
     pin = curated_frontier_v2_pin()
     if pin.archive_sha256 != namespace.PACKAGE_SHA256:
         raise namespace.PrivateStageError("public curated frontier archive pin differs")
-    if compare_source_hashes and pin.members_sha256.get(
+    if (compare_source_hashes or compare_hash_bytes) and pin.members_sha256.get(
             pin.package_root + "/" + audit.LEGACY_RESERVE_PUBLIC_MEMBER) != audit.LEGACY_RESERVE_SHA256:
         raise namespace.PrivateStageError("public retained reserve member pin differs")
     progress.mark("archive_input_admission")
@@ -224,14 +226,15 @@ def _run_structure_audit(*, compare_source_hashes: bool, progress: _Progress, di
         raise namespace.PrivateStageError("protected map permissions or owner differs")
     map_sha = os.environ["PERSONALITY_RAW_MEMBER_MAP_SHA256"]
     reviewed_structure = None
-    if compare_source_hashes or diagnose_hash_formats:
+    if compare_source_hashes or diagnose_hash_formats or compare_hash_bytes:
         progress.mark("reviewed_structure_admission")
         reviewed_structure = namespace._bounded_path(os.environ["PERSONALITY_REVIEWED_STRUCTURE_PATH"], root, file=True)
         if reviewed_structure in sources or code in reviewed_structure.parents or run in reviewed_structure.parents or \
                 stat.S_IMODE(reviewed_structure.stat().st_mode) != 0o600 or \
                 reviewed_structure.stat().st_uid not in (0, namespace.HOST_UID):
             raise namespace.PrivateStageError("reviewed protected structure location or permissions differs")
-    summary_path = run / ("declared-source-hash-format-diagnostic.json" if diagnose_hash_formats else
+    summary_path = run / ("declared-source-hash-bytes-comparison.json" if compare_hash_bytes else
+                          "declared-source-hash-format-diagnostic.json" if diagnose_hash_formats else
                           "declared-source-hash-comparison.json" if compare_source_hashes else "manifest-structure-summary.json")
     structure_path = run / "manifest-structure.protected.json"
     progress.mark("member_map_custody")
@@ -241,7 +244,17 @@ def _run_structure_audit(*, compare_source_hashes: bool, progress: _Progress, di
         member_map = namespace._raw_member_map(raw._json(payload))
         # Capturing output prevents any arbitrary metadata/error text reaching logs.
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
-            if diagnose_hash_formats:
+            if compare_hash_bytes:
+                progress.mark("declared_hash_bytes_comparison")
+                summary = audit.compare_declared_source_hash_bytes(package, curated_pin=pin,
+                    raw_archive_path=raw_source, expected_raw_archive_sha256=namespace.RAW_SOURCE_SHA256,
+                    raw_member_map=member_map, reviewed_structure_path=reviewed_structure,
+                    expected_reviewed_structure_file_sha256=audit.REVIEWED_STRUCTURE_FILE_SHA256,
+                    expected_curated_manifest_sha256=audit.REVIEWED_CURATED_MANIFEST_SHA256,
+                    expected_raw_generation_manifest_sha256=audit.REVIEWED_RAW_MANIFEST_SHA256)
+                progress.mark("result_schema")
+                audit.verify_bytes_comparison_result(summary)
+            elif diagnose_hash_formats:
                 progress.mark("declared_hash_format_diagnostic")
                 summary = audit.diagnose_declared_source_hash_formats(package, curated_pin=pin,
                     raw_archive_path=raw_source, expected_raw_archive_sha256=namespace.RAW_SOURCE_SHA256,
@@ -279,7 +292,7 @@ def _run_structure_audit(*, compare_source_hashes: bool, progress: _Progress, di
             raise namespace.PrivateStageError("audit implementation changed")
         # No files are created until every source/map/code recheck succeeds.
         progress.mark("result_binding")
-        structure_payload = None if compare_source_hashes or diagnose_hash_formats else raw._canonical(protected)
+        structure_payload = None if compare_source_hashes or diagnose_hash_formats or compare_hash_bytes else raw._canonical(protected)
         if structure_payload is not None and sha256(structure_payload).hexdigest() != summary["protected_structure_sha256"]:
             raise namespace.PrivateStageError("protected structure binding differs")
         initial_summary = dict(summary)
@@ -299,10 +312,14 @@ def _run_structure_audit(*, compare_source_hashes: bool, progress: _Progress, di
     return summary
 
 
-def run_structure_audit(*, compare_source_hashes: bool = False, diagnose_hash_formats: bool = False) -> dict:
+def run_structure_audit(*, compare_source_hashes: bool = False, diagnose_hash_formats: bool = False,
+                        compare_hash_bytes: bool = False) -> dict:
     """Run unchanged custody checks; failures retain only fixed stage/category."""
     progress = _Progress()
     try:
+        if compare_hash_bytes or type(compare_hash_bytes) is not bool:
+            return _run_structure_audit(compare_source_hashes=compare_source_hashes,
+                diagnose_hash_formats=diagnose_hash_formats, compare_hash_bytes=compare_hash_bytes, progress=progress)
         if diagnose_hash_formats or type(diagnose_hash_formats) is not bool:
             return _run_structure_audit(compare_source_hashes=compare_source_hashes,
                                         diagnose_hash_formats=diagnose_hash_formats, progress=progress)
@@ -315,11 +332,13 @@ def main(argv: list[str] | None = None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
     comparison = args == ["--p2-source-hash-comparison-stage"]
     formats = args == ["--p2-source-hash-format-stage"]
-    if args != ["--p2-structure-stage"] and not comparison and not formats:
-        print("usage: guarded manifest audit --p2-structure-stage | --p2-source-hash-comparison-stage | --p2-source-hash-format-stage", file=sys.stderr)
+    byte_comparison = args == ["--p2-source-hash-bytes-comparison-stage"]
+    if args != ["--p2-structure-stage"] and not comparison and not formats and not byte_comparison:
+        print("usage: guarded manifest audit --p2-structure-stage | --p2-source-hash-comparison-stage | --p2-source-hash-format-stage | --p2-source-hash-bytes-comparison-stage", file=sys.stderr)
         return 2
     try:
-        summary = run_structure_audit(diagnose_hash_formats=True) if formats else \
+        summary = run_structure_audit(compare_hash_bytes=True) if byte_comparison else \
+                  run_structure_audit(diagnose_hash_formats=True) if formats else \
                   run_structure_audit(compare_source_hashes=True) if comparison else run_structure_audit()
         public = ("schema", "state", "receipt_sha256", "curated_manifest_sha256", "raw_generation_manifest_sha256", "link_compared",
                   "acceptance_authority", "private_gradient_authorized", "historical_authority_granted",
@@ -329,7 +348,10 @@ def main(argv: list[str] | None = None) -> int:
                     "original_source_independently_verified", "legacy_namespace_proven", "source_admission")
                    if formats else ("declared_source_hash_count", "reserve_digest_match_count", "generator_declares_matching_digest",
                     "original_source_independently_verified", "legacy_namespace_proven", "source_admission")
-                   if comparison else ("protected_structure_file_sha256",))
+                   if comparison or byte_comparison else ("protected_structure_file_sha256",))
+        if byte_comparison:
+            public += ("comparison_representation", "encoding_policy_sha256", "decoded_digest_byte_count",
+                       "digest_text_normalization_performed", "source_text_mutated")
         print(json.dumps({key: summary[key] for key in public}, sort_keys=True))
         return 0
     except BaseException as exc:

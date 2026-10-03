@@ -28,6 +28,7 @@ ENTRY = REPO / "scripts/eipm/n1/audit_provenance_manifest_structure.py"
 SBATCH = REPO / "scripts/eipm/n1/magnolia_audit_provenance_manifests.sbatch"
 COMPARISON_SBATCH = REPO / "scripts/eipm/n1/magnolia_compare_declared_source_hashes.sbatch"
 FORMAT_SBATCH = REPO / "scripts/eipm/n1/magnolia_diagnose_declared_source_hash_formats.sbatch"
+BYTES_SBATCH = REPO / "scripts/eipm/n1/magnolia_compare_declared_source_hash_bytes.sbatch"
 SPEC = importlib.util.spec_from_file_location("manifest_structure_entry_fixture", ENTRY)
 entry = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(entry)
@@ -811,4 +812,158 @@ def test_format_mode_has_separate_fresh_one_stage_launcher_and_fixed_public_fiel
     bash = str(Path("C:/Program Files/Git/bin/bash.exe")) if Path("C:/Program Files/Git/bin/bash.exe").is_file() else shutil.which("bash")
     if bash:
         checked = subprocess.run([bash, "-n", str(FORMAT_SBATCH)], capture_output=True, text=True)
+        assert checked.returncode == 0, checked.stderr
+
+
+@pytest.mark.parametrize("case", ["lower", "upper", "mixed"])
+@pytest.mark.parametrize("matches", [0, 2])
+def test_v2_exact_digest_bytes_equivalence_does_not_mutate_source_or_v1(tmp_path, monkeypatch, case, matches):
+    def change(value):
+        for key, text in tuple(value["source_hashes"].items()):
+            value["source_hashes"][key] = text if case == "lower" else text.upper() if case == "upper" else \
+                "".join(char.upper() if index % 2 else char for index, char in enumerate(text))
+    inputs = fixture_comparison(tmp_path, matches=matches, manifest_change=change)
+    before = {key: inputs[key].read_bytes() for key in ("curated_archive_path", "raw_archive_path", "reviewed_structure_path")}
+    opened, read_member = [], raw._read_member
+    def observed(archive, member, limit):
+        opened.append(member.filename)
+        return read_member(archive, member, limit)
+    monkeypatch.setattr(raw, "_read_member", observed)
+    result = audit.compare_declared_source_hash_bytes(**inputs)
+    assert result["schema"] == audit.COMPARISON_BYTES_SCHEMA and result["state"] == audit.COMPARISON_BYTES_STATE
+    assert result["reserve_digest_match_count"] == matches and result["generator_declares_matching_digest"] is (matches > 0)
+    assert result["comparison_representation"] == "decoded_32_byte_sha256_from_exact_64_ascii_hex"
+    assert result["encoding_policy_sha256"] == audit.COMPARISON_BYTES_POLICY_SHA256
+    assert result["decoded_digest_byte_count"] == 32 and result["declared_source_hash_count"] == 30
+    assert all(result[key] is False for key in (*audit._FLAGS, "source_admission", "original_source_independently_verified",
+        "legacy_namespace_proven", "digest_text_normalization_performed", "source_text_mutated"))
+    assert len(opened) == 4 and not any(name.endswith(".jsonl") for name in opened)
+    serialized = raw._canonical(result)
+    assert b"PUBLIC_FIXTURE_LABEL" not in serialized and b"PUBLIC_PACKAGE_VALUE" not in serialized
+    for key, payload in before.items():
+        assert inputs[key].read_bytes() == payload
+    audit.verify_bytes_comparison_result(result)
+    if case == "lower":
+        v1 = audit.compare_declared_source_hashes(**inputs)
+        assert v1["schema"] == audit.COMPARISON_SCHEMA and v1["reserve_digest_match_count"] == matches
+        assert "comparison_representation" not in v1
+    else:
+        with pytest.raises(audit.ManifestStructureAuditError, match="^audit_declared_digest_format_refused$"):
+            audit.compare_declared_source_hashes(**inputs)
+
+
+@pytest.mark.parametrize("invalid", [
+    " " + "a" * 64, "a" * 64 + " ", "a" * 64 + "\n", "a" * 31 + "\t" + "a" * 32,
+    "a" * 63, "a" * 65, "g" * 64, "Ａ" * 64, "é" + "a" * 63, "a" * 63 + "\x00", "", True,
+])
+def test_v2_all30_exact_ascii_formats_validate_before_any_decoder_or_equality(tmp_path, monkeypatch, invalid):
+    inputs = fixture_comparison(tmp_path, matches=1, manifest_change=lambda value:
+        value["source_hashes"].__setitem__("PUBLIC_FIXTURE_LABEL_29", invalid))
+    decoder = Mock(side_effect=AssertionError("invalid map must refuse before decoding"))
+    monkeypatch.setattr(audit.binascii, "unhexlify", decoder)
+    with pytest.raises(audit.ManifestStructureAuditError, match="^audit_declared_digest_format_refused$"):
+        audit.compare_declared_source_hash_bytes(**inputs)
+    decoder.assert_not_called()
+
+
+@pytest.mark.parametrize("target", ["curated_archive_path", "raw_archive_path", "reviewed_structure_path"])
+def test_v2_source_and_reviewed_descriptors_rechecked_after_byte_comparison(tmp_path, monkeypatch, target):
+    inputs = fixture_comparison(tmp_path, matches=1)
+    original = audit._declared_byte_matches
+    def mutate(value):
+        count = original(value)
+        with inputs[target].open("ab") as stream:
+            stream.write(b"PUBLIC_FIXTURE_MUTATION_AFTER_BYTE_COMPARISON")
+        return count
+    monkeypatch.setattr(audit, "_declared_byte_matches", mutate)
+    with pytest.raises(audit.ManifestStructureAuditError, match="^audit_custody_refused$"):
+        audit.compare_declared_source_hash_bytes(**inputs)
+
+
+@pytest.mark.parametrize("case, reason", [
+    ("reviewed_file_pin", "audit_custody_refused"), ("reviewed_false_zero", "audit_reviewed_structure_refused"),
+    ("curated_manifest_pin", "audit_reviewed_manifest_pins_refused"),
+    ("raw_manifest_pin", "audit_reviewed_manifest_pins_refused"),
+])
+def test_v2_review_custody_and_exact_canonical_structure_precede_digest_decoding(tmp_path, monkeypatch, case, reason):
+    inputs = fixture_comparison(tmp_path, matches=1)
+    if case == "reviewed_file_pin":
+        inputs["expected_reviewed_structure_file_sha256"] = "0" * 64
+    elif case == "reviewed_false_zero":
+        path = inputs["reviewed_structure_path"]
+        reviewed = json.loads(path.read_bytes())
+        reviewed["link_compared"] = 0
+        path.write_bytes(raw._canonical(reviewed) + b"\n")
+        inputs["expected_reviewed_structure_file_sha256"] = digest(path.read_bytes())
+    else:
+        key = "expected_curated_manifest_sha256" if case == "curated_manifest_pin" else "expected_raw_generation_manifest_sha256"
+        inputs[key] = "0" * 64
+    matcher = Mock(side_effect=AssertionError("byte comparison must follow complete reviewed custody"))
+    monkeypatch.setattr(audit, "_declared_byte_matches", matcher)
+    with pytest.raises(audit.ManifestStructureAuditError, match=f"^{reason}$"):
+        audit.compare_declared_source_hash_bytes(**inputs)
+    matcher.assert_not_called()
+
+
+def test_v2_implementation_recheck_refuses_change_after_byte_comparison(tmp_path, monkeypatch):
+    inputs = fixture_comparison(tmp_path)
+    original = audit._declared_byte_matches
+    changed = dict(audit.implementation_hashes(), **{"compiler.py": "0" * 64})
+    def mutate(value):
+        count = original(value)
+        monkeypatch.setattr(audit, "implementation_hashes", Mock(return_value=changed))
+        return count
+    monkeypatch.setattr(audit, "_declared_byte_matches", mutate)
+    with pytest.raises(audit.ManifestStructureAuditError, match="^audit_code_changed$"):
+        audit.compare_declared_source_hash_bytes(**inputs)
+
+
+@pytest.mark.parametrize("change", [
+    {"encoding_policy_sha256": "0" * 64}, {"comparison_representation": "casefolded_text"},
+    {"schema": audit.COMPARISON_SCHEMA}, {"decoded_digest_byte_count": True}, {"decoded_digest_byte_count": 31},
+    {"digest_text_normalization_performed": True}, {"source_text_mutated": True},
+    {"source_admission": True}, {"original_source_independently_verified": True}, {"PRIVATE_FIXTURE_LABEL": "forbidden"},
+])
+def test_v2_result_binds_exact_encoding_policy_and_retains_false_authority(tmp_path, change):
+    result = audit.compare_declared_source_hash_bytes(**fixture_comparison(tmp_path))
+    with pytest.raises(audit.ManifestStructureAuditError, match="^audit_metadata_refused$"):
+        audit.verify_bytes_comparison_result(dict(result, **change))
+
+
+def test_v2_guard_first_and_separate_explicit_cli_safe_output(tmp_path, monkeypatch, capsys):
+    guard = Mock(side_effect=entry.namespace.PrivateStageError("PRIVATE_FIXTURE_BYTES_PATH"))
+    bounded = Mock()
+    monkeypatch.setattr(entry.namespace, "_p2_guard", guard)
+    monkeypatch.setattr(entry.namespace, "_bounded_path", bounded)
+    assert entry.main(["--p2-source-hash-bytes-comparison-stage"]) == 3
+    failure = json.loads(capsys.readouterr().err)
+    assert failure["failure_stage"] == "namespace_guard" and failure["source_admission"] is False
+    bounded.assert_not_called()
+    result = audit.compare_declared_source_hash_bytes(**fixture_comparison(tmp_path))
+    run = Mock(return_value=dict(result, receipt_sha256="1" * 64))
+    monkeypatch.setattr(entry, "run_structure_audit", run)
+    assert entry.main(["--p2-source-hash-bytes-comparison-stage"]) == 0
+    output = capsys.readouterr()
+    public = json.loads(output.out)
+    assert public["comparison_representation"] == audit.COMPARISON_BYTES_REPRESENTATION
+    assert public["encoding_policy_sha256"] == audit.COMPARISON_BYTES_POLICY_SHA256
+    assert public["original_source_independently_verified"] is False and public["legacy_namespace_proven"] is False
+    assert "PRIVATE" not in output.out + output.err and "PUBLIC_FIXTURE_LABEL" not in output.out
+    run.assert_called_once_with(compare_hash_bytes=True)
+
+
+def test_v2_fresh_existing_single_p2_stage_without_private_path_work_before_guard():
+    text = BYTES_SBATCH.read_text()
+    assert "rayan-source-hash-bytes-comparison-${SLURM_JOB_ID}" in text
+    assert "#SBATCH --mem=4G" in text and "#SBATCH --cpus-per-task=1" in text and "#SBATCH --time=00:15:00" in text
+    assert text.count('exec "$UDOCKER" run') == 1 and "rayan-n0-base" in text
+    assert '"$NAMESPACE_HELPER" -- /bin/bash' in text and 'exec python -I "$1" --p2-source-hash-bytes-comparison-stage' in text
+    prefix = text.split('"$NAMESPACE_HELPER" -- /bin/bash')[0]
+    for field in ("PRIVATE_PACKAGE_PATH", "PERSONALITY_RAW_SOURCE_PATH", "PERSONALITY_RAW_MEMBER_MAP_PATH", "PERSONALITY_REVIEWED_STRUCTURE_PATH"):
+        assert f'realpath -e "${field}"' not in prefix and f'stat -c %U "${field}"' not in prefix
+    for forbidden in ("pip install", "udocker setup", "compile_package", "derive_raw_inference_registry"):
+        assert forbidden not in text
+    bash = str(Path("C:/Program Files/Git/bin/bash.exe")) if Path("C:/Program Files/Git/bin/bash.exe").is_file() else shutil.which("bash")
+    if bash:
+        checked = subprocess.run([bash, "-n", str(BYTES_SBATCH)], capture_output=True, text=True)
         assert checked.returncode == 0, checked.stderr

@@ -15,6 +15,7 @@ authenticity. Bounds are parser/resource limits.
 """
 from __future__ import annotations
 
+import binascii
 from contextlib import ExitStack
 from hashlib import sha256
 import os
@@ -38,6 +39,16 @@ MAX_STRUCTURE_KEY_BYTES = 1024 * 1024
 MAX_STRUCTURE_BYTES = 4 * 1024 * 1024
 COMPARISON_SCHEMA = "alice-personality-declared-source-hash-comparison-v1"
 COMPARISON_STATE = "DECLARED_SOURCE_HASHES_COMPARED_UNQUALIFIED"
+COMPARISON_BYTES_SCHEMA = "alice-personality-declared-source-hash-comparison-v2"
+COMPARISON_BYTES_STATE = "DECLARED_SOURCE_HASH_BYTES_COMPARED_UNQUALIFIED"
+COMPARISON_BYTES_REPRESENTATION = "decoded_32_byte_sha256_from_exact_64_ascii_hex"
+COMPARISON_BYTES_POLICY_SHA256 = sha256(raw._canonical({
+    "schema": "alice-personality-declared-sha256-encoding-policy-v1",
+    "source_field": "source_hashes", "entry_count": 30, "value_type": "exact_str",
+    "pattern": "[0-9a-fA-F]{64}", "decoder": "binascii.unhexlify", "decoded_byte_count": 32,
+    "comparison_representation": COMPARISON_BYTES_REPRESENTATION,
+    "text_normalization": False, "whitespace_permitted": False,
+    "target": "externally_pinned_legacy_reserve_member_sha256"})).hexdigest()
 FORMAT_SCHEMA = "alice-personality-declared-source-hash-format-diagnostic-v1"
 FORMAT_STATE = "DECLARED_SOURCE_HASH_FORMAT_DIAGNOSED_UNQUALIFIED"
 LEGACY_RESERVE_SHA256 = "83901fc75ff25c1dda6188ad3b1fab65faf8f833df74b8c5c9e85fc6ea755327"
@@ -618,4 +629,106 @@ def diagnose_declared_source_hash_formats(curated_archive_path: str | Path, *,
     except (raw.RawInferenceLineageError, OSError, ValueError, UnicodeError, TypeError, RuntimeError, KeyError,
             EOFError, NotImplementedError, RecursionError, zlib.error, lzma.LZMAError,
             zipfile.BadZipFile, zipfile.LargeZipFile):
+        raise ManifestStructureAuditError("audit_refused") from None
+
+
+def _declared_byte_matches(manifest: dict) -> int:
+    """Compare exact decoded SHA256 bytes; leave every source string unchanged.
+
+    Python3.11 binascii.unhexlify accepts upper/lower ASCII hex. This policy
+    accepts only exactly64 ASCII hex characters, unlike whitespace-liberal
+    bytes.fromhex. Every declaration validates before decoding or matching.
+    """
+    values = manifest.get("source_hashes")
+    if type(values) is not dict or len(values) != DECLARED_SOURCE_HASH_COUNT or \
+            type(manifest.get("source_package")) is not str:
+        _fail("audit_declared_map_shape_refused")
+    if any(type(value) is not str or re.fullmatch(r"[0-9a-fA-F]{64}", value) is None
+           for value in values.values()):
+        _fail("audit_declared_digest_format_refused")
+    decoded = tuple(binascii.unhexlify(value) for value in values.values())
+    target = binascii.unhexlify(LEGACY_RESERVE_SHA256)
+    if any(type(value) is not bytes or len(value) != 32 for value in (*decoded, target)):
+        _fail("audit_declared_digest_format_refused")
+    return sum(value == target for value in decoded)
+
+
+def verify_bytes_comparison_result(value: dict) -> None:
+    """V2 representation/policy are explicit; original V1 schema stays intact."""
+    extra = {"comparison_representation", "encoding_policy_sha256", "digest_text_normalization_performed",
+             "source_text_mutated", "decoded_digest_byte_count"}
+    if type(value) is not dict or value.get("schema") != COMPARISON_BYTES_SCHEMA \
+            or value.get("state") != COMPARISON_BYTES_STATE \
+            or value.get("comparison_representation") != COMPARISON_BYTES_REPRESENTATION \
+            or value.get("encoding_policy_sha256") != COMPARISON_BYTES_POLICY_SHA256 \
+            or value.get("digest_text_normalization_performed") is not False \
+            or value.get("source_text_mutated") is not False \
+            or type(value.get("decoded_digest_byte_count")) is not int or value["decoded_digest_byte_count"] != 32 \
+            or not extra <= value.keys():
+        _fail("audit_metadata_refused")
+    # Reuse unchanged fixed V1 fields/counts/authority checks on a new mapping.
+    projected = {key: item for key, item in value.items() if key not in extra}
+    projected.update(schema=COMPARISON_SCHEMA, state=COMPARISON_STATE)
+    verify_comparison_result(projected)
+
+
+def compare_declared_source_hash_bytes(curated_archive_path: str | Path, *,
+        curated_pin: compiler.PackagePin, raw_archive_path: str | Path,
+        expected_raw_archive_sha256: str, raw_member_map: dict,
+        reviewed_structure_path: str | Path, expected_reviewed_structure_file_sha256: str,
+        expected_curated_manifest_sha256: str, expected_raw_generation_manifest_sha256: str) -> dict:
+    """V2 exact hex-decoded declaration equality; never original authenticity.
+
+    Caller isolation and original review/source/code custody remain mandatory.
+    No source text, labels, paths or record IDs are transformed. A match means
+    the pinned generator declared identical digest bytes, not proven input
+    authenticity, legacy namespace, reference acceptance or training authority.
+    The original V1 API keeps its lowercase-literal behavior and old schema.
+    """
+    try:
+        curated_digest = raw._digest(expected_curated_manifest_sha256)
+        raw_digest = raw._digest(expected_raw_generation_manifest_sha256)
+        with _PinnedFile(reviewed_structure_path, expected_reviewed_structure_file_sha256,
+                         MAX_STRUCTURE_BYTES + 1) as reviewed_file:
+            reviewed_bytes = reviewed_file.bounded_bytes()
+            reviewed = raw._json(reviewed_bytes)
+            matches = None
+
+            def compare(protected, manifest):
+                nonlocal matches
+                if reviewed_bytes != raw._canonical(reviewed) + b"\n" or raw._canonical(protected) != raw._canonical(reviewed):
+                    _fail("audit_reviewed_structure_refused")
+                if protected["curated"]["manifest_sha256"] != curated_digest or protected["raw"]["manifest_sha256"] != raw_digest:
+                    _fail("audit_reviewed_manifest_pins_refused")
+                matches = _declared_byte_matches(manifest)
+
+            _, discovered = _inspect_manifests(curated_archive_path, curated_pin=curated_pin,
+                raw_archive_path=raw_archive_path, expected_raw_archive_sha256=expected_raw_archive_sha256,
+                raw_member_map=raw_member_map, observer=compare)
+            reviewed_file.verify()
+            if implementation_hashes() != discovered["implementation_sha256"]:
+                _fail("audit_code_changed")
+        digest_keys = ("curated_archive_sha256", "raw_archive_sha256", "curated_manifest_sha256",
+                      "raw_generation_manifest_sha256", "curated_checksum_ledger_sha256", "raw_checksum_ledger_sha256",
+                      "protected_structure_sha256")
+        result = {"schema": COMPARISON_BYTES_SCHEMA, "state": COMPARISON_BYTES_STATE,
+            **{key: discovered[key] for key in digest_keys},
+            "reviewed_structure_file_sha256": raw._digest(expected_reviewed_structure_file_sha256),
+            "legacy_reserve_member_sha256": LEGACY_RESERVE_SHA256,
+            "comparison_basis": "reviewed_generation_source_hash_map", "declared_source_hash_count": DECLARED_SOURCE_HASH_COUNT,
+            "reserve_digest_match_count": matches, "generator_declares_matching_digest": matches > 0,
+            "comparison_representation": COMPARISON_BYTES_REPRESENTATION, "encoding_policy_sha256": COMPARISON_BYTES_POLICY_SHA256,
+            "decoded_digest_byte_count": 32, "digest_text_normalization_performed": False, "source_text_mutated": False,
+            "link_compared": True, "reviewed_structure_matched": True, "reviewed_manifest_pins_matched": True,
+            "original_source_independently_verified": False, "legacy_namespace_proven": False, "source_admission": False,
+            "digest_search_performed": False, "reference_registry_written": False, "model_training_performed": False,
+            "opened_json_manifest_count": 2, "opened_checksum_ledger_count": 2, "opened_identity_payload_member_count": 0,
+            "implementation_sha256": discovered["implementation_sha256"], **{key: False for key in _FLAGS}}
+        verify_bytes_comparison_result(result)
+        return result
+    except ManifestStructureAuditError:
+        raise
+    except (raw.RawInferenceLineageError, OSError, ValueError, UnicodeError, TypeError, RuntimeError, KeyError,
+            EOFError, NotImplementedError, RecursionError, zlib.error, lzma.LZMAError,
+            zipfile.BadZipFile, zipfile.LargeZipFile, binascii.Error):
         raise ManifestStructureAuditError("audit_refused") from None
