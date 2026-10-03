@@ -330,6 +330,39 @@ features to Kaggle requires a closed source-verification receipt, exact portable
 inventory and a separate consumer; the original Magnolia plan is not resealed
 or silently rebound to new paths. No Kaggle job or paid GPU has been submitted.
 
+## Connected learning construction, 3 October
+
+The owner directed completing the connected build before judging full
+personality capability. The relation-readout sequence remains stopped.
+`ReviewedTeachingCase` and `materialize_case` now connect exact separately
+reviewed named facts, complete target-free inputs, actual closed feature
+production and source-connected split allocation to the existing admitted
+N1/N2/N3 trainer. Source/compiler/preparation and annotation/protocol/review pins
+are coupled to actual admission, not merely copied into a self-sealed receipt.
+
+N1 has actual conditional applicability/uncertainty and independent source
+support/disconfirmation objectives. N2 learns source-specific conditional
+message consumption alongside full tokens, rich concepts and existing multi-head
+judgment/voice outputs. N3 remains separate. Partial comparisons, co-validity,
+missing observations, authority and uncertainty remain explicit. This is an
+implemented learning path, not training against compiler confidence or inferred
+gold. New schema/code bindings explicitly separate it from older checkpoints.
+
+Public mechanics verify the intended parameter updates and exact resumable
+state for all three phases; 92 affected tests passed after the review fixes.
+No private payload was read and no new Magnolia/Kaggle/paid job was launched.
+The 448 earlier-support dependency remains unresolved. A focused owner question
+asks for an original earlier inference input/delivery location; the known
+retained reserve remains a transparently bounded candidate source alternative,
+with its actual record schema and lineage still to be reviewed in isolation.
+
+Next construction is real source-linked teaching cases and the connected
+training curriculum, then integrated full-role evaluation and word/delivery
+consumer behavior. N0 approval, admitted identity source, trained ALICE
+personality, full voice fidelity and learned FBM transfer remain unclaimed.
+Details and original-method applicability are recorded in the governing-target
+review and `docs/superpowers/plans/2026-10-03-connected-personality-teaching.md`.
+
 ## Independent public semantics
 
 Human-annotated FewRel TRAIN/DEV is the strongest independent relation-target

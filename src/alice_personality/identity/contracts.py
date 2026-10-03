@@ -15,7 +15,7 @@ import torch
 from torch import Tensor
 
 FRAME_SCHEMA = "alice-personality-identity-tensor-frame-v1"
-PACKET_SCHEMA = "alice-personality-identity-tensor-packet-v1"
+PACKET_SCHEMA = "alice-personality-identity-tensor-packet-v2"
 SYNTHETIC_KINDS = ("ASYN_DIRECT", "ASYN_BASE", "ASYN_TARGETED", "ASYN_CONTEXT")
 SOURCE_KINDS = ("E0", "EINF", *SYNTHETIC_KINDS, "UNKNOWN", "HOST", "RELATIONSHIP", "AEXP", "ASELF")
 CONCEPT_VIEWS = ("identity", "host", "relationship", "self", "context")
@@ -337,6 +337,14 @@ class IdentityRepresentation:
     concept_source_logits: Tensor
     concept_source_probabilities: Tensor
     concept_source_mask: Tensor
+    concept_applicability_logits: Tensor
+    concept_applicability: Tensor
+    concept_uncertainty_logits: Tensor
+    concept_uncertainty: Tensor
+    concept_source_support_logits: Tensor
+    concept_source_support: Tensor
+    concept_source_disconfirmation_logits: Tensor
+    concept_source_disconfirmation: Tensor
 
 
 def calibration_candidate_mask(name: str, mask: Tensor) -> Tensor:
@@ -476,6 +484,24 @@ class IdentityDecisionPacket:
 
     def validate(self) -> None:
         """Validate the implemented tensor packet before it leaves the core."""
+        representation = self.representation
+        for name in ('concept_applicability_logits', 'concept_applicability',
+                     'concept_uncertainty_logits', 'concept_uncertainty'):
+            if tuple(getattr(representation, name).shape) != tuple(representation.concept_mask.shape):
+                raise IdentityError('conditional concept output geometry differs from concepts')
+        for name in ('concept_source_support_logits', 'concept_source_support',
+                     'concept_source_disconfirmation_logits', 'concept_source_disconfirmation'):
+            if tuple(getattr(representation, name).shape) != tuple(representation.concept_source_mask.shape):
+                raise IdentityError('conditional source relation geometry differs from authority')
+        for name, mask in (('concept_applicability', representation.concept_mask),
+                           ('concept_source_support', representation.concept_source_mask),
+                           ('concept_source_disconfirmation', representation.concept_source_mask)):
+            value = getattr(representation, name)
+            if bool(((value < 0) | (value > 1) | ((value != 0) & ~mask)).any()):
+                raise IdentityError('conditional scores cannot grant concept/source authority')
+        if bool(((representation.concept_uncertainty < 0) | (representation.concept_uncertainty > 1)
+                 | ((representation.concept_uncertainty != 1) & ~representation.concept_mask)).any()):
+            raise IdentityError('unavailable concepts cannot claim conditional certainty')
         shape = tuple(self.candidate_mask.shape)
         _bool_tensor(self.candidate_mask, shape, "packet candidate mask")
         if len(shape) != 2 or set(self.heads) != set(HEAD_FAMILIES):

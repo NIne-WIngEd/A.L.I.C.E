@@ -64,7 +64,8 @@ class IdentityObjectives(nn.Module):
         scalar_names = {"co_valid_probabilities", "evidence_sufficiency", "uncertainty", "contraindications",
                         "failure_tail_risk", "owner_fidelity_uncertainty"}
         if batch.phase == "n1":
-            supported = {"concept_source_alignment", "provenance"}
+            supported = {"concept_source_alignment", "provenance", "concept_applicability", "concept_uncertainty",
+                         "concept_source_support", "concept_source_disconfirmation"}
         elif batch.phase == "calibration":
             supported = CALIBRATION_FAMILIES
         else:
@@ -84,6 +85,10 @@ class IdentityObjectives(nn.Module):
                 representation = packet.representation
                 result = _distribution(representation.concept_source_logits, target,
                                        representation.concept_source_mask)
+            elif name in {"concept_applicability", "concept_uncertainty", "concept_source_support", "concept_source_disconfirmation"}:
+                representation = packet.representation
+                allowed = representation.concept_source_mask if name.startswith('concept_source_') else representation.concept_mask
+                result = _probability(getattr(representation, name + '_logits'), target, allowed, logits=True)
             elif name == "provenance":
                 scores = self.provenance(packet.representation.source_states)
                 allowed = source_mask[..., None].expand_as(scores)

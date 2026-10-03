@@ -93,3 +93,56 @@ Private production still requires actual lineage closure, suitable personality
 N0 and reviewed complete teaching inputs/targets. No governing learning recipe
 is adopted by this review. N1 conditional teaching, N2 full sparse judgments and
 separate N3 calibration must be substantive capabilities, not auxiliary scores.
+
+## Implemented connected construction, 3 October
+
+The owner's continuation and build-before-capability-evaluation instruction
+replaces further isolated relation-readout trials. `teaching/cases.py` now
+implements separately reviewed full-frame cases and named sparse target facts.
+`teaching/materialize.py` binds each case to its actual complete produced frame,
+closed feature session, explicit family allocation and exact source/compiler/
+annotation/review pins. Case annotation notes, review IDs and gold never enter
+the target-free producer. Unknown facts remain unavailable NaNs in tensors;
+closed comparisons require all lawful alternatives, while a partial singleton
+remains a zero-discrimination annotation. Targets are not inferred from source
+confidence, graph edges or candidate order.
+
+N1 now has conditional applicability, uncertainty and independent concept-source
+support/disconfirmation objectives in addition to alignment/provenance. These
+heads use current-context concept/source representations and retain deterministic
+authority masks. N2 consumes source-weighted relation messages and concept
+signals alongside complete source tokens and rich explicit/residual concepts.
+The consumer projections live in N2 so actual N2 judgment objectives train them;
+they are not unsupervised N1 relay parameters frozen at the phase transition.
+Support and disconfirmation are independent, not an exclusive class or a
+softmax that forces a supporting source. Their scores grant no source authority.
+
+An independent change review found and fixed (1) loss of source-specific meaning
+through probability averaging and (2) case pins disconnected from actual
+training admission. Counterexamples failed before the fixes. Source-weighted
+messages now preserve the source distinction; admission verifies the exact
+materialization schema/seal, target/frame/family/phase/source bindings, actual
+admitted source/compiler/preparation hashes and complete annotation/protocol/
+review pins explicitly declared by the externally pinned target-review receipt.
+
+Teaching targets and resumable checkpoint schema are now v3; tensor packet and
+decision document schema are v2. Frame/document schemas stay v1 because their
+target-free input contract has not changed. Old checkpoints/receipts remain
+immutable and cannot be loaded as current-code artifacts by changing a label.
+
+Actual public mechanical cases exercise N1, N2 and separate N3 optimizer steps,
+the intended new parameter updates, all N2/calibration target families, sparse
+unknowns, named-order changes, permission/split/custody refusals and exact
+checkpoint reload. The affected 92 tests passed. The pre-final-fix full local
+suite had 628 passing tests and 354 passing subtests, plus the existing Windows
+symlink privilege failure in an unchanged foundation test. Linux CI is the
+complete final-code check. These results establish construction mechanics,
+not learned ALICE identity, speech fidelity, N0 suitability or FBM transfer.
+
+This implements the missing learning interfaces; it is not a finished trained
+personality. Real reviewed case construction still needs governed source data,
+including the unresolved earlier inference lineage. The retained 720-record
+reserve is known candidate custody, not independently verified original input.
+Full behavior evaluation follows the connected trained build; source/correctness
+checks remain inside construction. No new scientific compute run or private
+payload access was made for this implementation.

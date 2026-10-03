@@ -17,7 +17,7 @@ from .contracts import (ConceptRecord, HEAD_FAMILIES, IdentityDecisionPacket,
                         IdentityError, LabelSpec, SourceRecord)
 
 DOCUMENT_SCHEMA = "alice-personality-cognitive-frame-document-v1"
-OUTPUT_SCHEMA = "alice-personality-decision-document-v1"
+OUTPUT_SCHEMA = "alice-personality-decision-document-v2"
 # Explicit absence is accepted. These families declare full-frame coverage;
 # entries and additional semantic roles remain dynamic, without numeric caps.
 REQUIRED_ROLES = frozenset({"actors_roles", "situation", "goals_constraints",
@@ -294,6 +294,9 @@ def decision_to_mapping(packet: IdentityDecisionPacket) -> dict:
     result["heads"] = {family: {"scores": tensor(head.scores), "activations": tensor(head.activations),
         "mask": tensor(head.mask), "specs": [[asdict(spec) if spec else None for spec in row] for row in head.specs]}
         for family, head in packet.heads.items()}
+    result['conditional_concepts'] = {name: tensor(getattr(packet.representation, name)) for name in
+        ('concept_applicability', 'concept_uncertainty', 'concept_source_support', 'concept_source_disconfirmation',
+         'concept_source_mask')}
     result["native_latent"] = {"candidates": tensor(packet.latent_candidates),
         "concepts": tensor(packet.representation.concepts), "concept_mask": tensor(packet.representation.concept_mask),
         "views": {name: tensor(value) for name, value in packet.representation.views.items()},

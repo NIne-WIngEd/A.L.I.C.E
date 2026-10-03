@@ -101,6 +101,12 @@ class IdentityRepresentationModel(nn.Module):
         self.residual_kind = nn.Embedding(2, config.learned_width)
         self.concept_evidence_query = nn.Linear(config.learned_width, config.learned_width, bias=False)
         self.source_evidence_key = nn.Linear(config.learned_width, config.learned_width, bias=False)
+        # Conditional meaning has its own supervised outputs. These scores do
+        # not rewrite graph/source authority or force exclusive source support.
+        self.conditional_concept = nn.Sequential(nn.Linear(config.learned_width * 2, config.learned_width),
+            nn.GELU(), nn.Linear(config.learned_width, 2))
+        self.conditional_source_query = nn.Linear(config.learned_width, config.learned_width * 2, bias=False)
+        self.conditional_source_key = nn.Linear(config.learned_width, config.learned_width * 2, bias=False)
         self.graph = nn.ModuleList(_DirectedGraphLayer(config.learned_width) for _ in range(config.graph_layers))
 
     @staticmethod
@@ -201,13 +207,27 @@ class IdentityRepresentationModel(nn.Module):
         concept_source_logits = torch.einsum("bkh,bsh->bks", self.concept_evidence_query(combined_concepts),
                                              self.source_evidence_key(sources))
         concept_source_probabilities = masked_softmax(concept_source_logits, concept_source_mask)
+        conditional = self.conditional_concept(torch.cat((combined_concepts,
+            query[:, None].expand_as(combined_concepts)), -1)) * combined_concept_mask[..., None]
+        applicability_logits, uncertainty_logits = conditional.unbind(-1)
+        applicability = applicability_logits.sigmoid() * combined_concept_mask
+        uncertainty = torch.where(combined_concept_mask, uncertainty_logits.sigmoid(), torch.ones_like(uncertainty_logits))
+        pair_query = self.conditional_source_query(combined_concepts).reshape(batch, combined_concepts.shape[1], 2, -1)
+        pair_key = self.conditional_source_key(sources).reshape(batch, sources.shape[1], 2, -1)
+        pair_logits = torch.einsum('bkrh,bsrh->bksr', pair_query, pair_key) / self.config.learned_width ** .5
+        pair_logits = pair_logits * concept_source_mask[..., None]
+        support_logits, disconfirmation_logits = pair_logits.unbind(-1)
+        support = support_logits.sigmoid() * concept_source_mask
+        disconfirmation = disconfirmation_logits.sigmoid() * concept_source_mask
         source_tokens = source_tokens * source_available[..., None, None]
         sources = sources * source_available[..., None]
         representation = IdentityRepresentation(
             source_tokens, sources, combined_concepts, combined_concept_mask,
             stream_states, stream_masks, query_tokens, query_mask,
             source_masks["identity"].any(-1), layer_weights,
-            concept_source_logits * concept_source_mask, concept_source_probabilities, concept_source_mask)
+            concept_source_logits * concept_source_mask, concept_source_probabilities, concept_source_mask,
+            applicability_logits, applicability, uncertainty_logits, uncertainty,
+            support_logits, support, disconfirmation_logits, disconfirmation)
         return representation, query
 
 
@@ -260,6 +280,34 @@ class IdentityJudgmentModel(nn.Module):
         self.concept_query = nn.Linear(config.learned_width, config.learned_width, bias=False)
         self.concept_key = nn.Linear(config.learned_width, config.learned_width, bias=False)
         self.voice_confidence = _SemanticHead(config.learned_width)
+        # The consumer learns these projections through actual N2 judgments;
+        # they are not unsupervised N1 parameters frozen after auxiliary fit.
+        self.conditional_embedding = nn.Linear(4, config.learned_width, bias=False)
+        self.conditional_source_value = nn.Linear(config.learned_width, config.learned_width * 2, bias=False)
+        self.conditional_relation_embedding = nn.Linear(config.learned_width * 2, config.learned_width, bias=False)
+
+    def conditional_memory(self, n1):
+        """Retain which semantic source supports/disconfirms each concept.
+
+        Source-weighted relation messages preserve information lost by an
+        average over probabilities. Full source tokens and rich concepts stay
+        available; learned messages never alter source or view permission.
+        """
+        batch, sources, width = n1.source_states.shape
+        values = self.conditional_source_value(n1.source_states).reshape(batch, sources, 2, width)
+        weights = torch.stack((n1.concept_source_support, n1.concept_source_disconfirmation), -1)
+        messages = torch.einsum('bksr,bsrh->bkrh', weights, values)
+        messages = messages / weights.sum(2).clamp_min(1)[..., None]
+        count = n1.concept_source_mask.sum(-1).clamp_min(1)
+        signals = torch.stack((n1.concept_applicability, n1.concept_uncertainty,
+            n1.concept_source_support.sum(-1) / count, n1.concept_source_disconfirmation.sum(-1) / count), -1)
+        delta = (self.conditional_embedding(signals) + self.conditional_relation_embedding(messages.flatten(2))) \
+                * n1.concept_mask[..., None]
+        concepts = n1.concepts + delta
+        views = {view: torch.cat((states[:, :sources],
+                    concepts * n1.view_masks[view][:, sources:, None]), 1)
+                 for view, states in n1.views.items()}
+        return concepts, views
 
     def forward(self, frame: IdentityFrame, n1: IdentityRepresentation, query: Tensor) -> dict:
         frame.validate(self.config)
@@ -268,7 +316,8 @@ class IdentityJudgmentModel(nn.Module):
         tokens = n1.source_tokens.flatten(1, 2)
         source_available = torch.stack(tuple(IdentityRepresentationModel.source_masks(frame).values())).any(0)
         token_mask = (frame.sources.token_mask & source_available[..., None]).flatten(1, 2)
-        memory = torch.cat((n1.query_tokens, tokens, *n1.views.values()), 1)
+        contextual_concepts, contextual_views = self.conditional_memory(n1)
+        memory = torch.cat((n1.query_tokens, tokens, *contextual_views.values()), 1)
         memory_mask = torch.cat((n1.query_mask, token_mask, *n1.view_masks.values()), 1)
         for layer in self.layers:
             candidates = layer(candidates, mask, memory, memory_mask)
@@ -279,7 +328,7 @@ class IdentityJudgmentModel(nn.Module):
             label_states[family] = labels
             heads[family] = self.heads["family_" + family](candidates, labels)
         evidence_logits = torch.einsum("bch,bsh->bcs", self.evidence_query(candidates), self.evidence_key(n1.source_states))
-        concept_logits = torch.einsum("bch,bkh->bck", self.concept_query(candidates), self.concept_key(n1.concepts))
+        concept_logits = torch.einsum("bch,bkh->bck", self.concept_query(candidates), self.concept_key(contextual_concepts))
         return {"candidates": candidates, "candidate_mask": mask, "heads": heads,
                 "scalar": self.scalar(candidates), "evidence_logits": evidence_logits,
                 "concept_logits": concept_logits, "source_mask": source_available,

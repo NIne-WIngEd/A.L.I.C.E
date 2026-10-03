@@ -13,7 +13,7 @@ from torch import Tensor
 from ..identity.contracts import IdentityFrame
 from ..identity.codec import fingerprint as _frame_fingerprint, tensor_digest
 
-TARGET_SCHEMA = "alice-personality-reviewed-teaching-targets-v2"
+TARGET_SCHEMA = "alice-personality-reviewed-teaching-targets-v3"
 REVIEW_SCHEMA = "alice-personality-reviewed-teaching-batches-v1"
 FAMILY_SCHEMA = "alice-personality-teaching-family-splits-v1"
 AUTH_SCHEMA = "alice-personality-current-training-authorization-v1"
@@ -94,6 +94,7 @@ class TeachingBatch:
     schema: str = TARGET_SCHEMA
     production_binding: Mapping | None = None
     production_session: Mapping | None = None
+    materialization_binding: Mapping | None = None
 
     def validate(self, config) -> None:
         self.frame.validate(config)
@@ -121,7 +122,7 @@ class TeachingBatch:
             raise TeachingError("source rows are not reviewed teaching targets")
         if type(self.contrasts) is not tuple or any(not isinstance(value, ContrastConstraint) for value in self.contrasts):
             raise TeachingError("contrasts require explicitly reviewed typed constraints")
-        for value in (self.production_binding, self.production_session):
+        for value in (self.production_binding, self.production_session, self.materialization_binding):
             if value is not None and not isinstance(value, Mapping):
                 raise TeachingError("frame production provenance must be explicit metadata objects")
 

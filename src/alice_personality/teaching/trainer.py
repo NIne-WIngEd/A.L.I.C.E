@@ -24,7 +24,7 @@ from .contracts import (AUTH_SCHEMA, FAMILY_SCHEMA, REVIEW_SCHEMA, TARGET_SCHEMA
                         TeachingError, TrainingRecipe, canonical, fingerprint)
 from .objectives import IdentityObjectives
 
-CHECKPOINT_SCHEMA = "alice-personality-resumable-teaching-checkpoint-v2"
+CHECKPOINT_SCHEMA = "alice-personality-resumable-teaching-checkpoint-v3"
 _DIGEST = re.compile(r"[0-9a-f]{64}\Z")
 _ARTIFACT_ROLES = {"source_package", "compiled_receipt", "prepared_receipt", "reviewed_targets",
                    "source_families", "authorization"}
@@ -300,6 +300,9 @@ class IdentityTrainer:
                     "source_family_ids": [list(row) for row in batch.source_family_ids]}
         if declared != expected:
             raise TeachingError("teaching batch lacks exact externally reviewed facts/features/pointers")
+        if batch.materialization_binding is not None:
+            from .materialize import verify_materialized_batch
+            verify_materialized_batch(batch, self.admission.artifacts, self.reviewed)
         if batch.source_class != "public_mechanical_fixture":
             prepared_pin = self.admission.artifacts["prepared_receipt"]
             prepared = _json(_path(prepared_pin.path))
