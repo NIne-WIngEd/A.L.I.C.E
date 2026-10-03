@@ -145,5 +145,85 @@ personality. Real reviewed case construction still needs governed source data,
 including the unresolved earlier inference lineage. The retained 720-record
 reserve is known candidate custody, not independently verified original input.
 Full behavior evaluation follows the connected trained build; source/correctness
-checks remain inside construction. No new scientific compute run or private
-payload access was made for this implementation.
+checks remain inside construction. The mechanical implementation itself made no
+private source access. Subsequent allocated source construction576667 verified
+720 retained envelope declarations and resolved437 of448 mandatory support
+references, with11 unresolved. That result narrows the source recovery task; it
+does not supply reviewed applicability, preference, head, voice or calibration
+targets, and grants no private-gradient permission. Original input discovery is
+continuing through the owner's named storage trails, preserving the distinction
+between candidate objects, historical evidence and actual teaching annotations.
+
+Original-stream construction diagnostic576672 completed0:0 in5s under mxrayan,
+with exact receipt/file/helper/Git/source/guard bindings independently checked.
+Sol's original720 input contains naked records, all720 exact retained original
+objects; its combined731 input contains reference envelopes. Astra11 remains
+strict standalone proposals. Original and combined format are distinct views.
+First construction576670 stopped because the helper incorrectly assumed the
+original stream used the curated envelope format. Numeric-location-only
+diagnostic576671 pinpointed that check; no compiler or model was altered.
+
+The corrected binding requires the entire unique original-record set equal the
+retained original bodies, uses the existing explicit retained declarations,
+and independently requires the complete combined ID-to-body map equal those
+earlier pairs plus exact standalone Astra pairs. It never derives IDs from raw
+field guesses or required references. Independent review first caught Astra
+IDs detached from their bodies; counterexamples failed before exact pair
+binding was added. Four format/correspondence fixtures likewise failed before
+the observed-format repair. All33 binding/discovery fixtures pass; final bounded
+review found no actionable findings and confirmed reordering tolerance and
+ambiguous-body refusal. No declined areas within its public implementation scope.
+
+Corrected allocated construction576673 completed0:0 in6s under mxrayan/node023,
+using exact clean0eeb scientific code and externally pinned helper
+f0a7d0fd2fe8f0bcbead376d4eb4b41698d1665e9425bc0f1cb865ff23c4d5b8.
+The guarded run compiled and reverified the actual substrate. Independent local
+verification accepted remote file/canonical/code/helper/guard/source bindings,
+the entire original720 correspondence, complete combined/Astra pairs, separately
+derived Sol195 namespace and compiled coverage/count seals. Raw-source and six
+artifact rehash/replay are attributed to that guarded execution, not local replay.
+
+All448unique support references (2114occurrences) and205inference origins resolve
+against926explicit IDs. Actual2460active records comprise290E0,205E-INF,
+1009direct A-SYN,822factorized base policies,119targeted A-SYN and15context
+variants. The3496historical UNKNOWN rows and13719unordered alternatives remain
+separate. The fixed summary is published byte-identically; source content,
+identifiers and exact private field layouts remain protected.
+
+All8connected source families fall in the original train allocation; largest
+2446records. The artifact has no held-out family coverage and supplies no
+independent calibration evidence. Preserve that observation: do not randomize
+connected rows or search seeds to invent independence. No source acceptance,
+reviewed personality targets, private gradients, N0 approval or learned ALICE
+behavior follows from compilation. E0, E-INF and A-SYN remain evidence categories
+across N1/N2/N3, not one category assigned to each phase. Source confidence and
+unselected alternatives cannot become judgment or calibration gold.
+
+Source-linked curriculum construction576674 completed0:0 in22s under
+mxrayan/node016, clean0eeb scientific code plus immutable public helper
+b1a817c8c0c1ba09e6cb0fa7e9c9695895ef1ea0c4025994fc684d919e1130a4.
+It assembled2460protected work items (9470268bytes), preserving290E0,
+205E-INF and1965A-SYN, actual declaration masks/lanes, separate identity/context/
+excluded links, family ancestry and original splits. All N1/N2/calibration
+annotation slots remain explicitly unset. Source confidence and administrative
+metadata stay outside semantic input; historical relationship conditions do not
+supply Alice's current host/relationship/self. Unknown and unordered alternative
+banks remain separately pinned, not labels or negatives.13public tests pass,
+including the actual pinned-descriptor interface. Bounded review found no
+actionable findings and no declined areas within its public implementation scope.
+
+The fixed summary is independently verified for external file/canonical seal,
+exact Git/helper/guard and parent/category/phase/bank bindings, then published
+byte-identically. Actual raw work-item construction and rehash remain attributed
+to the guarded run; the9.47MB text-bearing work items remain remote. No reviewed
+targets or admitted teaching batches exist yet. This advances the real source
+annotation workspace; it is not a complete ACFP, trained personality or review
+approval. The separate96-row A-SYN voice overlay still needs ingestion.
+
+Voice source grounding uses EIPM_VOICE_IDENTITY_OVERLAY_V02_RECEIPT.md at
+5e29f7f69ba4a5d031c7036639b67bebbcdc0bd2. It reports96synthetic delivery policies,
+retained E0/E-INF/A-SYN support and relationship-state gating. Exact acoustic
+imitation is not supplied by it. Its old eight generic N0 competency coverage
+bins are source metadata, not a personality architecture or capability ceiling.
+The next isolated complete schema profile will learn actual fields before an
+ingestion adapter is chosen; no guessed private parser or category promotion.

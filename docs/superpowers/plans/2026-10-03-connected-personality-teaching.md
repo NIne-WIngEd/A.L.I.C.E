@@ -139,7 +139,7 @@ repeat one-level probes. Copy no raw source text.
   rights/class/Unicode/duplicate refusal; preserve immutable v1 verification.
 - [x] Implement the reviewed envelope route through the same guarded entry;
   review its public/private output and exact source/layout/profile closing pins.
-- [ ] Publish/test/stage exact source and submit one guarded CPU construction
+- [x] Publish/test/stage exact source and submit one guarded CPU construction
   run under mxrayan. Record results or stop if only its result remains.
 
 Task 4 ledger: 17 additional tests observed RED before implementation/fixes;
@@ -151,3 +151,168 @@ retention. The actual protected layout is separately pinned and kept out of
 public Git. V1 verification still independently accepts the exact576666 receipt.
 No deferred findings or declined areas. This is source construction, not model
 evaluation or a new personality architecture.
+
+Actual task 4 closure: 576667 completed0:0 in5s, mxrayan/node023, exact0eeb7d2f.
+The complete Linux check passed667tests359subtests27.47s; all five checks passed.
+Independent local verification accepted exact remote file hashes, canonical
+seals, all seven executing Git hashes and source/package/layout/profile/guard
+bindings. Actual720 unique declared envelope IDs,333 nested schema variants.
+Of448 required support references,437 resolve and11 remain absent (121 reference
+occurrences in114 rows). This namespace resolves none of205 separately reported
+newer E-INF source origins; the earlier raw-v5 namespace resolved194 of those.
+Do not conflate the two sets or merge them without original-source bindings.
+No source admission, private gradients or original-delivery claim follows.
+
+## Task 5: Recover the earlier input sources
+
+The owner directed source discovery through Alice, local PC, Drive, Magnolia and
+memory. Public generator contracts distinguish earlier inference inputs from
+new proposals. Filename discovery found the Astra expansion and three generator
+handoff archives in the existing local Downloads store. Accessible Drive
+metadata search did not find these packages; existing Magnolia personality
+inputs hold the curated frontier and raw-v5 successor, rather than the recovered
+four earlier packages. No archive payload was inspected during discovery.
+
+Use a single immutable guarded CPU inspection to observe complete member pins,
+compare member digests with the exact previously reviewed generator input hash
+map, inspect only documented logical source-record streams, compare complete
+record fingerprints with retained original objects and measure already strict
+proposal namespaces against the11 missing supports. Keep arbitrary keys, member
+paths, IDs and record fingerprints protected. Do not infer namespaces from keys,
+alias IDs, install a registry or alter the personality architecture. Observed
+package pins are unqualified custody observations, not original authentication.
+
+- [x] Locate exact earlier packages and verify the prior437/11 result.
+- [x] Prepare bounded inspection and launch helpers; verify fixed errors,
+  guard-before-private-I/O, strict parsing and source-profile mechanics.
+- [x] Review, stage fresh owner-only inputs, execute the allocated inspection
+  and preserve exact output pins. Stop if only the external result remains.
+- [ ] Construct real reviewed cases from the recovered, role-separated sources;
+  retain missing or unreviewed targets explicitly before actual training.
+
+Actual task 5 discovery: 576668 stopped before container/source access because
+Magnolia Bash4.2.46 rejects an empty array under nounset. Its failed log and
+empty run directory are preserved. Bash's maintainer identifies this behavior
+as changed in4.4: https://lists.gnu.org/archive/html/bug-bash/2019-05/msg00024.html.
+A public no-data fixture reproduced RED on that actual shell; portable optional
+array expansion passed empty/unset/empty-string/spaced-argument checks on4.2
+and current Git Bash. The generic retained launcher received the same repair.
+No scientific hypothesis or source contract changed. All36 retained-source
+tests and constitutional/governance/product-family validators passed.
+
+576669 completed0:0 in5s, mxrayan/node023, original clean0eeb code plus immutable
+SHA-pinned helper. Independent verification accepted both external file hashes,
+canonical seal, six executing Git hashes, helper and actual guard. All11 missing
+references exist as original Astra proposals. The earlier generator input has
+all720 exact retained original objects; its entire780-row file is not the same
+byte stream as the later Sol input. Sol's handoff has30 members matching the
+recorded raw-v5 input hash map, including separately pinned original720,
+combined731 and Astra11 source streams. Protected member names, field names,
+identifiers and fingerprints remain private. The owner's clarification records
+Sol5.6 as the main expansion producer after Astra; the source strata are kept
+distinct. No source registry was installed or teaching permission granted.
+
+The next source construction binds original namespace IDs to exact records,
+not merely equal ID/object sets; checks the combined source copy; derives each
+proposal stratum independently; refuses ambiguous duplicate IDs; then uses the
+unchanged strict compiler to build the complete source-connected candidate
+substrate. Full private cases still require actual role-appropriate annotations.
+Whole-change review caught aggregate profile retention growing across members;
+the shared budget now accounts before retaining trees/fingerprints/IDs/metadata.
+Its cross-member counterexamples failed before the fix;14 discovery tests pass.
+
+Original-stream construction diagnostic576672 completed0:0 in5s under mxrayan,
+with exact receipt/file/helper/Git/source/guard bindings independently checked.
+Sol's original720 input contains naked records, all720 exact retained original
+objects; its combined731 input contains reference envelopes. Astra11 remains
+strict standalone proposals. Original and combined format are distinct views.
+First construction576670 stopped because the helper incorrectly assumed the
+original stream used the curated envelope format. Numeric-location-only
+diagnostic576671 pinpointed that check; no compiler or model was altered.
+
+The corrected binding requires the entire unique original-record set equal the
+retained original bodies, uses the existing explicit retained declarations,
+and independently requires the complete combined ID-to-body map equal those
+earlier pairs plus exact standalone Astra pairs. It never derives IDs from raw
+field guesses or required references. Independent review first caught Astra
+IDs detached from their bodies; counterexamples failed before exact pair
+binding was added. Four format/correspondence fixtures likewise failed before
+the observed-format repair. All33 binding/discovery fixtures pass; final bounded
+review found no actionable findings and confirmed reordering tolerance and
+ambiguous-body refusal. No declined areas within its public implementation scope.
+
+Corrected allocated construction576673 is submitted under mxrayan using exact
+clean0eeb scientific code and externally pinned helper
+f0a7d0fd2fe8f0bcbead376d4eb4b41698d1665e9425bc0f1cb865ff23c4d5b8.
+Actual576673 completed0:0 in6s:2460active records,926explicit inference IDs,
+all448support references and205source origins resolved. All8connected families
+fall in the original train allocation; largest2446records. No held-out coverage
+or independent calibration evidence is claimed. No source acceptance, reviewed personality targets,
+private gradients, N0 approval or learned ALICE behavior follows from this work.
+
+## Task 6: Construct source-linked curriculum work items
+
+Build the real annotation workspace from the actual compiled source, preserving
+E0 observations, revisable E-INF and all four explicit A-SYN sublanes. Every
+source record can support work for N1 conditional interpretation, N2 judgment
+and expression, and later N3 calibration; categories are not stage assignments.
+Keep declared identity/context/excluded links and loss masks verbatim. Historical
+relationship conditions cannot populate Alice's current relationship state;
+current host/relationship/later-self remain explicitly absent in these sources.
+
+Emit protected source-linked draft work items with complete meaningful source
+fields, separate declaration/review metadata and explicit unset slots for the
+actual implemented phase objectives. Source confidence, graph membership,
+historical UNKNOWN and unordered alternatives supply no ratings or negatives.
+N3 needs real judgment/outcome calibration annotations, not copied source belief.
+Carry the unknown/alternative banks as separately pinned candidate inputs. This
+workspace is neither a ReviewedTeachingCase nor an admitted tensor batch.
+
+- [x] Verify source/category preservation, source-confidence separation, phase
+  slot completeness, no history/lived-memory promotion and guard-first behavior.
+- [x] Assemble all actual source work items through the unchanged owner boundary;
+  verify compiled/source/code closure before and after output publication.
+- [ ] Convert actual content annotations into complete target-free documents and
+  reviewed cases, preserving original family ancestry and genuinely missing gold.
+
+The source split observation is retained as-is during construction; no random
+row split or seed search manufactures evaluation independence. The separate
+96-row voice overlay remains a substantive source-ingestion task, not silently
+included in this2460-record workspace. Full behavior evaluation follows training.
+
+
+Task5 source closure576673 is independently verified and the fixed summary
+published. Task6 public work-item fixtures13pass, including actual pinned-file
+descriptor reset/digest API; confidence/administrative metadata stays outside
+semantic inputs. All annotation values remain unset. Source-linked work items
+are a construction workspace, not reviewed cases or admitted batches. The next
+allocated assembly stays within the unchanged guard and source compiler.
+
+Source-linked curriculum construction576674 completed0:0 in22s under
+mxrayan/node016, clean0eeb scientific code plus immutable public helper
+b1a817c8c0c1ba09e6cb0fa7e9c9695895ef1ea0c4025994fc684d919e1130a4.
+It assembled2460protected work items (9470268bytes), preserving290E0,
+205E-INF and1965A-SYN, actual declaration masks/lanes, separate identity/context/
+excluded links, family ancestry and original splits. All N1/N2/calibration
+annotation slots remain explicitly unset. Source confidence and administrative
+metadata stay outside semantic input; historical relationship conditions do not
+supply Alice's current host/relationship/self. Unknown and unordered alternative
+banks remain separately pinned, not labels or negatives.13public tests pass,
+including the actual pinned-descriptor interface. Bounded review found no
+actionable findings and no declined areas within its public implementation scope.
+
+The fixed summary is independently verified for external file/canonical seal,
+exact Git/helper/guard and parent/category/phase/bank bindings, then published
+byte-identically. Actual raw work-item construction and rehash remain attributed
+to the guarded run; the9.47MB text-bearing work items remain remote. No reviewed
+targets or admitted teaching batches exist yet. This advances the real source
+annotation workspace; it is not a complete ACFP, trained personality or review
+approval. The separate96-row A-SYN voice overlay still needs ingestion.
+
+Voice source grounding uses EIPM_VOICE_IDENTITY_OVERLAY_V02_RECEIPT.md at
+5e29f7f69ba4a5d031c7036639b67bebbcdc0bd2. It reports96synthetic delivery policies,
+retained E0/E-INF/A-SYN support and relationship-state gating. Exact acoustic
+imitation is not supplied by it. Its old eight generic N0 competency coverage
+bins are source metadata, not a personality architecture or capability ceiling.
+The next isolated complete schema profile will learn actual fields before an
+ingestion adapter is chosen; no guessed private parser or category promotion.

@@ -69,7 +69,7 @@ if bash -lc 'set -euo pipefail; module load python/3.11.5; exec python3 -I "$@"'
           --env="PERSONALITY_RETAINED_PROFILE_PATH=$PERSONALITY_RETAINED_PROFILE_PATH")
       fi
       exec "$UDOCKER" run \
-        "${layout_arguments[@]}" \
+        ${layout_arguments[@]+"${layout_arguments[@]}"} \
         --volume="$COMPUTE_ROOT:$COMPUTE_ROOT" --workdir="$PERSONALITY_REPO_ROOT" \
         --env="COMPUTE_ROOT=$COMPUTE_ROOT" --env="PERSONALITY_REPO_ROOT=$PERSONALITY_REPO_ROOT" \
         --env="PERSONALITY_EXPECTED_REVISION=$PERSONALITY_EXPECTED_REVISION" \
