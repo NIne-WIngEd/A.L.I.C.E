@@ -189,8 +189,12 @@ letters, with zero empty/other values. Our lowercase-only comparison restriction
 caused the refusal. A separately versioned strict ASCII-hex-to-digest-byte
 comparison corrects that representation assumption without changing source text,
 source custody or lineage requirements. See
-`PERSONALITY_DECLARED_SOURCE_HASH_FORMAT_RESULT_576649.md`. No completed digest
-comparison, legacy namespace closure or private source admission is claimed yet.
+`PERSONALITY_DECLARED_SOURCE_HASH_FORMAT_RESULT_576649.md`. The separately
+versioned comparison 576650 completed `0:0` at immutable `93a2d116`: none of the
+30 declared digest-byte values matches the retained reserve's externally pinned
+digest. This rules out that specific declared input link, without proving source
+authenticity or legacy namespace closure. The 448 mandatory-reference lineage
+gap remains unresolved and private source admission remains false.
 
 The independent data-to-role audit found that current N1 supervision is only
 source alignment and provenance. Metadata/source-graph shortcuts can satisfy
@@ -242,8 +246,10 @@ under `mxrayan` at immutable `7b82149b`. Its allocated existing-runtime fixture
 compatibility stage passed all 16 stdlib tests before the actual cache consumer.
 The fresh partial-input fit preserves original descriptions, pools, initialization
 and 256-step recipe, verifies original controls and midpoint sampler state, and
-replaces variable sources with one explicitly artificial zero bank. Results remain
-pending; this is a learnable-prior diagnostic, not an adopted personality readout
+replaces variable sources with one explicitly artificial zero bank. The actual
+56-TRAIN/16-DEV controls and original midpoint were verified; the 256-step fit
+started. Results remain pending; this is a learnable-prior diagnostic, not an
+adopted personality readout
 or a winning repair. No new publisher forward or private gradient is performed.
 
 Kaggle's existing CLI successfully listed the owner's `mkrayanyan` notebooks.

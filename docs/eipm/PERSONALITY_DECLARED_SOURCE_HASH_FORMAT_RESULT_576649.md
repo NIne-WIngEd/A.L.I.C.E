@@ -51,11 +51,44 @@ The v2 result must name the exact comparison representation and preserve the
 original reviewed byte/structure/map/code pins and full closing checks. A
 generator-declared match remains a limited declaration about an input digest;
 it cannot independently authenticate original input bytes, resolve 448 required
-support references, admit source content or authorize gradients. No v2 comparison
-outcome is claimed here. All acceptance, training and historical authority
-flags remain false.
+support references, admit source content or authorize gradients. The format-only
+receipt and this design provide no v2 comparison outcome. All acceptance,
+training and historical authority flags remain false.
 
 The separate v2 implementation passed 225 focused boundary tests and 98
 subtests. Independent review matched all four frozen code-file hashes, passed
 38 v2 fixtures and launcher syntax, and found no actionable blocker. This is
 code validation before a new allocated comparison, not an actual source result.
+
+## Actual v2 comparison: Magnolia 576650
+
+Job 576650 completed `0:0` in four seconds under `mxrayan`, at immutable
+`93a2d11618a4ee8de6f0bc20c1abd80fa7621790`. All 30 exact ASCII hex declarations
+validated and their decoded 32-byte SHA-256 values were compared with the
+externally pinned retained reserve member digest. **Zero declarations matched.**
+Source text was neither normalized nor changed. This completed comparison
+rules out that exact generator-declared digest link; it does not rule out other
+earlier inputs or independently establish the retained reserve's authenticity.
+The missing 448 support-reference lineage remains unresolved.
+
+Fresh original-owner loopback-only isolation, the original reviewed structure,
+two manifest/two checksum streams and full source/map/code/held-descriptor closing
+checks were preserved. Zero identity-payload member streams were opened. No
+registry, source admission, private gradient or historical authority was granted.
+
+The byte-identical fixed receipt is
+`evaluation/eipm/gemma_n0/receipts/magnolia_576650_declared_source_hash_bytes_comparison.json`.
+Its external file SHA-256 is
+`f609316d386544bd4eded56f7b26c4fcd16f76735086bf3f51a3a77a4308cf3d`;
+canonical seal is
+`319b213333ef79a67d4224422313c9ed862f292248c70379c0ba681be4fa6236`.
+Remote/local file hashes agree. Root verified its complete fixed schema and
+canonical seal, source/map/structure pins against the prior actual format audit,
+all six implementation hashes against exact Git blobs, explicit encoding policy,
+actual isolation, counts and every false authority flag. Independent read-only
+review repeated those checks, reconstructed the encoding-policy pin, verified
+canonical JSON with no duplicate keys/nonfinite numbers, and confirmed the
+limited negative result. Linux CI for this code
+passed 609 personality/foundation tests and 346 subtests, plus foundation
+validation, repository audit and governance checks. A negative provenance result
+is preserved rather than converted into permissive source acceptance.
