@@ -27,6 +27,7 @@ REPO = Path(__file__).resolve().parents[2]
 ENTRY = REPO / "scripts/eipm/n1/audit_provenance_manifest_structure.py"
 SBATCH = REPO / "scripts/eipm/n1/magnolia_audit_provenance_manifests.sbatch"
 COMPARISON_SBATCH = REPO / "scripts/eipm/n1/magnolia_compare_declared_source_hashes.sbatch"
+FORMAT_SBATCH = REPO / "scripts/eipm/n1/magnolia_diagnose_declared_source_hash_formats.sbatch"
 SPEC = importlib.util.spec_from_file_location("manifest_structure_entry_fixture", ENTRY)
 entry = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(entry)
@@ -712,3 +713,102 @@ def test_reporting_refinement_preserves_original_structure_first_refusal_order(t
     inputs["expected_raw_generation_manifest_sha256"] = "0" * 64
     with pytest.raises(audit.ManifestStructureAuditError, match="^audit_reviewed_structure_refused$"):
         audit.compare_declared_source_hashes(**inputs)
+
+
+def test_format_only_counts_all30_without_digest_matching_normalization_or_leak(tmp_path, monkeypatch):
+    def changes(value):
+        entries = value["source_hashes"]
+        entries["PUBLIC_FIXTURE_LABEL_26"] = "a" * 63 + "F"
+        entries["PUBLIC_FIXTURE_LABEL_27"] = ""
+        entries["PUBLIC_FIXTURE_LABEL_28"] = "PRIVATE_FIXTURE_NONHASH_VALUE"
+        entries["PUBLIC_FIXTURE_LABEL_29"] = "  " + "0" * 64
+    inputs = fixture_comparison(tmp_path, matches=1, manifest_change=changes)
+    originals = {name: inputs[name].read_bytes() for name in ("curated_archive_path", "raw_archive_path", "reviewed_structure_path")}
+    opened, read_member = [], raw._read_member
+    def observed(archive, member, limit):
+        opened.append(member.filename)
+        return read_member(archive, member, limit)
+    monkeypatch.setattr(raw, "_read_member", observed)
+    strict_matcher = audit._declared_matches
+    matcher = Mock(side_effect=AssertionError("format diagnostic must not perform matching"))
+    monkeypatch.setattr(audit, "_declared_matches", matcher)
+    result = audit.diagnose_declared_source_hash_formats(**inputs)
+    assert (result["lowercase_64hex_count"], result["uppercase_64hex_count"], result["empty_string_count"],
+            result["other_nonempty_string_count"], result["declared_source_hash_count"]) == (26, 1, 1, 2, 30)
+    assert result["schema"] == audit.FORMAT_SCHEMA and result["state"] == audit.FORMAT_STATE
+    assert all(result[name] is False for name in (*audit._FLAGS, "link_compared", "digest_comparison_performed",
+        "hash_normalization_performed", "digest_search_performed", "source_admission", "original_source_independently_verified",
+        "legacy_namespace_proven", "reference_registry_written", "model_training_performed"))
+    public = raw._canonical(result)
+    assert all(text not in public for text in (b"PUBLIC_FIXTURE_LABEL", b"PRIVATE_FIXTURE_NONHASH_VALUE",
+        b"PUBLIC_PACKAGE_VALUE", audit.LEGACY_RESERVE_SHA256.encode(), b"reserve_digest_match_count"))
+    assert len(opened) == 4 and not any(name.endswith(".jsonl") for name in opened)
+    matcher.assert_not_called()
+    for name, before in originals.items():
+        assert inputs[name].read_bytes() == before
+    audit.verify_format_result(result)
+    monkeypatch.setattr(audit, "_declared_matches", strict_matcher)
+    with pytest.raises(audit.ManifestStructureAuditError, match="^audit_declared_digest_format_refused$"):
+        audit.compare_declared_source_hashes(**inputs)  # The original strict route still refuses.
+
+
+@pytest.mark.parametrize("target", ["raw_archive_path", "reviewed_structure_path"])
+def test_format_diagnostic_cannot_return_after_held_input_mutation(tmp_path, monkeypatch, target):
+    inputs = fixture_comparison(tmp_path)
+    original = audit._declared_format_counts
+    def mutate(value):
+        counts = original(value)
+        with inputs[target].open("ab") as stream:
+            stream.write(b"PUBLIC_FIXTURE_MUTATION_AFTER_COUNT")
+        return counts
+    monkeypatch.setattr(audit, "_declared_format_counts", mutate)
+    with pytest.raises(audit.ManifestStructureAuditError, match="^audit_custody_refused$"):
+        audit.diagnose_declared_source_hash_formats(**inputs)
+
+
+@pytest.mark.parametrize("change", [
+    {"lowercase_64hex_count": True}, {"empty_string_count": -1}, {"other_nonempty_string_count": 31},
+    {"lowercase_64hex_count": 29}, {"link_compared": True}, {"hash_normalization_performed": True},
+    {"source_admission": True}, {"digest_comparison_performed": True}, {"PRIVATE_FIXTURE_LABEL": "forbidden"},
+])
+def test_format_result_requires_fixed_schema_exact_counts_and_false_authority(tmp_path, change):
+    result = audit.diagnose_declared_source_hash_formats(**fixture_comparison(tmp_path))
+    with pytest.raises(audit.ManifestStructureAuditError, match="^audit_metadata_refused$"):
+        audit.verify_format_result(dict(result, **change))
+
+
+def test_format_mode_guard_precedes_inputs_and_refusal_cannot_echo_private_values(monkeypatch, capsys):
+    guard = Mock(side_effect=entry.namespace.PrivateStageError("PRIVATE_FIXTURE_PATH_OR_VALUE"))
+    bounded = Mock()
+    monkeypatch.setattr(entry.namespace, "_p2_guard", guard)
+    monkeypatch.setattr(entry.namespace, "_bounded_path", bounded)
+    assert entry.main(["--p2-source-hash-format-stage"]) == 3
+    output = capsys.readouterr()
+    failure = json.loads(output.err)
+    assert failure["failure_stage"] == "namespace_guard" and "PRIVATE" not in output.err and output.out == ""
+    assert failure["link_compared"] is False and failure["source_admission"] is False
+    bounded.assert_not_called()
+
+
+def test_format_mode_has_separate_fresh_one_stage_launcher_and_fixed_public_fields(tmp_path, monkeypatch, capsys):
+    result = audit.diagnose_declared_source_hash_formats(**fixture_comparison(tmp_path))
+    monkeypatch.setattr(entry, "run_structure_audit", Mock(return_value=dict(result, receipt_sha256="1" * 64)))
+    assert entry.main(["--p2-source-hash-format-stage"]) == 0
+    value = json.loads(capsys.readouterr().out)
+    assert value["link_compared"] is False and value["lowercase_64hex_count"] == 30
+    assert "reserve_digest_match_count" not in value and "generator_declares_matching_digest" not in value
+    entry.run_structure_audit.assert_called_once_with(diagnose_hash_formats=True)
+    text = FORMAT_SBATCH.read_text()
+    assert "rayan-source-hash-formats-${SLURM_JOB_ID}" in text and "#SBATCH --job-name=rayan-source-hash-formats" in text
+    assert "#SBATCH --mem=4G" in text and "#SBATCH --cpus-per-task=1" in text and "#SBATCH --time=00:15:00" in text
+    assert text.count('exec "$UDOCKER" run') == 1 and "rayan-n0-base" in text
+    assert '"$NAMESPACE_HELPER" -- /bin/bash' in text and 'exec python -I "$1" --p2-source-hash-format-stage' in text
+    prefix = text.split('"$NAMESPACE_HELPER" -- /bin/bash')[0]
+    for field in ("PRIVATE_PACKAGE_PATH", "PERSONALITY_RAW_SOURCE_PATH", "PERSONALITY_RAW_MEMBER_MAP_PATH", "PERSONALITY_REVIEWED_STRUCTURE_PATH"):
+        assert f'realpath -e "${field}"' not in prefix and f'stat -c %U "${field}"' not in prefix
+    for forbidden in ("pip install", "udocker setup", "compile_package", "derive_raw_inference_registry", "--p2-source-hash-comparison-stage"):
+        assert forbidden not in text
+    bash = str(Path("C:/Program Files/Git/bin/bash.exe")) if Path("C:/Program Files/Git/bin/bash.exe").is_file() else shutil.which("bash")
+    if bash:
+        checked = subprocess.run([bash, "-n", str(FORMAT_SBATCH)], capture_output=True, text=True)
+        assert checked.returncode == 0, checked.stderr

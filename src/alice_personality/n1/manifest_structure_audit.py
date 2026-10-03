@@ -38,6 +38,8 @@ MAX_STRUCTURE_KEY_BYTES = 1024 * 1024
 MAX_STRUCTURE_BYTES = 4 * 1024 * 1024
 COMPARISON_SCHEMA = "alice-personality-declared-source-hash-comparison-v1"
 COMPARISON_STATE = "DECLARED_SOURCE_HASHES_COMPARED_UNQUALIFIED"
+FORMAT_SCHEMA = "alice-personality-declared-source-hash-format-diagnostic-v1"
+FORMAT_STATE = "DECLARED_SOURCE_HASH_FORMAT_DIAGNOSED_UNQUALIFIED"
 LEGACY_RESERVE_SHA256 = "83901fc75ff25c1dda6188ad3b1fab65faf8f833df74b8c5c9e85fc6ea755327"
 LEGACY_RESERVE_PUBLIC_MEMBER = "reserve/legacy_einf_720_raw_reserve.jsonl"
 REVIEWED_STRUCTURE_FILE_SHA256 = "4e55e0c8ca124565d45cdf7f05b5ae5ad01754c7505e5ae84e9aed32f07e1788"
@@ -502,6 +504,114 @@ def compare_declared_source_hashes(curated_archive_path: str | Path, *,
             "opened_identity_payload_member_count": 0, "implementation_sha256": discovered["implementation_sha256"],
             **{key: False for key in _FLAGS}}
         verify_comparison_result(result)
+        return result
+    except ManifestStructureAuditError:
+        raise
+    except (raw.RawInferenceLineageError, OSError, ValueError, UnicodeError, TypeError, RuntimeError, KeyError,
+            EOFError, NotImplementedError, RecursionError, zlib.error, lzma.LZMAError,
+            zipfile.BadZipFile, zipfile.LargeZipFile):
+        raise ManifestStructureAuditError("audit_refused") from None
+
+
+def _declared_format_counts(manifest: dict) -> dict:
+    """Classify literal string formats only; never compare or normalize digests."""
+    values = manifest.get("source_hashes")
+    if type(values) is not dict or len(values) != DECLARED_SOURCE_HASH_COUNT or \
+            type(manifest.get("source_package")) is not str or any(type(value) is not str for value in values.values()):
+        _fail("audit_declared_map_shape_refused")
+    counts = {"lowercase_64hex_count": 0, "uppercase_64hex_count": 0,
+              "empty_string_count": 0, "other_nonempty_string_count": 0}
+    for value in values.values():
+        if re.fullmatch(r"[0-9a-f]{64}", value) is not None:
+            counts["lowercase_64hex_count"] += 1
+        elif re.fullmatch(r"[0-9a-fA-F]{64}", value) is not None:
+            # This bucket contains one or more uppercase hex characters.
+            counts["uppercase_64hex_count"] += 1
+        elif value == "":
+            counts["empty_string_count"] += 1
+        else:
+            counts["other_nonempty_string_count"] += 1
+    return counts
+
+
+def verify_format_result(value: dict) -> None:
+    digests = {"curated_archive_sha256", "raw_archive_sha256", "curated_manifest_sha256",
+        "raw_generation_manifest_sha256", "curated_checksum_ledger_sha256", "raw_checksum_ledger_sha256",
+        "reviewed_structure_file_sha256", "protected_structure_sha256"}
+    buckets = {"lowercase_64hex_count", "uppercase_64hex_count", "empty_string_count", "other_nonempty_string_count"}
+    counts = buckets | {"declared_source_hash_count", "opened_json_manifest_count",
+                       "opened_checksum_ledger_count", "opened_identity_payload_member_count"}
+    false = set(_FLAGS) | {"link_compared", "original_source_independently_verified", "legacy_namespace_proven",
+        "source_admission", "digest_search_performed", "digest_comparison_performed", "hash_normalization_performed",
+        "reference_registry_written", "model_training_performed"}
+    true = {"reviewed_structure_matched", "reviewed_manifest_pins_matched"}
+    if type(value) is not dict or set(value) != digests | counts | false | true | {"schema", "state", "implementation_sha256"} \
+            or value["schema"] != FORMAT_SCHEMA or value["state"] != FORMAT_STATE \
+            or any(value[key] is not False for key in false) or any(value[key] is not True for key in true) \
+            or any(type(value[key]) is not int for key in counts) \
+            or any(not 0 <= value[key] <= DECLARED_SOURCE_HASH_COUNT for key in buckets) \
+            or sum(value[key] for key in buckets) != DECLARED_SOURCE_HASH_COUNT \
+            or value["declared_source_hash_count"] != DECLARED_SOURCE_HASH_COUNT \
+            or (value["opened_json_manifest_count"], value["opened_checksum_ledger_count"],
+                value["opened_identity_payload_member_count"]) != (2, 2, 0):
+        _fail("audit_metadata_refused")
+    for key in digests:
+        if raw._digest(value[key]) != value[key]:
+            _fail("audit_metadata_refused")
+    code = value["implementation_sha256"]
+    if type(code) is not dict or set(code) != {"compiler.py", "raw_inference_lineage.py", "manifest_structure_audit.py", "__init__.py"}:
+        _fail("audit_metadata_refused")
+    if any(raw._digest(digest) != digest for digest in code.values()):
+        _fail("audit_metadata_refused")
+
+
+def diagnose_declared_source_hash_formats(curated_archive_path: str | Path, *,
+        curated_pin: compiler.PackagePin, raw_archive_path: str | Path,
+        expected_raw_archive_sha256: str, raw_member_map: dict,
+        reviewed_structure_path: str | Path, expected_reviewed_structure_file_sha256: str,
+        expected_curated_manifest_sha256: str, expected_raw_generation_manifest_sha256: str) -> dict:
+    """Count formats in the exact reviewed map; no digest equality or authority.
+
+    Caller-established isolation is mandatory before any private path operation.
+    Old reviewed evidence is read-only. All four metadata streams and both source
+    descriptors use the same custody closure as discovery and strict comparison.
+    """
+    try:
+        curated_digest = raw._digest(expected_curated_manifest_sha256)
+        raw_digest = raw._digest(expected_raw_generation_manifest_sha256)
+        with _PinnedFile(reviewed_structure_path, expected_reviewed_structure_file_sha256,
+                         MAX_STRUCTURE_BYTES + 1) as reviewed_file:
+            reviewed_bytes = reviewed_file.bounded_bytes()
+            reviewed = raw._json(reviewed_bytes)
+            counts = None
+
+            def observe(protected, manifest):
+                nonlocal counts
+                if reviewed_bytes != raw._canonical(reviewed) + b"\n" or raw._canonical(protected) != raw._canonical(reviewed):
+                    _fail("audit_reviewed_structure_refused")
+                if protected["curated"]["manifest_sha256"] != curated_digest or protected["raw"]["manifest_sha256"] != raw_digest:
+                    _fail("audit_reviewed_manifest_pins_refused")
+                counts = _declared_format_counts(manifest)
+
+            _, discovered = _inspect_manifests(curated_archive_path, curated_pin=curated_pin,
+                raw_archive_path=raw_archive_path, expected_raw_archive_sha256=expected_raw_archive_sha256,
+                raw_member_map=raw_member_map, observer=observe)
+            reviewed_file.verify()
+            if implementation_hashes() != discovered["implementation_sha256"]:
+                _fail("audit_code_changed")
+        digests = ("curated_archive_sha256", "raw_archive_sha256", "curated_manifest_sha256",
+                   "raw_generation_manifest_sha256", "curated_checksum_ledger_sha256", "raw_checksum_ledger_sha256",
+                   "protected_structure_sha256")
+        result = {"schema": FORMAT_SCHEMA, "state": FORMAT_STATE, **{key: discovered[key] for key in digests},
+            "reviewed_structure_file_sha256": raw._digest(expected_reviewed_structure_file_sha256),
+            "declared_source_hash_count": DECLARED_SOURCE_HASH_COUNT, **counts,
+            "opened_json_manifest_count": 2, "opened_checksum_ledger_count": 2, "opened_identity_payload_member_count": 0,
+            "reviewed_structure_matched": True, "reviewed_manifest_pins_matched": True,
+            "link_compared": False, "original_source_independently_verified": False, "legacy_namespace_proven": False,
+            "source_admission": False, "digest_search_performed": False, "digest_comparison_performed": False,
+            "hash_normalization_performed": False, "reference_registry_written": False, "model_training_performed": False,
+            "implementation_sha256": discovered["implementation_sha256"], **{key: False for key in _FLAGS}}
+        verify_format_result(result)
         return result
     except ManifestStructureAuditError:
         raise
