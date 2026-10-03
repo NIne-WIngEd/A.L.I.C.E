@@ -1,0 +1,39 @@
+name: Personality Gemma N0 preparation
+
+on:
+  push:
+    branches: ["codex/personality-gemma-v1-preparation"]
+  pull_request:
+    paths:
+      - "src/alice_foundation/**"
+      - "src/alice_personality/**"
+      - "scripts/eipm/gemma_n0/**"
+      - "scripts/eipm/n1/**"
+      - "evaluation/eipm/gemma_n0/**"
+      - "tests/foundation/**"
+      - "tests/personality/**"
+      - ".github/workflows/personality-gemma-n0-preparation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  public-fixtures:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install CPU test dependencies
+        run: |
+          python -m pip install -r requirements-dev.txt
+          python -m pip install numpy==2.5.3
+          python -m pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu
+      - name: Verify source custody and personality boundary
+        run: |
+          python -m pytest tests/foundation tests/personality -q
+          python scripts/validate_phase0.py
+          git diff --check
+      # These tiny fixtures never download Gemma or approve learned behavior.
