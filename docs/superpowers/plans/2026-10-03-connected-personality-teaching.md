@@ -1,5 +1,9 @@
 # Connected personality teaching implementation plan
 
+**Current continuation:** the [4 October route review](#4-october-route-review)
+supersedes automatic execution of another small packet. Construction job 576688
+passed; the upstream correction is proposed and has not been implemented.
+
 > For agentic workers: use executing-plans to implement inline; one whole-change review at completion.
 
 **Goal:** Connect separately reviewed complete teaching cases to conditional N1 representations, contextual N2 judgment and separate N3 calibration, without another isolated relation-readout experiment.
@@ -400,3 +404,17 @@ Actual successor576688 submitted under mxrayan; result verification remains pend
 
 Job 576688 still covers only v1r4 (three documents / five cases). The v2a packet
 is a separate unsubmitted construction candidate (four documents / six cases).
+# 4 October route review
+
+The next-run instruction in the historical construction ledger is superseded
+by the owner's concern that narrow repairs are displacing full model construction.
+Actual job 576688 completed and materialized all five cases; it performed zero
+training steps. V2a remains unsubmitted. No new compute run is pending.
+
+The [current route audit](../../eipm/FULL_PERSONALITY_BUILD_STATE_2026-10-02.md#current-route-audit--4-october-2026)
+identifies a demonstrated old prequalification gate in the governed trainer,
+incomplete governing curriculum, unresolved calibration lineage/N3 outcomes and
+missing response/delivery consumption. Its proposed correction must be discussed
+with the owner before more fixes. Preserve the working full-token producer,
+typed materialization, deterministic source authority and replay/checkpoint
+mechanics; do not infer that the whole architecture failed from a narrow job.

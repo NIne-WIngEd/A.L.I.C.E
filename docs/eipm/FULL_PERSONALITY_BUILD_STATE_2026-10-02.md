@@ -1,5 +1,9 @@
 # Full Alice personality build state
 
+**Current snapshot:** see the [4 October route audit](#current-route-audit--4-october-2026).
+Job 576688 materialized five cases successfully; no private personality training
+or N0 approval has occurred. Further implementation is under upstream route review.
+
 The owner requires the full Alice personality described in the comic and
 contracts, with its construction captured for full Fable v1 FBM. There is no
 prototype capability ceiling. FloRA work is outside this scope.
@@ -764,3 +768,148 @@ This packet is not submitted to an actual publisher yet. It does not change the
 running 576688 inputs or establish publisher features, voice fidelity or the
 full 2556-draft curriculum. Its fixed public proposal summary and paired FBM
 trace capture the concrete progress and the pending consumer execution.
+# Current route audit — 4 October 2026
+
+**Current status:** the latest actual construction job passed; the full
+personality has not been trained, N0 is not approved, and no successor job has
+been launched. This snapshot supersedes the pending-576688 continuation below.
+Historical attempts and their original states remain preserved.
+
+The owner identified repeated narrow repairs and inadequate progress toward the
+full model. That criticism applies to the construction route even though the
+latest scheduler result is successful. Public fixture counts, source recovery,
+and annotation materialization have received disproportionate attention while
+the substantive connected model remains unbuilt. The route needs correction
+before another small packet is submitted.
+
+## Latest observed result
+
+Magnolia job **576688**, executed as **mxrayan**, completed with exit **0:0**
+after **46m14s**. Its paired fixed receipts were recovered and verified against
+the externally pinned source, documents, annotations, preparation, executing
+code, helper and isolation guard. Three complete source-bound documents produced
+real Gemma features, retaining all 49 states at width 3840. Five cases
+materialized: three N1 and two N2, zero calibration cases. The protected feature
+and materialization artifacts remain in the existing owner-only Magnolia
+custody. Reload verification belongs to that guarded remote execution; no local
+private tensor replay is claimed.
+
+- [Feature-retention receipt](../../evaluation/eipm/gemma_n0/receipts/magnolia_576688_closed_feature_retention_summary.json):
+  canonical seal `024abba38f31444fa2b8e756e6031d5c9c3a1f14066345f140e2ec6dbc43ca25`;
+  file SHA-256 `6620410eea9b3f04d089e36be98dae798ee722a03da15cf7100976afea2570e9`.
+- [Materialization receipt](../../evaluation/eipm/gemma_n0/receipts/magnolia_576688_primary_materialization_summary.json):
+  canonical seal `9be2e65b6b1a352eb260f2fa94d41f8c5875763c59fb51861c40aa7e8eced192`;
+  file SHA-256 `154f24c618ec258f8a5f02f31f961828714f5e4c8976f7e9cc1375555ee5f91a`.
+
+Both receipts record zero gradient steps; the final receipt records zero admitted
+teaching batches. Source acceptance, training authority, owner acceptance, N0
+approval and personality qualification remain false. The earlier 576683 failure
+and its unresolved sole internal cause are not rewritten by this result.
+
+## Findings across the connected route
+
+| Component | What exists | Unresolved issue and consequence |
+| --- | --- | --- |
+| Gemma N0 | Exact non-IT 24 GB source custody; personality-specific headless frozen representation interface; real complete token/layer forwards. | This is implemented role preparation, not an approved semantic foundation or proof of suppressed inherited preference. The checkpoint weights are intentionally unchanged under the owner's v1 decision. |
+| Training admission | Source, feature, target, code, recipe, authorization and replay binding. | `teaching/trainer.py` requires an externally pinned `QUALIFIED_PERSONALITY_N0` report before any governed identity gradients. The separate public qualifier requires 39 coverage cells in seven groups, including inherited-preference causality, and independent target/protocol/owner reviews. This still implements the prequalification sequence the owner stopped. |
+| N1 | Trainable token/layer readout, evidence/concept relations, conditional applicability and source support/disconfirmation outputs. | The recovered 2556 drafts are source material, not a complete governing curriculum. Actual publisher-backed teaching currently covers only three N1 cases. Broad conditional concepts, exceptions, contradictory evidence and uncertainty teaching remain incomplete. |
+| N2 / EIPM | Context-conditioned candidates, dynamic semantic heads, partial comparisons, co-validity, evidence pointers and expressive controls. | Only two narrow N2 cases have actual publisher features. Values and trade-offs, characteristic disagreement, boundaries, repair, emotional interpretation and diverse expressive choices do not yet have adequate reviewed coverage. No private N2 learning has run. |
+| N3 | Separate confidence temperatures and a learned three-signal risk adjustment, with N1/N2 frozen during calibration. | No reviewed actual outcome/fidelity curriculum exists. Temperature scaling cannot repair incorrect ranking. The risk adjustment sees margin magnitude, predicted uncertainty and sufficiency, not the complete response or contextual identity representation. Its adequacy for owner fidelity is unestablished, rather than an observed trained-model failure. |
+| Splits | Complete source ancestry is retained; connected originals remain in their declared families. | All eight compiled source families are TRAIN. Case and trainer rules require every referenced source family to match the case split. They do not separately represent shared immutable identity references and the ancestry of fresh judgments/outcomes. The calibration-data route is therefore unresolved; neither random splitting nor renamed family IDs creates independence. |
+| Words and delivery | Serializable rich decision packet and training checkpoint mechanics. | No assembled service in this branch consumes the trained personality packet and enforces it in actual words/delivery. The packet alone cannot establish the comic's enduring point of view across replaceable generators. |
+| Compute route | Actual CPU construction completes with full source geometry. | This three-document/five-case run took 46m14s and retained 6,060,459,510 bytes across feature and materialization artifacts. The producer deduplicates texts within a document, but the helper invokes it again per document. The full curriculum's encoding, padding, retained-state and training costs have not been budgeted. Repeating small CPU packets is not an established scalable build route. |
+
+The training-sequence mismatch is demonstrated by the implementation, not a
+hypothesis about model capacity. The owner-directed build-before-full-evaluation
+instruction and the original
+`EIPM_MAINSTREAMED_BUILD_AND_TEACHING_DOCTRINE_2026-09-13.md` explicitly retire a
+standing N0 qualification chain. Documentation adopted the new direction while
+the governed trainer retained the old prerequisite. No qualification report
+should be fabricated to get through it.
+
+The family-granularity and N3-representation findings are design/data questions
+to resolve. No valid independently held-out outcomes or owner-fidelity labels
+were discovered by this audit. No parameter-count increase, backbone surgery,
+new external teacher or replacement architecture is justified by these findings.
+
+The elapsed time is for the entire job, not an isolated backbone benchmark.
+Artifact size is for this actual packet; it is not a justified linear estimate
+for all 2556 drafts. Before bulk teaching, account for unique immutable source
+encoding, complete token/layer retention, frame assembly and downstream training.
+Any reuse of frozen features must retain owner custody and exact prepared-source,
+text, implementation and closing-session bindings. No layer cap, quantization or
+new feature-cache implementation is selected by this audit.
+
+## Evidence and focused research
+
+The audit traced producer → materializer → admitted trainer → N1/N2/N3 → packet
+export and searched the available runtime source for its consumer. The producer
+preserves complete per-entry tokens and layers; the learned readout attends over
+them. It is not a static whole-document mean. These working interfaces should
+be retained instead of discarding all previous construction.
+
+Original role doctrine was checked in `alice-eipm-v1-build` at
+`021c5021a98104b35f9c8e94b19e48d21f25f132`; current executing scientific code is
+`0eeb7d2f8a55f8d3c78ef19fd629fd218161e3dc`. The Fable comic's grounded point of
+view, disagreement with owner agency, and continuity scenes were checked in
+`comic/STORYBOARD.md` at `1805a01c`. They describe required behavior; they are not
+private source-person labels. Existing frontier intake was consulted at
+`research/frontier-watch@bd04f9c6147ab27178508f3bd45e50cffaeca19f` and
+`research/frontier-current-impact-20260923@f813268fc42598bf5fda776e7a17fbf42b13cf40`.
+
+Three primary mechanisms were examined for this audit:
+
+- [PAL's frozen-foundation variant](https://github.com/RamyaLab/pluralistic-alignment)
+  learns personalized projectors and user weights from contextual preference
+  pairs; its [training entry point](https://raw.githubusercontent.com/RamyaLab/pluralistic-alignment/main/main_pal_b_fix_llm.py)
+  connects data, learning and export-oriented use. It supports the feasibility of
+  modular personalized learning, but its pairwise/scalar preference task is not
+  the full ALICE decision contract and supplies no identity truth.
+- [Temperature scaling](https://arxiv.org/html/1706.04599) fits a trained model's
+  confidence on validation data and preserves the predicted class. It explains
+  why confidence calibration must follow substantive judgment learning and
+  cannot repair wrong choices.
+- [RewardUQ's methods and limitations](https://arxiv.org/html/2602.24040v1)
+  distinguish prediction accuracy, confidence and uncertainty bounds; its frozen
+  backbone head ensemble uses independent heads' variance. Its study does not
+  establish downstream identity fidelity. No ensemble, reward scalar, checkpoint
+  or new dependency is adopted here.
+
+## Proposed correction before further implementation
+
+1. **Separate construction from approval in the actual trainer.** Admit only
+   source-bound, explicitly authorized development learning with the exact
+   prepared N0 and valid target mechanics. Retain custody, privacy, source
+   authority and checkpoint checks. Keep N0/personality approval and independent
+   capability qualification explicit later decisions; do not fake their reports.
+2. **Construct one role-complete curriculum and connected execution route.**
+   Map governing capabilities to actually read sources, present conditions,
+   competing choices, typed targets and unsupported regions. Root/owner remain
+   the teachers. E0, E-INF and A-SYN span the stages with their original authority;
+   source rows and unselected alternatives are not automatic targets or negatives.
+   Include principled disagreement, values/conflict, boundaries, repair, emotion,
+   humor, uncertainty, initiative and expression where the evidence permits them.
+   Budget full-corpus compute and feature reuse before repeating per-packet
+   extraction; use the existing Magnolia/Kaggle route and preserve full geometry.
+3. **Resolve calibration lineage and N3 outcomes within that build.** Explicitly
+   distinguish fixed reference knowledge from teaching/outcome ancestry while
+   preserving actual dependencies and declared source splits. Use reviewed
+   outputs of the connected N1/N2 and response path to construct N3 targets.
+   Author confidence and simulated events are not independently observed outcomes
+   or lived experience. Determine whether N3 has the information needed for each
+   intended fidelity target before adding capacity or calibrating arbitrary scores.
+4. **Connect the real response and delivery consumer, then train and inspect the
+   assembled model.** Preserve resumable N1/N2/N3 states and actual output lineage.
+   Validate construction as it proceeds; judge full capability and remaining
+   Gemma influence on the connected learned behavior. Research and repair a
+   demonstrated cause rather than running another isolated readout tournament.
+
+This is a concrete route diagnosis and correction proposal. No scientific
+implementation, private training authorization, owner approval or future job
+result is inferred from it. The next action is to discuss this upstream correction
+with the owner before attempting more fixes. V2a remains an unsubmitted proposal,
+not an automatic next run. FBM captures the verified small construction result
+and the route failure lesson separately, without promoting either to trained
+builder competence.
+
+---

@@ -2,6 +2,13 @@
 
 Status: role preparation under construction; no approved N0 or identity checkpoint.
 
+**4 October route audit:** the historical sequence below still makes broad public
+N0 qualification a prerequisite to personality learning. The governed trainer
+also enforces that old sequence. This conflicts with the owner's later direction
+to complete the connected build before full capability evaluation. See the
+[current diagnosis and proposed construction/approval separation](FULL_PERSONALITY_BUILD_STATE_2026-10-02.md#current-route-audit--4-october-2026).
+The code has not yet been changed; no qualification or approval is inferred.
+
 ## Current owner decision
 
 The October 2, 2026 instruction supersedes the custom-N0 execution commands in
