@@ -1,0 +1,186 @@
+{
+  "schema": "mfm-root-cause-investigation-state-v1",
+  "recorded_at_utc": "2026-10-04T18:31:45.130923+00:00",
+  "source_export": {
+    "jobs": {
+      "576630": "TIMEOUT",
+      "576631": "TIMEOUT",
+      "576632": "COMPLETED",
+      "576633": "COMPLETED_SKIP"
+    },
+    "train_cases": 432,
+    "development_cases": 9,
+    "complete": true,
+    "feature_bank_sha256": "516a429326645316d42c1bbc2da82940699cb7146092a5bf9a156dd9e7194c0d"
+  },
+  "learning_job": {
+    "job": 576637,
+    "state": "TIMEOUT_DURING_SEEDED_GENERATION",
+    "probe_component": {
+      "feature_bank_sha256": "516a429326645316d42c1bbc2da82940699cb7146092a5bf9a156dd9e7194c0d",
+      "full_fit": false,
+      "probe_only": true,
+      "qualified_for_product": false,
+      "result": {
+        "atol": 1e-06,
+        "backward_and_restart_passed": true,
+        "checkpoint_reload_executed": true,
+        "first_and_later_steps": [
+          {
+            "gradient_norm": 983.400146484375,
+            "mean_loss": 221.04344177246094,
+            "train_examples": 16
+          },
+          {
+            "gradient_norm": 457.71624755859375,
+            "mean_loss": 120.96071577072144,
+            "train_examples": 16
+          }
+        ],
+        "model_max_abs_difference": 0.0,
+        "optimizer_max_abs_difference": 0.0,
+        "optimizer_steps": 3,
+        "probe_weights_sha256": "db7ba2a0566456ac8718cf17d7e5e4834a3e084a36f09c0e5a1655d40f3004e1",
+        "resumed_next_step": {
+          "gradient_norm": 397.603515625,
+          "mean_loss": 97.33990955352783,
+          "train_examples": 16
+        },
+        "rtol": 1e-05
+      },
+      "run_sha256": "021217453a301d448652b9d23b6ea29b6f2c6e53c60543cc26b62054d712e5aa",
+      "schema": "mfm-v16-cached-specialist-artifact-v1",
+      "scope": "cache-only teacher learning; diagnostic CE is not generated formation behavior",
+      "specialist_config": {
+        "base_hidden_size": 3840,
+        "end_token_id": 1,
+        "heads": 12,
+        "layers": 6,
+        "logit_chunk_tokens": 64,
+        "max_target_tokens": 8192,
+        "pad_token_id": 0,
+        "start_token_id": 2,
+        "vocabulary_size": 262144,
+        "width": 768
+      },
+      "teacher_fit": true,
+      "record_sha256": "c8dc6bf16463b140ea5b7aadad9e5fbc06f400127b6941c0bea876545c9710d7"
+    },
+    "fit_component": {
+      "feature_bank_sha256": "516a429326645316d42c1bbc2da82940699cb7146092a5bf9a156dd9e7194c0d",
+      "full_fit": false,
+      "probe_only": false,
+      "qualified_for_product": false,
+      "result": {
+        "all_train_epochs_completed": true,
+        "development_has_no_gradients": true,
+        "diagnostic_development_teacher_forced_loss": 25.1405109181972,
+        "independent_qualification": false,
+        "optimizer_steps": 54,
+        "seeded_development_teacher_forced_loss": 229.01781805623756,
+        "trained_weights_sha256": "4be2d61d0198fe1bfe3a5910d01ecfe1d2a00c422fa52c0ee3df6d8057209536"
+      },
+      "run_sha256": "d30ff7b838682cb5f5523ba1ac796e9da2ce1f25e41daace8685356925dffb34",
+      "schema": "mfm-v16-cached-specialist-artifact-v1",
+      "scope": "cache-only teacher learning; diagnostic CE is not generated formation behavior",
+      "specialist_config": {
+        "base_hidden_size": 3840,
+        "end_token_id": 1,
+        "heads": 12,
+        "layers": 6,
+        "logit_chunk_tokens": 64,
+        "max_target_tokens": 8192,
+        "pad_token_id": 0,
+        "start_token_id": 2,
+        "vocabulary_size": 262144,
+        "width": 768
+      },
+      "teacher_fit": true,
+      "record_sha256": "12537c467518773bfe7fd2abcd9a7e9eaedee80b623ee827ce0ec8e640dbe166"
+    },
+    "fit_run_sha256": "d30ff7b838682cb5f5523ba1ac796e9da2ce1f25e41daace8685356925dffb34",
+    "fit_completed": true,
+    "epochs": 2,
+    "optimizer_steps": 54,
+    "seconds_fit_reported": 26249.54974240437,
+    "checkpoint": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-fit-576637/checkpoint-00000054"
+  },
+  "generation": {
+    "max_new_tokens": 2048,
+    "trained_completed": 9,
+    "trained_invalid": 9,
+    "trained_eos_observed": 0,
+    "seeded_completed": 3,
+    "seeded_invalid": 3,
+    "seeded_unique_tokens_each": 1,
+    "full_matched_comparison_complete": false,
+    "recovery_plan_sha256": "25749a7680ba86dcb294e29931ebb94af36a31947c52fec42aa364cb1e85f98b",
+    "original_output_pins": {
+      "seeded-untrained": {
+        "completed_cases": 3,
+        "sha256": "fec211e61dc891913d50a7019bbd311207f193e564b9e9f3db7d43542bca5523"
+      },
+      "trained": {
+        "completed_cases": 9,
+        "sha256": "04273afc8c38ccb237e65e230a053711fe622d72ae53d49120c396829d224c77"
+      }
+    }
+  },
+  "root_analysis": {
+    "job": 576702,
+    "state_at_snapshot": "RUNNING",
+    "code_commit": "322c9c5f19ec46846d47a27f5500ec2a5838ef79",
+    "device": "cpu",
+    "threads": 12,
+    "memory_gb": 64,
+    "allocation_hours": 6,
+    "owner_uid": 1905,
+    "namespace_verified": "loopback-only and distinct net namespace",
+    "runtime_tests_passed": 7,
+    "local_relevant_tests_passed": 19,
+    "receipt": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-root-analysis-576702.json",
+    "recovered_diagnostic": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-generated-recovered-576702/diagnostic.json",
+    "objective": "Trace numerical scale, complete target alignment, contract/value errors and actual source dependence before a corrective fit",
+    "corrective_fit_launched": false,
+    "new_weights_exported": false
+  },
+  "causal_scope": {
+    "local_public_probe": {
+      "torch": "2.14.1+cpu",
+      "vocabulary": 262144,
+      "width": 768,
+      "original": {
+        "copy_positions": 4,
+        "positions": 4,
+        "mean_entropy": 7.286752014489049e-44,
+        "next_token_loss": 286.0789489746094
+      },
+      "unfitted_embedding_intervention_0_02": {
+        "copy_positions": 0,
+        "mean_entropy": 12.322334289550781,
+        "next_token_loss": 12.805130004882812
+      }
+    },
+    "supported_mechanism": "Default unit-scale embeddings, residual token path and tied output head create saturated initial copying in the local full-configured model.",
+    "not_yet_established": [
+      "same numerical diagnosis in actual Torch 2.7.1 corpus runtime",
+      "sole cause of trained failure",
+      "value accuracy and source-conditioning behavior",
+      "adequacy of objective and data for full MFM",
+      "successful successor formation model"
+    ],
+    "design_risks": [
+      "fresh large-vocabulary language interface with only 54 updates",
+      "aggregate loss conflates format and semantic values",
+      "exact source copying learned through frozen states without input-ID copy channel",
+      "single-author curriculum insufficient for independent transfer claims"
+    ]
+  },
+  "frontier_watch_reviewed_commit": "3bea33189",
+  "independent_gold": false,
+  "final_opened": false,
+  "memory_activation": false,
+  "qualified_for_product": false,
+  "paid_compute_purchased": false,
+  "durable_model_backup_verified": false
+}

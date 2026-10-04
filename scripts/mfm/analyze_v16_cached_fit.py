@@ -69,9 +69,13 @@ def target_groups(tokenizer, example, maximum):
     if list(encoded['input_ids']) != labels[:-1]:
         raise CognitiveKernelContractError('analysis tokenizer alignment differs')
     spans = []
-    for match in re.finditer(r'"(?:[^"\\]|\\.)*"', answer):
+    # JSON scalars include numeric offsets/confidence, booleans and null;
+    # treating these as punctuation would hide grounding-critical errors.
+    scalar = r'"(?:[^"\\]|\\.)*"|-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?|true|false|null'
+    for match in re.finditer(scalar, answer):
         rest = answer[match.end():].lstrip()
-        spans.append((match.start(), match.end(), 'key' if rest.startswith(':') else 'value'))
+        is_key = match.group().startswith('"') and rest.startswith(':')
+        spans.append((match.start(), match.end(), 'key' if is_key else 'value'))
     groups = []
     for left, right in encoded['offset_mapping']:
         overlap = [(max(0, min(right, end) - max(left, start)), kind) for start, end, kind in spans]

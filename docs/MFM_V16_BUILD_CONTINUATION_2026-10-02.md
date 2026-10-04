@@ -454,3 +454,48 @@ verification and October 4 evolvable-memory notes. Those support source-native
 grounding and independent outcome evidence; they neither repair this numerical
 failure nor justify replacing MFM with a memory-program search. No capability
 target, authority boundary, source custody or FINAL condition is relaxed.
+
+### Actual-runtime findings and interpretation boundary
+
+**576702** completed its read-only analysis in 186.19 seconds, sealed digest
+`4a6845745980f091aed57ee6e077490acecff7ed50410aa10604866d2dea03fe`.
+All 441 targets round-tripped with the exact BOS/body/EOS alignment. They contain
+199,104 tokens total and only 728 distinct target token IDs out of the 262,144
+vocabulary. The six full-length sampled train/development cases show:
+
+- Original seed: every teacher-prefix position predicts the previous input
+  token; mean losses 227.63–237.19, zero first-position entropy and essentially
+  zero probability of the correct initial token and EOS.
+- Trained matched sources: mean losses 20.24–25.97 and token accuracy
+  30.58–33.87%. Removing source states raises loss to 78.83–80.91 and input-copy
+  rates to 83.85–89.33%. Swapping real sources changes loss by only
+  -0.206 to +0.232. Nonzero source activation is therefore important, but this
+  broad teacher-forced test does not establish source-specific grounding.
+- Scaling original seed embeddings only: loss 12.55–12.62, entropy about 12.32,
+  and zero next-token accuracy. This confirms relief of numerical saturation,
+  **not learning or a useful memory model**.
+
+The supported design defect is an uncalibrated tied lexical/output interface
+coupled to a residual token path. The completed training has partly learned
+around it, rather than reaching an adequate conditional model. Data scale,
+learning budget and evidence-specific credit remain coupled unresolved design
+questions. Both numerical trainability and actual evidence-dependent formation
+must be repaired; lower CE or adjusted decoding alone cannot establish this.
+Teacher forcing reveals preceding gold values, and broad source swaps also
+change context; neither is a clean content-only semantic intervention. Do not
+call the specialist source-blind or claim a complete causal closure from these
+six measurements. The existing full generated failure remains decisive.
+
+An independent static review found two diagnostic edge defects. The initial
+grouping classified numeric offsets/confidence, booleans and null as structure;
+thus its `value` group covers **quoted values only**, and the first receipt must
+not be presented as a complete scalar-value metric. Correct grouping follows
+[RFC 8259 scalar syntax](https://www.rfc-editor.org/rfc/rfc8259.html#section-3).
+The resume check also permitted EOS after an already exhausted non-EOS budget,
+contradicting the reference decoder's iteration count. Both defects were first
+reproduced by failing tests and then corrected; **21 relevant tests passed**.
+All original retained rows have no EOS, so the resume edge did not affect them.
+The executing 322c9c5 job stays immutable. A separate corrected analysis receipt
+will supersede grouped measurements while retaining the first receipt and the
+unchanged completed model. No model repair, repetition penalty, grammar mask,
+new architecture, target narrowing or further fit follows from this review.

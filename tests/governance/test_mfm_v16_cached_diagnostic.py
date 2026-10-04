@@ -144,6 +144,23 @@ class CachedDiagnosticTests(unittest.TestCase):
                     diagnostic.load_resume_rows(path, **{**kwargs,
                         "expected_sha256": cached.training.shared._digest(path)})
 
+    def test_resume_rejects_eos_that_would_need_an_extra_decode_iteration(self):
+        example = learning_example_v16_from_record(case_record())
+        raw = json.dumps(example.target.output_record())
+        row = {"case_id": example.case_id, "split": "development", "control": "trained",
+            "weights_sha256": "a" * 64, "inference_run_id": "fixture",
+            "context_sha256": example.context.content_digest(),
+            "model_input_sha256": diagnostic.features.case_key(example), "generated_token_ids": [3, 4],
+            **diagnostic.validate_generated(raw, True, example, "a" * 64, "fixture")}
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "trained.jsonl"
+            path.write_text(json.dumps(row) + "\n")
+            with self.assertRaises(CognitiveKernelContractError):
+                diagnostic.load_resume_rows(path, expected_sha256=cached.training.shared._digest(path),
+                    control="trained", weight_digest="a" * 64, run_id="fixture", examples=[example],
+                    tokenizer=SimpleNamespace(decode=lambda *a, **k: raw),
+                    config=SimpleNamespace(vocabulary_size=9, end_token_id=1), max_new_tokens=2)
+
 
 if __name__ == "__main__":
     unittest.main()

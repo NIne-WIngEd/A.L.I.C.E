@@ -132,7 +132,8 @@ def load_resume_rows(path, *, expected_sha256, control, weight_digest, run_id,
         if type(tokens) is not list or type(ended) is not bool or \
                 any(type(t) is not int or not 0 <= t < config.vocabulary_size or
                     t == config.end_token_id for t in tokens) or \
-                len(tokens) > max_new_tokens or (not ended and len(tokens) != max_new_tokens):
+                len(tokens) > max_new_tokens or (ended and len(tokens) >= max_new_tokens) or \
+                (not ended and len(tokens) != max_new_tokens):
             raise CognitiveKernelContractError("partial diagnostic tokens or stopping differ")
         validated = validate_generated(tokenizer.decode(tokens, skip_special_tokens=False),
                                        ended, example, weight_digest, run_id)
