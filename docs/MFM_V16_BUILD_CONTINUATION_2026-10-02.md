@@ -499,3 +499,24 @@ The executing 322c9c5 job stays immutable. A separate corrected analysis receipt
 will supersede grouped measurements while retaining the first receipt and the
 unchanged completed model. No model repair, repetition penalty, grammar mask,
 new architecture, target narrowing or further fit follows from this review.
+
+### Completed controls and corrected construction contract (October 4)
+
+Both 576702 and 576703 are COMPLETED. Complete matched generation has 9/9
+invalid outputs for both fitted and seeded controls, sealed
+`a17b610d62887fb8dd371b9a72bee7f75287b8a78cf8f803cf45b81eb625c9c6`.
+Corrected scalar analysis is sealed
+`5e42932974ab7c8c083fed21c68b0606e7cbebd44b271f9ea7c2e9df64b5b6a7`.
+The earlier pending states above are historical snapshots. Original receipts,
+failed weights, source states and optimizer checkpoints remain intact.
+
+The owner's test-design challenge opened the broader producer/objective/
+evaluation audit. Missing prior-memory IDs, arbitrary local-ID supervision
+and exact mismatches misreported as falsity are now independently reproduced.
+See [the complete successor ledger](MFM_V16_OUTPUT_INTERFACE_SUCCESSOR_2026-10-04.md).
+The byte proposal is on hold. The correction preserves the selected original
+decoder geometry, supplies explicit fictional read snapshots for incomplete
+teaching cases, and learns complete semantic decisions with externally assigned
+new local identities. Existing/shared uncertainty identities stay preserved.
+All 49 relevant local tests pass; these establish contracts, not learned ability.
+Source-view preparation and subsequent fitted/generated capability remain open.

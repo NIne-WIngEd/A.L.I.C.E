@@ -340,7 +340,11 @@ def assess_pair(gold: dict[str, FormationGoldCaseV16], input_sha: str,
                 e.sensitivity_hint for e in case.expected} for p in bundle.proposals)
             critical = [*scored.critical_failures]
             if scored.false_positives:
-                critical.append("false_memory")
+                # This scorer compares exact text, fields and citation spans.
+                # A mismatch can be a supported paraphrase or another valid
+                # evidence span; it does not establish factual fabrication.
+                # Keep it unresolved and failing until separately reviewed.
+                critical.append("unreviewed_target_mismatch")
             if wrong_subject:
                 critical.append("wrong_subject")
             if missing_abstention:
@@ -372,7 +376,10 @@ def assess_pair(gold: dict[str, FormationGoldCaseV16], input_sha: str,
     if any(len({json.dumps(indexed[role][case_id]["generation"], sort_keys=True)
                 for case_id in gold}) != 1 for role in CONTROL_ROLES):
         raise CognitiveKernelContractError("specialist decoding changed between reviewed cases")
-    return {"cases": report, "trained_improvement_cases": improvements,
+    return {"cases": report,
+            "agreement_metric": "exact_target_fields_not_semantic_entailment",
+            "unmatched_outputs_require_semantic_review": True,
+            "trained_improvement_cases": improvements,
             "trained_failure_cases": failures,
             "observed_gold_coverage": dict(sorted(coverage.items())),
             "missing_positive_gold_dimensions": sorted(

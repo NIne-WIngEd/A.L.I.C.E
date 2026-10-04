@@ -114,7 +114,24 @@ class MFMV16SpecialistAssessmentTests(unittest.TestCase):
         self.assertFalse(report["qualification_claim"])
         self.assertFalse(report["inference_execution_authenticity_verified"])
 
-    def test_grounded_false_subject_and_false_memory_are_critical(self):
+    def test_paraphrase_mismatch_is_unreviewed_not_proven_false_memory(self):
+        case = gold_case()
+        row = output_row(case, "trained", "0" * 64)
+        body = json.loads(row["output_text"])
+        body["proposals"][0]["proposal"]["value_text"] = "Alice and Owner planned a project."
+        row["output_text"] = row["raw_output_text"] = json.dumps(body)
+        rows = {"trained": [row], "seeded-untrained": [output_row(
+            case, "seeded-untrained", "0" * 64, invalid=True)]}
+        report = qualifier.assess_pair({case.case_id: case}, "0" * 64, rows, lineage())
+        score = report["cases"][0]["trained"]
+        self.assertNotIn("false_memory", score["critical_failures"])
+        self.assertIn("unreviewed_target_mismatch", score["critical_failures"])
+        self.assertEqual(score["false_positives"], 1)
+        self.assertEqual(report["trained_failure_cases"], [case.case_id])
+        self.assertFalse(report["qualification_claim"])
+        self.assertEqual(report["agreement_metric"], "exact_target_fields_not_semantic_entailment")
+
+    def test_grounded_false_subject_and_target_mismatch_are_critical(self):
         case = gold_case()
         input_sha = "0" * 64
         rows = {"trained": [output_row(case, "trained", input_sha, altered=True)],
@@ -122,7 +139,7 @@ class MFMV16SpecialistAssessmentTests(unittest.TestCase):
                                                 input_sha, invalid=True)]}
         report = qualifier.assess_pair({case.case_id: case}, input_sha, rows, lineage())
         score = report["cases"][0]["trained"]
-        self.assertIn("false_memory", score["critical_failures"])
+        self.assertIn("unreviewed_target_mismatch", score["critical_failures"])
         self.assertIn("wrong_subject", score["critical_failures"])
         self.assertEqual(score["false_positives"], 1)
         self.assertEqual(report["trained_failure_cases"], [case.case_id])
