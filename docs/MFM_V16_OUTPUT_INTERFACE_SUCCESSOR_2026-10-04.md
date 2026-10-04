@@ -44,7 +44,7 @@ decoder and correct the complete input/learning/evaluation contract first.
 - `prepare_v16_contract_successor.py` re-admits the exact original corpus,
   preflight, failed component and complete bank; processes all 441 full sources
   and decision targets; checks unchanged input IDs/masks against original
-  features; reuses 438 unchanged states and exports only three changed sources
+  features; reuses unchanged states and exports changed admitted sources
   through the fully reverified frozen Gemma role clone. Its new complete source
   view binds all input/target hashes, code, ancestry, lengths, stress cases and
   remaining bounded-literal reference gaps including existing uncertainty.
@@ -76,6 +76,22 @@ view and subsequent fitted/generated capability remain pending. Original core,
 bank, training/code and failed weights stay reproducible. Full longitudinal,
 native modality, calibrated uncertainty, governed consumer/outcome learning and
 independent second-host qualification remain required by the full build plan.
+
+Actual issued-corpus correction: job 576713 passed all 49 runtime tests then
+stopped at a roster assertion before loading Gemma or exporting new features.
+The initial preparation wrongly assumed every public fixture was admitted.
+Read-only re-admission of the exact pinned corpus establishes 432 train / 9
+development, with seed06/11 admitted and seed18 absent. The 25 base cases
+include a separate source-person revocation case and nine deterministic
+development cases; 416 longitudinal cases complete the roster. All 441 cases
+were audited: only seed06/11 source inputs change, and the corrected complete
+inputs have zero unresolved existing-reference gaps. A strict intersection of
+the explicit augmentation mapping and admitted roster therefore reuses **439**
+states and exports **two**, preserving all 441 rows. No missing fixture is
+fabricated, no source is dropped, and no failure becomes a model pass. The
+initial fixture-only tests missed this producer-boundary assumption; a subset
+regression and the actual-corpus audit now cover it. Source job 576713 is retained
+as failed preparation; neither new features nor fitted weights came from it.
 
 ## Historical byte-interface proposal (not adopted)
 

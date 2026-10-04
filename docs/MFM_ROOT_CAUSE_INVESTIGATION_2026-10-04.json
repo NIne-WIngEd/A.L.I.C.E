@@ -1,6 +1,6 @@
 {
   "schema": "mfm-root-cause-investigation-state-v1",
-  "recorded_at_utc": "2026-10-04T23:04:58.395740+00:00",
+  "recorded_at_utc": "2026-10-04T18:04:58.39574-05:00",
   "source_export": {
     "jobs": {
       "576630": "TIMEOUT",
@@ -22,7 +22,7 @@
       "probe_only": true,
       "qualified_for_product": false,
       "result": {
-        "atol": 1e-06,
+        "atol": 1E-06,
         "backward_and_restart_passed": true,
         "checkpoint_reload_executed": true,
         "first_and_later_steps": [
@@ -46,7 +46,7 @@
           "mean_loss": 97.33990955352783,
           "train_examples": 16
         },
-        "rtol": 1e-05
+        "rtol": 1E-05
       },
       "run_sha256": "021217453a301d448652b9d23b6ea29b6f2c6e53c60543cc26b62054d712e5aa",
       "schema": "mfm-v16-cached-specialist-artifact-v1",
@@ -170,7 +170,7 @@
       "original": {
         "copy_positions": 4,
         "positions": 4,
-        "mean_entropy": 7.286752014489049e-44,
+        "mean_entropy": 7.286752014489049E-44,
         "next_token_loss": 286.0789489746094
       },
       "unfitted_embedding_intervention_0_02": {
@@ -246,11 +246,31 @@
     ],
     "implementation": "separately versioned complete decision/compiler plus explicit fictional prior-memory snapshot and source-view preparation",
     "architecture": "selected original vocabulary/width/layers retained; byte proposal on hold unimplemented",
-    "local_tests_passed": 49,
+    "local_tests_passed": 56,
     "model_learning_claim": false,
     "correction_job_submitted": false,
     "source_view_completed": false,
     "new_weights_exported": false,
-    "qualified_for_product": false
+    "qualified_for_product": false,
+    "actual_admitted_input_audit": {
+      "cases_audited": 441,
+      "unchanged_source_cases": 439,
+      "development_cases": 9,
+      "train_cases": 432,
+      "target_or_source_rows_dropped": 0,
+      "augmented_case_ids": [
+        "v16-seed-06",
+        "v16-seed-11"
+      ],
+      "admitted_seed18": false,
+      "unresolved_existing_reference_input_gaps": 0
+    },
+    "source_preparation_history": {
+      "state": "FAILED_ROSTER_ASSERTION_BEFORE_SOURCE_EXPORT",
+      "job": 576713,
+      "cause": "Fixture superset mistaken for admitted corpus roster; full actual admission and new subset regression now cover the boundary",
+      "new_source_features_produced": false,
+      "actual_runtime_tests_passed": 49
+    }
   }
 }

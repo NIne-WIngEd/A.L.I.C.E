@@ -26,6 +26,11 @@ class SuccessorPreparationTests(unittest.TestCase):
             self.assertEqual(preparation.reference_input_gaps(augment_public_seed_example(original)), [])
         self.assertEqual(preparation.reference_input_gaps(self.example('v16-seed-05')), [])
 
+    def test_issued_subset_roster_never_requires_an_unadmitted_fixture(self):
+        examples = tuple(self.example(c) for c in ('v16-seed-02', 'v16-seed-06', 'v16-seed-11'))
+        self.assertEqual(preparation.expected_augmentation_roster(examples), {'v16-seed-06', 'v16-seed-11'})
+        self.assertNotIn('v16-seed-18', preparation.expected_augmentation_roster(examples))
+
     def test_privacy_and_parent_verification_precede_output_or_new_source_reads(self):
         with TemporaryDirectory() as directory:
             output = Path(directory) / 'new-view'

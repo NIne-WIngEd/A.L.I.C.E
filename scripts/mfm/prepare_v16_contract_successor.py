@@ -45,6 +45,11 @@ def decision_for_example(example):
     return decision_record(example, local_uncertainty_refs=prior.local_uncertainty_allocations(example))
 
 
+def expected_augmentation_roster(examples):
+    """Authoring fixtures are a superset, not the admitted corpus roster."""
+    return {e.case_id for e in examples if e.case_id in prior.PUBLIC_SEED_PRIOR_MEMORY}
+
+
 def verify_source_runtime(export, torch_version, transformers_version):
     if export.get('torch_version') != torch_version or export.get('transformers_version') != transformers_version:
         raise CognitiveKernelContractError('successor source runtime differs from parent export')
@@ -113,7 +118,7 @@ def prepare(args):
             for name, size in (('source', source_length), ('target', len(labels)), ('joint', pair_count)):
                 if name not in stress or size > stress[name][0]:
                     stress[name] = (size, example.case_id)
-    expected = set(prior.PUBLIC_SEED_PRIOR_MEMORY)
+    expected = expected_augmentation_roster(originals)
     actual = {row['case_id'] for row in rows if row['source_augmented']}
     if actual != expected:
         raise CognitiveKernelContractError('explicit prior-memory augmentation roster differs')

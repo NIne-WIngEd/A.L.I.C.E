@@ -11,7 +11,7 @@ umask 077
 [[ "$MFM_EXPORT_JOB_IDS" =~ ^[0-9]+(:[0-9]+)*$ ]]
 [[ "$(id -un)" == mxrayan && "$(id -u)" == 1905 ]]
 root=/homes/01/mxrayan/rayan-compute
-repo="$root/rayan-mfm/code/rayan-mfm-contract-20261004"
+repo="$root/rayan-mfm/code/rayan-mfm-contract-v2-20261004"
 container=rayan-mfm-source-cpu-20261002
 [[ "$(cd "$repo" && git rev-parse HEAD)" == "$MFM_CODE_COMMIT" && -z "$(cd "$repo" && git status --porcelain)" ]]
 export UDOCKER_DIR="$root/udocker-store" UDOCKER_TMP="$root/udocker-tmp"
