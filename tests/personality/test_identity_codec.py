@@ -164,6 +164,13 @@ class CodecTests(unittest.TestCase):
         with self.assertRaisesRegex(IdentityError, "verified loader"):
             FrozenFrameProducer(self.tokenizer, self.backbone, self.config)
 
+    def test_strided_singleton_packet_values_have_stable_exact_fingerprints(self):
+        value = torch.tensor([[.25, .75]])[:, 1:2]
+        self.assertEqual(value.stride(-1), 1)
+        value = torch.tensor([.25, .75, .5])[1:2:2]
+        self.assertEqual(value.stride(-1), 2)
+        self.assertEqual(fingerprint(value), fingerprint(torch.tensor([.75])))
+
 
 if __name__ == "__main__":
     unittest.main()

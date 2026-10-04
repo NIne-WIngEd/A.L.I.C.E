@@ -20,6 +20,7 @@ from .lineage import ConstructionLineage
 
 CASE_SCHEMA = 'alice-personality-reviewed-teaching-case-v1'
 CASE_LINEAGE_SCHEMA = 'alice-personality-reviewed-teaching-case-v2'
+OUTCOME_CASE_SCHEMA = 'alice-personality-reviewed-teaching-case-v3'
 ARTIFACT_ROLES = frozenset({'source_package', 'compiled_receipt', 'annotation_protocol', 'review_record'})
 _DIGEST = re.compile(r'[0-9a-f]{64}')
 
@@ -105,12 +106,20 @@ class ReviewedTeachingCase:
     targets: tuple[NamedTarget, ...]
     schema: str = CASE_SCHEMA
     lineage: ConstructionLineage | None = None
+    outcome_binding: Mapping | None = None
 
     def validate(self):
-        if self.schema not in {CASE_SCHEMA, CASE_LINEAGE_SCHEMA} or self.phase not in {'n1', 'n2', 'calibration'}:
+        if self.schema not in {CASE_SCHEMA, CASE_LINEAGE_SCHEMA, OUTCOME_CASE_SCHEMA} or self.phase not in {'n1', 'n2', 'calibration'}:
             raise TeachingError('unsupported reviewed-case schema or teaching phase')
         if (self.schema == CASE_SCHEMA) != (self.lineage is None):
             raise TeachingError('legacy cases retain strict splits; new lineage requires its explicit case schema')
+        if (self.schema == OUTCOME_CASE_SCHEMA) != (self.outcome_binding is not None):
+            raise TeachingError('actual outcome bindings require their explicit case schema')
+        if self.outcome_binding is not None:
+            from .outcomes import validate_outcome_binding
+            validate_outcome_binding(self.outcome_binding, self.document)
+            if self.phase != 'calibration':
+                raise TeachingError('actual calibration outcomes cannot replace N1/N2 teaching')
         splits = {'CALIBRATION_TRAIN', 'CALIBRATION_DEV'} if self.phase == 'calibration' else {'TRAIN', 'DEV'}
         if self.split not in splits:
             raise TeachingError('reviewed cases cannot consume FINAL or cross teaching/calibration splits')
@@ -152,6 +161,8 @@ class ReviewedTeachingCase:
         value = asdict(self)
         if self.lineage is None:
             value.pop('lineage')
+        if self.outcome_binding is None:
+            value.pop('outcome_binding')
         return json.loads(canonical(value))
 
     @property
@@ -161,6 +172,8 @@ class ReviewedTeachingCase:
     @classmethod
     def from_mapping(cls, raw):
         fields = set(cls.__dataclass_fields__)
+        if type(raw) is dict and raw.get('schema') != OUTCOME_CASE_SCHEMA:
+            fields.remove('outcome_binding')
         if type(raw) is dict and raw.get('schema') == CASE_SCHEMA:
             fields.remove('lineage')
         _exact(raw, fields)
@@ -187,7 +200,8 @@ class ReviewedTeachingCase:
         case = cls(raw['case_id'], raw['phase'], raw['split'], raw['source_class'], document,
                    tuple(raw['source_family_ids']), raw['artifact_sha256'], raw['annotation_origin'],
                    raw['review_id'], raw['annotation_note'], tuple(targets), raw['schema'],
-                   ConstructionLineage.from_mapping(raw['lineage']) if 'lineage' in raw else None)
+                   ConstructionLineage.from_mapping(raw['lineage']) if 'lineage' in raw else None,
+                   raw.get('outcome_binding'))
         case.validate()
         return case
 

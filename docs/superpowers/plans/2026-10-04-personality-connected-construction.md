@@ -56,10 +56,10 @@
 **Consumes:** Exact cognitive document, actual model packet and bound optimization evidence, candidate responses and explicit delivery descriptions.
 **Produces:** Actual selected response or explicitly unresolved co-valid choice set, governing semantic/delivery intent and a source/checkpoint-bound construction outcome for primary review.
 
-- [ ] Prove the consumer uses model preference rather than candidate order, preserves supported disagreement and owner agency, returns plurality without inventing a tie-break and withholds unavailable numeric voice controls.
-- [ ] Bind response text, document, packet/model state and renderer result. A replaceable renderer cannot silently replace the selected judgment; changed or unverified output is retained as an unresolved outcome.
-- [ ] Bind primary-reviewed outcomes to the exact prior model/document/response and teaching lineage. Outcome author/source confidence must not be converted automatically into targets or independent owner approval.
-- [ ] Run affected suites and commit.
+- [x] Prove the consumer uses model preference rather than candidate order, preserves supported disagreement and owner agency, returns plurality without inventing a tie-break and withholds unavailable numeric voice controls.
+- [x] Bind response text, document, packet/model state and renderer result. A replaceable renderer cannot silently replace the selected judgment; changed or unverified output is retained as an unresolved outcome.
+- [x] Bind primary-reviewed outcomes to the exact prior model/document/response and teaching lineage. Outcome author/source confidence must not be converted automatically into targets or independent owner approval.
+- [x] Run affected suites and commit.
 
 ## Task 5: Source-bound feature reuse and connected training controller
 
@@ -94,3 +94,5 @@ Task 1: six-pin governed development was refused by the old qualification gate b
 Task 2: observed absent lineage interface before implementation. New allocation distinguishes unchanged TRAIN references from disjoint supervision/context families; explicit derivative ancestry cannot cross splits. New case v2 / teaching target v4 / materialization v2 bind the lineage; legacy case v1 bytes and strict source splits remain. Actual public materializer and calibration optimizer integration passed. Initial combined suite:68 tests /55 subtests; added dynamic-context and stale-receipt regressions pass. Scope is conditional development, never source-independent qualification.
 
 Task 3: RED confirmed missing contextual N3 input and an untaught N2 unit affecting owner-fidelity uncertainty. Contextual N3 now learns its own outcome risk; N2 retains six taught judgment outputs. Positive temperature scaling preserves rankings. Snapshot v3 / resumable checkpoint v5 explicitly bind changed geometry. Combined model/teaching/case/lineage suite passed 97 tests / 65 subtests; only public mechanical fixtures.
+
+Task 4: actual public N2 optimization selects the second candidate response; equal preferences retain unresolved plurality. Consumer rechecks optimized checkpoint payload/state/code and stage lineage, target-specific semantic/voice coverage, complete document/frame/session, and keeps renderer differences unresolved. Outcome case v3 binds actual response/model/document and explicit primary development facts, with no owner/spoken approval. Legacy v1/v2 case bytes remain unchanged. Complete response fingerprint exposed a stride-2 singleton dtype-view failure: reproduced independently, fixed by contiguous-format cloning per PyTorch view/clone contracts. Initial combined suite passed 93 tests /55 subtests (five duplicate imported tests subsequently removed). Checkpoint v6 binds exact output model state and reviewed semantic-label coverage.

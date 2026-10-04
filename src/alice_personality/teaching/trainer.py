@@ -25,7 +25,7 @@ from .contracts import (AUTH_SCHEMA, FAMILY_SCHEMA, REVIEW_SCHEMA, TARGET_SCHEMA
 from .objectives import IdentityObjectives
 from .lineage import ALLOCATION_SCHEMA, validate_allocation, verify_allocation
 
-CHECKPOINT_SCHEMA = "alice-personality-resumable-teaching-checkpoint-v5"
+CHECKPOINT_SCHEMA = "alice-personality-resumable-teaching-checkpoint-v6"
 _DIGEST = re.compile(r"[0-9a-f]{64}\Z")
 _ARTIFACT_ROLES = {"source_package", "compiled_receipt", "prepared_receipt", "reviewed_targets",
                    "source_families", "authorization"}
@@ -486,10 +486,18 @@ class IdentityTrainer:
         return self._event(batch, losses, coverage, float(total))
 
     def _event(self, batch, losses, coverage, total):
+        label_coverage = {}
+        for name, target in batch.targets.items():
+            family = name[5:] if name.startswith("head:") else "voice" \
+                if name in {"voice_control_values", "voice_control_confidence"} else None
+            if family is not None:
+                label_coverage[name] = sorted({spec.label_id for row, specs in enumerate(batch.frame.label_specs[family])
+                    for col, spec in enumerate(specs) if spec is not None and bool(target.available[row, :, col].any())})
         return {"schema": "alice-personality-unqualified-teaching-evidence-v1", "phase": self.recipe.phase,
                 "split": batch.split, "step": self.steps, "epoch": self.epoch, "loss": total,
                 "objectives": {name: float(value.detach()) for name, value in losses.items()},
-                "reviewed_target_coverage": coverage, "source_class": batch.source_class,
+                "reviewed_target_coverage": coverage, "reviewed_label_coverage": label_coverage,
+                "source_class": batch.source_class,
                 "teaching_batch_sha256": batch.fingerprint(),
                 "admission_binding_sha256": sha256(canonical(self._binding)).hexdigest(),
                 "qualification": "UNQUALIFIED", "behavior_qualification": None,
@@ -522,6 +530,7 @@ class IdentityTrainer:
                     "qualification": "UNQUALIFIED", "acceptance_authority": False,
                     "binding": self._binding, "recipe": asdict(self.recipe),
                     "optimizer_parameters": [name for name, _ in self._expected_parameters()],
+                    "model_state_sha256": model_fingerprint(self.model),
                     "resume_sha256": _hash(path / "resume.pt"), "step": self.steps,
                     "epoch": self.epoch, "batch_index": self.batch_index,
                     "events": json.loads(canonical(self.events)), "device": str(next(self.model.parameters()).device)}
@@ -571,6 +580,8 @@ class IdentityTrainer:
             if not isinstance(state[key], dict) or any(not isinstance(value, torch.Tensor)
                     or not bool(torch.isfinite(value).all()) for value in state[key].values()):
                 raise TeachingError("resume learned tensors must be finite")
+        if fingerprint(state["model"]) != manifest.get("model_state_sha256"):
+            raise TeachingError("resume model state differs from its published state binding")
         for key, manifest_key in (("steps", "step"), ("epoch", "epoch"), ("batch_index", "batch_index")):
             if type(state[key]) is not int or state[key] < 0 or state[key] != manifest.get(manifest_key):
                 raise TeachingError("resume data cursor does not match bound evidence")
