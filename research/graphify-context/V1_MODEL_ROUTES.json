@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "41252af3a30cb3680a209450a7d49c0886908737",
+      "commit": "2d050298d19767ef7f10b6f969cb9274e57f0f07",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -47,12 +47,22 @@
         {
           "path": "docs/MFM_V16_BUILD_CONTINUATION_2026-10-02.md",
           "purpose": "MFM recovered corpus, compute decisions and remaining full-capability roadmap",
-          "blob_sha": "6395684d440b6dcdac070d6d76adb3a6e053d9b0"
+          "blob_sha": "a6bd3b45b2a2b7320f6aeafd6b5d887f915d8409"
         },
         {
           "path": "docs/MFM_COMPUTE_RECOVERY_RECEIPTS_2026-10-02.json",
           "purpose": "actual failed export audit, full synthetic capacity, Kaggle isolation evidence and selected protected CPU route",
           "blob_sha": "bc47bbf883fff6b014f1e47ce2cb965f7ca04d9e"
+        },
+        {
+          "path": "docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
+          "purpose": "completed teacher fit, failed generated formation, actual causal analysis and corrected measurement handoff",
+          "blob_sha": "d0c713d51901d2e840b42c84f811acaab73bdfb7"
+        },
+        {
+          "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576702.json",
+          "purpose": "sealed original full-target source-ablation analysis; initial value grouping covers quoted values only",
+          "blob_sha": "60a795d327c0f38ea1268aa4eb8f4ea821e14a83"
         },
         {
           "path": "docs/MFM_V1_ROLE_BOUNDARY_DIAGNOSTIC_2026-09-30.md",
@@ -157,7 +167,22 @@
         {
           "path": "scripts/mfm/run_v16_cached_diagnostic.py",
           "purpose": "matched generated FP32 teacher development diagnostics and raw failure preservation",
-          "blob_sha": "e8a9acd005933ae399a6d8c0aa24cadc20ec7aaf"
+          "blob_sha": "40402e793f8cc6452ec680ce38352cdc0a125bf6"
+        },
+        {
+          "path": "scripts/mfm/analyze_v16_cached_fit.py",
+          "purpose": "read-only target alignment, scalar field loss, source interventions and unfitted initial-scale diagnosis",
+          "blob_sha": "d25eae5670499b7a2f15ca3389bb664ff245685b"
+        },
+        {
+          "path": "scripts/mfm/magnolia_v16_root_analysis_20261004.sbatch",
+          "purpose": "protected actual-runtime causal diagnosis and externally pinned partial-control recovery",
+          "blob_sha": "bcbeca400b280ea2de2cd2cc0cbbad77fa4ab12d"
+        },
+        {
+          "path": "scripts/mfm/magnolia_v16_corrected_analysis_20261004.sbatch",
+          "purpose": "separate corrected scalar-value measurement without training or model export",
+          "blob_sha": "007a8f8ddf03e30b94d2b6bf69dfae4759b5d33b"
         },
         {
           "path": "scripts/mfm/magnolia_v16_feature_resume_20261002.sbatch",
@@ -212,7 +237,7 @@
         {
           "path": "tests/governance/test_mfm_v16_cached_diagnostic.py",
           "purpose": "cached generated-control lineage, EOS, FP32 and unqualified diagnostic tests",
-          "blob_sha": "e1adf45b9b71f1422d21f820ecbb269091a9656c"
+          "blob_sha": "355c20408880d83923227decbe33f8b17be7aa28"
         },
         {
           "path": "scripts/mfm/run_v1_formation_specialist.py",
@@ -278,7 +303,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "e59a20504fb91947cfa50a05d6017996906b8e91",
+      "commit": "535f314602e0e20b2889a45c96da78e98bde2839",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -288,7 +313,7 @@
         {
           "path": "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
           "purpose": "FBM recovered teacher CPU evidence and frozen-feature build continuation",
-          "blob_sha": "dfc8bdf7243406351ed0a2bd7d9457733b03dd2a"
+          "blob_sha": "6dd6785b0e2f763e5b6c7507be3529d745d48229"
         },
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261002_MFM_RECOVERY_AND_FROZEN_FEATURE_ROUTE.jsonl",
@@ -354,6 +379,11 @@
           "path": "docs/fable-builder/traces/FBM_TRACE_20260930_MFM_SIGNED_FULL_FIT_AND_P2_BRIDGE.jsonl",
           "purpose": "signed fit gate and narrow P2 bridge replay pin",
           "blob_sha": "3fd29e104a984816ae8ece40bdd2faa0372b9633"
+        },
+        {
+          "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
+          "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
+          "blob_sha": "00075bb12bd7fc259230311e1e5fd71a584796f6"
         }
       ]
     }
