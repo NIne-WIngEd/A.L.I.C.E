@@ -1,0 +1,48 @@
+{
+  "actual_job_postconditions_verified": false,
+  "allocated_cpus": 16,
+  "durable_export_verified": false,
+  "full_personality_qualified": false,
+  "gradient_steps_observed": null,
+  "helper_sha256": "1520472de130d26a0bab31e5f6406d36b346d7e659f16af679c3c5420a6fd678",
+  "job_id": 576704,
+  "n0_approved": false,
+  "n3_training_authorized_for_this_job": false,
+  "next": "Recover exact protected outputs after completion; primary teacher reviews actual new-context responses before constructing eligible N3 facts. No idle polling.",
+  "owner_account": "mxrayan",
+  "owner_approved": false,
+  "owner_run_plan_sha256": "8c21fc2fa3d1438bf18c0bfa6accf3c83480d3687fd732ca0be984b8aac8df40",
+  "packet_index_sha256": "abdcfbda3337ddaa50bc0f6a5500debc3a3cc5b841f686bf2685bc01f30b76ce",
+  "partition": "node",
+  "planned_outputs": [
+    "complete sealed per-entry frozen features",
+    "actual N1 and N2 optimizer/checkpoint lineage",
+    "bound actual responses and full decision packets for primary N3 review"
+  ],
+  "private_payload_in_public_receipt": false,
+  "public_verification": {
+    "capability_audit_findings": 0,
+    "constitutional_governance_validators": "4 passed",
+    "fresh_public_review": "Four Important findings reproduced and fixed in one pass; focused and full suites green.",
+    "skip_reason": "Windows symlink creation privilege unavailable; Linux CI retains actual symlink refusal test.",
+    "skipped": 1,
+    "subtests_passed": 365,
+    "tests_passed": 811
+  },
+  "purpose": "development_construction",
+  "recipe": {
+    "learning_rate": 0.0003,
+    "n1_epochs": 5,
+    "n2_adapts_n1": false,
+    "n2_epochs": 8,
+    "seed": 20261004
+  },
+  "requested_memory_gib": 120,
+  "schema": "alice-personality-connected-construction-submission-v1",
+  "scientific_code_revision": "d6785840132afd7a8bc7c6a48dba1afd94bafcdd",
+  "spoken_fidelity_approved": false,
+  "state_at_dispatch_check": "RUNNING",
+  "time_limit_hours": 24,
+  "timestamp_utc": "2026-10-04T19:18:48Z",
+  "wrapper_sha256": "9a9d4067cb98a54590254766f7412f965ee08bb4688a080fb850d19737d1967f"
+}

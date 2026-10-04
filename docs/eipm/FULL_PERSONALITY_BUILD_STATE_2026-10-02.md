@@ -1,8 +1,10 @@
 # Full Alice personality build state
 
-**Current snapshot:** see the [4 October route audit](#current-route-audit--4-october-2026).
-Job 576688 materialized five cases successfully; no private personality training
-or N0 approval has occurred. Further implementation is under upstream route review.
+**Current snapshot:** see the [connected implementation and owner run](#connected-implementation-and-owner-run--4-october-2026).
+The owner-authorized route correction is implemented and checked. Magnolia job
+576704 is running as `mxrayan` to construct N1 followed by N2 and retain actual
+connected responses. Job postconditions, N3 learning and model approval remain
+pending; the earlier route audit below is preserved as historical evidence.
 
 The owner requires the full Alice personality described in the comic and
 contracts, with its construction captured for full Fable v1 FBM. There is no
@@ -913,3 +915,71 @@ and the route failure lesson separately, without promoting either to trained
 builder competence.
 
 ---
+
+## Connected implementation and owner run — 4 October 2026
+
+The owner's instruction to start implementation authorized the concrete upstream
+correction. Scientific code `d6785840132afd7a8bc7c6a48dba1afd94bafcdd`
+implements development admission independently of later N0/model qualification,
+while preserving exact source, preparation, compiler, target, recipe and code
+custody. Immutable TRAIN identity references remain distinct from explicitly
+allocated teaching episodes and outcome derivatives. Shared references and
+primary-teacher ancestry grant no source-independent or owner-fidelity claim.
+
+N1 learns conditional interpretation and support. N2 learns contextual judgment,
+preferences and available expressive intent. N3 has contextual inputs for its
+own outcome/fidelity calibration and positive temperatures that preserve ranking.
+The response consumer uses actual optimized decisions and complete semantic
+label bindings; it preserves genuinely co-valid choices, unresolved ties and
+unavailable controls. Uncertainty-one annotations and constant singleton
+distributions cannot claim learned control. Actual response/model/document
+receipts support later primary outcome review; renderer changes remain unresolved.
+
+The frozen semantic provider retains all actual tokens and hidden states in an
+immutable, source-bound per-entry store. Repeated references reuse complete
+features without duplicating whole retained frames. Connected training streams
+actual admitted N1 then N2 batches, preserves resumable optimizer state each
+completed epoch, and retains actual words, delivery intent and decision packets.
+Resource profiling precedes expensive extraction and checks the real Slurm
+memory allocation, declared budget and protected disk. Estimates are not measured
+peak memory or successful execution.
+
+Root primary teaching packet v3r2 contains 40 N1 TRAIN cases, 40 N2 TRAIN cases
+and 20 new unlabeled contexts across 20 domains, with 86 original references from
+one unchanged TRAIN family. Complete attributed E0, revisable E-INF and explicit
+nonhistorical A-SYN policies retain their separate authority. Two context-restricted
+historical units were excluded from identity authority while their original
+contextual bodies were preserved. Sparse unavailable targets stay unknown;
+numeric acoustics, outcome/fidelity and unsupported uncertainty are untaught.
+This finite initial curriculum does not establish full personality coverage.
+
+One fresh public-code review found four substantive issues in effective target
+coverage, learned pairwise preference consumption, semantic label identity and
+actual resource allocation. All were reproduced and fixed in one pass. The full
+public suite passed **811 tests and 365 subtests**, with one Windows symlink
+creation test skipped for unavailable privilege; Linux CI retains the actual
+symlink refusal test. Four constitutional/governance validators passed, and the
+capability audit reported zero unresolved findings. These are implementation
+checks, not learned personality evidence.
+
+**Owner compute:** Magnolia **576704**, submitted and observed RUNNING as
+`mxrayan`, with 16 CPUs, 120 GiB and a 24-hour limit. Exact recipe: five N1 epochs,
+eight N2 epochs, learning rate 0.0003, seed 20261004; N2 does not adapt N1. The
+existing owner USER+NET/P2 route precedes private reads. No new setup, external
+teacher, weight surgery, provider tournament, paid launch or FloRA work is part
+of this run. The prepared non-IT Gemma base remains frozen and unqualified.
+
+Actual feature geometry, optimizer steps, checkpoints, responses, peak resources
+and completion are pending recovery. Review actual new-context responses before
+authoring eligible N3 facts. Complete the connected governing build before full
+behavioral evaluation and residual Gemma-influence assessment. N0 approval,
+full personality qualification, owner acceptance and spoken fidelity remain false.
+Protected Magnolia retention is not verified durable export.
+
+Fixed public evidence: [curriculum summary](../../evaluation/eipm/gemma_n0/receipts/primary_governing_curriculum_summary_20261004_v3r2.json)
+and [submission](../../evaluation/eipm/gemma_n0/receipts/magnolia_576704_connected_construction_submission.json).
+The paired FBM trace preserves all 11 earlier rows and adds the corrected
+construction method and actual submission. Immutable v4 procedure seed parents
+v3 by exact SHA; no FBM weights, independent transfer, training eligibility or
+evaluation eligibility are claimed. Stop when only the external run remains;
+the owner will report completion.

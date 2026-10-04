@@ -77,9 +77,9 @@
 **Consumes:** Actually read canonical originals, controlling role/voice contracts and all prior task interfaces.
 **Produces:** A reviewed development curriculum across conditional identity, contextual judgment, disagreement/values/boundaries/repair/emotion/humor/uncertainty/initiative/expression where sources permit; actual N1/N2 construction outputs followed by primary-reviewed N3 outcomes.
 
-- [ ] Map capabilities to sources, conditions, competing choices, sparse targets and missing observations. Preserve full reference authority and explicit ancestry; no arbitrary row-to-preference conversion or corpus-size success claim.
-- [ ] Assemble exact source/target/phase/model/recipe/code construction authorization using the current owner's instruction. Record development purpose and false release/owner-approval claims.
-- [ ] Perform one fresh-context whole-change public-code review and required repository checks before actual private execution. Resolve substantive findings with discriminating regressions.
+- [x] Map capabilities to sources, conditions, competing choices, sparse targets and missing observations. Preserve full reference authority and explicit ancestry; no arbitrary row-to-preference conversion or corpus-size success claim.
+- [x] Assemble exact source/target/phase/model/recipe/code construction authorization using the current owner's instruction. Record development purpose and false release/owner-approval claims.
+- [x] Perform one fresh-context whole-change public-code review and required repository checks before actual private execution. Resolve substantive findings with discriminating regressions.
 - [ ] Run the connected construction as mxrayan with verified existing isolation/runtime, retain actual model and consumer outputs, and review those outputs for N3 teaching. Complete the next eligible phase; stop only at genuine input or external-result dependency.
 - [ ] Capture the transferable method and failed/partial/verified outcomes in the existing FBM trace and procedure seed. Update the current handoff and draft PR with actual results and remaining limits.
 
