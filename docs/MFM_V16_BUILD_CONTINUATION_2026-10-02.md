@@ -386,3 +386,71 @@ The CPU learning submission is
 `rayan-mfm/runs/rayan-mfm-{probe,fit,generated}-576637` custody. Source export
 continues to use the original exact BF16 bank binding. Full-capability gates
 listed above remain open.
+
+## October 4: completed teacher fit, failed generation, root-cause investigation
+
+Original Slurm accounting is now independently read: **576630/576631** reached
+their twelve-hour limits, **576632** completed the 441-case bank in 5:35:15,
+and **576633** skipped redundant export. The externally published complete-bank
+digest is `516a429326645316d42c1bbc2da82940699cb7146092a5bf9a156dd9e7194c0d`.
+No feature recomputation is required.
+
+**576637** passed actual admitted-corpus stress/restart with identical next
+weights and Adam moments, then completed all 432 training cases for two epochs
+(54 optimizer updates, about 7.29 hours). Its unqualified component is
+`12537c467518773bfe7fd2abcd9a7e9eaedee80b623ee827ce0ec8e640dbe166`,
+with trained weights `4be2d61d0198fe1bfe3a5910d01ecfe1d2a00c422fa52c0ee3df6d8057209536`.
+Development teacher-forced loss fell from 229.0178 to 25.1405. This establishes
+learning under the objective, not useful formation. All nine trained generated
+outputs failed: each exhausted 2,048 tokens without EOS and repeated a small
+token set. Three seeded-control cases repeated only BOS. The allocation timed
+out during the fourth control; six controls and the complete diagnostic receipt
+remain unfinished. Preserve the original fit, optimizer checkpoints and outputs.
+
+The owner's October 4 instruction rules out a narrow symptom fix or blind
+trial-and-error. Investigate the complete purpose: source-grounded,
+subject/time/uncertainty-aware memory proposals behind independent write
+authority, with eventual governed memory-to-judgment/outcome feedback.
+
+The initial causal observation is a tied-head/residual scale problem. The
+runtime's [PyTorch 2.7.1 embedding initialization](https://github.com/pytorch/pytorch/blob/v2.7.1/torch/nn/modules/sparse.py)
+uses unit standard deviation. In our pre-normalized decoder, the input token's
+residual and its tied output vector can strongly favor copying the input.
+A full-width/vocabulary local public random-input probe copied all four prefix
+tokens, entropy approximately zero and next-token loss 286.08. Scaling only the
+fresh token/position embeddings by 0.02 removed those four copying argmaxes and
+gave entropy 12.32 and loss 12.81; uniform-vocabulary loss is 12.4766. This
+single intervention locates an initialization mechanism, **not the sole cause
+of trained failure or a validated replacement model**. Local Torch 2.14.1 differs
+from the actual 2.7.1 runtime. Relevant reference mechanisms are
+[BART's tied embedding/init scale](https://github.com/huggingface/transformers/blob/v5.17.0/src/transformers/models/bart/configuration_bart.py)
+and [T5's explicit decoder-output scaling](https://github.com/huggingface/transformers/blob/v5.17.0/src/transformers/models/t5/modeling_t5.py).
+They explain numerical design choices; neither architecture is adopted.
+
+Broader design questions remain open: a fresh 262,144-token language interface
+must learn long exact source-linked JSON from a single-author 441-case corpus;
+only 54 updates were taken; aggregate CE does not reveal value accuracy or
+source dependence. Cached input IDs are retained for custody but not consumed
+by the specialist, so exact source copying relies entirely on frozen hidden
+states and a newly learned output interface. This is a representational burden,
+not yet a proven fatal flaw. Target construction correctly shifts BOS/body/EOS
+and omits context/weight digests from the generated payload; runtime alignment,
+source dependence, evidence values and EOS still need measurement.
+
+`analyze_v16_cached_fit.py` performs a bounded read-only investigation: full
+source/target lengths and bank/component pins; all-corpus tokenizer/shift and
+target statistics; stress training and development examples; exact chunked CE,
+key/value/structure accuracy, input-copy rate and EOS probability; trained real,
+zeroed and swapped-source controls; original seed and the single unfitted
+embedding intervention. It performs no optimization or weight export. The
+recovery runner preserves externally pinned completed rows, rechecks tokens,
+context/source/weight bindings and validation, and generates only the missing
+controls under unchanged FP32 greedy settings. Nineteen local cache/diagnostic/
+analysis tests passed. The Magnolia recipe runs both inside the existing
+owner-UID, loopback-only dedicated runtime. No corrective fit is launched yet.
+
+Frontier-watch through `3bea33189` was reviewed, including October 3 outcome
+verification and October 4 evolvable-memory notes. Those support source-native
+grounding and independent outcome evidence; they neither repair this numerical
+failure nor justify replacing MFM with a memory-program search. No capability
+target, authority boundary, source custody or FINAL condition is relaxed.

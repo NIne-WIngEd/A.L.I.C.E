@@ -117,6 +117,33 @@ class CachedDiagnosticTests(unittest.TestCase):
                 diagnostic.run(SimpleNamespace())
             opener.assert_not_called()
 
+    def test_resume_retains_invalid_rows_and_rejects_digest_or_binding_changes(self):
+        example = learning_example_v16_from_record(case_record())
+        config = SimpleNamespace(vocabulary_size=9, end_token_id=1)
+        tokenizer = SimpleNamespace(decode=lambda tokens, **kwargs: "bad-json")
+        row = {"case_id": example.case_id, "split": "development", "control": "trained",
+               "weights_sha256": "a" * 64, "inference_run_id": "fixture",
+               "context_sha256": example.context.content_digest(),
+               "model_input_sha256": diagnostic.features.case_key(example),
+               "generated_token_ids": [2, 2],
+               **diagnostic.validate_generated("bad-json", False, example, "a" * 64, "fixture")}
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "trained.jsonl"
+            path.write_text(json.dumps(row) + "\n")
+            kwargs = dict(expected_sha256=cached.training.shared._digest(path), control="trained",
+                          weight_digest="a" * 64, run_id="fixture", examples=[example],
+                          tokenizer=tokenizer, config=config, max_new_tokens=2)
+            self.assertEqual(diagnostic.load_resume_rows(path, **kwargs), [row])
+            with self.assertRaises(CognitiveKernelContractError):
+                diagnostic.load_resume_rows(path, **{**kwargs, "expected_sha256": "b" * 64})
+            for key, value in (("context_sha256", "c" * 64), ("control", "seeded-untrained"),
+                               ("eos_observed", True), ("generated_token_ids", [2, 9])):
+                altered = {**row, key: value}
+                path.write_text(json.dumps(altered) + "\n")
+                with self.assertRaises(CognitiveKernelContractError):
+                    diagnostic.load_resume_rows(path, **{**kwargs,
+                        "expected_sha256": cached.training.shared._digest(path)})
+
 
 if __name__ == "__main__":
     unittest.main()
