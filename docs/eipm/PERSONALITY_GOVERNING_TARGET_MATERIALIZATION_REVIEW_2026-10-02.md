@@ -334,3 +334,96 @@ consumer materialization, admitted training/integration and causal behavioral
 assessment. No private personality text, feature values or learned identity is
 included. This is a reusable method seed with observed evidence; it is not an
 admitted supervised builder corpus, independent evaluation or learned FBM transfer.
+
+
+Job576683 failed3:0 after18m39s. Its original helper traceback locates the
+materializer call after producer return and source-session closure. No private
+artifact or completed result receipt was retained. The internal exception
+category was intentionally suppressed and cannot now be recovered; we do not
+claim to prove that a later-reproduced defect was its sole internal cause.
+
+Root's bounded private target-layout diagnostic found the same mandatory defect
+in both N2 proposals: head:stance was authored as independent values, but the
+actual model softmax, deterministic layout and objective require a categorical
+distribution. One stance label also cannot encode a contrary stance. This is a
+target/consumer contract error, not evidence of failed Gemma personality learning.
+Source: actual0eeb model.py/layout.py/objectives.py/materialize.py and versioned
+[PyTorch2.7 CrossEntropyLoss](https://docs.pytorch.org/docs/2.7/generated/torch.nn.CrossEntropyLoss.html).
+The supported repair adds an explicit alternative stance to the authored
+contrasts and complete normalized stance targets; independently judged values,
+relationship, emotion, communication and drift remain independent. We do not
+weaken the validator or change the selected architecture.
+
+Fresh primary packetv1r4 preserves all prior private packets and exact source
+bindings. All five revised cases construct through the actual materializer on
+explicit mechanical fixture states in the root's authorized private teaching
+context. This validates target mechanics, not publisher features or capability.
+The public categorical-stance counterexample and exact multi-document grouping
+fixtures pass; all88public helper fixtures pass (11consumer fixtures).
+Quantitative voice and N3 calibration remain unavailable, no owner acceptance or
+independent gold is invented, and no private gradients are admitted.
+
+The successor actual construction covers all three complete documents and five
+typed proposals, rather than only the first document. It preserves the actual
+source-closed protected feature artifact before materializing targets, with a
+separate fixed retention receipt, so a later target error need not discard the
+expensive producer result. Existing producer no-cache bindings remain unchanged;
+caller retention is explicit. Exact document/frame assignment, source rechecks
+and own artifact reload remain required. Actual result is still pending.
+
+Frontier research was refreshed: frontier-watch@bd04f9c6147ab27178508f3bd45e50cffaeca19f,
+and frontier-current-impact@f813268fc42598bf5fda776e7a17fbf42b13cf40. The latter
+localizes failure to procedure, retrieval/context, model, executor, environment,
+evaluator or unknown before mutation. This supports repairing annotation
+semantics here rather than interpreting a schema failure as a weight defect.
+It is a research direction, not a new global production authority.
+
+The Oct3 intake's useful mechanism is outcome-gated progress and learning. The
+primary [StructAgent methods](https://arxiv.org/html/2607.11388v1) distinguish
+proposed progress from evidence-backed transitions and reusable advice from
+current task truth. [RSIAgent's verification and failure analysis](https://arxiv.org/html/2609.15364v2)
+shows that incomplete checks can reinforce wrong rules and keeps unresolved
+outcomes distinct from verified successes/failures. For this personality build,
+author review/source confidence is not N3 outcome evidence; a finished job is
+not a trained personality; and an unresolved attempt may teach a failure lesson
+without becoming a success seed. Verification itself remains fallible. We adapt
+the authority invariant without installing their agent topology or reopening
+the selected architecture. Actual owner outcome/fidelity and calibration
+construction remains a separate substantive task, not bypassed by these papers.
+
+
+The reviewed successor was actually submitted as Magnolia576688 under mxrayan,
+CPU4/64GiB/2h, immutable scientific0eeb, unchanged USER+NET/P2 and runtime overlay.
+It covers all3complete documents/5proposals from fresh private packetv1r4. Public
+helper SHA94f6bc5ee9c0705d7ed29cf7e26b5480ee69e41b7372927b9eecc44018c90a6d
+is bound before execution. Bounded public review found no actionable defects;
+11consumer/88total public helper fixtures passed. Result remains pending.
+Fixed feature-retention and final materialization receipts will be checked
+against exact source, review/protocol, code/helper/guard, geometry/counts and
+each other. Only fixed metadata is retrieved; protected feature/target artifacts
+remain in owner custody. Source closure is not training or N0 approval.
+
+
+While actual job 576688 runs the earlier v1r4 packet, root advanced a separate
+fresh private v2a teaching packet. The two actually read A-SYN delivery policies
+now enter the complete document source bank through the already-declared
+ASYN_TARGETED consumer kind, with exact original IDs/bodies, A-SYN provenance,
+explicit runtime-prior permission, no historical truth and no Alice lived memory.
+All active E0/E-INF supports close transitively: 14 source entries per document,
+including two literal policies and three further original E0 context bodies.
+Context bodies do not automatically receive positive concept-support labels.
+
+Four complete documents and six typed proposals (four N1, two N2) preserve the
+existing co-valid choices and categorical/independent target semantics. A new
+public-setting condition supplies familiar current relationship independently
+while withholding the private-affection policy's applicability. No public
+response ranking is invented. Six cases construct through the real materializer
+on explicit mechanical fixture states; source bodies, permissions, complete
+active support closure and the public/private condition are checked in the root
+teacher context. Numeric voice, N3 outcome/fidelity and private gradients remain
+unavailable. Owner-only Vault ACL is confirmed. No other teacher saw the packet.
+
+This packet is not submitted to an actual publisher yet. It does not change the
+running 576688 inputs or establish publisher features, voice fidelity or the
+full 2556-draft curriculum. Its fixed public proposal summary and paired FBM
+trace capture the concrete progress and the pending consumer execution.

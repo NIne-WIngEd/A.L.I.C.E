@@ -358,6 +358,45 @@ ratified source semantics remain distinct from newly authored governing targets.
 First proposals advance construction, not the full curriculum or capability
 qualification. Full behavioral evaluation still follows the connected build.
 
-Actual first complete-document job576683 is running under mxrayan after public
-review and86helper fixture passes. Result is pending. Explicit FBM procedure
+The first complete-document job 576683 subsequently failed during target
+materialization. Task 9 records the diagnosis and successor; its original
+attempt and FBM seed remain preserved. Explicit FBM procedure
 seed is saved in `training/fbm/base_assembly/personality_primary_teaching_20261003.seed.json`; no private input or target payload is shared.
+
+
+## Task 9: Repair actual target semantics and retain producer work
+
+- [x] Preserve failed576683 accounting and honest incomplete-cause boundary.
+- [x] Refresh frontier-watch and current-impact; inspect relevant primary methods.
+- [x] Diagnose categorical stance against actual model/layout/objective before repair.
+- [x] Root-author freshv1r4 with explicit complete stance distributions.
+- [x] Construct all5 revised targets through actual mechanics without publisher claims.
+- [x] Exercise categorical stance and exact multi-document associations in public fixtures.
+- [x] Preserve source-closed protected features before target construction in the controller.
+- [x] Complete bounded public review and submit all3real documents/5proposals under the owner guard (576688).
+- [ ] Verify returned actual feature/materialization artifacts, then continue substantive curriculum/N3.
+
+Failure is an annotation/consumer defect with a discriminating reproduction,
+not justification for another upstream-model or semantic-readout variant.
+The original remote internal error was not retained; its sole cause remains
+unproven. Source-closed checkpoint retention makes subsequent failures inspectable.
+
+Actual successor576688 submitted under mxrayan; result verification remains pending.
+
+
+## Task 10: Put actual nonhistorical delivery priors into consumer documents
+
+- [x] Root-read the two policies and their complete active support closure.
+- [x] Author fresh v2a with explicit ASYN_TARGETED consumer mapping, literal policy
+  meaning and historical/experience/runtime permissions preserved.
+- [x] Include all 14 active sources, keeping extra context distinct from positive
+  conditional support labels.
+- [x] Add public versus private applicability with current relationship supplied
+  independently; retain unknown public response ordering and missing voice/N3 gold.
+- [x] Verify six complete cases through actual target mechanics, exact source bodies
+  and current owner-only Vault custody; capture fixed summary and FBM procedure.
+- [ ] Produce and close actual full publisher features for this separate packet,
+  then materialize/reload it through the source-bound consumer.
+
+Job 576688 still covers only v1r4 (three documents / five cases). The v2a packet
+is a separate unsubmitted construction candidate (four documents / six cases).
