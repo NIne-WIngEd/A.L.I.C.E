@@ -24,7 +24,7 @@ from .contracts import (AUTH_SCHEMA, FAMILY_SCHEMA, REVIEW_SCHEMA, TARGET_SCHEMA
                         TeachingError, TrainingRecipe, canonical, fingerprint)
 from .objectives import IdentityObjectives
 
-CHECKPOINT_SCHEMA = "alice-personality-resumable-teaching-checkpoint-v3"
+CHECKPOINT_SCHEMA = "alice-personality-resumable-teaching-checkpoint-v4"
 _DIGEST = re.compile(r"[0-9a-f]{64}\Z")
 _ARTIFACT_ROLES = {"source_package", "compiled_receipt", "prepared_receipt", "reviewed_targets",
                    "source_families", "authorization"}
@@ -170,7 +170,7 @@ class TeachingAdmission:
         recipe.validate()
         if not isinstance(self.artifacts, Mapping) or set(self.artifacts) not in (_ARTIFACT_ROLES, _GOVERNED_ROLES) \
                 or any(not isinstance(value, ArtifactPin) for value in self.artifacts.values()):
-            raise TeachingError("teaching needs all six explicit pins plus personality N0 qualification for governed training")
+            raise TeachingError("development teaching needs all six explicit pins; a supplied N0 qualification is separately verified")
         paths = {role: pin.verify() for role, pin in self.artifacts.items()}
         config_hash = sha256(canonical(asdict(model.config))).hexdigest()
         if config_hash != _digest(self.model_config_sha256, "model config") \
@@ -194,6 +194,8 @@ class TeachingAdmission:
         if auth.get("schema") != AUTH_SCHEMA or not isinstance(auth.get("authorization_id"), str) \
                 or not auth["authorization_id"] or auth.get("phase") != recipe.phase:
             raise TeachingError("a separately bound current phase authorization is required")
+        if auth.get("purpose") != "development_construction":
+            raise TeachingError("training authorization must explicitly permit development construction, never model approval")
         source_class = reviewed.get("source_class")
         if auth.get("source_class") != source_class:
             raise TeachingError("authorization and reviewed target source classes disagree")
@@ -213,8 +215,6 @@ class TeachingAdmission:
             expected_class = "governed_calibration_targets" if recipe.phase == "calibration" else "governed_identity_targets"
             if source_class != expected_class or not auth["private_gradient_authorized"]:
                 raise TeachingError("governed identity gradients need current explicit private authorization")
-            if set(self.artifacts) != _GOVERNED_ROLES:
-                raise TeachingError("governed gradients require externally pinned QUALIFIED_PERSONALITY_N0 evidence first")
             # Custody is independently rechecked at admission/resume; source
             # compiler eligibility is never read as the authorization above.
             from ..n1.compiler import verify_compiled
@@ -223,26 +223,27 @@ class TeachingAdmission:
             prepared = verify_prepared(paths["prepared_receipt"]) if deep_custody else _json(paths["prepared_receipt"])
             if compiled["source_package_sha256"] != self.artifacts["source_package"].sha256:
                 raise TeachingError("compiled archive differs from the externally pinned source package")
-            if deep_custody:
-                try:
+            # Development builds use the exact prepared source without first
+            # qualifying the completed capability. Never fabricate a report.
+            # If a caller supplies one, its custody and scope still must verify.
+            if "n0_qualification" in paths:
+                if deep_custody:
                     from ..gemma_n0.qualification import verify_personality_n0_qualification
-                except ImportError as exc:
-                    raise TeachingError("personality N0 qualification validator is not available; governed gradients remain blocked") from exc
-                qualification = verify_personality_n0_qualification(paths["n0_qualification"],
-                    expected_file_sha256=self.artifacts["n0_qualification"].sha256,
-                    expected_prepared_file_sha256=self.artifacts["prepared_receipt"].sha256,
-                    expected_prepared_receipt_sha256=prepared["receipt_sha256"])
-            else:
-                qualification = _json(paths["n0_qualification"])
-            if (not isinstance(qualification, dict)
-                    or qualification.get("schema") != "alice-personality-n0-role-qualification-v1"
-                    or qualification.get("state") != "QUALIFIED_PERSONALITY_N0"
-                    or qualification.get("role") != "personality"
-                    or qualification.get("prepared_receipt_file_sha256") != self.artifacts["prepared_receipt"].sha256
-                    or qualification.get("prepared_receipt_sha256") != prepared["receipt_sha256"]
-                    or qualification.get("repository") != prepared["repository"]
-                    or qualification.get("revision") != prepared["revision"]):
-                raise TeachingError("personality N0 role qualification differs from the exact prepared source")
+                    qualification = verify_personality_n0_qualification(paths["n0_qualification"],
+                        expected_file_sha256=self.artifacts["n0_qualification"].sha256,
+                        expected_prepared_file_sha256=self.artifacts["prepared_receipt"].sha256,
+                        expected_prepared_receipt_sha256=prepared["receipt_sha256"])
+                else:
+                    qualification = _json(paths["n0_qualification"])
+                if (not isinstance(qualification, dict)
+                        or qualification.get("schema") != "alice-personality-n0-role-qualification-v1"
+                        or qualification.get("state") != "QUALIFIED_PERSONALITY_N0"
+                        or qualification.get("role") != "personality"
+                        or qualification.get("prepared_receipt_file_sha256") != self.artifacts["prepared_receipt"].sha256
+                        or qualification.get("prepared_receipt_sha256") != prepared["receipt_sha256"]
+                        or qualification.get("repository") != prepared["repository"]
+                        or qualification.get("revision") != prepared["revision"]):
+                    raise TeachingError("personality N0 role qualification differs from the exact prepared source")
         geometry = prepared.get("model_geometry")
         if not isinstance(geometry, dict) or (geometry.get("hidden_size"), geometry.get("hidden_state_count")) \
                 != (model.config.provider_width, model.config.provider_state_count):

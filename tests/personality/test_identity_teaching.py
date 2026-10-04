@@ -149,6 +149,7 @@ def _admission(directory, model, recipe, batches, *, auth_changes=None, reviewed
     config_hash, initial = sha256(canonical(asdict(model.config))).hexdigest(), model_fingerprint(model)
     code = current_code_hashes()
     auth = {"schema": AUTH_SCHEMA, "authorization_id": "public-implementation-test-only", "phase": recipe.phase,
+            "purpose": "development_construction",
             "source_class": "public_mechanical_fixture", "private_gradient_authorized": False,
             "mechanical_steps_authorized": True, "artifact_file_sha256": {key: pin.sha256 for key, pin in artifacts.items()},
             "model_config_sha256": config_hash, "model_initial_state_sha256": initial,
@@ -176,12 +177,12 @@ def _production_fixture(frame):
     return binding, session, kwargs
 
 
-def _governed_custody_seam(directory, model, recipe, batch, *, implementation_changes=None):
+def _governed_custody_seam(directory, model, recipe, batch, *, implementation_changes=None, qualification_present=True):
     """Synthetic governed-path dependency test, not real custody qualification.
 
     Only external custody validators are mocked. Actual file/code/batch pins,
-    closed-session hashes and trainer admission run normally. No optimizer
-    step is executed, no private identity payload exists, and no fixture can
+    closed-session hashes and trainer admission run normally. Optimizer steps
+    use synthetic public features, no private identity payload exists, and no fixture can
     satisfy the actual N0 verifier's protocol/outcome/sidecar requirements.
     """
     from src.alice_foundation import gemma4_v1 as foundation
@@ -203,6 +204,8 @@ def _governed_custody_seam(directory, model, recipe, batch, *, implementation_ch
         "state": "QUALIFIED_PERSONALITY_N0", "role": "personality", "repository": foundation.MODEL,
         "revision": foundation.REVISION, "prepared_receipt_file_sha256": artifacts["prepared_receipt"].sha256,
         "prepared_receipt_sha256": prepared["receipt_sha256"], "fixture_only": True})
+    if not qualification_present:
+        artifacts.pop("n0_qualification")
     binding, session, _ = _production_fixture(batch.frame)
     for value, digest_key in ((binding, "binding_sha256"), (session, "receipt_sha256")):
         value["prepared_receipt_file_sha256"] = artifacts["prepared_receipt"].sha256
@@ -692,10 +695,36 @@ class IdentityTeachingMechanicalTests(unittest.TestCase):
         with self.assertRaisesRegex(TeachingError, "deterministic algorithm"):
             trainer.step(batch)
 
-    def test_governed_training_without_independent_n0_qualification_fails_closed(self):
-        with self.assertRaisesRegex(TeachingError, "QUALIFIED_PERSONALITY_N0"):
+    def test_governed_construction_still_requires_real_source_custody(self):
+        with self.assertRaises((TeachingError, ValueError, FileNotFoundError)):
             self.trainer(reviewed_changes={"source_class": "governed_identity_targets"},
                          auth_changes={"source_class": "governed_identity_targets", "private_gradient_authorized": True})
+
+    def test_authorized_governed_development_learns_with_prepared_unqualified_n0(self):
+        recipe = TrainingRecipe("n2", learning_rate=0.01, max_grad_norm=0.5, seed=777)
+        batch = _batch(self.model, self.frame)
+        admission, linked, outputs = _governed_custody_seam(
+            self.path, self.model, recipe, batch, qualification_present=False)
+        before = {name: value.detach().clone() for name, value in self.model.named_parameters()}
+        with patch("src.alice_personality.n1.compiler.verify_compiled", return_value=outputs[0]) as compiled, \
+             patch("src.alice_personality.gemma_n0.preparation.verify_prepared", return_value=outputs[1]) as prepared, \
+             patch("src.alice_personality.gemma_n0.qualification.verify_personality_n0_qualification") as qualify:
+            trainer = IdentityTrainer(self.model, recipe, admission, first_batch=linked)
+            event = trainer.step(linked)
+        compiled.assert_called_once()
+        prepared.assert_called_once()
+        qualify.assert_not_called()
+        changed = {name for name, value in self.model.named_parameters() if not torch.equal(before[name], value)}
+        self.assertTrue(changed)
+        self.assertTrue(all(name.startswith("n2.") for name in changed))
+        self.assertEqual(event["qualification"], "UNQUALIFIED")
+        self.assertFalse(event["acceptance_authority"])
+        self.assertIsNone(event["behavior_qualification"])
+
+    def test_current_authorization_requires_development_purpose_and_cannot_approve_model(self):
+        for purpose in (None, "release_approval"):
+            with self.subTest(purpose=purpose), self.assertRaisesRegex(TeachingError, "development"):
+                self.trainer(auth_changes={"purpose": purpose})
 
     def test_governed_admission_matches_actual_four_file_producer_dependency_scope(self):
         recipe = TrainingRecipe("n2", learning_rate=0.01, max_grad_norm=0.5, seed=777)

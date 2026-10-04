@@ -16,7 +16,7 @@ from ..identity.codec import fingerprint as _frame_fingerprint, tensor_digest
 TARGET_SCHEMA = "alice-personality-reviewed-teaching-targets-v3"
 REVIEW_SCHEMA = "alice-personality-reviewed-teaching-batches-v1"
 FAMILY_SCHEMA = "alice-personality-teaching-family-splits-v1"
-AUTH_SCHEMA = "alice-personality-current-training-authorization-v1"
+AUTH_SCHEMA = "alice-personality-current-training-authorization-v2"
 
 
 class TeachingError(ValueError):
