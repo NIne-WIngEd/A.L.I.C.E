@@ -33,13 +33,16 @@ class ConsumerTests(unittest.TestCase):
         self.session = producer.close_and_verify()
         self.model = IdentityModel(self.config)
 
-    def build(self, *, tie=False):
+    def build(self, *, tie=False, co_valid=False):
         if tie:
             with torch.no_grad():
                 self.model.n2.scalar[-1].weight[0].zero_()
                 self.model.n2.scalar[-1].bias[0].zero_()
         target = [[.5, .5]] if tie else [[.02, .98]]
-        batch = TeachingBatch(self.produced.frame, {"preferences": _target(target)},
+        targets = {"preferences": _target(target)}
+        if co_valid:
+            targets['co_valid_probabilities'] = _target([[1., 1.]])
+        batch = TeachingBatch(self.produced.frame, targets,
             ("fictional-judgment",), (("fictional-source-family",),), "n2", "TRAIN", "public_mechanical_fixture")
         recipe = TrainingRecipe("n2", seed=411, learning_rate=.01, max_grad_norm=1, weight_decay=0)
         admission = _admission(self.path, self.model, recipe, [batch])
@@ -65,6 +68,12 @@ class ConsumerTests(unittest.TestCase):
         self.assertEqual(result["status"], "UNRESOLVED_PLURALITY")
         self.assertEqual(set(result["selected_candidate_ids"]), {e.candidate_id for e in self.doc.candidates})
         self.assertIsNone(result["response_text"])
+
+    def test_valid_alternative_does_not_erase_learned_preference(self):
+        result = self.build(co_valid=True).respond(self.doc, self.produced, self.session)
+        self.assertEqual(result['status'], 'SELECTED')
+        self.assertEqual(result['selected_candidate_ids'], ['opaque-candidate-b'])
+        self.assertEqual(set(result['acceptable_candidate_ids']), {'opaque-candidate-a', 'opaque-candidate-b'})
 
     def test_changed_renderer_words_are_retained_as_unresolved(self):
         result = self.build().respond(self.doc, self.produced, self.session,

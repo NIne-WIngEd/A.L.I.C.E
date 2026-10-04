@@ -151,10 +151,10 @@ class DecisionConsumer:
             and bool(packet.identity_grounding_available[0])
         best = max((item["preference"] for item in intents), default=0)
         choices = [item for item in intents if best - item["preference"] <= tie_tolerance] if taught_preference else []
-        # Reviewed co-valid choices remain alternatives even when ranking differs.
-        if taught_preference:
-            choices += [item for item in intents if item not in choices and item["co_valid_probability"] is not None
-                        and item["co_valid_probability"] >= .5]
+        # Validity and preference are distinct governing outputs. A valid
+        # alternative remains available without erasing a learned preference.
+        acceptable = [item for item in intents if item in choices or
+            (item["co_valid_probability"] is not None and item["co_valid_probability"] >= .5)]
         status = "SELECTED" if len(choices) == 1 else "UNRESOLVED_PLURALITY" if choices else "UNRESOLVED_UNTAUGHT"
         text = choices[0]["text"] if len(choices) == 1 else None
         rendering = {"status": "NOT_RENDERED", "text": None, "delivery": None,
@@ -179,6 +179,7 @@ class DecisionConsumer:
             "packet_sha256": fingerprint(packet), "model_state_sha256": evidence["model_state_sha256"],
             "checkpoint_manifest_sha256": evidence["checkpoint_manifest_sha256"], "source_classes": evidence["source_classes"],
             "selected_candidate_ids": [item["candidate_id"] for item in choices], "response_text": text,
+            "acceptable_candidate_ids": [item["candidate_id"] for item in acceptable],
             "intents": intents, "rendering": rendering, "tie_tolerance": tie_tolerance,
             "training_state": "OPTIMIZED_UNQUALIFIED", "qualification": "UNQUALIFIED",
             "acceptance_authority": False, "owner_fidelity_approved": False, "spoken_fidelity_verified": False}

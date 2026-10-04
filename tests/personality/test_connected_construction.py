@@ -1,5 +1,6 @@
 """Full source features streamed through actual N1/N2 construction phases."""
 from dataclasses import replace
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -81,3 +82,16 @@ class ConstructionTests(unittest.TestCase):
         with self.assertRaises(TeachingError):
             construction.run_phase(recipe, admission, batch_loader=stale, epochs=1, destination=self.path / 'stale')
         self.assertTrue(all(torch.equal(v, self.model.state_dict()[k]) for k, v in before.items()))
+
+    def test_epoch_checkpoints_preserve_actual_optimizer_progress_without_advancing_stage(self):
+        construction = ConnectedConstruction(self.model)
+        recipe, admission, loader, seen = self.phase('n1')
+        epochs = self.path / 'epochs'
+        epochs.mkdir()
+        final = construction.run_phase(recipe, admission, batch_loader=loader, epochs=2,
+            destination=self.path / 'n1-final', epoch_checkpoint_directory=epochs)
+        manifests = [json.loads((p / 'manifest.json').read_bytes()) for p in sorted(epochs.iterdir())]
+        self.assertEqual([m['step'] for m in manifests], [1, 2])
+        self.assertTrue(all(m['phase'] == 'n1' and m['acceptance_authority'] is False for m in manifests))
+        self.assertEqual(manifests[-1]['model_state_sha256'], final['model_state_sha256'])
+        self.assertEqual(len(construction.checkpoints), 1)
