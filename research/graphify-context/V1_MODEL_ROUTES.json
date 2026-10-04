@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "2d050298d19767ef7f10b6f969cb9274e57f0f07",
+      "commit": "c3595da8415d254259ff377978522842872f68ce",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -47,7 +47,7 @@
         {
           "path": "docs/MFM_V16_BUILD_CONTINUATION_2026-10-02.md",
           "purpose": "MFM recovered corpus, compute decisions and remaining full-capability roadmap",
-          "blob_sha": "a6bd3b45b2a2b7320f6aeafd6b5d887f915d8409"
+          "blob_sha": "c7606d03eb75e9d210d5a3fe186ecc39d72b7a99"
         },
         {
           "path": "docs/MFM_COMPUTE_RECOVERY_RECEIPTS_2026-10-02.json",
@@ -57,12 +57,27 @@
         {
           "path": "docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
           "purpose": "completed teacher fit, failed generated formation, actual causal analysis and corrected measurement handoff",
-          "blob_sha": "d0c713d51901d2e840b42c84f811acaab73bdfb7"
+          "blob_sha": "d0e3c17d055845d7e312f6e90d921ef6e7ac437e"
         },
         {
           "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576702.json",
           "purpose": "sealed original full-target source-ablation analysis; initial value grouping covers quoted values only",
           "blob_sha": "60a795d327c0f38ea1268aa4eb8f4ea821e14a83"
+        },
+        {
+          "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576703.json",
+          "purpose": "sealed corrected all-scalar causal analysis; does not establish semantic ability",
+          "blob_sha": "c1a7495c7513a890df5b6ebb1af4dbd7a402cf4e"
+        },
+        {
+          "path": "docs/receipts/MFM_V16_COMPLETE_DIAGNOSTIC_576702.json",
+          "purpose": "complete matched nine trained and nine seeded invalid outputs; preserved original failure",
+          "blob_sha": "f634df4702923d123ab2c90c7e11b4ad2c0d682c"
+        },
+        {
+          "path": "docs/MFM_V16_OUTPUT_INTERFACE_SUCCESSOR_2026-10-04.md",
+          "purpose": "root input/objective/evaluation audit, actual corpus boundary and full decision construction; byte proposal on hold",
+          "blob_sha": "a88a7e37fa45b04847c496508082fdecdb6e5362"
         },
         {
           "path": "docs/MFM_V1_ROLE_BOUNDARY_DIAGNOSTIC_2026-09-30.md",
@@ -108,6 +123,61 @@
           "path": "src/cognitive_kernel/formation_learning_v16.py",
           "purpose": "v1.6 source-bound target codec and admitted learning rows",
           "blob_sha": "428aa46da9083e1868abbdf5ab3cc4a4c6f620d9"
+        },
+        {
+          "path": "src/cognitive_kernel/formation_decision_v16.py",
+          "purpose": "complete semantic decision compiler; allocates new local IDs while preserving existing and shared uncertainty identities",
+          "blob_sha": "be38f945f67d5696719d1a828c78c1cf8adb7dc6"
+        },
+        {
+          "path": "src/cognitive_kernel/formation_decision_specialist_v16.py",
+          "purpose": "calibrated fresh lexical embeddings with selected full specialist geometry unchanged",
+          "blob_sha": "6cccfb2b5c0c7cdef8b6640c0c3c8d5f34fbb3e2"
+        },
+        {
+          "path": "scripts/mfm/v16_prior_memory_inputs.py",
+          "purpose": "explicit fictional read snapshots for incomplete teaching inputs; no expected actions or write authority",
+          "blob_sha": "13ec265b2f8c2caad5cc467302277081d5683fe4"
+        },
+        {
+          "path": "scripts/mfm/prepare_v16_contract_successor.py",
+          "purpose": "actual admitted source-view preparation; immutable unchanged-state reuse and separately bound source patches",
+          "blob_sha": "2bb68b57f271be4b8e96462fd4900980edb6c96b"
+        },
+        {
+          "path": "scripts/mfm/formation_source_view.py",
+          "purpose": "external source-view pin and every full input/target/runtime/stress check before gradients",
+          "blob_sha": "a74479407bb00f751a85ad62ea01639b1e1cfc97"
+        },
+        {
+          "path": "scripts/mfm/train_v16_decision_specialist.py",
+          "purpose": "full decision teacher construction gated on actual complete stress/restart proof",
+          "blob_sha": "2199b021d43ec345c921a463d1b8b865f3fe37b8"
+        },
+        {
+          "path": "scripts/mfm/run_v16_decision_diagnostic.py",
+          "purpose": "target-free matched generated controls with explicit FP32 cache parity and honest exact agreement scope",
+          "blob_sha": "b38de490db67bb99d69314cd907013857c0725ed"
+        },
+        {
+          "path": "scripts/mfm/magnolia_v16_decision_learning_20261004.sbatch",
+          "purpose": "protected owner-account source-view to stress/restart to teacher fit and matched generation workflow",
+          "blob_sha": "e588ecb2e94f46c11d58eb3e028f7b0b33a80c3c"
+        },
+        {
+          "path": "tests/governance/test_mfm_v16_decision_interface.py",
+          "purpose": "complete semantic roundtrip, local-ID invariance and existing/shared uncertainty counterexamples",
+          "blob_sha": "dd2ab1e08ef56265d620cc82fcada9a9e208f606"
+        },
+        {
+          "path": "tests/governance/test_mfm_v16_contract_successor.py",
+          "purpose": "actual admitted subset boundary, reference availability, runtime ancestry and native binary input checks",
+          "blob_sha": "dde5ec2f7b7c95c1a47e8a00f664f6579f6b591d"
+        },
+        {
+          "path": "tests/governance/test_mfm_v16_decision_model.py",
+          "purpose": "construction reader rejection, optimizer restart and generated cache/wording scope checks; no capability claim",
+          "blob_sha": "8bede129ab62ffff3264f667705c0789f23b38fe"
         },
         {
           "path": "src/cognitive_kernel/formation_adjudication_v16.py",
@@ -252,7 +322,7 @@
         {
           "path": "scripts/mfm/qualify_v16_formation_specialist.py",
           "purpose": "v1.6 specialist assessment and diagnostic boundary",
-          "blob_sha": "37f658294a7f1abd34f187595f89f7470603c622"
+          "blob_sha": "932669c974a6448fbf0de0dba4f5a2b742f0ad7e"
         },
         {
           "path": "scripts/mfm/verify_gemma4_pretrained.py",
@@ -287,7 +357,7 @@
         {
           "path": "tests/governance/test_mfm_v16_specialist_assessment.py",
           "purpose": "v1.6 specialist assessment contract tests",
-          "blob_sha": "e0345cd6ae1f57eb706132f5da59e6bc79bc078e"
+          "blob_sha": "a4467310e35198107c5e83f3ffddf62bfc0fec3d"
         },
         {
           "path": "tests/governance/test_mfm_v16_signed_fit_gate.py",
@@ -303,7 +373,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "535f314602e0e20b2889a45c96da78e98bde2839",
+      "commit": "8c1b30868a2206e7c20494c673d480734cf7fb68",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -313,7 +383,7 @@
         {
           "path": "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
           "purpose": "FBM recovered teacher CPU evidence and frozen-feature build continuation",
-          "blob_sha": "6dd6785b0e2f763e5b6c7507be3529d745d48229"
+          "blob_sha": "a98654053086280cf94d937ee2188b096b82ad43"
         },
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261002_MFM_RECOVERY_AND_FROZEN_FEATURE_ROUTE.jsonl",
@@ -383,7 +453,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "00075bb12bd7fc259230311e1e5fd71a584796f6"
+          "blob_sha": "69a1159e73cc0ef17f0fabb5fbc37bf3d6b71b2b"
         }
       ]
     }
