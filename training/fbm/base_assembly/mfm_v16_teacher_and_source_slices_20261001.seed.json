@@ -838,7 +838,7 @@
     "latest_analysis_code_commit": "64be770d8f8f4770d76c6d65f04abab582c1a2b2",
     "root_cause_investigation_20261004": {
       "schema": "mfm-root-cause-investigation-state-v1",
-      "recorded_at_utc": "2026-10-04T18:43:58.289914+00:00",
+      "recorded_at_utc": "2026-10-04T23:30:00.038121+00:00",
       "source_export": {
         "jobs": {
           "576630": "TIMEOUT",
@@ -966,7 +966,7 @@
       },
       "root_analysis": {
         "job": 576702,
-        "state_at_snapshot": "RUNNING_REMAINING_SEEDED_CONTROLS",
+        "state_at_snapshot": "COMPLETED",
         "code_commit": "322c9c5f19ec46846d47a27f5500ec2a5838ef79",
         "device": "cpu",
         "threads": 12,
@@ -984,7 +984,21 @@
         "analysis_completed": true,
         "analysis_receipt_sha256": "4a6845745980f091aed57ee6e077490acecff7ed50410aa10604866d2dea03fe",
         "seconds_analysis_reported": 186.19100738316774,
-        "local_relevant_tests_passed_after_review": 21
+        "local_relevant_tests_passed_after_review": 21,
+        "generated_diagnostic_completed": true,
+        "complete_diagnostic_sha256": "a17b610d62887fb8dd371b9a72bee7f75287b8a78cf8f803cf45b81eb625c9c6",
+        "complete_generated_summary": {
+          "seeded-untrained": {
+            "cases": 9,
+            "grounded_proposals": 0,
+            "invalid_outputs": 9
+          },
+          "trained": {
+            "cases": 9,
+            "grounded_proposals": 0,
+            "invalid_outputs": 9
+          }
+        }
       },
       "causal_scope": {
         "local_public_probe": {
@@ -1038,7 +1052,7 @@
             12.5483,
             12.6247
           ],
-          "initial_grouped_metrics_caveat": "Quoted values only; unquoted numeric/boolean/null wrongly grouped as structure. Corrected measurement queued."
+          "initial_grouped_metrics_caveat": "Initial receipt retains quoted-values-only grouping; completed corrected receipt includes every JSON scalar."
         }
       },
       "frontier_watch_reviewed_commit": "3bea33189",
@@ -1050,13 +1064,104 @@
       "durable_model_backup_verified": false,
       "corrected_analysis": {
         "job": 576703,
-        "state_at_snapshot": "PENDING_DEPENDENCY",
+        "state_at_snapshot": "COMPLETED",
         "afterany": 576702,
         "code_commit": "64be770d8f8f4770d76c6d65f04abab582c1a2b2",
         "allocation_hours": 1,
         "receipt": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-root-analysis-576703.json",
-        "purpose": "Include numeric offsets/confidence, booleans and null in value measurements; retain first receipt as quoted-value-only historical grouping."
+        "purpose": "Include numeric offsets/confidence, booleans and null in value measurements; retain first receipt as quoted-value-only historical grouping.",
+        "receipt_sha256": "5e42932974ab7c8c083fed21c68b0606e7cbebd44b271f9ea7c2e9df64b5b6a7",
+        "seconds": 178.44226380065084
+      },
+      "contract_audit": {
+        "source": "public committed authoring fixtures plus independent read-only review",
+        "findings": [
+          "Missing prior-memory identities in seed06/11/18 input; most longitudinal/correction identities already visible.",
+          "Unobservable arbitrary case-derived local proposal/value identity spelling is penalized by old CE.",
+          "Exact field disagreement is not factual falsity; faithful public paraphrase remains a failed exact-agreement case.",
+          "Initial successor draft lost existing/shared uncertainty identity; failing counterexamples reproduced and corrected.",
+          "Substring availability hid longer-ID mismatch; bounded identifiers and existing uncertainty now checked."
+        ],
+        "implementation": "separately versioned complete decision/compiler plus explicit fictional prior-memory snapshot and source-view preparation",
+        "architecture": "selected original vocabulary/width/layers retained; byte proposal on hold unimplemented",
+        "local_tests_passed": 58,
+        "model_learning_claim": false,
+        "correction_job_submitted": true,
+        "source_view_completed": false,
+        "new_weights_exported": false,
+        "qualified_for_product": false,
+        "actual_admitted_input_audit": {
+          "cases_audited": 441,
+          "unchanged_source_cases": 439,
+          "development_cases": 9,
+          "train_cases": 432,
+          "target_or_source_rows_dropped": 0,
+          "augmented_case_ids": [
+            "v16-seed-06",
+            "v16-seed-11"
+          ],
+          "admitted_seed18": false,
+          "unresolved_existing_reference_input_gaps": 0
+        },
+        "source_preparation_history": {
+          "state": "FAILED_ROSTER_ASSERTION_BEFORE_SOURCE_EXPORT",
+          "job": 576713,
+          "cause": "Fixture superset mistaken for admitted corpus roster; full actual admission and new subset regression now cover the boundary",
+          "new_source_features_produced": false,
+          "actual_runtime_tests_passed": 49
+        },
+        "model_code_commit": "532bdeb1c5e537b334e62cdacc391737b1335715",
+        "source_code_commit": "2e78629b23376719c07008256915557345c501b6"
+      },
+      "decision_pipeline": {
+        "source_job": 576714,
+        "source_state_at_snapshot": "RUNNING",
+        "source_view": "/homes/01/mxrayan/rayan-compute/rayan-mfm/features/rayan-mfm-contract-view-576714/view.json",
+        "source_actual_runtime_tests_passed": 50,
+        "learning_job": 576715,
+        "learning_state_at_snapshot": "PENDING_AFTEROK_576714",
+        "code_commit": "532bdeb1c5e537b334e62cdacc391737b1335715",
+        "job_script_sha256": "722ce7143cff95f91ab081a37edfc8b5b6a5aac4484eca83c1eaee21b572ad08",
+        "owner_account": "mxrayan",
+        "execution": "dedicated protected CPU12/64GiB/12h",
+        "sequence": [
+          "externally pinned source-view admission",
+          "complete16-case3-step stress and next-step restart",
+          "fresh matched-seed432-case2-epoch teacher fit",
+          "target-free9-case matched trained/seeded generation"
+        ],
+        "fit_requires_pinned_stress_probe": true,
+        "full_role_geometry_unchanged": true,
+        "qualified_for_product": false,
+        "new_fitted_capability_established": false,
+        "final_payloads_opened": false,
+        "paid_compute_used": false
       }
+    },
+    "latest_decision_model_code_commit": "532bdeb1c5e537b334e62cdacc391737b1335715",
+    "decision_pipeline_20261004": {
+      "source_job": 576714,
+      "source_state_at_snapshot": "RUNNING",
+      "source_view": "/homes/01/mxrayan/rayan-compute/rayan-mfm/features/rayan-mfm-contract-view-576714/view.json",
+      "source_actual_runtime_tests_passed": 50,
+      "learning_job": 576715,
+      "learning_state_at_snapshot": "PENDING_AFTEROK_576714",
+      "code_commit": "532bdeb1c5e537b334e62cdacc391737b1335715",
+      "job_script_sha256": "722ce7143cff95f91ab081a37edfc8b5b6a5aac4484eca83c1eaee21b572ad08",
+      "owner_account": "mxrayan",
+      "execution": "dedicated protected CPU12/64GiB/12h",
+      "sequence": [
+        "externally pinned source-view admission",
+        "complete16-case3-step stress and next-step restart",
+        "fresh matched-seed432-case2-epoch teacher fit",
+        "target-free9-case matched trained/seeded generation"
+      ],
+      "fit_requires_pinned_stress_probe": true,
+      "full_role_geometry_unchanged": true,
+      "qualified_for_product": false,
+      "new_fitted_capability_established": false,
+      "final_payloads_opened": false,
+      "paid_compute_used": false
     }
   }
 }
