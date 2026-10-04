@@ -564,3 +564,110 @@ imitation is not supplied by it. Its old eight generic N0 competency coverage
 bins are source metadata, not a personality architecture or capability ceiling.
 The next isolated complete schema profile will learn actual fields before an
 ingestion adapter is chosen; no guessed private parser or category promotion.
+
+
+Voice profile576675 completed0:0 in4s under mxrayan/node023, using unchanged
+clean0eeb scientific modules and helper
+7a11d66c771d6f2b782db55c2349540758b5fe94b7ca369c2826480dbc4d51d2.
+Its exact source archive has9fully hashed members and complete value-free
+profiles for96voice policies,56delta rows,32E0anchors,77E-INF anchors and
+542existing A-SYN candidates. External file hashes, canonical seal, Git/helper/
+guard, voice archive and parent compile bindings are independently verified.
+The fixed summary is published byte-identically; paths, source keys, IDs and
+schema details remain protected. This profile is not source ingestion.
+
+The next construction connects the actual voice policies to the existing2460
+source-linked drafts. Require exact full-record delta subset and support-copy
+correspondence against the original curated package. Count96new A-SYN policies
+once; copies and delta rows create no extra examples or independent evidence.
+Preserve literal delivery descriptions and optional controls, uncertainty and
+relationship conditions. Old N0 coverage labels stay administrative metadata.
+Do not infer acoustic imitation, numeric voice gold or current host intimacy.
+Keep phase annotations unset; unknown and alternative banks remain separately
+pinned. Connect source and shared synthetic-package ancestry conservatively,
+retaining original families/splits and refusing any cross-split reuse. Do not
+resplit or create independent calibration evidence. Full content annotations,
+complete target-free documents and actual role training remain next work.
+
+
+Connected voice construction576678 completed0:0 in6s under mxrayan/node023.
+The exact source-bound workspace now has2556drafts:2460original rows plus96
+nonhistorical delivery policies. All56delta rows and32E0/77E-INF/542A-SYN
+support copies match their complete original bodies and add zero extra rows.
+Literal delivery policy and optional controls survive; source confidence and
+old coverage bins remain administrative. Shared generator ancestry is linked
+conservatively while original families/splits remain recorded. The resulting
+eight connected families are still all train, not heldout/calibration evidence.
+The workspace subtype ASYN_VOICE requires an explicit ASYN_TARGETED consumer
+mapping; it is not a newly admitted SourceRecord kind or an ID alias.
+
+Full-context authoring576679 completed0:0 in12s under mxrayan/node023. Its2556
+protected records preserve the exact original body, subject/time/context and
+source declarations alongside the existing draft. Original raw records are not
+automatically provider inputs. All document/head/phase slots in that workspace
+remain unset. Both fixed summaries are independently verified against external
+files, canonical seals, Git/helper/guard, parent/source and count bindings, then
+published byte-identically. Public helper reviews found no actionable findings
+within scope. Twenty voice-connection and eight full-context fixtures pass.
+
+The owner designated this chat's root assistant as primary teacher, with the
+owner resolving uncertainty, and prohibited another model as teacher. Scoped
+local/Magnolia/repository/saved-context recovery found owner-ratified E0 semantic
+decomposition, earlier teaching doctrine and provenance tests, but no approved
+governing N1/N2/N3 target package. The reviewed E0 units establish source meaning,
+not conditional judgment, confidence or outcome targets. Original context was
+copied opaquely into the existing owner-only Vault for deliberate primary
+teaching. Root reads are purpose-limited to this authorized teaching context;
+private content is not sent to code reviewers, public Git or shared stores.
+
+Root read the actual evidence and authored three complete target-free documents
+and five typed proposals: three N1 interpretation and two N2 judgment cases.
+They contrast distress support and conditional private warmth, preserving nine
+canonical E0/E-INF entries, complete context roles, one connected source family
+and present relationship permission. Supplemental voice policies are separately
+pinned in the annotation protocol; they are not unregistered source records.
+Two co-valid responses remain equally valid. Each semantic head is judged
+separately: a style mismatch is not automatically a values or stance violation.
+Teacher notes/targets and source confidence do not enter the frozen provider.
+
+These are author-reviewed proposals, not owner acceptance or independent gold.
+No private gradient is admitted. Unestablished closeness receives no invented
+N2 warmth ranking; unsupported uncertainty, disconfirmation, quantitative voice,
+owner fidelity and N3 calibration targets remain unavailable. Source categories
+span stages; source history is not Alice autobiography. The first real consumer
+construction will produce all actual frozen layers/tokens for one full document
+and materialize its N1/N2 cases through the existing interfaces, retaining a
+protected caller artifact and verifying its reload. No training or personality
+qualification follows automatically from this construction result.
+
+
+The actual first complete-document feature/materialization job576683 is
+submitted under mxrayan: CPU4,64GiB,2h, unchanged original USER+NET/P2 guard,
+clean scientific0eeb source and immutable helper
+df0439b085192e23710a20db6cc60a78b9ecde387448d45dcf9c935a45851e1e.
+It reuses the previously successful processor overlay and prepared source;
+no installation, paid allocation or source-weight change is introduced.
+One complete document serves one N1 and one N2 case; all actual tokens and
+49x3840 source states are required. Closed source recheck and own protected
+artifact reload precede a materialization receipt. No gradient/admission is
+part of this job. It reached actual feature production; result is pending.
+
+Bounded review identified a draft/consumer-kind mismatch: the source workspace
+retains ASYN_VOICE while declaring ASYN_TARGETED for the existing codec. The
+controller now checks the explicit declared consumer kind, preserving subtype
+and original ID. A real-codec synthetic counterexample failed before this
+correction and passes afterward. The selected first case uses canonical E0/
+E-INF sources; the corrected mapping prevents a latent supplemental-policy
+consumer defect. The source contract and codec establish this representation
+boundary; no new architecture or source enum is inferred. Final bounded review
+has no findings. All86 public helper fixtures pass, including9consumer fixtures.
+
+FBM has an explicit host-neutral procedure seed at `training/fbm/base_assembly/personality_primary_teaching_20261003.seed.json`
+(SHA256 `cc37bbfa79d3afa5e1187ba72bfe2154bff2328c8fe38e57ddde1e5eb36506af`), paired with the actual construction traces. Its ten
+replay steps cover role-specific base preparation, original lineage recovery,
+duplicate-copy rejection, connected split ancestry, source context preservation,
+teacher recovery/designation, conditional head-specific authorship, complete
+consumer materialization, admitted training/integration and causal behavioral
+assessment. No private personality text, feature values or learned identity is
+included. This is a reusable method seed with observed evidence; it is not an
+admitted supervised builder corpus, independent evaluation or learned FBM transfer.

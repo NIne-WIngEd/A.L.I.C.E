@@ -316,3 +316,48 @@ imitation is not supplied by it. Its old eight generic N0 competency coverage
 bins are source metadata, not a personality architecture or capability ceiling.
 The next isolated complete schema profile will learn actual fields before an
 ingestion adapter is chosen; no guessed private parser or category promotion.
+
+
+## Task 7: Connect actual voice source to the curriculum
+
+Use the complete protected576675 schema and source receipt to assemble the
+96A-SYN policies against the existing2460drafts. Exact byte-pinned source bodies
+must close the delta subset and all E0/E-INF/A-SYN support copies; copies do not
+add examples. Preserve literal policy meaning and relationship constraints,
+explicitly missing phase annotations and current live context. Connect shared
+source/generator ancestry without moving original splits or inventing holdout.
+
+- [x] Verify completed576675 full source profile and publish its fixed summary.
+- [x] Exercise source-copy/delta, authority, ancestry, strings/missing gold and
+  guard-first behavior in public synthetic fixtures (20new,36combined pass).
+- [x] Complete bounded review and execute the source-bound connected workspace
+  under the unchanged owner guard; verify and record the actual result.
+- [ ] Annotate real conditional interpretation, judgment and calibration
+  content through complete target-free documents and role-specific targets.
+
+
+## Task 8: Primary teaching through the complete consumer
+
+Owner and root are teachers; no external or offline teacher is used. Existing
+ratified source semantics remain distinct from newly authored governing targets.
+
+- [x] Search existing local/Magnolia/repository/saved-context label packages.
+- [x] Preserve all2556original contexts through the actual guarded authoring job.
+- [x] Read original evidence in the authorized owner-only teaching context.
+- [x] Author three complete target-free documents and five typed N1/N2 proposals.
+- [x] Preserve co-valid choices, independent semantic head judgments, missing
+  quantitative voice and calibration labels, actual family and subject/time.
+- [x] Exercise exact document/phase/artifact selection, target separation and
+  guard-first behavior in nine public fixtures.
+- [ ] Produce actual full49x3840 frozen features, close/recheck source, materialize
+  the first complete document's N1/N2 cases and verify protected own-artifact reload.
+- [ ] Expand the substantive source-grounded curriculum and actual N3 outcome/
+  calibration route; do not infer independent evidence from the all-train source.
+- [ ] Assemble reviewable source/target manifests and actual trained consumer.
+
+First proposals advance construction, not the full curriculum or capability
+qualification. Full behavioral evaluation still follows the connected build.
+
+Actual first complete-document job576683 is running under mxrayan after public
+review and86helper fixture passes. Result is pending. Explicit FBM procedure
+seed is saved in `training/fbm/base_assembly/personality_primary_teaching_20261003.seed.json`; no private input or target payload is shared.

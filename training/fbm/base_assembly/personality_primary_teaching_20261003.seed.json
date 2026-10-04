@@ -1,0 +1,129 @@
+{
+  "autonomous_replay": [
+    {
+      "action": "Resolve the actual repository/head and intended consumer; bind original bytes, producer strata, IDs and body correspondence independently. Retain source-person/host/relationship/self scopes.",
+      "id": "recover_role_and_source",
+      "input": "Current owner objective, role contract and original source manifests",
+      "stop_if": "The role is confused with another model, original lineage is unresolved, or required custody is absent."
+    },
+    {
+      "action": "Prepare a role-specific headless semantic provider, freeze publisher parameters and preserve complete actual tokens/layers. Keep native interpretation/judgment/calibration responsible for personality. Record inherited influence for later actual behavioral assessment.",
+      "id": "prepare_role_base",
+      "input": "Exact permitted base source and current full-capability role interface",
+      "stop_if": "The base is merely copied and declared approved, a publisher response head controls personality, or required representation is truncated."
+    },
+    {
+      "action": "Require exact full-body delta subset and support-copy correspondence. Count genuinely new policies once. Preserve literal policy, uncertainty and present-permission conditions; keep administrative confidence/coverage out of feature meaning.",
+      "id": "join_without_duplicate_evidence",
+      "input": "Original source rows plus supplemental policy/support copies",
+      "stop_if": "Copied evidence or shared generator ancestry is counted as independent data."
+    },
+    {
+      "action": "Keep connected components and original split assignments together. Record all-train coverage honestly; obtain separate eligible outcome/case ancestry for calibration rather than manufacturing independence by row splits.",
+      "id": "preserve_connected_ancestry",
+      "input": "Source, generator, parent and scenario lineage",
+      "stop_if": "A connected family crosses allocations or renamed IDs are used to fake independence."
+    },
+    {
+      "action": "Retain subject, time, reported speech, authority and relationship scope for authorship. Raw source bodies are not automatically provider documents. Resolve draft subtypes through their explicit versioned consumer-kind mapping.",
+      "id": "recover_original_context",
+      "input": "Normalized draft plus exact original body",
+      "stop_if": "Normalization erased attribution or an unsupported source enum/alias is introduced."
+    },
+    {
+      "action": "Search current authorized stores and evidence first. Distinguish source decomposition from conditional teaching targets. Use the owner-designated teacher; this ALICE run explicitly excludes another teacher. Ask the owner about actual ambiguity, not settled routine scope.",
+      "id": "recover_teacher_package",
+      "input": "Existing approved source-semantic and governing-target packages plus owner teacher instruction",
+      "stop_if": "Teacher provenance/authorization is missing or source confidence is offered as governing gold."
+    },
+    {
+      "action": "Author complete target-free documents and separate typed annotations. Historical closeness does not fill present permission. Include multiple valid options and genuine explicit contrasts; judge each semantic dimension separately. Mark unsupported voice/uncertainty/outcome targets unavailable.",
+      "id": "author_full_context_cases",
+      "input": "Actually read permitted source, explicit present conditions and role outputs",
+      "stop_if": "A style mismatch is copied to every judgment head, a hypothetical becomes history, or unselected source alternatives become negatives."
+    },
+    {
+      "action": "Establish actual owner isolation before private paths/reads. Pass only the target-free document to the frozen producer. Close and recheck source; materialize named sparse targets against the exact frame/geometry and phase. If the caller retains protected features, preserve the producer no-cache binding and record caller custody separately; verify own checksum-bound artifact reload.",
+      "id": "materialize_actual_consumer",
+      "input": "Pinned full document, annotation protocol, author review, source/compiler and prepared-base receipts",
+      "stop_if": "Targets/review prose leak into provider text, session source recheck is absent, bindings change, or stage/split authority is inferred."
+    },
+    {
+      "action": "Train only the intended learned components through the real admitted route, retain resumable checkpoints, and connect word/delivery consumers. Complete substantive N3 calibration and the intended full build before full capability evaluation.",
+      "id": "train_and_integrate_when_admitted",
+      "input": "Concrete reviewable source/target manifest, actual current training authority and complete governing components",
+      "stop_if": "A compiler pass, author proposal or feature receipt is being treated as gradient admission or trained personality."
+    },
+    {
+      "action": "Measure intended interpretation, judgment, expression and calibration with matched controls. Diagnose inherited-base interference, research the actual causal mechanism, repair the responsible interface/objective and preserve residual limits. Capture useful methods with paired evidence.",
+      "id": "evaluate_actual_personality",
+      "input": "Connected trained consumer and suitable independent evidence/interventions",
+      "stop_if": "Unqualified mechanics, teacher fit or source custody is being promoted to independent personality fidelity."
+    }
+  ],
+  "builder_weights_updated": false,
+  "cross_user_transfer_demonstrated": false,
+  "evaluation_eligible": false,
+  "generic_evidence_categories": {
+    "alternatives": "Unselected alternatives are candidate options, not automatic negatives.",
+    "direct_history": "Original attributed observation with subject/time/context and immutable body.",
+    "inference": "Revisable tendency linked to direct supports, counterevidence, conditions and uncertainty.",
+    "synthetic_policy": "Explicit nonhistorical starting policy or rehearsal, never actual experience.",
+    "unknown": "Absent historical evidence remains unknown without forbidding a separately permitted starting policy."
+  },
+  "implementation_sources": {
+    "feature_producer": "src/alice_personality/identity/feature_producer.py",
+    "materialization_helper_sha256": "df0439b085192e23710a20db6cc60a78b9ecde387448d45dcf9c935a45851e1e",
+    "materializer": "src/alice_personality/teaching/materialize.py",
+    "personality_branch": "codex/personality-gemma-v1-preparation",
+    "published_parent_commit": "d6467d1b3265ddba37e2d9690eae4fd9c7235d38",
+    "scientific_commit": "0eeb7d2f8a55f8d3c78ef19fd629fd218161e3dc",
+    "source_complete_helper_sha256": "507e39f81680e72e16eb2aca9cebf70b16ed38d78cf589a6b18ae5b5c3389ec0",
+    "teaching_case_codec": "src/alice_personality/teaching/cases.py",
+    "trainer": "src/alice_personality/teaching/trainer.py"
+  },
+  "observed_evidence": {
+    "bounded_public_review_remaining_findings": 0,
+    "calibration_proposals": 0,
+    "compiled_active_records": 2460,
+    "connected_drafts": 2556,
+    "connected_voice_job": 576678,
+    "consumer_controller_fixtures_passed": 9,
+    "explicit_inference_records": 926,
+    "full_personality_trained": false,
+    "materialization_job": 576683,
+    "materialization_result": "PENDING",
+    "n0_approved": false,
+    "new_delivery_policies": 96,
+    "original_context_job": 576679,
+    "original_context_records": 2556,
+    "other_teacher_used": false,
+    "primary_n1_proposals": 3,
+    "primary_n2_proposals": 2,
+    "private_gradient_steps": 0,
+    "source_compile_job": 576673,
+    "source_families_all_train": true,
+    "target_free_documents": 3
+  },
+  "paired_trace": "docs/fable-builder/traces/FBM_TRACE_20261003_RETAINED_INFERENCE_CONSTRUCTION.jsonl",
+  "private_payload_in_fbm_git": false,
+  "qualification_boundary": "This is a transferable operating recipe with observed construction evidence, not a supervised builder input-target-outcome corpus, admitted training seed, learned FBM competence or a private personality export.",
+  "receipt_refs": [
+    "evaluation/eipm/gemma_n0/receipts/magnolia_576673_source_bound_substrate_summary.json",
+    "evaluation/eipm/gemma_n0/receipts/magnolia_576678_connected_voice_curriculum_summary.json",
+    "evaluation/eipm/gemma_n0/receipts/magnolia_576679_source_complete_case_authoring_summary.json",
+    "evaluation/eipm/gemma_n0/receipts/primary_teacher_proposal_summary_20261003.json"
+  ],
+  "role_contract": {
+    "boundary": "A source-person identity, host, relationship and assistant-self remain separate. Evidence categories span stages. Other model roles require their own objectives and consumers.",
+    "eipm": "Preserve qualitative words/delivery, conditions and identity through the real consumer; exact acoustics require separate evidence.",
+    "n0": "Prepared headless frozen semantic features; complete actual tokens/layers; source/clone custody grants no personality approval.",
+    "n1": "Conditional interpretation, concept applicability, source support/disconfirmation and available uncertainty.",
+    "n2": "Source-grounded governing judgment, multiple valid choices, separate semantic dimensions and expressive intent.",
+    "n3": "Separate calibration from actual judgment/outcome or owner fidelity evidence; never source-confidence copies."
+  },
+  "schema": "alice.fbm.personality_construction_seed.v1",
+  "scope": "Full Fable v1 personality construction; host-neutral procedure seed with paired ALICE evidence",
+  "status": "PUBLISHED_METHOD_UNQUALIFIED",
+  "training_eligible": false
+}
