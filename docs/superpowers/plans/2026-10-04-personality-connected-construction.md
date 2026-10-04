@@ -46,9 +46,9 @@
 **Consumes:** Frozen N1/N2 contextual candidate representation and separately reviewed actual outcome targets.
 **Produces:** N3 confidence/risk calibration with access to contextual judgment information, preserving N1/N2 and all source permissions.
 
-- [ ] Write a discriminating test: equal margin/uncertainty/sufficiency with different contextual judgment representations and different fidelity outcomes must be representable by N3. Expected before implementation: the current three-signal-only risk adjustment cannot distinguish them.
-- [ ] Preserve temperature calibration for confidence; add a context-conditioned risk/fidelity readout within N3 only. Do not use the untaught N2 fidelity logit as calibrated truth or make N3 reverse personality rankings.
-- [ ] Prove outcome gradients update only N3, unsupported targets remain unavailable, and checkpoint/resume preserves the exact new state. Run model/teaching suites and commit.
+- [x] Write a discriminating test: equal margin/uncertainty/sufficiency with different contextual judgment representations and different fidelity outcomes must be representable by N3. Expected before implementation: the current three-signal-only risk adjustment cannot distinguish them.
+- [x] Preserve temperature calibration for confidence; add a context-conditioned risk/fidelity readout within N3 only. Do not use the untaught N2 fidelity logit as calibrated truth or make N3 reverse personality rankings.
+- [x] Prove outcome gradients update only N3, unsupported targets remain unavailable, and checkpoint/resume preserves the exact new state. Run model/teaching suites and commit.
 
 ## Task 4: Actual decision-to-response consumer and outcome receipts
 
@@ -92,3 +92,5 @@ Ruling: retain legacy case/split semantics rather than silently migrating old si
 Task 1: six-pin governed development was refused by the old qualification gate before repair. New construction-purpose negatives also failed. After repair, all 47 teaching tests / 38 subtests passed. Commit 605f7d11 preserves optional qualification verification, real source/preparation custody, feature/target/code/phase bindings and false approval claims. Deep custody verifies once at admission; each optimizer step rechecks current file/code pins. These are synthetic mechanics, not private model training.
 
 Task 2: observed absent lineage interface before implementation. New allocation distinguishes unchanged TRAIN references from disjoint supervision/context families; explicit derivative ancestry cannot cross splits. New case v2 / teaching target v4 / materialization v2 bind the lineage; legacy case v1 bytes and strict source splits remain. Actual public materializer and calibration optimizer integration passed. Initial combined suite:68 tests /55 subtests; added dynamic-context and stale-receipt regressions pass. Scope is conditional development, never source-independent qualification.
+
+Task 3: RED confirmed missing contextual N3 input and an untaught N2 unit affecting owner-fidelity uncertainty. Contextual N3 now learns its own outcome risk; N2 retains six taught judgment outputs. Positive temperature scaling preserves rankings. Snapshot v3 / resumable checkpoint v5 explicitly bind changed geometry. Combined model/teaching/case/lineage suite passed 97 tests / 65 subtests; only public mechanical fixtures.

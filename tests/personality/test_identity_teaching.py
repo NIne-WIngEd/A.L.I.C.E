@@ -339,6 +339,7 @@ class IdentityTeachingMechanicalTests(unittest.TestCase):
         trainer, batch = self.trainer("calibration", full=True)
         trainer.step(batch)
         manifest = trainer.save_checkpoint(self.path / "n3-resume")
+        self.assertTrue(any(name.startswith("n3.contextual_risk.") for name in manifest["optimizer_parameters"]))
         expected_event = trainer.step(batch)
         expected_state = copy.deepcopy(self.model.n3.state_dict())
         restarted = IdentityModel(self.config)

@@ -274,7 +274,7 @@ class IdentityJudgmentModel(nn.Module):
         self.layers = nn.ModuleList(_CandidateReadoutLayer(config) for _ in range(config.readout_layers))
         self.heads = nn.ModuleDict({"family_" + family: _SemanticHead(config.learned_width) for family in HEAD_FAMILIES})
         self.scalar = nn.Sequential(nn.Linear(config.learned_width, config.learned_width), nn.GELU(),
-                                    nn.Linear(config.learned_width, 7))
+                                    nn.Linear(config.learned_width, 6))
         self.evidence_query = nn.Linear(config.learned_width, config.learned_width, bias=False)
         self.evidence_key = nn.Linear(config.learned_width, config.learned_width, bias=False)
         self.concept_query = nn.Linear(config.learned_width, config.learned_width, bias=False)
@@ -337,20 +337,30 @@ class IdentityJudgmentModel(nn.Module):
 
 class IdentityCalibration(nn.Module):
     """N3 state lives separately; no input/provenance/graph rewriting API."""
-    def __init__(self):
+    def __init__(self, width: int):
         super().__init__()
         self.log_temperatures = nn.ParameterDict({"temperature_" + name: nn.Parameter(torch.zeros(()))
                                                  for name in (*HEAD_FAMILIES, "preference", "scalar", "voice_confidence")})
         self.risk_adjustment = nn.Linear(3, 3)
         nn.init.zeros_(self.risk_adjustment.weight)
         nn.init.zeros_(self.risk_adjustment.bias)
+        # Outcome labels belong to N3. Retain contextual candidate and query
+        # information even when confidence/margin summaries are identical.
+        self.contextual_risk = nn.Sequential(nn.LayerNorm(width * 2),
+            nn.Linear(width * 2, width), nn.GELU(), nn.Linear(width, 3))
+        nn.init.zeros_(self.contextual_risk[-1].weight)
+        nn.init.zeros_(self.contextual_risk[-1].bias)
 
     def scale(self, name: str, values: Tensor) -> Tensor:
         return values * self.log_temperatures["temperature_" + name].clamp(-7, 7).neg().exp()
 
-    def risks(self, scalar: Tensor, margins: Tensor) -> Tensor:
+    def risks(self, scalar: Tensor, margins: Tensor, *, context: Tensor) -> Tensor:
         signals = torch.stack((margins.abs(), scalar[..., 3], scalar[..., 2]), -1)
-        return self.scale("scalar", scalar[..., (3, 5, 6)]) + self.risk_adjustment(signals)
+        # N2 has no owner-fidelity gold. Its uncertainty and failure-tail
+        # predictions are calibrated; fidelity starts unresolved and is learned
+        # here from separately reviewed outcomes, never an arbitrary N2 unit.
+        base = torch.stack((scalar[..., 3], scalar[..., 5], torch.zeros_like(margins)), -1)
+        return self.scale("scalar", base) + self.risk_adjustment(signals) + self.contextual_risk(context)
 
 
 class IdentityModel(nn.Module):
@@ -366,7 +376,7 @@ class IdentityModel(nn.Module):
         self.config = config
         self.n1 = IdentityRepresentationModel(config)
         self.n2 = IdentityJudgmentModel(config)
-        self.n3 = IdentityCalibration()
+        self.n3 = IdentityCalibration(config.learned_width)
         self.phase = "inference"
         self._calibration_batch = None
         self.set_phase("inference")
@@ -428,7 +438,8 @@ class IdentityModel(nn.Module):
         rival_scores = preference_logits[:, None].expand(-1, count, -1).masked_fill(~rivals, -torch.finfo(scalar.dtype).max)
         margins = torch.where(rivals.any(-1), preference_logits - rival_scores.max(-1).values,
                               torch.zeros_like(preference_logits))
-        risks = torch.sigmoid(self.n3.risks(scalar, margins))
+        calibration_context = torch.cat((raw["candidates"], query[:, None].expand_as(raw["candidates"])), -1)
+        risks = torch.sigmoid(self.n3.risks(scalar, margins, context=calibration_context))
         heads = {}
         for family, scores in raw["heads"].items():
             scores = self.n3.scale(family, scores)

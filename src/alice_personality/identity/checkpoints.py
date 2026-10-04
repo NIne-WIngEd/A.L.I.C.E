@@ -11,7 +11,7 @@ import torch
 from .contracts import CALIBRATION_SCHEMA, FRAME_SCHEMA, PACKET_SCHEMA, IdentityError, IdentityModelConfig
 from .model import IdentityModel
 
-SNAPSHOT_SCHEMA = "alice-personality-identity-untrained-snapshot-v2"
+SNAPSHOT_SCHEMA = "alice-personality-identity-untrained-snapshot-v3"
 
 
 def _canonical(value: object) -> bytes:

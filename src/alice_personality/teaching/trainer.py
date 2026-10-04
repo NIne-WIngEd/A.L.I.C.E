@@ -25,7 +25,7 @@ from .contracts import (AUTH_SCHEMA, FAMILY_SCHEMA, REVIEW_SCHEMA, TARGET_SCHEMA
 from .objectives import IdentityObjectives
 from .lineage import ALLOCATION_SCHEMA, validate_allocation, verify_allocation
 
-CHECKPOINT_SCHEMA = "alice-personality-resumable-teaching-checkpoint-v4"
+CHECKPOINT_SCHEMA = "alice-personality-resumable-teaching-checkpoint-v5"
 _DIGEST = re.compile(r"[0-9a-f]{64}\Z")
 _ARTIFACT_ROLES = {"source_package", "compiled_receipt", "prepared_receipt", "reviewed_targets",
                    "source_families", "authorization"}
