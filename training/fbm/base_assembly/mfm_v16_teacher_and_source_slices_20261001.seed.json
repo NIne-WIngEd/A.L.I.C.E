@@ -835,10 +835,10 @@
     "feature_export_completion_job": 576632,
     "teacher_fit_completed": true,
     "useful_formation_demonstrated": false,
-    "latest_analysis_code_commit": "322c9c5f19ec46846d47a27f5500ec2a5838ef79",
+    "latest_analysis_code_commit": "64be770d8f8f4770d76c6d65f04abab582c1a2b2",
     "root_cause_investigation_20261004": {
       "schema": "mfm-root-cause-investigation-state-v1",
-      "recorded_at_utc": "2026-10-04T18:31:45.130923+00:00",
+      "recorded_at_utc": "2026-10-04T18:43:58.289914+00:00",
       "source_export": {
         "jobs": {
           "576630": "TIMEOUT",
@@ -966,7 +966,7 @@
       },
       "root_analysis": {
         "job": 576702,
-        "state_at_snapshot": "RUNNING",
+        "state_at_snapshot": "RUNNING_REMAINING_SEEDED_CONTROLS",
         "code_commit": "322c9c5f19ec46846d47a27f5500ec2a5838ef79",
         "device": "cpu",
         "threads": 12,
@@ -980,7 +980,11 @@
         "recovered_diagnostic": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-generated-recovered-576702/diagnostic.json",
         "objective": "Trace numerical scale, complete target alignment, contract/value errors and actual source dependence before a corrective fit",
         "corrective_fit_launched": false,
-        "new_weights_exported": false
+        "new_weights_exported": false,
+        "analysis_completed": true,
+        "analysis_receipt_sha256": "4a6845745980f091aed57ee6e077490acecff7ed50410aa10604866d2dea03fe",
+        "seconds_analysis_reported": 186.19100738316774,
+        "local_relevant_tests_passed_after_review": 21
       },
       "causal_scope": {
         "local_public_probe": {
@@ -1001,7 +1005,6 @@
         },
         "supported_mechanism": "Default unit-scale embeddings, residual token path and tied output head create saturated initial copying in the local full-configured model.",
         "not_yet_established": [
-          "same numerical diagnosis in actual Torch 2.7.1 corpus runtime",
           "sole cause of trained failure",
           "value accuracy and source-conditioning behavior",
           "adequacy of objective and data for full MFM",
@@ -1012,7 +1015,31 @@
           "aggregate loss conflates format and semantic values",
           "exact source copying learned through frozen states without input-ID copy channel",
           "single-author curriculum insufficient for independent transfer claims"
-        ]
+        ],
+        "actual_runtime_observation": {
+          "target_alignment_verified_cases": 441,
+          "total_target_tokens": 199104,
+          "unique_target_tokens": 728,
+          "sampled_cases": 6,
+          "seeded_previous_input_copy_rate_all_cases": 1.0,
+          "trained_matched_loss_range": [
+            20.241608500055452,
+            25.969901830546522
+          ],
+          "source_swap_loss_effect_range_approx": [
+            -0.206,
+            0.232
+          ],
+          "source_zero_copy_rate_range_approx": [
+            0.8385,
+            0.8933
+          ],
+          "untrained_embedding_intervention_loss_range_approx": [
+            12.5483,
+            12.6247
+          ],
+          "initial_grouped_metrics_caveat": "Quoted values only; unquoted numeric/boolean/null wrongly grouped as structure. Corrected measurement queued."
+        }
       },
       "frontier_watch_reviewed_commit": "3bea33189",
       "independent_gold": false,
@@ -1020,7 +1047,16 @@
       "memory_activation": false,
       "qualified_for_product": false,
       "paid_compute_purchased": false,
-      "durable_model_backup_verified": false
+      "durable_model_backup_verified": false,
+      "corrected_analysis": {
+        "job": 576703,
+        "state_at_snapshot": "PENDING_DEPENDENCY",
+        "afterany": 576702,
+        "code_commit": "64be770d8f8f4770d76c6d65f04abab582c1a2b2",
+        "allocation_hours": 1,
+        "receipt": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-root-analysis-576703.json",
+        "purpose": "Include numeric offsets/confidence, booleans and null in value measurements; retain first receipt as quoted-value-only historical grouping."
+      }
     }
   }
 }
