@@ -93,6 +93,49 @@ initial fixture-only tests missed this producer-boundary assumption; a subset
 regression and the actual-corpus audit now cover it. Source job 576713 is retained
 as failed preparation; neither new features nor fitted weights came from it.
 
+## Actual decision-model construction
+
+The new `FormationDecisionSpecialist` inherits the original complete model and
+scales only its freshly initialized token/position embeddings by the causal
+0.02 intervention. A parameter comparison confirms every other initialization
+is unchanged. No source lexical weights or language head are imported.
+
+`formation_source_view.py` re-admits the original corpus, verifies the external
+new-view producer pin, every input/target/source feature/code/runtime binding,
+new patches, complete lengths, derived stress maxima and zero unresolved input
+identities. Training rejects a different or incomplete view before gradients.
+`train_v16_decision_specialist.py` uses all 432 training cases with original
+FP32 geometry, seed, learning rate, 16-case accumulation and two epochs. Every
+development case remains gradient-free. This is a matched construction
+comparison, not a claim that 441 single-author examples suffice for full MFM.
+
+A separate actual-runtime 16-case stress probe includes all admitted augmented
+inputs and new longest source/target/joint cases, takes three optimizer steps,
+reloads the step-two checkpoint and compares the next weights and Adam moments.
+Its externally published receipt is required by the fit, and the initial fit
+seed must equal the probe's seed. Full epoch checkpoints retain sampler/RNG and
+optimizer state; a long session can stop at an optimizer boundary for resume.
+
+`run_v16_decision_diagnostic.py` decodes every diagnostic development case for
+trained and seeded controls without target tokens, using the same full budget.
+It reuses the existing incremental decoder under explicit FP32/disabled
+autocast and checks the first 32 actual greedy prefix logits and argmaxes per
+case/control against reference prefix computation. This bound is recorded,
+not presented as exhaustive whole-sequence cache qualification. The receipt
+names the actual device, dtype and runtime. Invalid raw completions remain
+invalid. Valid outputs compile strictly and pass the original source grounding
+check; exact teacher-decision agreement is a separate field, not truth.
+
+All 58 relevant local tests pass, including real numerical cache comparison,
+next-step weights/moments after restart, admission-before-read, resealed target
+mismatch rejection and faithful-paraphrase disagreement retention. Independent
+read-only review found no further construction blocker; a missing diagnostic
+device/dtype receipt field was corrected. Actual source export, new stress/
+restart, full fit and generated semantic capability still need runtime receipts.
+Full-role longitudinal and native-media coverage, independent judgments,
+meaning-preserving evaluation, learned memory-to-judgment/outcome behavior and
+both consumers remain required. This teacher candidate cannot activate MFM.
+
 ## Historical byte-interface proposal (not adopted)
 
 Owner direction: continue the full Alice/Fable MFM build, resolve the design
