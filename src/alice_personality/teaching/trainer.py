@@ -23,6 +23,7 @@ from ..identity.model import IdentityModel
 from .contracts import (AUTH_SCHEMA, FAMILY_SCHEMA, REVIEW_SCHEMA, TARGET_SCHEMA, TeachingBatch,
                         TeachingError, TrainingRecipe, canonical, fingerprint)
 from .objectives import IdentityObjectives
+from .lineage import ALLOCATION_SCHEMA, validate_allocation, verify_allocation
 
 CHECKPOINT_SCHEMA = "alice-personality-resumable-teaching-checkpoint-v4"
 _DIGEST = re.compile(r"[0-9a-f]{64}\Z")
@@ -185,8 +186,10 @@ class TeachingAdmission:
         if reviewed.get("schema") != REVIEW_SCHEMA or reviewed.get("target_schema") != TARGET_SCHEMA \
                 or reviewed.get("reviewed") is not True:
             raise TeachingError("compiler rows are not a reviewed teaching target receipt")
-        if families.get("schema") != FAMILY_SCHEMA or not isinstance(families.get("family_splits"), dict):
+        if families.get("schema") not in {FAMILY_SCHEMA, ALLOCATION_SCHEMA} or not isinstance(families.get("family_splits"), dict):
             raise TeachingError("source-family splits require their explicit bound schema")
+        if families["schema"] == ALLOCATION_SCHEMA:
+            validate_allocation(families)
         if any(not isinstance(key, str) or not key or value not in
                {"TRAIN", "DEV", "CALIBRATION_TRAIN", "CALIBRATION_DEV", "FINAL"}
                for key, value in families["family_splits"].items()):
@@ -299,6 +302,8 @@ class IdentityTrainer:
         declared = self.reviewed["reviewed_batches"].get(digest)
         expected = {"split": batch.split, "case_ids": list(batch.case_ids),
                     "source_family_ids": [list(row) for row in batch.source_family_ids]}
+        if batch.lineage is not None:
+            expected["construction_lineage_sha256"] = fingerprint(batch.lineage)
         if declared != expected:
             raise TeachingError("teaching batch lacks exact externally reviewed facts/features/pointers")
         if batch.materialization_binding is not None:
@@ -314,11 +319,19 @@ class IdentityTrainer:
             _production(batch.frame, batch.production_binding, batch.production_session, **arguments)
             for contrast in batch.contrasts:
                 _production(contrast.other_frame, contrast.production_binding, contrast.production_session, **arguments)
-        for row in batch.source_family_ids:
-            if any(self.families["family_splits"].get(family) != batch.split for family in row):
-                raise TeachingError("shared source family crossed its held-out teaching split")
+        if batch.lineage is not None:
+            for row, lineage in enumerate(batch.lineage):
+                verify_allocation(lineage, batch.frame.source_records[row], batch.split, self.families)
+        else:
+            for row in batch.source_family_ids:
+                if any(self.families["family_splits"].get(family) != batch.split for family in row):
+                    raise TeachingError("shared source family crossed its held-out teaching split")
         for contrast in batch.contrasts:
             contrast.other_frame.validate(self.model.config)
+            if batch.lineage is not None:
+                records = tuple(source for row in contrast.other_frame.source_records for source in row)
+                verify_allocation(contrast.lineage, records, batch.split, self.families)
+                continue
             other_families = {source.source_family_id for row in contrast.other_frame.source_records
                               for source in row if source is not None}
             if any(self.families["family_splits"].get(family) != batch.split for family in other_families):

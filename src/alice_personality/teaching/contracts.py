@@ -12,8 +12,9 @@ from torch import Tensor
 
 from ..identity.contracts import IdentityFrame
 from ..identity.codec import fingerprint as _frame_fingerprint, tensor_digest
+from .lineage import ConstructionLineage
 
-TARGET_SCHEMA = "alice-personality-reviewed-teaching-targets-v3"
+TARGET_SCHEMA = "alice-personality-reviewed-teaching-targets-v4"
 REVIEW_SCHEMA = "alice-personality-reviewed-teaching-batches-v1"
 FAMILY_SCHEMA = "alice-personality-teaching-family-splits-v1"
 AUTH_SCHEMA = "alice-personality-current-training-authorization-v2"
@@ -79,6 +80,7 @@ class ContrastConstraint:
     uncertainty: Tensor
     production_binding: Mapping | None = None
     production_session: Mapping | None = None
+    lineage: ConstructionLineage | None = None
 
 
 @dataclass(frozen=True)
@@ -95,6 +97,7 @@ class TeachingBatch:
     production_binding: Mapping | None = None
     production_session: Mapping | None = None
     materialization_binding: Mapping | None = None
+    lineage: tuple[ConstructionLineage, ...] | None = None
 
     def validate(self, config) -> None:
         self.frame.validate(config)
@@ -117,6 +120,13 @@ class TeachingBatch:
             actual = {source.source_family_id for source in self.frame.source_records[row] if source is not None}
             if type(declared) is not tuple or len(set(declared)) != len(declared) or set(declared) != actual:
                 raise TeachingError("reviewed source families must match the complete declared frame lineage")
+        if self.lineage is not None:
+            if type(self.lineage) is not tuple or len(self.lineage) != count:
+                raise TeachingError("each teaching row needs its own construction lineage")
+            for row, lineage in enumerate(self.lineage):
+                if type(lineage) is not ConstructionLineage:
+                    raise TeachingError("construction lineage must be typed")
+                lineage.validate(self.frame.source_records[row])
         if not isinstance(self.targets, Mapping) or not self.targets \
                 or any(not isinstance(name, str) or not isinstance(value, ReviewedTarget) for name, value in self.targets.items()):
             raise TeachingError("source rows are not reviewed teaching targets")

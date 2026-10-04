@@ -26,9 +26,9 @@
 **Consumes:** Existing exact source/preparation/target/family/model/recipe/code pins and explicit current construction authorization.
 **Produces:** Governed development optimization without mandatory N0 approval; optional supplied qualification still verifies exactly and grants no personality approval.
 
-- [ ] Add a regression that admits an authorized governed batch with six pins and runs an actual intended-stage optimizer step, while both source custody validators are exercised and the qualification validator is not called. Expected before repair: old N0 qualification gate refuses the batch.
-- [ ] Require explicit development purpose in current authorization; retain every source/production/target/code/phase check. Reject missing authorization, changed preparation, fabricated qualification and attempted approval promotion.
-- [ ] Run the complete identity teaching tests; record the observed red/green evidence and commit.
+- [x] Add a regression that admits an authorized governed batch with six pins and runs an actual intended-stage optimizer step, while both source custody validators are exercised and the qualification validator is not called. Expected before repair: old N0 qualification gate refuses the batch.
+- [x] Require explicit development purpose in current authorization; retain every source/production/target/code/phase check. Reject missing authorization, changed preparation, fabricated qualification and attempted approval promotion.
+- [x] Run the complete identity teaching tests; record the observed red/green evidence and commit.
 
 ## Task 2: Reference versus supervision/outcome lineage
 
@@ -36,9 +36,9 @@
 **Consumes:** Complete original source-family references, explicit case-family ancestry and a pinned family allocation.
 **Produces:** An exact typed construction-lineage record with separate immutable reference families and supervised episode/outcome families, carried through case serialization, materialization, admission and resume.
 
-- [ ] Demonstrate that a new calibration episode may reference the fixed TRAIN identity bank without relabeling it, while an N2 TRAIN episode or its derivative cannot become calibration/DEV by changing its case ID. Expected before implementation: no explicit distinction exists.
-- [ ] Keep the old strict route for legacy cases. New source references must be explicitly authorized as references; dynamic context/experience ancestry remains allocated and checked. Do not claim source-independent evaluation from shared references.
-- [ ] Verify changed lineage pins, missing ancestry and cross-split derivative reuse fail. Run teaching/case suites and commit.
+- [x] Demonstrate that a new calibration episode may reference the fixed TRAIN identity bank without relabeling it, while an N2 TRAIN episode or its derivative cannot become calibration/DEV by changing its case ID. Expected before implementation: no explicit distinction exists.
+- [x] Keep the old strict route for legacy cases. New source references must be explicitly authorized as references; dynamic context/experience ancestry remains allocated and checked. Do not claim source-independent evaluation from shared references.
+- [x] Verify changed lineage pins, missing ancestry and cross-split derivative reuse fail. Run teaching/case suites and commit.
 
 ## Task 3: Contextual N3 outcome/fidelity learning
 
@@ -88,3 +88,7 @@
 Base: `c3984c78c5688603f9e1a265880cce0978e198f3`; existing isolated personality checkout reused. The audit and latest owner instruction approve the correction; no renewed blanket permission gate applies.
 Pre-flight: task 2 lineage must survive task 1 authorization and checkpoint binding; task 3 retains task 1 stage isolation; task 4 outcome provenance feeds task 2 calibration ancestry; task 5 feature bindings must match actual producer admission and task 4 responses; task 6 uses all interfaces. No source or model approval is produced by any of these construction steps.
 Ruling: retain legacy case/split semantics rather than silently migrating old signed packets. New construction lineage is explicit, versioned and separately pinned; historical evidence remains unchanged.
+
+Task 1: six-pin governed development was refused by the old qualification gate before repair. New construction-purpose negatives also failed. After repair, all 47 teaching tests / 38 subtests passed. Commit 605f7d11 preserves optional qualification verification, real source/preparation custody, feature/target/code/phase bindings and false approval claims. Deep custody verifies once at admission; each optimizer step rechecks current file/code pins. These are synthetic mechanics, not private model training.
+
+Task 2: observed absent lineage interface before implementation. New allocation distinguishes unchanged TRAIN references from disjoint supervision/context families; explicit derivative ancestry cannot cross splits. New case v2 / teaching target v4 / materialization v2 bind the lineage; legacy case v1 bytes and strict source splits remain. Actual public materializer and calibration optimizer integration passed. Initial combined suite:68 tests /55 subtests; added dynamic-context and stale-receipt regressions pass. Scope is conditional development, never source-independent qualification.

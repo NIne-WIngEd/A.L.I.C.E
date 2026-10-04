@@ -16,8 +16,10 @@ from typing import Mapping
 from ..identity.codec import CognitiveFrameDocument
 from ..identity.contracts import IdentityError
 from .contracts import TeachingError, canonical
+from .lineage import ConstructionLineage
 
 CASE_SCHEMA = 'alice-personality-reviewed-teaching-case-v1'
+CASE_LINEAGE_SCHEMA = 'alice-personality-reviewed-teaching-case-v2'
 ARTIFACT_ROLES = frozenset({'source_package', 'compiled_receipt', 'annotation_protocol', 'review_record'})
 _DIGEST = re.compile(r'[0-9a-f]{64}')
 
@@ -102,10 +104,13 @@ class ReviewedTeachingCase:
     annotation_note: str
     targets: tuple[NamedTarget, ...]
     schema: str = CASE_SCHEMA
+    lineage: ConstructionLineage | None = None
 
     def validate(self):
-        if self.schema != CASE_SCHEMA or self.phase not in {'n1', 'n2', 'calibration'}:
+        if self.schema not in {CASE_SCHEMA, CASE_LINEAGE_SCHEMA} or self.phase not in {'n1', 'n2', 'calibration'}:
             raise TeachingError('unsupported reviewed-case schema or teaching phase')
+        if (self.schema == CASE_SCHEMA) != (self.lineage is None):
+            raise TeachingError('legacy cases retain strict splits; new lineage requires its explicit case schema')
         splits = {'CALIBRATION_TRAIN', 'CALIBRATION_DEV'} if self.phase == 'calibration' else {'TRAIN', 'DEV'}
         if self.split not in splits:
             raise TeachingError('reviewed cases cannot consume FINAL or cross teaching/calibration splits')
@@ -127,6 +132,10 @@ class ReviewedTeachingCase:
         if type(self.source_family_ids) is not tuple or len(set(self.source_family_ids)) != len(self.source_family_ids) \
                 or set(self.source_family_ids) != actual:
             raise TeachingError('case source families must preserve complete source lineage')
+        if self.lineage is not None:
+            if type(self.lineage) is not ConstructionLineage:
+                raise TeachingError('new cases require typed construction lineage')
+            self.lineage.validate(tuple(entry.record for entry in self.document.sources))
         validate_artifact_pins(self.artifact_sha256, self.source_class)
         if type(self.targets) is not tuple or not self.targets or any(type(t) is not NamedTarget for t in self.targets):
             raise TeachingError('source facts alone are not reviewed teaching targets')
@@ -140,7 +149,10 @@ class ReviewedTeachingCase:
         self.validate()
         # JSON arrays are explicit at the serialized boundary, including the
         # embedded document; values contain no nonfinite placeholders.
-        return json.loads(canonical(asdict(self)))
+        value = asdict(self)
+        if self.lineage is None:
+            value.pop('lineage')
+        return json.loads(canonical(value))
 
     @property
     def sha256(self):
@@ -148,7 +160,10 @@ class ReviewedTeachingCase:
 
     @classmethod
     def from_mapping(cls, raw):
-        _exact(raw, cls.__dataclass_fields__)
+        fields = set(cls.__dataclass_fields__)
+        if type(raw) is dict and raw.get('schema') == CASE_SCHEMA:
+            fields.remove('lineage')
+        _exact(raw, fields)
         if type(raw['source_family_ids']) is not list or type(raw['targets']) is not list:
             raise TeachingError('serialized case collections require JSON lists')
         targets = []
@@ -171,7 +186,8 @@ class ReviewedTeachingCase:
             raise TeachingError('invalid embedded target-free document') from exc
         case = cls(raw['case_id'], raw['phase'], raw['split'], raw['source_class'], document,
                    tuple(raw['source_family_ids']), raw['artifact_sha256'], raw['annotation_origin'],
-                   raw['review_id'], raw['annotation_note'], tuple(targets), raw['schema'])
+                   raw['review_id'], raw['annotation_note'], tuple(targets), raw['schema'],
+                   ConstructionLineage.from_mapping(raw['lineage']) if 'lineage' in raw else None)
         case.validate()
         return case
 

@@ -138,6 +138,8 @@ def _admission(directory, model, recipe, batches, *, auth_changes=None, reviewed
         digest = batch.fingerprint()
         review["reviewed_batches"][digest] = {"split": batch.split, "case_ids": list(batch.case_ids),
                                                "source_family_ids": [list(row) for row in batch.source_family_ids]}
+        if batch.lineage is not None:
+            review["reviewed_batches"][digest]["construction_lineage_sha256"] = fingerprint(batch.lineage)
         review["batch_order"].setdefault(batch.split, []).append(digest)
         for row in batch.source_family_ids:
             for family in row:
@@ -145,7 +147,20 @@ def _admission(directory, model, recipe, batches, *, auth_changes=None, reviewed
     review.update(reviewed_changes or {})
     write("reviewed_targets", review)
     splits.update(family_changes or {})
-    write("source_families", {"schema": FAMILY_SCHEMA, "family_splits": splits})
+    lineages = [(batch.split, lineage) for batch in batches for lineage in (batch.lineage or ())]
+    if lineages:
+        from src.alice_personality.teaching.lineage import ALLOCATION_SCHEMA
+        references = sorted({name for _, lineage in lineages for name in lineage.reference_family_ids})
+        for name in references:
+            splits[name] = "TRAIN"
+        splits.update(family_changes or {})
+        supervision = {name: split for split, lineage in lineages for name in lineage.supervision_family_ids}
+        allocation = {"schema": ALLOCATION_SCHEMA, "family_splits": splits, "reference_family_ids": references,
+            "supervision_family_splits": supervision, "supervision_parents": {name: [] for name in supervision},
+            "qualification_scope": "DEVELOPMENT_CONDITIONAL_CASES"}
+    else:
+        allocation = {"schema": FAMILY_SCHEMA, "family_splits": splits}
+    write("source_families", allocation)
     config_hash, initial = sha256(canonical(asdict(model.config))).hexdigest(), model_fingerprint(model)
     code = current_code_hashes()
     auth = {"schema": AUTH_SCHEMA, "authorization_id": "public-implementation-test-only", "phase": recipe.phase,

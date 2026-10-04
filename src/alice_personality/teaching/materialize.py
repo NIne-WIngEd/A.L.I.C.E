@@ -15,6 +15,7 @@ from ..identity.feature_producer import FrozenFrameProducer, ProducedFrame
 from ..identity.contracts import IdentityModelConfig, SOURCE_KINDS
 from .cases import ReviewedTeachingCase, validate_artifact_pins
 from .contracts import ReviewedTarget, TeachingBatch, TeachingError, canonical
+from .lineage import verify_allocation
 from .layout import target_layouts
 
 
@@ -30,12 +31,13 @@ def verify_materialized_batch(batch, artifacts, reviewed):
     if not isinstance(receipt, Mapping):
         raise TeachingError('materialized batch requires its exact materialization receipt')
     body = {key: value for key, value in receipt.items() if key != 'receipt_sha256'}
-    if (receipt.get('schema') != 'alice-personality-teaching-case-materialization-v1'
+    if (receipt.get('schema') != 'alice-personality-teaching-case-materialization-v2'
             or receipt.get('receipt_sha256') != sha256(canonical(body)).hexdigest()
             or receipt.get('frame_sha256') != fingerprint(batch.frame)
             or receipt.get('target_sha256') != fingerprint(batch.targets)
             or len(batch.case_ids) != 1 or len(batch.source_family_ids) != 1
             or receipt.get('source_families_sha256') != fingerprint(batch.source_family_ids[0])
+            or receipt.get('construction_lineage_sha256') != fingerprint(batch.lineage)
             or receipt.get('phase') != batch.phase or receipt.get('split') != batch.split
             or receipt.get('source_class') != batch.source_class):
         raise TeachingError('materialization schema, bytes, targets, lineage or phase differs')
@@ -140,7 +142,9 @@ def materialize_case(case: ReviewedTeachingCase, produced: ProducedFrame, closed
     case.validate()
     if case.sha256 != expected_case_sha256 or dict(case.artifact_sha256) != expected_artifact_sha256:
         raise TeachingError('case or source/compiler/annotation/review differs from its external binding')
-    if not isinstance(family_splits, Mapping) or any(family_splits.get(family) != case.split for family in case.source_family_ids):
+    if case.lineage is not None:
+        verify_allocation(case.lineage, tuple(entry.record for entry in case.document.sources), case.split, family_splits)
+    elif not isinstance(family_splits, Mapping) or any(family_splits.get(family) != case.split for family in case.source_family_ids):
         raise TeachingError('source family crosses explicit teaching/calibration split allocation')
     _production(case, produced, closed_session)
     frame = produced.frame
@@ -197,11 +201,12 @@ def materialize_case(case: ReviewedTeachingCase, produced: ProducedFrame, closed
             'certain_facts': int((available & (uncertainty < 1)).sum()),
             'discriminating_rows': int(((available.sum(-1) > 1) &
                 (torch.where(available, 1 - uncertainty, 0).sum(-1) > 0)).sum()) if layout.distribution else None}
-    receipt = {'schema': 'alice-personality-teaching-case-materialization-v1', 'case_sha256': case.sha256,
+    receipt = {'schema': 'alice-personality-teaching-case-materialization-v2', 'case_sha256': case.sha256,
         'document_sha256': case.document.sha256, 'frame_sha256': fingerprint(frame),
         'target_sha256': fingerprint(targets), 'feature_binding_sha256': produced.binding['binding_sha256'],
         'closed_session_sha256': closed_session['receipt_sha256'], 'artifact_sha256': dict(case.artifact_sha256),
         'source_families_sha256': fingerprint(case.source_family_ids), 'phase': case.phase, 'split': case.split,
+        'construction_lineage_sha256': fingerprint((case.lineage,) if case.lineage is not None else None),
         'source_class': case.source_class, 'coverage': coverage, 'qualification': 'UNQUALIFIED',
         'review_authority_granted': False, 'source_acceptance_authority': False, 'gradient_authority_granted': False}
     receipt['receipt_sha256'] = sha256(canonical(receipt)).hexdigest()
@@ -209,6 +214,6 @@ def materialize_case(case: ReviewedTeachingCase, produced: ProducedFrame, closed
         raise TeachingError('reviewed case or feature frame changed during materialization')
     batch = TeachingBatch(frame, targets, (case.case_id,), (case.source_family_ids,), case.phase, case.split,
         case.source_class, production_binding=produced.binding, production_session=dict(closed_session),
-        materialization_binding=receipt)
+        materialization_binding=receipt, lineage=(case.lineage,) if case.lineage is not None else None)
     batch.validate(config)
     return MaterializedCase(batch, receipt)
