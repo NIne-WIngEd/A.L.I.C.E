@@ -59,9 +59,9 @@ class DecisionConsumer:
             phase = manifest.get("phase")
             source_pin = manifest["binding"]["artifacts"]["prepared_receipt"]
             if (manifest["binding"].get("model_config_sha256") != sha256(canonical(asdict(self.model.config))).hexdigest()
-                    or (prepared_source is not None and source_pin != prepared_source)):
+                    or (prepared_source is not None and source_pin["file_sha256"] != prepared_source)):
                 raise IdentityError("construction checkpoint model configuration or prepared source changed")
-            prepared_source = source_pin
+            prepared_source = source_pin["file_sha256"]
             order = {"n1": 0, "n2": 1, "calibration": 2}
             if phase not in order or (previous_phase is not None and order[phase] <= order[previous_phase]):
                 raise IdentityError("construction checkpoints must preserve governing stage order")
@@ -105,6 +105,8 @@ class DecisionConsumer:
             raise IdentityError("response document/features differ from the closed session")
         _document_frame(document, produced.frame)
         evidence = self._evidence()
+        from .feature_store import verify_store_custody
+        verify_store_custody(produced.binding, closed_session)
         from ..teaching.trainer import _json, _path, _production
         from .feature_producer import FrozenFrameProducer
         if evidence["source_classes"] == ["public_mechanical_fixture"]:

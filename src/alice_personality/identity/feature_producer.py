@@ -1,7 +1,8 @@
 """Complete raw-text ACFP documents to frozen full-layer tensor frames.
 
-No chat template, generation, gold input, truncation, persistent feature cache
-or source-authority promotion is implemented. All returned values are protected
+No chat template, generation, gold input, truncation or source-authority
+promotion is implemented. An optional caller-owned store reuses complete frozen
+values with explicit custody. All returned values are protected
 runtime data. The caller must establish the private execution boundary before
 reading a private document; this module does not create OS isolation.
 """
@@ -33,7 +34,7 @@ class FrozenFrameProducer:
     source-bound evidence. It never grants identity or training acceptance.
     """
     def __init__(self, tokenizer: Any, backbone: Any, config: IdentityModelConfig,
-                 *, _fixture: bool = False):
+                 *, _fixture: bool = False, feature_store=None):
         if _fixture is not True:
             raise IdentityError("use the verified loader for production feature sessions")
         config.validate()
@@ -47,17 +48,18 @@ class FrozenFrameProducer:
         self._closed = False
         self._source_class = "public_mechanical_fixture"
         self._implementation = self._code_hashes()
+        self.feature_store, self._replay_session = feature_store, None
 
     @staticmethod
     def _code_hashes() -> dict:
         root = Path(__file__).resolve().parent
         return {name: sha256((root / name).read_bytes()).hexdigest()
-            for name in ("feature_producer.py", "codec.py", "contracts.py", "__init__.py")}
+            for name in ("feature_producer.py", "feature_store.py", "codec.py", "contracts.py", "__init__.py")}
 
     @classmethod
     def load(cls, preparation_receipt: str | Path, *, expected_file_sha256: str,
              device: str = "cpu", learned_width: int = 256, attention_heads: int = 8,
-             graph_layers: int = 3, readout_layers: int = 2) -> "FrozenFrameProducer":
+             graph_layers: int = 3, readout_layers: int = 2, feature_store=None) -> "FrozenFrameProducer":
         path = Path(preparation_receipt)
         if (not path.is_absolute() or path.is_symlink() or not path.is_file()
                 or path != path.resolve(strict=True)):
@@ -76,13 +78,57 @@ class FrozenFrameProducer:
         backbone = load_prepared_gemma_n0(path, device=device)
         config = IdentityModelConfig(backbone.hidden_size, backbone.hidden_state_count,
             learned_width, attention_heads, graph_layers, readout_layers)
-        result = cls(tokenizer, backbone, config, _fixture=True)
+        result = cls(tokenizer, backbone, config, _fixture=True, feature_store=feature_store)
         result._prepared_path, result._prepared_digest = path, expected_file_sha256
         result._prepared_receipt_sha256 = prepared["receipt_sha256"]
         result._source_class = "prepared_frozen_gemma_features_unqualified"
         return result
 
+    def _store_context(self):
+        from importlib.metadata import PackageNotFoundError, version
+        from ..gemma_n0 import backbone
+        try:
+            transformers_version = version("transformers")
+        except PackageNotFoundError:
+            transformers_version = None
+        return {"prepared_receipt_file_sha256": self._prepared_digest,
+            "prepared_receipt_sha256": self._prepared_receipt_sha256,
+            "source_geometry": [self.config.provider_state_count, self.config.provider_width],
+            "implementation_sha256": self._implementation, "encoder_code_sha256": sha256(Path(backbone.__file__).read_bytes()).hexdigest(),
+            "tokenizer_type": type(self.tokenizer).__module__ + "." + type(self.tokenizer).__qualname__,
+            "encoder_type": type(self.backbone).__module__ + "." + type(self.backbone).__qualname__,
+            "encoder_device": str(self.backbone.device), "max_source_tokens": self.backbone.max_source_tokens,
+            "torch_version": str(torch.__version__), "transformers_version": transformers_version}
+
+    @classmethod
+    def replay(cls, feature_store, config, closed_session, *, expected_session_sha256):
+        """Assemble exact previously emitted frames without reloading N0.
+
+        The supplied closed session is externally pinned; replay cannot close
+        or manufacture a new publisher verification interval.
+        """
+        from .feature_store import verify_store_custody
+        config.validate()
+        if (not feature_store.sealed or closed_session.get("receipt_sha256") != expected_session_sha256
+                or sha256(canonical({k: v for k, v in closed_session.items() if k != "receipt_sha256"})).hexdigest() != expected_session_sha256
+                or closed_session.get("implementation_sha256") != cls._code_hashes()
+                or closed_session.get("feature_store") != feature_store.summary()
+                or feature_store.manifest["source_context"]["source_geometry"] != [config.provider_state_count, config.provider_width]):
+            raise IdentityError("replay source/store/session/implementation context differs")
+        result = object.__new__(cls)
+        result.config, result.feature_store = config, feature_store
+        result.tokenizer = result.backbone = None
+        result._prepared_path = None
+        result._prepared_digest = closed_session["prepared_receipt_file_sha256"]
+        result._prepared_receipt_sha256 = closed_session["prepared_receipt_sha256"]
+        result._source_class = closed_session["source_class"]
+        result._implementation, result._documents, result._closed = cls._code_hashes(), [], False
+        result._replay_session = closed_session
+        return result
+
     def _tokenize(self, text: str) -> dict:
+        if self._replay_session is not None:
+            return self.feature_store.encoded(text)
         value = self.tokenizer([text], padding=False, truncation=False,
             add_special_tokens=True, return_attention_mask=True, return_tensors="pt")
         if set(value) != {"input_ids", "attention_mask"}:
@@ -98,12 +144,26 @@ class FrozenFrameProducer:
             raise IdentityError("complete semantic input exceeds source capacity; truncation is forbidden")
         return {name: tensor.to(self.backbone.device) for name, tensor in value.items()}
 
+    def _extract_states(self, inputs):
+        result = self.backbone.extract_features(**inputs)
+        if (len(result.all_hidden_states) != self.config.provider_state_count
+                or not torch.equal(result.attention_mask.bool(), inputs["attention_mask"].bool())):
+            raise IdentityError("provider changed complete source geometry or attention")
+        states = torch.stack(result.all_hidden_states, dim=1).detach()
+        if (tuple(states.shape) != (1, self.config.provider_state_count, inputs["input_ids"].shape[1], self.config.provider_width)
+                or not bool(torch.isfinite(states).all())
+                or not torch.equal(result.hidden_states, result.all_hidden_states[-1])):
+            raise IdentityError("provider must emit all actual finite source-aligned layers")
+        return states
+
     def produce(self, document: CognitiveFrameDocument) -> ProducedFrame:
         if self._closed:
             raise IdentityError("closed feature sessions cannot emit more evidence")
         if self._code_hashes() != self._implementation:
             raise IdentityError("producer implementation changed during the session")
         document.validate()
+        if self.feature_store is not None and self._replay_session is None:
+            self.feature_store.bind_context(self._store_context())
         document_sha256 = document.sha256
         # Pointer IDs are exclusively metadata. No preferred candidate or target
         # is available to these renderers; source classes remain explicit.
@@ -122,15 +182,8 @@ class FrozenFrameProducer:
         encoded = {text: self._tokenize(text) for entries in texts.values() for _, text in entries}
         features = {}
         for text, inputs in encoded.items():
-            result = self.backbone.extract_features(**inputs)
-            if (len(result.all_hidden_states) != self.config.provider_state_count
-                    or not torch.equal(result.attention_mask.bool(), inputs["attention_mask"].bool())):
-                raise IdentityError("provider changed complete source geometry or attention")
-            states = torch.stack(result.all_hidden_states, dim=1).detach()
-            if (tuple(states.shape) != (1, self.config.provider_state_count, inputs["input_ids"].shape[1], self.config.provider_width)
-                    or not bool(torch.isfinite(states).all())
-                    or not torch.equal(result.hidden_states, result.all_hidden_states[-1])):
-                raise IdentityError("provider must emit all actual finite source-aligned layers")
+            states = self._extract_states(inputs) if self.feature_store is None else self.feature_store.features(
+                text, inputs, lambda: self._extract_states(inputs))
             features[text] = states
         reference = next(iter(features.values()))
         def bank(entries):
@@ -190,10 +243,19 @@ class FrozenFrameProducer:
             "persistent_feature_values_retained": False, "session_source_recheck_pending": True,
             "implementation_sha256": dict(self._implementation)}
         binding["binding_sha256"] = sha256(canonical(binding)).hexdigest()
+        if self.feature_store is not None:
+            binding.pop("binding_sha256")
+            binding.update(schema="alice-personality-produced-frame-binding-v2", persistent_feature_values_retained=True,
+                           feature_store_binding_sha256=self.feature_store.binding_sha256)
+            binding["binding_sha256"] = sha256(canonical(binding)).hexdigest()
+        if self._replay_session is not None and binding["binding_sha256"] not in self._replay_session["frame_binding_sha256"]:
+            raise IdentityError("replay document was not emitted in the actual closed source session")
         self._documents.append(binding["binding_sha256"])
         return ProducedFrame(frame, binding)
 
     def close_and_verify(self) -> dict:
+        if self._replay_session is not None:
+            raise IdentityError("replay cannot manufacture a new source-verification session")
         if self._closed:
             raise IdentityError("feature session was already closed")
         if self._code_hashes() != self._implementation:
@@ -214,5 +276,10 @@ class FrozenFrameProducer:
             "mechanical_fixture_only": self._prepared_path is None, "qualification": "UNQUALIFIED",
             "source_acceptance_authority": False, "persistent_feature_values_retained": False}
         receipt["receipt_sha256"] = sha256(canonical(receipt)).hexdigest()
+        if self.feature_store is not None:
+            receipt.pop("receipt_sha256")
+            receipt.update(schema="alice-personality-feature-session-v2", persistent_feature_values_retained=True,
+                           feature_store=self.feature_store.seal())
+            receipt["receipt_sha256"] = sha256(canonical(receipt)).hexdigest()
         self._closed = True
         return receipt

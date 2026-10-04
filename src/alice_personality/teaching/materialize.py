@@ -97,21 +97,25 @@ def _production(case, produced, session):
     if type(produced) is not ProducedFrame or not isinstance(session, Mapping):
         raise TeachingError('materialization requires an actual frame and closed feature session')
     binding = produced.binding
+    from ..identity.feature_store import verify_store_custody
+    try:
+        verify_store_custody(binding, session)
+    except ValueError as exc:
+        raise TeachingError('feature materialization store custody differs') from exc
     for value, key in ((binding, 'binding_sha256'), (session, 'receipt_sha256')):
         if not isinstance(value, Mapping) or sha256(canonical({k: v for k, v in value.items() if k != key})).hexdigest() != value.get(key):
             raise TeachingError('feature binding or closed session bytes changed')
     if (binding.get('document_sha256') != case.document.sha256
             or binding.get('frame_sha256') != fingerprint(produced.frame)
-            or binding.get('schema') != 'alice-personality-produced-frame-binding-v1'
-            or session.get('schema') != 'alice-personality-feature-session-v1'
+            or binding.get('schema') not in {'alice-personality-produced-frame-binding-v1', 'alice-personality-produced-frame-binding-v2'}
+            or session.get('schema') not in {'alice-personality-feature-session-v1', 'alice-personality-feature-session-v2'}
             or binding.get('source_geometry') != [produced.frame.query.states.shape[2], produced.frame.query.states.shape[-1]]
             or binding.get('binding_sha256') not in session.get('frame_binding_sha256', [])
             or binding.get('implementation_sha256') != FrozenFrameProducer._code_hashes()
             or session.get('implementation_sha256') != FrozenFrameProducer._code_hashes()):
         raise TeachingError('document/frame/closed session membership or producer implementation differs')
     for value in (binding, session):
-        if (value.get('qualification') != 'UNQUALIFIED' or value.get('source_acceptance_authority') is not False
-                or value.get('persistent_feature_values_retained') is not False):
+        if (value.get('qualification') != 'UNQUALIFIED' or value.get('source_acceptance_authority') is not False):
             raise TeachingError('feature materialization cannot grant source or personality acceptance')
     if binding.get('session_source_recheck_pending') is not True \
             or any(binding.get(name) is not False for name in ('generation', 'chat_template', 'truncation')):

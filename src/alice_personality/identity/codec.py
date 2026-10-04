@@ -35,7 +35,9 @@ def tensor_digest(value: torch.Tensor) -> str:
     digest = sha256(canonical({"shape": list(data.shape), "dtype": str(data.dtype)}))
     # A singleton slice can count as contiguous while retaining stride > 1;
     # dtype reinterpretation requires stride 1 even for that singleton.
-    flat = data.reshape(-1).clone(memory_format=torch.contiguous_format)
+    flat = data.reshape(-1)
+    if flat.stride(-1) != 1:
+        flat = flat.clone(memory_format=torch.contiguous_format)
     digest.update(flat.view(torch.uint8).numpy().tobytes())
     return digest.hexdigest()
 

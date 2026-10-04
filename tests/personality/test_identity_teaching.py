@@ -742,12 +742,12 @@ class IdentityTeachingMechanicalTests(unittest.TestCase):
             with self.subTest(purpose=purpose), self.assertRaisesRegex(TeachingError, "development"):
                 self.trainer(auth_changes={"purpose": purpose})
 
-    def test_governed_admission_matches_actual_four_file_producer_dependency_scope(self):
+    def test_governed_admission_matches_actual_producer_dependency_scope(self):
         recipe = TrainingRecipe("n2", learning_rate=0.01, max_grad_norm=0.5, seed=777)
         batch = _batch(self.model, self.frame)
         admission, linked, outputs = _governed_custody_seam(self.path, self.model, recipe, batch)
         expected = FrozenFrameProducer._code_hashes()
-        self.assertEqual(set(expected), {"codec.py", "feature_producer.py", "contracts.py", "__init__.py"})
+        self.assertEqual(set(expected), {"codec.py", "feature_producer.py", "feature_store.py", "contracts.py", "__init__.py"})
         self.assertEqual(linked.production_binding["implementation_sha256"], expected)
         with patch("src.alice_personality.n1.compiler.verify_compiled", return_value=outputs[0]), \
              patch("src.alice_personality.gemma_n0.preparation.verify_prepared", return_value=outputs[1]), \

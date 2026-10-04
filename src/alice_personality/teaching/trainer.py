@@ -30,7 +30,7 @@ _DIGEST = re.compile(r"[0-9a-f]{64}\Z")
 _ARTIFACT_ROLES = {"source_package", "compiled_receipt", "prepared_receipt", "reviewed_targets",
                    "source_families", "authorization"}
 _GOVERNED_ROLES = _ARTIFACT_ROLES | {"n0_qualification"}
-_PRODUCTION_IMPLEMENTATION_FILES = ("feature_producer.py", "codec.py", "contracts.py", "__init__.py")
+_PRODUCTION_IMPLEMENTATION_FILES = ("feature_producer.py", "feature_store.py", "codec.py", "contracts.py", "__init__.py")
 
 
 def _digest(value, label):
@@ -108,11 +108,16 @@ def _production(frame, binding, session, *, prepared_file_sha256, prepared_recei
         body = {name: item for name, item in value.items() if name != key}
         if sha256(canonical(body)).hexdigest() != digest:
             raise TeachingError("production binding/session digest changed")
-    if (binding.get("schema") != "alice-personality-produced-frame-binding-v1"
+    from ..identity.feature_store import verify_store_custody
+    try:
+        verify_store_custody(binding, session)
+    except ValueError as exc:
+        raise TeachingError("production feature store custody differs") from exc
+    if (binding.get("schema") not in {"alice-personality-produced-frame-binding-v1", "alice-personality-produced-frame-binding-v2"}
             or binding.get("frame_sha256") != fingerprint(frame)
             or binding.get("source_geometry") != [frame.query.states.shape[2], frame.query.states.shape[-1]]
             or binding.get("session_source_recheck_pending") is not True
-            or session.get("schema") != "alice-personality-feature-session-v1"
+            or session.get("schema") not in {"alice-personality-feature-session-v1", "alice-personality-feature-session-v2"}
             or session.get("status") != "CLOSED_SOURCE_VERIFIED"
             or session.get("session_source_recheck_passed") is not True
             or session.get("mechanical_fixture_only") is not False
@@ -123,8 +128,7 @@ def _production(frame, binding, session, *, prepared_file_sha256, prepared_recei
                 or value.get("prepared_receipt_file_sha256") != prepared_file_sha256
                 or value.get("implementation_sha256") != implementation
                 or value.get("qualification") != "UNQUALIFIED"
-                or value.get("source_acceptance_authority") is not False
-                or value.get("persistent_feature_values_retained") is not False):
+                or value.get("source_acceptance_authority") is not False):
             raise TeachingError("production custody/source/code binding or unqualified authority differs")
     if any(binding.get(name) is not False for name in ("generation", "truncation", "chat_template")):
         raise TeachingError("production cannot derive frame features through generation or truncation")
@@ -317,6 +321,9 @@ class IdentityTrainer:
             arguments = {"prepared_file_sha256": prepared_pin.sha256,
                          "prepared_receipt_sha256": prepared.get("receipt_sha256"), "implementation": code}
             _production(batch.frame, batch.production_binding, batch.production_session, **arguments)
+            if (batch.production_session.get("feature_store") is not None
+                    and batch.production_session["feature_store"].get("source_package_sha256") != self.admission.artifacts["source_package"].sha256):
+                raise TeachingError("retained features differ from the admitted original source package")
             for contrast in batch.contrasts:
                 _production(contrast.other_frame, contrast.production_binding, contrast.production_session, **arguments)
         if batch.lineage is not None:
