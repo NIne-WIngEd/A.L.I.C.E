@@ -78,6 +78,19 @@ def token_cost_profile(documents,tokenizer,*,layers,width,max_tokens):
         'truncation':False,'qualification':'UNQUALIFIED','acceptance_authority':False}
 
 
+def verify_memory_allocation(declared_bytes,estimated_bytes,slurm_megabytes):
+    """Check the scheduler's --mem allocation, not only the author's budget.
+
+    SLURM_MEM_PER_NODE has --mem semantics; default unit is megabytes.
+    https://slurm.schedmd.com/sbatch.html
+    """
+    if (type(declared_bytes) is not int or type(estimated_bytes) is not int or declared_bytes<1 or estimated_bytes<1
+            or type(slurm_megabytes) is not str or not slurm_megabytes.isdecimal()):refuse()
+    actual_bytes=int(slurm_megabytes)*1024**2
+    if actual_bytes<1 or declared_bytes>actual_bytes or estimated_bytes>min(declared_bytes,actual_bytes):refuse()
+    return actual_bytes
+
+
 def verify_reference_families(document,allocation,compiled_families,original_rows,protocol):
     """Cross-check pinned original compiler membership; no new source aliases."""
     families={r['family_id']:r for r in compiled_families}
@@ -223,9 +236,12 @@ def run(namespace):
         # budgeted; this is a conservative operating estimate, not a measurement.
         estimate=48*1024**3+profile['largest_padded_frame_value_bytes']*12
         profile['estimated_live_memory_budget_bytes']=estimate
-        profile['requested_memory_bytes']=plan['memory_budget_bytes']
+        profile['declared_memory_budget_bytes']=plan['memory_budget_bytes']
+        memory_environment=os.environ['SLURM_MEM_PER_NODE']
+        profile['actual_slurm_memory_bytes']=int(memory_environment)*1024**2 if memory_environment.isdecimal() else None
         write(output/'token-cost-profile.json',profile)
-        if (estimate>plan['memory_budget_bytes'] or profile['state_value_bytes']+profile['serialization_overhead_budget_bytes']>plan['feature_disk_budget_bytes']
+        verify_memory_allocation(plan['memory_budget_bytes'],estimate,memory_environment)
+        if (profile['state_value_bytes']+profile['serialization_overhead_budget_bytes']>plan['feature_disk_budget_bytes']
                 or os.statvfs(output).f_bavail*os.statvfs(output).f_frsize<plan['feature_disk_budget_bytes']+plan['checkpoint_disk_budget_bytes']):refuse()
         del processor;gc.collect()
         store=FrozenFeatureStore.create(output/'feature-store',source_package_sha256=artifacts['source_package'])

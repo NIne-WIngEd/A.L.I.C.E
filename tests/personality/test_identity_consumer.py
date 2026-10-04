@@ -100,3 +100,54 @@ class ConsumerTests(unittest.TestCase):
         manifest = trainer.save_checkpoint(self.path / "empty")
         with self.assertRaisesRegex(IdentityError, "optimized"):
             DecisionConsumer(self.model, (CheckpointPin(str(self.path / "empty"), manifest["manifest_sha256"]),))
+
+    def build_sparse(self, targets):
+        batch = TeachingBatch(self.produced.frame, targets, ('public-sparse',),
+            (('fictional-source-family',),), 'n2', 'TRAIN', 'public_mechanical_fixture')
+        recipe = TrainingRecipe('n2', seed=411, learning_rate=.01, max_grad_norm=1, weight_decay=0)
+        trainer = IdentityTrainer(self.model, recipe, _admission(self.path,self.model,recipe,[batch]),first_batch=batch)
+        for _ in range(20):
+            event = trainer.step(batch)
+        manifest = trainer.save_checkpoint(self.path / 'sparse')
+        return DecisionConsumer(self.model,(CheckpointPin(str(self.path / 'sparse'),manifest['manifest_sha256']),)),event
+
+    def test_actual_pairwise_supervision_selects_the_learned_response(self):
+        mask = torch.tensor([[[False,True],[True,False]]])
+        consumer,_ = self.build_sparse({'candidate_pair_probabilities':_target([[[.5,.01],[.99,.5]]],mask)})
+        self.assertGreater(float(self.model(self.produced.frame).preferences[0,1].detach()),.9)
+        response = consumer.respond(self.doc,self.produced,self.session)
+        self.assertEqual(response['selected_candidate_ids'],['opaque-candidate-b'])
+
+    def test_zero_certainty_voice_and_preference_targets_do_not_claim_learning(self):
+        consumer,event = self.build_sparse({'preferences':_target([[.02,.98]]),
+            'voice_control_values':_target([[[.4],[.4]]],uncertainty=1.),
+            'voice_control_confidence':_target([[[.9],[.9]]],uncertainty=1.)})
+        self.assertEqual(event['objectives']['voice_control_values'],0)
+        self.assertEqual(event['objectives']['voice_control_confidence'],0)
+        response = consumer.respond(self.doc,self.produced,self.session)
+        self.assertTrue(all(not i['voice_controls'] for i in response['intents']))
+
+    def test_zero_certainty_preference_is_not_effective_judgment_supervision(self):
+        consumer,_ = self.build_sparse({'preferences':_target([[.02,.98]],uncertainty=1.),
+            'co_valid_probabilities':_target([[1.,1.]])})
+        self.assertEqual(consumer.respond(self.doc,self.produced,self.session)['status'],'UNRESOLVED_UNTAUGHT')
+
+    def test_singleton_partial_distribution_does_not_claim_preference_learning(self):
+        consumer,event = self.build_sparse({'preferences':_target([[1.,float('nan')]],torch.tensor([[True,False]])),
+            'co_valid_probabilities':_target([[1.,1.]])})
+        self.assertEqual(event['objectives']['preferences'],0)
+        self.assertEqual(consumer.respond(self.doc,self.produced,self.session)['status'],'UNRESOLVED_UNTAUGHT')
+
+    def test_voice_coverage_binds_actual_label_meaning_unit_and_range(self):
+        consumer,_ = self.build_sparse({'preferences':_target([[.02,.98]]),
+            'voice_control_values':_target([[[.4],[.4]]]),'voice_control_confidence':_target([[[.9],[.9]]])})
+        before = consumer.respond(self.doc,self.produced,self.session)
+        self.assertTrue(all(i['voice_controls'] for i in before['intents']))
+        labels = dict(self.doc.labels)
+        labels['voice'] = (replace(labels['voice'][0],name='pause duration',description='Pause before a phrase.',
+            unit='milliseconds',minimum=100.,maximum=200.),)
+        changed = replace(self.doc,labels=labels)
+        p = FrozenFrameProducer(Tokenizer(),Backbone(),self.config,_fixture=True)
+        produced = p.produce(changed)
+        response = consumer.respond(changed,produced,p.close_and_verify())
+        self.assertTrue(all(not i['voice_controls'] for i in response['intents']))

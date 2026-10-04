@@ -10,6 +10,14 @@ from tests.personality.test_identity_codec import document, Tokenizer, Backbone
 
 
 class RunPreflightTests(unittest.TestCase):
+    def test_memory_plan_cannot_exceed_actual_slurm_megabyte_allocation(self):
+        from scripts.eipm.gemma_n0.construct_personality import verify_memory_allocation
+        actual = 120*1024**3
+        self.assertEqual(verify_memory_allocation(actual,100*1024**3,'122880'),actual)
+        for declared,estimate,allocation in ((130*1024**3,125*1024**3,'122880'),
+                (actual,121*1024**3,'122880'),(actual,100,'120G'),(actual,100,'')):
+            with self.assertRaises(ValueError):
+                verify_memory_allocation(declared,estimate,allocation)
     def test_profile_uses_exact_actual_producer_semantic_texts_and_deduplicates(self):
         doc=document()
         tokenizer=Tokenizer()

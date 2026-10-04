@@ -11,7 +11,7 @@ import re
 
 import torch
 
-from .codec import canonical, fingerprint
+from .codec import canonical, fingerprint, label_semantics_fingerprint
 from .contracts import IdentityError
 from .feature_producer import ProducedFrame
 
@@ -81,7 +81,7 @@ class DecisionConsumer:
                     raise IdentityError("checkpoint optimization events differ from their admitted construction")
                 source_classes.add(event["source_class"])
                 if phase == "n2":
-                    fields.update(name for name, count in event["reviewed_target_coverage"].items() if count > 0)
+                    fields.update(name for name, count in event.get("effective_target_coverage", {}).items() if count > 0)
                     for name, ids in event.get("reviewed_label_coverage", {}).items():
                         labels.setdefault(name, set()).update(ids)
             manifests.append(pin.manifest_sha256)
@@ -135,11 +135,11 @@ class DecisionConsumer:
                 taught = evidence["reviewed_labels"].get("head:" + family, set())
                 heads[family] = [{"label_id": spec.label_id, "name": spec.name, "description": spec.description,
                     "activation": float(head.activations[0, index, col])} for col, spec in enumerate(head.specs[0])
-                    if spec is not None and spec.label_id in taught and bool(head.mask[0, index, col])]
+                    if spec is not None and label_semantics_fingerprint(family, spec) in taught and bool(head.mask[0, index, col])]
             for col, spec in enumerate(packet.heads["voice"].specs[0]):
                 if (spec is not None and bool(packet.heads["voice"].mask[0, index, col])
-                        and spec.label_id in evidence["reviewed_labels"].get("voice_control_values", set())
-                        and spec.label_id in evidence["reviewed_labels"].get("voice_control_confidence", set())):
+                        and label_semantics_fingerprint('voice', spec) in evidence["reviewed_labels"].get("voice_control_values", set())
+                        and label_semantics_fingerprint('voice', spec) in evidence["reviewed_labels"].get("voice_control_confidence", set())):
                     controls[spec.label_id] = {"name": spec.name, "description": spec.description, "unit": spec.unit,
                         "value": float(packet.voice_control_values[0, index, col]),
                         "confidence": float(packet.voice_control_confidence[0, index, col])}
@@ -147,7 +147,7 @@ class DecisionConsumer:
                 "preference": float(packet.preferences[0, index]), "heads": heads, "voice_controls": controls,
                 "co_valid_probability": float(packet.co_valid_probabilities[0, index])
                     if "co_valid_probabilities" in evidence["reviewed_fields"] else None})
-        taught_preference = bool({"preferences", "preference_margins"} & evidence["reviewed_fields"]) \
+        taught_preference = bool({"preferences", "candidate_pair_probabilities"} & evidence["reviewed_fields"]) \
             and bool(packet.identity_grounding_available[0])
         best = max((item["preference"] for item in intents), default=0)
         choices = [item for item in intents if best - item["preference"] <= tie_tolerance] if taught_preference else []

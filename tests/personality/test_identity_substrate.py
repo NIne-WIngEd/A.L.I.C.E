@@ -1,4 +1,4 @@
-"""Public-only tiny archive tests; no real identity package is opened.
+"""Tiny fictional archives exercise custody, authority and split mechanics.
 
 These verify source custody/authority/split mechanics, not accepted teaching
 targets, learned N1 behavior or private-gradient permission.

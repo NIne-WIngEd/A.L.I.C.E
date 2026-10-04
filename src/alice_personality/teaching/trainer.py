@@ -24,8 +24,10 @@ from .contracts import (AUTH_SCHEMA, FAMILY_SCHEMA, REVIEW_SCHEMA, TARGET_SCHEMA
                         TeachingError, TrainingRecipe, canonical, fingerprint)
 from .objectives import IdentityObjectives
 from .lineage import ALLOCATION_SCHEMA, validate_allocation, verify_allocation
+from .layout import target_layouts
+from ..identity.codec import label_semantics_fingerprint
 
-CHECKPOINT_SCHEMA = "alice-personality-resumable-teaching-checkpoint-v6"
+CHECKPOINT_SCHEMA = "alice-personality-resumable-teaching-checkpoint-v7"
 _DIGEST = re.compile(r"[0-9a-f]{64}\Z")
 _ARTIFACT_ROLES = {"source_package", "compiled_receipt", "prepared_receipt", "reviewed_targets",
                    "source_families", "authorization"}
@@ -493,17 +495,28 @@ class IdentityTrainer:
         return self._event(batch, losses, coverage, float(total))
 
     def _event(self, batch, losses, coverage, total):
-        label_coverage = {}
+        label_coverage, effective_coverage = {}, {}
+        layouts = target_layouts(batch.frame, batch.phase) if batch.frame.query.states.shape[0] == 1 else None
         for name, target in batch.targets.items():
+            effective = target.available & (target.uncertainty < 1)
+            distribution = (layouts[name].distribution if layouts is not None else name in
+                {'preferences', 'concept_source_alignment', 'provenance', 'evidence_pointers',
+                 'historical_evidence_pointers', 'alice_experience_pointers', 'concept_pointers', 'head:stance'})
+            if distribution:
+                # Softmax on one reviewed option is constant and teaches no
+                # comparison, even if other objectives drove this optimizer.
+                effective &= (target.available.sum(-1) > 1)[..., None]
+            effective_coverage[name] = int(effective.sum())
             family = name[5:] if name.startswith("head:") else "voice" \
                 if name in {"voice_control_values", "voice_control_confidence"} else None
             if family is not None:
-                label_coverage[name] = sorted({spec.label_id for row, specs in enumerate(batch.frame.label_specs[family])
-                    for col, spec in enumerate(specs) if spec is not None and bool(target.available[row, :, col].any())})
-        return {"schema": "alice-personality-unqualified-teaching-evidence-v1", "phase": self.recipe.phase,
+                label_coverage[name] = sorted({label_semantics_fingerprint(family, spec) for row, specs in enumerate(batch.frame.label_specs[family])
+                    for col, spec in enumerate(specs) if spec is not None and bool(effective[row, :, col].any())})
+        return {"schema": "alice-personality-unqualified-teaching-evidence-v2", "phase": self.recipe.phase,
                 "split": batch.split, "step": self.steps, "epoch": self.epoch, "loss": total,
                 "objectives": {name: float(value.detach()) for name, value in losses.items()},
                 "reviewed_target_coverage": coverage, "reviewed_label_coverage": label_coverage,
+                "effective_target_coverage": effective_coverage,
                 "source_class": batch.source_class,
                 "teaching_batch_sha256": batch.fingerprint(),
                 "admission_binding_sha256": sha256(canonical(self._binding)).hexdigest(),

@@ -30,6 +30,12 @@ def canonical(value: object) -> bytes:
                       allow_nan=False).encode("utf-8")
 
 
+def label_semantics_fingerprint(family: str, spec: LabelSpec) -> str:
+    """Bind actual portable meaning and units, never an opaque ID alone."""
+    spec.validate(family)
+    return sha256(canonical({'family': family, 'spec': asdict(spec)})).hexdigest()
+
+
 def tensor_digest(value: torch.Tensor) -> str:
     data = value.detach().cpu().contiguous()
     digest = sha256(canonical({"shape": list(data.shape), "dtype": str(data.dtype)}))
