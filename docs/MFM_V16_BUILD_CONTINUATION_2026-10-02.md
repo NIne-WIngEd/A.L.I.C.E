@@ -520,3 +520,20 @@ teaching cases, and learns complete semantic decisions with externally assigned
 new local identities. Existing/shared uncertainty identities stay preserved.
 All 49 relevant local tests pass; these establish contracts, not learned ability.
 Source-view preparation and subsequent fitted/generated capability remain open.
+
+### Corrected actual-corpus pipeline submitted
+
+Source preparation 576713 is retained as failed at the fixture/admitted-roster
+boundary before new features. The complete pinned441-case audit confirms only
+seed06/11 need augmented inputs; seed18 is not admitted. All441 rows remain,
+with439 unchanged states reused and two changed inputs to export. Preparation
+576714 uses code2e78629b23376719c07008256915557345c501b6; its50 actual-runtime
+tests pass. Decision pipeline576715 is queued afterok576714 using immutable
+532bdeb1c5e537b334e62cdacc391737b1335715. It rechecks every source/target row,
+requires a completed exact stress/restart proof, then fits the complete teacher
+corpus and retains all matched raw generated failures. The new58 local tests
+and independent review establish construction contracts, not semantic ability.
+Existing fit/checkpoint54 and failed outputs remain intact. No paid compute,
+FINAL, memory activation or model qualification is involved. Detailed current
+status is in MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json; this paragraph records
+submission, not completed new training. Next read the actual job receipts.
