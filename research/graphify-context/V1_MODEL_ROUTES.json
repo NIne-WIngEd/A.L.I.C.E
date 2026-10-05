@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "c3595da8415d254259ff377978522842872f68ce",
+      "commit": "fa7e75b823680fc93491dc38c0a5d8723d9ca0ce",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -47,7 +47,7 @@
         {
           "path": "docs/MFM_V16_BUILD_CONTINUATION_2026-10-02.md",
           "purpose": "MFM recovered corpus, compute decisions and remaining full-capability roadmap",
-          "blob_sha": "c7606d03eb75e9d210d5a3fe186ecc39d72b7a99"
+          "blob_sha": "50179f335ab71394363567c09a38f22fc66ef5dd"
         },
         {
           "path": "docs/MFM_COMPUTE_RECOVERY_RECEIPTS_2026-10-02.json",
@@ -57,7 +57,7 @@
         {
           "path": "docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
           "purpose": "completed teacher fit, failed generated formation, actual causal analysis and corrected measurement handoff",
-          "blob_sha": "d0e3c17d055845d7e312f6e90d921ef6e7ac437e"
+          "blob_sha": "53d4a5c902b2fa875423adc2b3541f0a333ba256"
         },
         {
           "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576702.json",
@@ -75,9 +75,39 @@
           "blob_sha": "f634df4702923d123ab2c90c7e11b4ad2c0d682c"
         },
         {
+          "path": "docs/receipts/MFM_V16_SOURCE_VIEW_576714_SUMMARY.json",
+          "purpose": "public aggregate projection of completed corrected441case source view; protected original remains authoritative",
+          "blob_sha": "b01d83c908b4a43e3e37b80d54830e4039d210cf"
+        },
+        {
+          "path": "docs/receipts/MFM_V16_DECISION_PROBE_576715.json",
+          "purpose": "sealed actual16case calibrated stress and exact next-step restart result",
+          "blob_sha": "fe5ad89516b45da46ff1ab33f4a372c67679846f"
+        },
+        {
+          "path": "docs/receipts/MFM_V16_DECISION_FIT_576715.json",
+          "purpose": "sealed completed corrected54update teacher fit; generated capability unproved",
+          "blob_sha": "2232211f6ec3a455b31a06ed132847f1016faea2"
+        },
+        {
+          "path": "docs/receipts/MFM_V16_DECISION_RUN_576715.json",
+          "purpose": "exact corrected fit code/objective/runtime/source and stress ancestry",
+          "blob_sha": "d78bf8dd4a625b9a5ba5f0c9477f31968cea29b6"
+        },
+        {
+          "path": "docs/receipts/MFM_V16_DECISION_DIAGNOSTIC_576715.json",
+          "purpose": "all9trained and9seeded corrected outputs invalid; actualFP32 reference-prefix parity",
+          "blob_sha": "6c4fcb5b52fe545d5815625397474171ea1b39bb"
+        },
+        {
+          "path": "docs/receipts/MFM_V16_LANGUAGE_ANALYSIS_576724.json",
+          "purpose": "sealed whole-corpus exposure and field-frequency diagnosis; common-field underlearning plus separate unseen-positive identity gap",
+          "blob_sha": "9d5f8e858b6da2aed610513825938e7ba50966b2"
+        },
+        {
           "path": "docs/MFM_V16_OUTPUT_INTERFACE_SUCCESSOR_2026-10-04.md",
           "purpose": "root input/objective/evaluation audit, actual corpus boundary and full decision construction; byte proposal on hold",
-          "blob_sha": "a88a7e37fa45b04847c496508082fdecdb6e5362"
+          "blob_sha": "281a25bef03aeeb58c3d8289b5b434bae2b77626"
         },
         {
           "path": "docs/MFM_V1_ROLE_BOUNDARY_DIAGNOSTIC_2026-09-30.md",
@@ -158,6 +188,41 @@
           "path": "scripts/mfm/run_v16_decision_diagnostic.py",
           "purpose": "target-free matched generated controls with explicit FP32 cache parity and honest exact agreement scope",
           "blob_sha": "b38de490db67bb99d69314cd907013857c0725ed"
+        },
+        {
+          "path": "scripts/mfm/analyze_v16_decision_fit.py",
+          "purpose": "read-only full corrected corpus token-frequency and source membership plus same-forward field-stratified prefix measurements",
+          "blob_sha": "b37dcf2184ad0546c2b1b5a36f6b76b3e9f8e37f"
+        },
+        {
+          "path": "scripts/mfm/magnolia_v16_language_analysis_20261004.sbatch",
+          "purpose": "protected owner-account bounded language/root-interface diagnosis without optimization",
+          "blob_sha": "22ab77f912cc7e3d3139e34a483d276a9147f219"
+        },
+        {
+          "path": "scripts/mfm/continue_v16_decision_learning.py",
+          "purpose": "bounded full-corpus child learning with parent checkpoint/Adam/RNG lineage and equal-case train stopping; not open-identity repair",
+          "blob_sha": "0d7e12c5a309cd73bb067e4281e35ab22d12027b"
+        },
+        {
+          "path": "scripts/mfm/run_v16_budget_diagnostic.py",
+          "purpose": "truthful plateau/cap completion and raw child/seed generation against byte-retained parent control",
+          "blob_sha": "980776a5efa5a15ab0679cebe73e25bc179895a6"
+        },
+        {
+          "path": "scripts/mfm/magnolia_v16_budget_learning_20261004.sbatch",
+          "purpose": "protected6additional-epoch maximum construction with train-only progress and no automatic budget extension",
+          "blob_sha": "4bc7712fef498c64e0b2ba02ec71a6bbcd911a8b"
+        },
+        {
+          "path": "tests/governance/test_mfm_v16_language_analysis.py",
+          "purpose": "field provenance, positive corpus frequency and weighted same-forward metric aggregation",
+          "blob_sha": "f59b120d08266c00ba3b2d84c94b75146059d715"
+        },
+        {
+          "path": "tests/governance/test_mfm_v16_learning_continuation.py",
+          "purpose": "parent transfer and interrupted child next-state identity, equal-case objective and honest terminal claims",
+          "blob_sha": "d0cbb817d2b481d918613df06def71e99fbe0ff0"
         },
         {
           "path": "scripts/mfm/magnolia_v16_decision_learning_20261004.sbatch",
@@ -373,7 +438,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "8c1b30868a2206e7c20494c673d480734cf7fb68",
+      "commit": "84290819bd6d308ac5ba9fb1bdea84f0e0041e53",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -383,7 +448,7 @@
         {
           "path": "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
           "purpose": "FBM recovered teacher CPU evidence and frozen-feature build continuation",
-          "blob_sha": "a98654053086280cf94d937ee2188b096b82ad43"
+          "blob_sha": "b846042c59864f2ba7ca39d72f38ab6dfbefd35b"
         },
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261002_MFM_RECOVERY_AND_FROZEN_FEATURE_ROUTE.jsonl",
@@ -453,7 +518,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "69a1159e73cc0ef17f0fabb5fbc37bf3d6b71b2b"
+          "blob_sha": "30776731163db0e2612ca2e2996bc899ef2b7d90"
         }
       ]
     }
