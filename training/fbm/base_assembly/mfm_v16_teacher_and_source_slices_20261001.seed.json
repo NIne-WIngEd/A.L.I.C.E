@@ -838,7 +838,7 @@
     "latest_analysis_code_commit": "64be770d8f8f4770d76c6d65f04abab582c1a2b2",
     "root_cause_investigation_20261004": {
       "schema": "mfm-root-cause-investigation-state-v1",
-      "recorded_at_utc": "2026-10-04T23:30:00.038121+00:00",
+      "recorded_at_utc": "2026-10-05T03:26:10.621567+00:00",
       "source_export": {
         "jobs": {
           "576630": "TIMEOUT",
@@ -1055,7 +1055,7 @@
           "initial_grouped_metrics_caveat": "Initial receipt retains quoted-values-only grouping; completed corrected receipt includes every JSON scalar."
         }
       },
-      "frontier_watch_reviewed_commit": "3bea33189",
+      "frontier_watch_reviewed_commit": "3bea3318904ec2881d3f981d46a5b8d5bca91ba7",
       "independent_gold": false,
       "final_opened": false,
       "memory_activation": false,
@@ -1087,8 +1087,8 @@
         "local_tests_passed": 58,
         "model_learning_claim": false,
         "correction_job_submitted": true,
-        "source_view_completed": false,
-        "new_weights_exported": false,
+        "source_view_completed": true,
+        "new_weights_exported": true,
         "qualified_for_product": false,
         "actual_admitted_input_audit": {
           "cases_audited": 441,
@@ -1115,11 +1115,11 @@
       },
       "decision_pipeline": {
         "source_job": 576714,
-        "source_state_at_snapshot": "RUNNING",
+        "source_state_at_snapshot": "COMPLETED",
         "source_view": "/homes/01/mxrayan/rayan-compute/rayan-mfm/features/rayan-mfm-contract-view-576714/view.json",
         "source_actual_runtime_tests_passed": 50,
         "learning_job": 576715,
-        "learning_state_at_snapshot": "PENDING_AFTEROK_576714",
+        "learning_state_at_snapshot": "COMPLETED_WITH_FAILED_GENERATION",
         "code_commit": "532bdeb1c5e537b334e62cdacc391737b1335715",
         "job_script_sha256": "722ce7143cff95f91ab081a37edfc8b5b6a5aac4484eca83c1eaee21b572ad08",
         "owner_account": "mxrayan",
@@ -1135,17 +1135,215 @@
         "qualified_for_product": false,
         "new_fitted_capability_established": false,
         "final_payloads_opened": false,
-        "paid_compute_used": false
+        "paid_compute_used": false,
+        "source_elapsed": "00:15:45",
+        "source_view_sha256": "0c10f71e4af006c159e7995d79d80ac6a8a7ae76fea98315faa719b04ca8fd60",
+        "source_seconds": 908.1583442278206,
+        "unchanged_source_cases_reused": 439,
+        "augmented_source_cases": 2,
+        "unresolved_reference_input_gap_cases": 0,
+        "learning_scheduler_state": "COMPLETED",
+        "learning_elapsed": "02:18:45",
+        "learning_exit_code": "0:0",
+        "learning_actual_runtime_tests_passed": 58,
+        "probe_component_sha256": "05ada08cd3eaf1b17a48805e097b4eb7d34f8037d0ccc0dc2d470dadaf1840cc",
+        "restart_next_weight_difference": 0.0,
+        "restart_next_moment_difference": 0.0,
+        "fit_component_sha256": "94d597caf7e2cd4cdd6de9da5642ed77a959305a06488224116e97bc114e01a0",
+        "fit_run_sha256": "ca47489b76129dd0e30f46eb2b983a76ec0f2568c8887d07b8b38a365e6cd80e",
+        "trained_weights_sha256": "23fbfa54602453d4377b4cb437394022c54a0357a7ef95c38636839b98bd63a7",
+        "completed_epochs": 2,
+        "optimizer_steps": 54,
+        "fit_seconds": 4387.58396,
+        "last_training_group_loss": 3.123219281435013,
+        "development_teacher_forced_loss": 4.214184115844497,
+        "seeded_development_teacher_forced_loss": 12.574968655240754,
+        "generated_diagnostic_sha256": "f8a9ecc26e55762c8b5364eab48e171fb8408fee25e1ba245b9b7724c7a0b47e",
+        "generated_summary": {
+          "seeded-untrained": {
+            "cases": 9,
+            "exact_teacher_agreements": 0,
+            "grounded_outputs": 0,
+            "invalid_outputs": 9,
+            "proposals_in_grounded_outputs": 0
+          },
+          "trained": {
+            "cases": 9,
+            "exact_teacher_agreements": 0,
+            "grounded_outputs": 0,
+            "invalid_outputs": 9,
+            "proposals_in_grounded_outputs": 0
+          }
+        },
+        "no_eos_in_all_18_completions": true,
+        "decode": {
+          "device": "cpu",
+          "matched_between_controls": true,
+          "max_new_tokens": 2048,
+          "method": "FP32_incremental_first32_actual_greedy_reference_checked",
+          "specialist_dtype": "float32",
+          "target_visible": false,
+          "torch_version": "2.7.1+cu118"
+        },
+        "raw_outputs_externally_hash_verified": true
+      },
+      "language_analysis": {
+        "job": 576724,
+        "state_at_snapshot": "COMPLETED",
+        "owner_account": "mxrayan",
+        "allocation_hours": 2,
+        "code_commit": "4b37c6b09e88a69dd50013133c98a37a26c270bf",
+        "job_script_sha256": "7c7d87b4865d079e518f926fcabe8ee73757d0e59215a7a2b33a76b448b8f9a1",
+        "receipt": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-language-analysis-576724.json",
+        "actual_runtime_tests_passed": 12,
+        "local_targeted_tests_passed": 12,
+        "optimization_or_new_weight_export": false,
+        "qualified_for_product": false,
+        "purpose": "Separate incomplete scratch sequence learning from unsupported positive lexical alignment and source-identity transfer; no new fit or architecture adopted",
+        "measurements": [
+          "all441 full-target frequency and original source-token membership",
+          "field-by-frequency teacher-prefix loss and accuracy on full train-stress/augmented and development cases",
+          "matched versus all-BOS-prefix versus zero-source, same forward measurement path",
+          "retained actual greedy exact teacher divergence with original validity and checked-prefix provenance"
+        ],
+        "interpretation_limits": [
+          "token frequency is one positive-target corpus pass, not epochs or total gradients",
+          "unseen-positive output rows still receive negative softmax gradients",
+          "source token membership does not prove contiguous copying, entailment or pointer model success",
+          "first exact teacher divergence is not first malformed token and a paraphrase can diverge validly",
+          "gold-prefix artificial controls measure sensitivity, not independent semantic capability"
+        ],
+        "elapsed": "00:04:52",
+        "exit_code": "0:0",
+        "receipt_sha256": "4c841f1afbd630db067290b496198a81fe8c0dab14858ae1a205b533fde149c9",
+        "seconds": 242.8667862340808,
+        "positive_train_corpus_token_types": 582,
+        "positive_development_corpus_token_types": 365,
+        "development_token_types_without_positive_train_corpus_occurrence": 146,
+        "first_exact_teacher_divergence_token_all9": 7,
+        "first_divergence_target_positive_train_corpus_count": 495,
+        "ordinary_key_accuracy_range": [
+          0.4463276836158192,
+          0.525
+        ],
+        "matched_teacher_prefix_eos_top1_all6": false,
+        "matched_teacher_prefix_eos_probability_range": [
+          0.0039008259773254395,
+          0.0069834087044000626
+        ],
+        "measured_unseen_and_rare_positive_target_top1_correct": 0,
+        "unseen_development_reference_tokens": 306,
+        "total_development_reference_tokens": 1353,
+        "unseen_development_reference_tokens_present_in_original_source_ids": 270,
+        "matched_mean_loss_range": [
+          3.792912974368566,
+          4.20008889881732
+        ],
+        "all_bos_teacher_input_accuracy_range": [
+          0.000757002271006813,
+          0.0033444816053511705
+        ],
+        "zero_source_accuracy_range": [
+          0.09235427706283118,
+          0.11090225563909774
+        ],
+        "supported_diagnosis": "Broad incomplete learned sequence generation already affects common keys/action/EOS in admitted training cases; sparse/no-positive lexical alignment is an additional open-identity gap. Source ablation materially changes predictions, so no claim that frozen states are ignored.",
+        "next_design_limit": "Copying alone cannot solve common-field underlearning; another fixed two-epoch recipe cannot be called a full-capability training plan. Establish basic full-corpus sequence learning with an explicit bounded continuation before inferring the need or success of a new lexical architecture."
+      },
+      "current_hypotheses": [
+        "54 updates leave even ordinary structure/action/EOS sequence behavior insufficiently learned",
+        "frozen source states plus independently random lexical head provide no inherited source-to-output token identity channel",
+        "gold-prefix learning may not sustain coherent decisions after an incorrect generated prefix"
+      ],
+      "research_before_next_model": {
+        "adoption_state": "NO_NEW_ARCHITECTURE_OR_LEARNING_TECHNIQUE_SELECTED",
+        "pointer_generator": {
+          "url": "https://aclanthology.org/P17-1099/",
+          "implementation": "https://github.com/abisee/pointer-generator/blob/master/model.py",
+          "mechanism": "learned generator mixture with summed attention mass over source positions sharing an output identity",
+          "limitations": "word-level RNN summarization is not this frozen-state BPE Transformer; repetition coverage is separate; not evidence copying is the first bottleneck"
+        },
+        "pretrained_seq2seq": {
+          "url": "https://aclanthology.org/2020.tacl-1.18.pdf",
+          "mechanism": "investigates encoder/decoder initialization and shared pretrained embeddings; encoder-pretrained random-decoder baseline already shares pretrained lexical embeddings",
+          "limitations": "task-dependent benefits and much larger datasets; no direct proof or drop-in legal/role/source binding for MFM"
+        },
+        "memreader": {
+          "url": "https://arxiv.org/html/2604.07877v2",
+          "mechanism": "passive extraction and active contextual memory-management decisions reinforce full extraction/update/action scope",
+          "limitations": "reported task results and proposed learning recipes do not qualify our model or transfer write authority",
+          "initialization_verified": "Sections4.1/4.2 explicitly build on Qwen3-4B and Qwen3-0.6B; extraction/action teaching is not learning a randomly initialized language decoder from441cases"
+        },
+        "copy_arbitration": {
+          "url": "https://arxiv.org/abs/2601.12075",
+          "limitations": "copy-versus-recall steering of already instruction-tuned models cannot transfer their language competence to a fresh decoder"
+        },
+        "frontier_intakes": [
+          "2026-10-04_EVOLVABLE_MEMORY_PROGRAMS",
+          "2026-10-03_VERIFIED_MISSION_STATE_AND_OUTCOME_GATED_LEARNING"
+        ],
+        "frontier_application": "memory programming preserves the governed memory planes; verifier-owned results keep finite fit and receipts distinct from usable MFM behavior"
+      },
+      "bounded_learning_continuation": {
+        "job": 576741,
+        "state_at_snapshot": "RUNNING",
+        "owner_account": "mxrayan",
+        "code_commit": "a4fd0c5fcf34755299fe33907793e7262e137d9d",
+        "job_script_sha256": "bf383faefa54a1acafc2938df034d7ca0ce144c380d59b4666189906565e61b5",
+        "fit_dir": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-budget-fit-576741",
+        "generated_dir": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-budget-generated-576741",
+        "allocation_hours": 12,
+        "training_session_hours": 8,
+        "cpu_threads": 12,
+        "memory_gb": 64,
+        "parent_component_sha256": "94d597caf7e2cd4cdd6de9da5642ed77a959305a06488224116e97bc114e01a0",
+        "parent_checkpoint_sha256": "4e9e838434ee570c865f74c152da14bb4ef30fe0411575eb59f1d68477587e49",
+        "parent_optimizer_sha256": "ea056e567f57e773a5a41462458ad28309048187c9448409dcfb8d503844843d",
+        "parent_cursor": {
+          "epoch": 1,
+          "next_case": 432,
+          "step": 54
+        },
+        "first_child_cursor": {
+          "epoch": 2,
+          "next_case": 0,
+          "next_global_update": 55
+        },
+        "maximum_additional_complete_epochs": 6,
+        "maximum_additional_optimizer_steps": 162,
+        "same_complete_train_cases": 432,
+        "learning_rate": 0.0001,
+        "gradient_accumulation": 16,
+        "source_weights_architecture_and_targets_unchanged": true,
+        "optimizer_moments_rng_and_global_shuffle_preserved": true,
+        "stopping": "full-train equal-case CE at baseline and every two extra epochs; two consecutive relative improvements below1% stop as insufficient progress; otherwise finite epoch cap",
+        "stopping_uses_development": false,
+        "token_weighted_ce_reported_separately": true,
+        "controls": "byte-reuse pinned original9parent outputs; same-settings fresh9child and9original-untrained-seed outputs",
+        "local_targeted_tests_passed": 21,
+        "independent_review_launch_blockers": 0,
+        "new_fitted_behavior_pending": true,
+        "unseen_identity_gap_resolved": false,
+        "automatic_second_budget_extension_authorized_by_recipe": false,
+        "qualified_for_product": false,
+        "final_payloads_opened": false,
+        "memory_activation": false,
+        "paid_compute_used": false,
+        "actual_runtime_tests_passed": 21,
+        "initial_scheduler_elapsed": "00:02:25",
+        "actual_runtime_test_seconds": 10.892,
+        "actual_full_corpus_learning_progress_observed": false,
+        "log_interpretation": "Initial Slurm stdout contains tiny unit-test fixture progress; real432-case progress is exclusively in receipts/rayan-mfm-budget-fit-576741.stdout and the actual run progress files."
       }
     },
     "latest_decision_model_code_commit": "532bdeb1c5e537b334e62cdacc391737b1335715",
     "decision_pipeline_20261004": {
       "source_job": 576714,
-      "source_state_at_snapshot": "RUNNING",
+      "source_state_at_snapshot": "COMPLETED",
       "source_view": "/homes/01/mxrayan/rayan-compute/rayan-mfm/features/rayan-mfm-contract-view-576714/view.json",
       "source_actual_runtime_tests_passed": 50,
       "learning_job": 576715,
-      "learning_state_at_snapshot": "PENDING_AFTEROK_576714",
+      "learning_state_at_snapshot": "COMPLETED_WITH_FAILED_GENERATION",
       "code_commit": "532bdeb1c5e537b334e62cdacc391737b1335715",
       "job_script_sha256": "722ce7143cff95f91ab081a37edfc8b5b6a5aac4484eca83c1eaee21b572ad08",
       "owner_account": "mxrayan",
@@ -1161,7 +1359,173 @@
       "qualified_for_product": false,
       "new_fitted_capability_established": false,
       "final_payloads_opened": false,
-      "paid_compute_used": false
-    }
+      "paid_compute_used": false,
+      "source_elapsed": "00:15:45",
+      "source_view_sha256": "0c10f71e4af006c159e7995d79d80ac6a8a7ae76fea98315faa719b04ca8fd60",
+      "source_seconds": 908.1583442278206,
+      "unchanged_source_cases_reused": 439,
+      "augmented_source_cases": 2,
+      "unresolved_reference_input_gap_cases": 0,
+      "learning_scheduler_state": "COMPLETED",
+      "learning_elapsed": "02:18:45",
+      "learning_exit_code": "0:0",
+      "learning_actual_runtime_tests_passed": 58,
+      "probe_component_sha256": "05ada08cd3eaf1b17a48805e097b4eb7d34f8037d0ccc0dc2d470dadaf1840cc",
+      "restart_next_weight_difference": 0.0,
+      "restart_next_moment_difference": 0.0,
+      "fit_component_sha256": "94d597caf7e2cd4cdd6de9da5642ed77a959305a06488224116e97bc114e01a0",
+      "fit_run_sha256": "ca47489b76129dd0e30f46eb2b983a76ec0f2568c8887d07b8b38a365e6cd80e",
+      "trained_weights_sha256": "23fbfa54602453d4377b4cb437394022c54a0357a7ef95c38636839b98bd63a7",
+      "completed_epochs": 2,
+      "optimizer_steps": 54,
+      "fit_seconds": 4387.58396,
+      "last_training_group_loss": 3.123219281435013,
+      "development_teacher_forced_loss": 4.214184115844497,
+      "seeded_development_teacher_forced_loss": 12.574968655240754,
+      "generated_diagnostic_sha256": "f8a9ecc26e55762c8b5364eab48e171fb8408fee25e1ba245b9b7724c7a0b47e",
+      "generated_summary": {
+        "seeded-untrained": {
+          "cases": 9,
+          "exact_teacher_agreements": 0,
+          "grounded_outputs": 0,
+          "invalid_outputs": 9,
+          "proposals_in_grounded_outputs": 0
+        },
+        "trained": {
+          "cases": 9,
+          "exact_teacher_agreements": 0,
+          "grounded_outputs": 0,
+          "invalid_outputs": 9,
+          "proposals_in_grounded_outputs": 0
+        }
+      },
+      "no_eos_in_all_18_completions": true,
+      "decode": {
+        "device": "cpu",
+        "matched_between_controls": true,
+        "max_new_tokens": 2048,
+        "method": "FP32_incremental_first32_actual_greedy_reference_checked",
+        "specialist_dtype": "float32",
+        "target_visible": false,
+        "torch_version": "2.7.1+cu118"
+      },
+      "raw_outputs_externally_hash_verified": true
+    },
+    "language_analysis_20261004": {
+      "job": 576724,
+      "state_at_snapshot": "COMPLETED",
+      "owner_account": "mxrayan",
+      "allocation_hours": 2,
+      "code_commit": "4b37c6b09e88a69dd50013133c98a37a26c270bf",
+      "job_script_sha256": "7c7d87b4865d079e518f926fcabe8ee73757d0e59215a7a2b33a76b448b8f9a1",
+      "receipt": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-language-analysis-576724.json",
+      "actual_runtime_tests_passed": 12,
+      "local_targeted_tests_passed": 12,
+      "optimization_or_new_weight_export": false,
+      "qualified_for_product": false,
+      "purpose": "Separate incomplete scratch sequence learning from unsupported positive lexical alignment and source-identity transfer; no new fit or architecture adopted",
+      "measurements": [
+        "all441 full-target frequency and original source-token membership",
+        "field-by-frequency teacher-prefix loss and accuracy on full train-stress/augmented and development cases",
+        "matched versus all-BOS-prefix versus zero-source, same forward measurement path",
+        "retained actual greedy exact teacher divergence with original validity and checked-prefix provenance"
+      ],
+      "interpretation_limits": [
+        "token frequency is one positive-target corpus pass, not epochs or total gradients",
+        "unseen-positive output rows still receive negative softmax gradients",
+        "source token membership does not prove contiguous copying, entailment or pointer model success",
+        "first exact teacher divergence is not first malformed token and a paraphrase can diverge validly",
+        "gold-prefix artificial controls measure sensitivity, not independent semantic capability"
+      ],
+      "elapsed": "00:04:52",
+      "exit_code": "0:0",
+      "receipt_sha256": "4c841f1afbd630db067290b496198a81fe8c0dab14858ae1a205b533fde149c9",
+      "seconds": 242.8667862340808,
+      "positive_train_corpus_token_types": 582,
+      "positive_development_corpus_token_types": 365,
+      "development_token_types_without_positive_train_corpus_occurrence": 146,
+      "first_exact_teacher_divergence_token_all9": 7,
+      "first_divergence_target_positive_train_corpus_count": 495,
+      "ordinary_key_accuracy_range": [
+        0.4463276836158192,
+        0.525
+      ],
+      "matched_teacher_prefix_eos_top1_all6": false,
+      "matched_teacher_prefix_eos_probability_range": [
+        0.0039008259773254395,
+        0.0069834087044000626
+      ],
+      "measured_unseen_and_rare_positive_target_top1_correct": 0,
+      "unseen_development_reference_tokens": 306,
+      "total_development_reference_tokens": 1353,
+      "unseen_development_reference_tokens_present_in_original_source_ids": 270,
+      "matched_mean_loss_range": [
+        3.792912974368566,
+        4.20008889881732
+      ],
+      "all_bos_teacher_input_accuracy_range": [
+        0.000757002271006813,
+        0.0033444816053511705
+      ],
+      "zero_source_accuracy_range": [
+        0.09235427706283118,
+        0.11090225563909774
+      ],
+      "supported_diagnosis": "Broad incomplete learned sequence generation already affects common keys/action/EOS in admitted training cases; sparse/no-positive lexical alignment is an additional open-identity gap. Source ablation materially changes predictions, so no claim that frozen states are ignored.",
+      "next_design_limit": "Copying alone cannot solve common-field underlearning; another fixed two-epoch recipe cannot be called a full-capability training plan. Establish basic full-corpus sequence learning with an explicit bounded continuation before inferring the need or success of a new lexical architecture."
+    },
+    "latest_language_analysis_code_commit": "4b37c6b09e88a69dd50013133c98a37a26c270bf",
+    "bounded_learning_continuation_20261004": {
+      "job": 576741,
+      "state_at_snapshot": "RUNNING",
+      "owner_account": "mxrayan",
+      "code_commit": "a4fd0c5fcf34755299fe33907793e7262e137d9d",
+      "job_script_sha256": "bf383faefa54a1acafc2938df034d7ca0ce144c380d59b4666189906565e61b5",
+      "fit_dir": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-budget-fit-576741",
+      "generated_dir": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-budget-generated-576741",
+      "allocation_hours": 12,
+      "training_session_hours": 8,
+      "cpu_threads": 12,
+      "memory_gb": 64,
+      "parent_component_sha256": "94d597caf7e2cd4cdd6de9da5642ed77a959305a06488224116e97bc114e01a0",
+      "parent_checkpoint_sha256": "4e9e838434ee570c865f74c152da14bb4ef30fe0411575eb59f1d68477587e49",
+      "parent_optimizer_sha256": "ea056e567f57e773a5a41462458ad28309048187c9448409dcfb8d503844843d",
+      "parent_cursor": {
+        "epoch": 1,
+        "next_case": 432,
+        "step": 54
+      },
+      "first_child_cursor": {
+        "epoch": 2,
+        "next_case": 0,
+        "next_global_update": 55
+      },
+      "maximum_additional_complete_epochs": 6,
+      "maximum_additional_optimizer_steps": 162,
+      "same_complete_train_cases": 432,
+      "learning_rate": 0.0001,
+      "gradient_accumulation": 16,
+      "source_weights_architecture_and_targets_unchanged": true,
+      "optimizer_moments_rng_and_global_shuffle_preserved": true,
+      "stopping": "full-train equal-case CE at baseline and every two extra epochs; two consecutive relative improvements below1% stop as insufficient progress; otherwise finite epoch cap",
+      "stopping_uses_development": false,
+      "token_weighted_ce_reported_separately": true,
+      "controls": "byte-reuse pinned original9parent outputs; same-settings fresh9child and9original-untrained-seed outputs",
+      "local_targeted_tests_passed": 21,
+      "independent_review_launch_blockers": 0,
+      "new_fitted_behavior_pending": true,
+      "unseen_identity_gap_resolved": false,
+      "automatic_second_budget_extension_authorized_by_recipe": false,
+      "qualified_for_product": false,
+      "final_payloads_opened": false,
+      "memory_activation": false,
+      "paid_compute_used": false,
+      "actual_runtime_tests_passed": 21,
+      "initial_scheduler_elapsed": "00:02:25",
+      "actual_runtime_test_seconds": 10.892,
+      "actual_full_corpus_learning_progress_observed": false,
+      "log_interpretation": "Initial Slurm stdout contains tiny unit-test fixture progress; real432-case progress is exclusively in receipts/rayan-mfm-budget-fit-576741.stdout and the actual run progress files."
+    },
+    "latest_bounded_learning_code_commit": "a4fd0c5fcf34755299fe33907793e7262e137d9d"
   }
 }
