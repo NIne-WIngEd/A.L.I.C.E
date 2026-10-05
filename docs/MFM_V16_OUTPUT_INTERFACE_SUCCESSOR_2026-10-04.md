@@ -347,19 +347,47 @@ train field/frequency/EOS measurements on the three already selected augmented/
 stress examples, with no development-based selection. Keep development target
 loss and all9 trained/seeded target-free completions as end diagnostics.
 
-- [ ] Add `scripts/mfm/continue_v16_decision_learning.py` and focused tests for
+- [x] Add `scripts/mfm/continue_v16_decision_learning.py` and focused tests for
   admission-before-read, exact completed parent/cursor/external checkpoint pin,
   restored next-step weights/moments/RNG, equal-case versus token-weighted
   reporting, plateau versus finite-cap status, and declared resume boundaries.
-- [ ] Add a separately bound continuation diagnostic using the original FP32
+- [x] Add a separately bound continuation diagnostic using the original FP32
   reference-checked generation and strict grounding; retain invalid output and
   existing no-write boundaries. A deliberate finite stop is not a completed
   eight-epoch fit and must never be mislabeled as one.
-- [ ] Verify targeted tests and independent review, then package immutable
+- [x] Verify targeted tests and independent review, then package immutable
   code and submit one protected Magnolia CPU12/64GiB job as mxrayan. Preserve
   all original artifacts and checkpoint interruption state.
-- [ ] Record actual results or pending job in existing MFM/FBM/Graphify records.
+- [x] Record actual results or pending job in existing MFM/FBM/Graphify records.
   Do not automatically schedule another budget increase. If familiar sequence
   learning progresses but unseen identities remain unsupported, use that
   measured state to decide the source-identity/lexical route. If it stalls,
   reassess the learning interface/data instead of repeating this job.
+
+### Bounded construction submitted: 576741
+
+Magnolia job576741 uses immutable `a4fd0c5fcf34755299fe33907793e7262e137d9d`
+under mxrayan, protected CPU12/64GiB,12h allocation and8h train-session limit.
+It restores the externally pinned completed parent54 weights/Adam/RNG, creates
+a distinct child manifest and starts globalepoch2/update55. Maximum162 new
+updates over six complete432-case epochs; complete equal-case trainCE determines
+the declared insufficient-progress stop. Token-weightedCE is separate.
+
+Twenty-one targeted tests pass, including actual next-step weights/moments/RNG
+identity and interrupted-child/final-weight identity. Independent read-only
+review found no remaining launch blocker; session seconds are sealed and the
+actual incremental-decoder hash is bound and checked. Tests establish machinery,
+not learned competence. The child uses distinct run/component schemas, so a
+deliberate plateau is never reported as completing the maximum eight epochs.
+Its strict diagnostic byte-reuses the original pinned parent9 controls and
+generates all9child/9original-seed controls at the same2048-token FP32 settings.
+Original malformed outputs and the146 never-positive development token types
+remain unresolved. No automatic second budget increase or architecture choice
+follows from this run. Await actual full-train progress, terminal receipt and
+raw generated behavior before selecting the next learning/lexical route.
+
+Runtime snapshot:576741 RUNNING after all21 actual-runtime tests (10.892s).
+Initial Slurm stdout includes tiny test-fixture progress; those one-case rows
+are not432-case MFM training. Real progress is in the separate protected
+`receipts/rayan-mfm-budget-fit-576741.stdout` and run progress receipts.
+No actual full-corpus child update or behavioral result is asserted yet.

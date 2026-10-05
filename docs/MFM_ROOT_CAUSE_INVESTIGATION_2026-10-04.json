@@ -1,6 +1,6 @@
 {
   "schema": "mfm-root-cause-investigation-state-v1",
-  "recorded_at_utc": "2026-10-05T02:47:13.037218+00:00",
+  "recorded_at_utc": "2026-10-05T03:27:57.824279+00:00",
   "source_export": {
     "jobs": {
       "576630": "TIMEOUT",
@@ -445,5 +445,56 @@
       "2026-10-03_VERIFIED_MISSION_STATE_AND_OUTCOME_GATED_LEARNING"
     ],
     "frontier_application": "memory programming preserves the governed memory planes; verifier-owned results keep finite fit and receipts distinct from usable MFM behavior"
+  },
+  "bounded_learning_continuation": {
+    "job": 576741,
+    "state_at_snapshot": "RUNNING",
+    "owner_account": "mxrayan",
+    "code_commit": "a4fd0c5fcf34755299fe33907793e7262e137d9d",
+    "job_script_sha256": "bf383faefa54a1acafc2938df034d7ca0ce144c380d59b4666189906565e61b5",
+    "fit_dir": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-budget-fit-576741",
+    "generated_dir": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-budget-generated-576741",
+    "allocation_hours": 12,
+    "training_session_hours": 8,
+    "cpu_threads": 12,
+    "memory_gb": 64,
+    "parent_component_sha256": "94d597caf7e2cd4cdd6de9da5642ed77a959305a06488224116e97bc114e01a0",
+    "parent_checkpoint_sha256": "4e9e838434ee570c865f74c152da14bb4ef30fe0411575eb59f1d68477587e49",
+    "parent_optimizer_sha256": "ea056e567f57e773a5a41462458ad28309048187c9448409dcfb8d503844843d",
+    "parent_cursor": {
+      "epoch": 1,
+      "next_case": 432,
+      "step": 54
+    },
+    "first_child_cursor": {
+      "epoch": 2,
+      "next_case": 0,
+      "next_global_update": 55
+    },
+    "maximum_additional_complete_epochs": 6,
+    "maximum_additional_optimizer_steps": 162,
+    "same_complete_train_cases": 432,
+    "learning_rate": 0.0001,
+    "gradient_accumulation": 16,
+    "source_weights_architecture_and_targets_unchanged": true,
+    "optimizer_moments_rng_and_global_shuffle_preserved": true,
+    "stopping": "full-train equal-case CE at baseline and every two extra epochs; two consecutive relative improvements below1% stop as insufficient progress; otherwise finite epoch cap",
+    "stopping_uses_development": false,
+    "token_weighted_ce_reported_separately": true,
+    "controls": "byte-reuse pinned original9parent outputs; same-settings fresh9child and9original-untrained-seed outputs",
+    "local_targeted_tests_passed": 21,
+    "independent_review_launch_blockers": 0,
+    "new_fitted_behavior_pending": true,
+    "unseen_identity_gap_resolved": false,
+    "automatic_second_budget_extension_authorized_by_recipe": false,
+    "qualified_for_product": false,
+    "final_payloads_opened": false,
+    "memory_activation": false,
+    "paid_compute_used": false,
+    "actual_runtime_tests_passed": 21,
+    "initial_scheduler_elapsed": "00:02:25",
+    "actual_runtime_test_seconds": 10.892,
+    "actual_full_corpus_learning_progress_observed": false,
+    "log_interpretation": "Initial Slurm stdout contains tiny unit-test fixture progress; real432-case progress is exclusively in receipts/rayan-mfm-budget-fit-576741.stdout and the actual run progress files."
   }
 }

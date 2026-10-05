@@ -1,7 +1,7 @@
 # MFM V1 continuation: recovered corpus and frozen-feature training
 
 Status: corrected source view, stress/restart and teacher fit completed;
-all generated controls invalid. Read-only language diagnosis 576724 completed; construction continuation is being prepared.
+all generated controls invalid. Read-only language diagnosis 576724 completed; bounded full-corpus learning continuation576741 is running after21runtime tests.
 Capability remains unqualified. Continues `ae7d680286b84a5755caeb1d2e82e0d09c5176ae`.
 
 ## Destination and retained decisions
@@ -627,3 +627,31 @@ parent checkpoint/optimizer/RNG and full corpus; record train-only learning
 progress, finite budget and stop/failure interpretation; retain target-free
 generation and the unresolved open-identity/full-consumer requirements. Do not
 declare this analysis a semantic MFM pass or repeatedly extend a flat run.
+
+### Bounded construction submitted: 576741
+
+Magnolia job576741 uses immutable `a4fd0c5fcf34755299fe33907793e7262e137d9d`
+under mxrayan, protected CPU12/64GiB,12h allocation and8h train-session limit.
+It restores the externally pinned completed parent54 weights/Adam/RNG, creates
+a distinct child manifest and starts globalepoch2/update55. Maximum162 new
+updates over six complete432-case epochs; complete equal-case trainCE determines
+the declared insufficient-progress stop. Token-weightedCE is separate.
+
+Twenty-one targeted tests pass, including actual next-step weights/moments/RNG
+identity and interrupted-child/final-weight identity. Independent read-only
+review found no remaining launch blocker; session seconds are sealed and the
+actual incremental-decoder hash is bound and checked. Tests establish machinery,
+not learned competence. The child uses distinct run/component schemas, so a
+deliberate plateau is never reported as completing the maximum eight epochs.
+Its strict diagnostic byte-reuses the original pinned parent9 controls and
+generates all9child/9original-seed controls at the same2048-token FP32 settings.
+Original malformed outputs and the146 never-positive development token types
+remain unresolved. No automatic second budget increase or architecture choice
+follows from this run. Await actual full-train progress, terminal receipt and
+raw generated behavior before selecting the next learning/lexical route.
+
+Runtime snapshot:576741 RUNNING after all21 actual-runtime tests (10.892s).
+Initial Slurm stdout includes tiny test-fixture progress; those one-case rows
+are not432-case MFM training. Real progress is in the separate protected
+`receipts/rayan-mfm-budget-fit-576741.stdout` and run progress receipts.
+No actual full-corpus child update or behavioral result is asserted yet.
