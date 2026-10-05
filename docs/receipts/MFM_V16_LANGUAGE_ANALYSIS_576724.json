@@ -1,0 +1,2193 @@
+{
+  "actual_runtime": {
+    "device": "cpu",
+    "dtype": "float32",
+    "torch_version": "2.7.1+cu118"
+  },
+  "analyzer_sha256": "89f0bf63464b40a99bdb0fa300e5c62792a4699a67ceaaf7a3ffd29da0762ae4",
+  "completed_training_epochs": 2,
+  "component_sha256": "94d597caf7e2cd4cdd6de9da5642ed77a959305a06488224116e97bc114e01a0",
+  "development_token_types_without_positive_train_corpus_occurrence": 146,
+  "diagnostic_sha256": "f8a9ecc26e55762c8b5364eab48e171fb8408fee25e1ba245b9b7724c7a0b47e",
+  "exposure_by_split_and_field": {
+    "development": {
+      "eos": {
+        "fewer_than_10_positive_train_corpus_occurrences": 0,
+        "no_positive_train_corpus_occurrence": 0,
+        "no_positive_train_corpus_occurrence_present_in_source": 0,
+        "source_token_present": 0,
+        "tokens": 9
+      },
+      "key": {
+        "fewer_than_10_positive_train_corpus_occurrences": 0,
+        "no_positive_train_corpus_occurrence": 0,
+        "no_positive_train_corpus_occurrence_present_in_source": 0,
+        "source_token_present": 1380,
+        "tokens": 3084
+      },
+      "reference_identity": {
+        "fewer_than_10_positive_train_corpus_occurrences": 342,
+        "no_positive_train_corpus_occurrence": 306,
+        "no_positive_train_corpus_occurrence_present_in_source": 270,
+        "source_token_present": 935,
+        "tokens": 1353
+      },
+      "structure": {
+        "fewer_than_10_positive_train_corpus_occurrences": 0,
+        "no_positive_train_corpus_occurrence": 0,
+        "no_positive_train_corpus_occurrence_present_in_source": 0,
+        "source_token_present": 14,
+        "tokens": 69
+      },
+      "value": {
+        "fewer_than_10_positive_train_corpus_occurrences": 76,
+        "no_positive_train_corpus_occurrence": 67,
+        "no_positive_train_corpus_occurrence_present_in_source": 65,
+        "source_token_present": 1633,
+        "tokens": 2182
+      },
+      "value_text": {
+        "fewer_than_10_positive_train_corpus_occurrences": 206,
+        "no_positive_train_corpus_occurrence": 169,
+        "no_positive_train_corpus_occurrence_present_in_source": 120,
+        "source_token_present": 343,
+        "tokens": 491
+      }
+    },
+    "train": {
+      "eos": {
+        "fewer_than_10_positive_train_corpus_occurrences": 0,
+        "no_positive_train_corpus_occurrence": 0,
+        "no_positive_train_corpus_occurrence_present_in_source": 0,
+        "source_token_present": 0,
+        "tokens": 432
+      },
+      "key": {
+        "fewer_than_10_positive_train_corpus_occurrences": 0,
+        "no_positive_train_corpus_occurrence": 0,
+        "no_positive_train_corpus_occurrence_present_in_source": 0,
+        "source_token_present": 30147,
+        "tokens": 66223
+      },
+      "reference_identity": {
+        "fewer_than_10_positive_train_corpus_occurrences": 215,
+        "no_positive_train_corpus_occurrence": 0,
+        "no_positive_train_corpus_occurrence_present_in_source": 0,
+        "source_token_present": 37273,
+        "tokens": 47774
+      },
+      "structure": {
+        "fewer_than_10_positive_train_corpus_occurrences": 0,
+        "no_positive_train_corpus_occurrence": 0,
+        "no_positive_train_corpus_occurrence_present_in_source": 0,
+        "source_token_present": 358,
+        "tokens": 1628
+      },
+      "value": {
+        "fewer_than_10_positive_train_corpus_occurrences": 49,
+        "no_positive_train_corpus_occurrence": 0,
+        "no_positive_train_corpus_occurrence_present_in_source": 0,
+        "source_token_present": 36467,
+        "tokens": 49183
+      },
+      "value_text": {
+        "fewer_than_10_positive_train_corpus_occurrences": 217,
+        "no_positive_train_corpus_occurrence": 0,
+        "no_positive_train_corpus_occurrence_present_in_source": 0,
+        "source_token_present": 7720,
+        "tokens": 10117
+      }
+    }
+  },
+  "final_payloads_opened": false,
+  "frequency_basis": "positive target occurrences in one complete admitted training corpus pass; every case was presented once per completed epoch",
+  "full_teacher_prefix_measurements": [
+    {
+      "case_id": "v16-seed-06",
+      "first_position": {
+        "entropy": 2.641775369644165,
+        "previous_input_probability": 4.304468347982038e-06,
+        "target_probability": 0.8220395445823669
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 4.999575138092041,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.49572649572649574,
+          "mean_loss": 3.0681086513731213,
+          "tokens": 117
+        },
+        "reference_identity": {
+          "accuracy": 0.35714285714285715,
+          "mean_loss": 4.348885919100472,
+          "tokens": 56
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 5.9280617237091064,
+          "tokens": 2
+        },
+        "value": {
+          "accuracy": 0.52,
+          "mean_loss": 3.223695163652301,
+          "tokens": 100
+        },
+        "value_text": {
+          "accuracy": 0.043478260869565216,
+          "mean_loss": 8.379780609970508,
+          "tokens": 23
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 4.999575138092041,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.49572649572649574,
+            "mean_loss": 3.0681086513731213,
+            "tokens": 117
+          }
+        },
+        "reference_identity": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 11.336466153462728,
+            "tokens": 6
+          },
+          "10+": {
+            "accuracy": 0.4,
+            "mean_loss": 3.510376290977001,
+            "tokens": 50
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 5.9280617237091064,
+            "tokens": 2
+          }
+        },
+        "value": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 11.35228188832601,
+            "tokens": 3
+          },
+          "10+": {
+            "accuracy": 0.5360824742268041,
+            "mean_loss": 2.9722955742294026,
+            "tokens": 97
+          }
+        },
+        "value_text": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 10.698363304138184,
+            "tokens": 10
+          },
+          "10+": {
+            "accuracy": 0.07692307692307693,
+            "mean_loss": 6.596255460610757,
+            "tokens": 13
+          }
+        }
+      },
+      "intervention": "matched",
+      "mean_loss": 3.7942023165897782,
+      "next_token_accuracy": 0.43812709030100333,
+      "previous_input_copy_rate": 0.12040133779264214,
+      "split": "train",
+      "teacher_prefix_eos_probability": 0.006740810349583626,
+      "tokens": 299
+    },
+    {
+      "case_id": "v16-seed-06",
+      "first_position": {
+        "entropy": 2.641775369644165,
+        "previous_input_probability": 4.304468347982038e-06,
+        "target_probability": 0.8220395445823669
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 10.133645057678223,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.008547008547008548,
+          "mean_loss": 9.8901638416653,
+          "tokens": 117
+        },
+        "reference_identity": {
+          "accuracy": 0.0,
+          "mean_loss": 10.431064128875732,
+          "tokens": 56
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 10.544153213500977,
+          "tokens": 2
+        },
+        "value": {
+          "accuracy": 0.0,
+          "mean_loss": 10.222673473358155,
+          "tokens": 100
+        },
+        "value_text": {
+          "accuracy": 0.0,
+          "mean_loss": 11.714440055515455,
+          "tokens": 23
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.133645057678223,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.008547008547008548,
+            "mean_loss": 9.8901638416653,
+            "tokens": 117
+          }
+        },
+        "reference_identity": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 12.960959275563559,
+            "tokens": 6
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.127476711273193,
+            "tokens": 50
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.544153213500977,
+            "tokens": 2
+          }
+        },
+        "value": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 12.953831354777018,
+            "tokens": 3
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.138204672901901,
+            "tokens": 97
+          }
+        },
+        "value_text": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 12.585132598876953,
+            "tokens": 10
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 11.044676560621996,
+            "tokens": 13
+          }
+        }
+      },
+      "intervention": "all-BOS-teacher-input",
+      "mean_loss": 10.248194584579371,
+      "next_token_accuracy": 0.0033444816053511705,
+      "previous_input_copy_rate": 0.0,
+      "split": "train",
+      "teacher_prefix_eos_probability": 3.9720423956168815e-05,
+      "tokens": 299
+    },
+    {
+      "case_id": "v16-seed-06",
+      "first_position": {
+        "entropy": 9.098735809326172,
+        "previous_input_probability": 8.20653440314345e-06,
+        "target_probability": 0.30545574426651
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 7.259854316711426,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.2222222222222222,
+          "mean_loss": 5.982248692431002,
+          "tokens": 117
+        },
+        "reference_identity": {
+          "accuracy": 0.03571428571428571,
+          "mean_loss": 6.735678902694157,
+          "tokens": 56
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 7.243622064590454,
+          "tokens": 2
+        },
+        "value": {
+          "accuracy": 0.02,
+          "mean_loss": 6.3544545745849605,
+          "tokens": 100
+        },
+        "value_text": {
+          "accuracy": 0.0,
+          "mean_loss": 8.988592583200205,
+          "tokens": 23
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.259854316711426,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.2222222222222222,
+            "mean_loss": 5.982248692431002,
+            "tokens": 117
+          }
+        },
+        "reference_identity": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 10.416236718495687,
+            "tokens": 6
+          },
+          "10+": {
+            "accuracy": 0.04,
+            "mean_loss": 6.294011964797973,
+            "tokens": 50
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.243622064590454,
+            "tokens": 2
+          }
+        },
+        "value": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 10.342321395874023,
+            "tokens": 3
+          },
+          "10+": {
+            "accuracy": 0.020618556701030927,
+            "mean_loss": 6.231118487328598,
+            "tokens": 97
+          }
+        },
+        "value_text": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 10.766275119781493,
+            "tokens": 10
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.621144478137676,
+            "tokens": 13
+          }
+        }
+      },
+      "intervention": "zero-source",
+      "mean_loss": 6.491810370847134,
+      "next_token_accuracy": 0.10033444816053512,
+      "previous_input_copy_rate": 0.09698996655518395,
+      "split": "train",
+      "teacher_prefix_eos_probability": 0.0007032104767858982,
+      "tokens": 299
+    },
+    {
+      "case_id": "v16-seed-11",
+      "first_position": {
+        "entropy": 2.8031110763549805,
+        "previous_input_probability": 4.307231847633375e-06,
+        "target_probability": 0.8103646636009216
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 4.9642181396484375,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.4590909090909091,
+          "mean_loss": 3.2664804317057134,
+          "tokens": 220
+        },
+        "reference_identity": {
+          "accuracy": 0.2926829268292683,
+          "mean_loss": 4.335723545515864,
+          "tokens": 82
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 5.727417755126953,
+          "tokens": 5
+        },
+        "value": {
+          "accuracy": 0.47126436781609193,
+          "mean_loss": 3.553405565616471,
+          "tokens": 174
+        },
+        "value_text": {
+          "accuracy": 0.09523809523809523,
+          "mean_loss": 8.656491669870558,
+          "tokens": 21
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 4.9642181396484375,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.4590909090909091,
+            "mean_loss": 3.2664804317057134,
+            "tokens": 220
+          }
+        },
+        "reference_identity": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 10.94700558980306,
+            "tokens": 6
+          },
+          "10+": {
+            "accuracy": 0.3157894736842105,
+            "mean_loss": 3.8137802262300333,
+            "tokens": 76
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 5.727417755126953,
+            "tokens": 5
+          }
+        },
+        "value": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 10.99710377779874,
+            "tokens": 11
+          },
+          "10+": {
+            "accuracy": 0.5030674846625767,
+            "mean_loss": 3.051070103444662,
+            "tokens": 163
+          }
+        },
+        "value_text": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 11.374029072848233,
+            "tokens": 11
+          },
+          "10+": {
+            "accuracy": 0.2,
+            "mean_loss": 5.667200526595115,
+            "tokens": 10
+          }
+        }
+      },
+      "intervention": "matched",
+      "mean_loss": 3.792912974368566,
+      "next_token_accuracy": 0.415506958250497,
+      "previous_input_copy_rate": 0.1272365805168986,
+      "split": "train",
+      "teacher_prefix_eos_probability": 0.0069834087044000626,
+      "tokens": 503
+    },
+    {
+      "case_id": "v16-seed-11",
+      "first_position": {
+        "entropy": 2.8031110763549805,
+        "previous_input_probability": 4.307231847633375e-06,
+        "target_probability": 0.8103646636009216
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 10.248449325561523,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.004545454545454545,
+          "mean_loss": 10.121518522230062,
+          "tokens": 220
+        },
+        "reference_identity": {
+          "accuracy": 0.0,
+          "mean_loss": 10.488843621277228,
+          "tokens": 82
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 10.89714012145996,
+          "tokens": 5
+        },
+        "value": {
+          "accuracy": 0.0,
+          "mean_loss": 10.450492480705524,
+          "tokens": 174
+        },
+        "value_text": {
+          "accuracy": 0.0,
+          "mean_loss": 11.815206391470772,
+          "tokens": 21
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.248449325561523,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.004545454545454545,
+            "mean_loss": 10.121518522230062,
+            "tokens": 220
+          }
+        },
+        "reference_identity": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 12.513583660125732,
+            "tokens": 6
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.328995723473398,
+            "tokens": 76
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.89714012145996,
+            "tokens": 5
+          }
+        },
+        "value": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 12.583959752863104,
+            "tokens": 11
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.306516161725565,
+            "tokens": 163
+          }
+        },
+        "value_text": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 12.737227960066361,
+            "tokens": 11
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.800982666015624,
+            "tokens": 10
+          }
+        }
+      },
+      "intervention": "all-BOS-teacher-input",
+      "mean_loss": 10.373873613582218,
+      "next_token_accuracy": 0.0019880715705765406,
+      "previous_input_copy_rate": 0.0,
+      "split": "train",
+      "teacher_prefix_eos_probability": 3.5412373108556494e-05,
+      "tokens": 503
+    },
+    {
+      "case_id": "v16-seed-11",
+      "first_position": {
+        "entropy": 9.09873104095459,
+        "previous_input_probability": 8.206541679101065e-06,
+        "target_probability": 0.30545592308044434
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 7.171133995056152,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.20909090909090908,
+          "mean_loss": 5.914660575173118,
+          "tokens": 220
+        },
+        "reference_identity": {
+          "accuracy": 0.06097560975609756,
+          "mean_loss": 6.606332627738395,
+          "tokens": 82
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 7.255490398406982,
+          "tokens": 5
+        },
+        "value": {
+          "accuracy": 0.011494252873563218,
+          "mean_loss": 6.442766481432422,
+          "tokens": 174
+        },
+        "value_text": {
+          "accuracy": 0.0,
+          "mean_loss": 9.19643227259318,
+          "tokens": 21
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.171133995056152,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.20909090909090908,
+            "mean_loss": 5.914660575173118,
+            "tokens": 220
+          }
+        },
+        "reference_identity": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 10.885059674580893,
+            "tokens": 6
+          },
+          "10+": {
+            "accuracy": 0.06578947368421052,
+            "mean_loss": 6.2685383871981974,
+            "tokens": 76
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.255490398406982,
+            "tokens": 5
+          }
+        },
+        "value": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 10.861106265674938,
+            "tokens": 11
+          },
+          "10+": {
+            "accuracy": 0.012269938650306749,
+            "mean_loss": 6.144596311943663,
+            "tokens": 163
+          }
+        },
+        "value_text": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 10.89227260242809,
+            "tokens": 11
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.3310079097747805,
+            "tokens": 10
+          }
+        }
+      },
+      "intervention": "zero-source",
+      "mean_loss": 6.362941617283148,
+      "next_token_accuracy": 0.10536779324055666,
+      "previous_input_copy_rate": 0.09940357852882704,
+      "split": "train",
+      "teacher_prefix_eos_probability": 0.0007684507872909307,
+      "tokens": 503
+    },
+    {
+      "case_id": "v16-seed-21",
+      "first_position": {
+        "entropy": 2.7480053901672363,
+        "previous_input_probability": 3.99849659515894e-06,
+        "target_probability": 0.8144359588623047
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 5.174563407897949,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.4463276836158192,
+          "mean_loss": 3.426526143775092,
+          "tokens": 531
+        },
+        "reference_identity": {
+          "accuracy": 0.2727272727272727,
+          "mean_loss": 4.192933161722548,
+          "tokens": 319
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 7.002518858228411,
+          "tokens": 7
+        },
+        "value": {
+          "accuracy": 0.45897435897435895,
+          "mean_loss": 3.5021901385381056,
+          "tokens": 390
+        },
+        "value_text": {
+          "accuracy": 0.0821917808219178,
+          "mean_loss": 9.758120523740168,
+          "tokens": 73
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 5.174563407897949,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.4463276836158192,
+            "mean_loss": 3.426526143775092,
+            "tokens": 531
+          }
+        },
+        "reference_identity": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 10.434832436697823,
+            "tokens": 14
+          },
+          "10+": {
+            "accuracy": 0.28524590163934427,
+            "mean_loss": 3.9064197523794215,
+            "tokens": 305
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.002518858228411,
+            "tokens": 7
+          }
+        },
+        "value": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 11.382995865561746,
+            "tokens": 11
+          },
+          "10+": {
+            "accuracy": 0.47229551451187335,
+            "mean_loss": 3.2734596293105063,
+            "tokens": 379
+          }
+        },
+        "value_text": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 12.19165494225242,
+            "tokens": 44
+          },
+          "10+": {
+            "accuracy": 0.20689655172413793,
+            "mean_loss": 6.065861405997441,
+            "tokens": 29
+          }
+        }
+      },
+      "intervention": "matched",
+      "mean_loss": 4.004103110228961,
+      "next_token_accuracy": 0.3853141559424678,
+      "previous_input_copy_rate": 0.15215745647236942,
+      "split": "train",
+      "teacher_prefix_eos_probability": 0.005658687092363834,
+      "tokens": 1321
+    },
+    {
+      "case_id": "v16-seed-21",
+      "first_position": {
+        "entropy": 2.7480053901672363,
+        "previous_input_probability": 3.99849659515894e-06,
+        "target_probability": 0.8144359588623047
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 10.361425399780273,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.0018832391713747645,
+          "mean_loss": 10.179100334195319,
+          "tokens": 531
+        },
+        "reference_identity": {
+          "accuracy": 0.0,
+          "mean_loss": 10.440374739117757,
+          "tokens": 319
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 11.113206727164131,
+          "tokens": 7
+        },
+        "value": {
+          "accuracy": 0.0,
+          "mean_loss": 10.478616742598705,
+          "tokens": 390
+        },
+        "value_text": {
+          "accuracy": 0.0,
+          "mean_loss": 12.26492117529046,
+          "tokens": 73
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.361425399780273,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.0018832391713747645,
+            "mean_loss": 10.179100334195319,
+            "tokens": 531
+          }
+        },
+        "reference_identity": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 12.952262878417969,
+            "tokens": 14
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.325074955674468,
+            "tokens": 305
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 11.113206727164131,
+            "tokens": 7
+          }
+        },
+        "value": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 13.164481423117898,
+            "tokens": 11
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.400662886435878,
+            "tokens": 379
+          }
+        },
+        "value_text": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 13.146663232283158,
+            "tokens": 44
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.927105640542917,
+            "tokens": 29
+          }
+        }
+      },
+      "intervention": "all-BOS-teacher-input",
+      "mean_loss": 10.450973101541186,
+      "next_token_accuracy": 0.000757002271006813,
+      "previous_input_copy_rate": 0.0,
+      "split": "train",
+      "teacher_prefix_eos_probability": 3.162934081046842e-05,
+      "tokens": 1321
+    },
+    {
+      "case_id": "v16-seed-21",
+      "first_position": {
+        "entropy": 9.09873104095459,
+        "previous_input_probability": 8.206526217691135e-06,
+        "target_probability": 0.30545592308044434
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 7.190623760223389,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.2128060263653484,
+          "mean_loss": 5.856136613870969,
+          "tokens": 531
+        },
+        "reference_identity": {
+          "accuracy": 0.009404388714733545,
+          "mean_loss": 6.310627730288849,
+          "tokens": 319
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 7.5617972782679965,
+          "tokens": 7
+        },
+        "value": {
+          "accuracy": 0.015384615384615385,
+          "mean_loss": 6.298611926421141,
+          "tokens": 390
+        },
+        "value_text": {
+          "accuracy": 0.0,
+          "mean_loss": 9.902725422219055,
+          "tokens": 73
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.190623760223389,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.2128060263653484,
+            "mean_loss": 5.856136613870969,
+            "tokens": 531
+          }
+        },
+        "reference_identity": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 10.688232898712158,
+            "tokens": 14
+          },
+          "10+": {
+            "accuracy": 0.009836065573770493,
+            "mean_loss": 6.109688476656304,
+            "tokens": 305
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.5617972782679965,
+            "tokens": 7
+          }
+        },
+        "value": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 11.413595199584961,
+            "tokens": 11
+          },
+          "10+": {
+            "accuracy": 0.0158311345646438,
+            "mean_loss": 6.15015594751665,
+            "tokens": 379
+          }
+        },
+        "value_text": {
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 11.631214900450273,
+            "tokens": 44
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.280189662144102,
+            "tokens": 29
+          }
+        }
+      },
+      "intervention": "zero-source",
+      "mean_loss": 6.330188947586649,
+      "next_token_accuracy": 0.09235427706283118,
+      "previous_input_copy_rate": 0.09084027252081757,
+      "split": "train",
+      "teacher_prefix_eos_probability": 0.0007536188932135701,
+      "tokens": 1321
+    },
+    {
+      "case_id": "det-dev-studio-plan",
+      "first_position": {
+        "entropy": 2.7481253147125244,
+        "previous_input_probability": 3.6395754250406753e-06,
+        "target_probability": 0.8148397207260132
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 5.546566963195801,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.4745762711864407,
+          "mean_loss": 3.011107106077469,
+          "tokens": 236
+        },
+        "reference_identity": {
+          "accuracy": 0.22988505747126436,
+          "mean_loss": 6.426822476303098,
+          "tokens": 87
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 5.804876232147217,
+          "tokens": 5
+        },
+        "value": {
+          "accuracy": 0.46540880503144655,
+          "mean_loss": 3.2060390160120322,
+          "tokens": 159
+        },
+        "value_text": {
+          "accuracy": 0.06818181818181818,
+          "mean_loss": 8.980318020690572,
+          "tokens": 44
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 5.546566963195801,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.4745762711864407,
+            "mean_loss": 3.011107106077469,
+            "tokens": 236
+          }
+        },
+        "reference_identity": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 13.372348229090372,
+            "tokens": 24
+          },
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 11.818600177764893,
+            "tokens": 2
+          },
+          "10+": {
+            "accuracy": 0.32786885245901637,
+            "mean_loss": 3.517377009584767,
+            "tokens": 61
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 5.804876232147217,
+            "tokens": 5
+          }
+        },
+        "value": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 12.618715524673462,
+            "tokens": 4
+          },
+          "10+": {
+            "accuracy": 0.4774193548387097,
+            "mean_loss": 2.96313123514335,
+            "tokens": 155
+          }
+        },
+        "value_text": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 13.36798612276713,
+            "tokens": 12
+          },
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 11.2417893409729,
+            "tokens": 4
+          },
+          "10+": {
+            "accuracy": 0.10714285714285714,
+            "mean_loss": 6.776821502617428,
+            "tokens": 28
+          }
+        }
+      },
+      "intervention": "matched",
+      "mean_loss": 4.152669129798651,
+      "next_token_accuracy": 0.39285714285714285,
+      "previous_input_copy_rate": 0.10714285714285714,
+      "split": "development",
+      "teacher_prefix_eos_probability": 0.0039008259773254395,
+      "tokens": 532
+    },
+    {
+      "case_id": "det-dev-studio-plan",
+      "first_position": {
+        "entropy": 2.7481253147125244,
+        "previous_input_probability": 3.6395754250406753e-06,
+        "target_probability": 0.8148397207260132
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 10.410125732421875,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.00423728813559322,
+          "mean_loss": 10.553133874373922,
+          "tokens": 236
+        },
+        "reference_identity": {
+          "accuracy": 0.0,
+          "mean_loss": 11.425683449054587,
+          "tokens": 87
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 11.195076751708985,
+          "tokens": 5
+        },
+        "value": {
+          "accuracy": 0.0,
+          "mean_loss": 10.628433029606658,
+          "tokens": 159
+        },
+        "value_text": {
+          "accuracy": 0.0,
+          "mean_loss": 12.018662604418667,
+          "tokens": 44
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.410125732421875,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.00423728813559322,
+            "mean_loss": 10.553133874373922,
+            "tokens": 236
+          }
+        },
+        "reference_identity": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 14.06564458211263,
+            "tokens": 24
+          },
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 13.460833549499512,
+            "tokens": 2
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.320283983574539,
+            "tokens": 61
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 11.195076751708985,
+            "tokens": 5
+          }
+        },
+        "value": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 13.776033401489258,
+            "tokens": 4
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.547204632912912,
+            "tokens": 155
+          }
+        },
+        "value_text": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 14.013463338216146,
+            "tokens": 12
+          },
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 13.144221305847168,
+            "tokens": 4
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 11.002953904015678,
+            "tokens": 28
+          }
+        }
+      },
+      "intervention": "all-BOS-teacher-input",
+      "mean_loss": 10.845303703407597,
+      "next_token_accuracy": 0.0018796992481203006,
+      "previous_input_copy_rate": 0.0,
+      "split": "development",
+      "teacher_prefix_eos_probability": 3.0125886041787453e-05,
+      "tokens": 532
+    },
+    {
+      "case_id": "det-dev-studio-plan",
+      "first_position": {
+        "entropy": 9.09872817993164,
+        "previous_input_probability": 8.20653440314345e-06,
+        "target_probability": 0.30545610189437866
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 7.24235725402832,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.2076271186440678,
+          "mean_loss": 5.9319694532176195,
+          "tokens": 236
+        },
+        "reference_identity": {
+          "accuracy": 0.05747126436781609,
+          "mean_loss": 7.519925640917372,
+          "tokens": 87
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 7.359735298156738,
+          "tokens": 5
+        },
+        "value": {
+          "accuracy": 0.031446540880503145,
+          "mean_loss": 6.35739476875689,
+          "tokens": 159
+        },
+        "value_text": {
+          "accuracy": 0.0,
+          "mean_loss": 9.120538001710718,
+          "tokens": 44
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.24235725402832,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.2076271186440678,
+            "mean_loss": 5.9319694532176195,
+            "tokens": 236
+          }
+        },
+        "reference_identity": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 12.473023970921835,
+            "tokens": 24
+          },
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 11.20844316482544,
+            "tokens": 2
+          },
+          "10+": {
+            "accuracy": 0.08196721311475409,
+            "mean_loss": 5.450230641443222,
+            "tokens": 61
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.359735298156738,
+            "tokens": 5
+          }
+        },
+        "value": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 11.952611207962036,
+            "tokens": 4
+          },
+          "10+": {
+            "accuracy": 0.03225806451612903,
+            "mean_loss": 6.213002086454822,
+            "tokens": 155
+          }
+        },
+        "value_text": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 12.901080211003622,
+            "tokens": 12
+          },
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 11.253034830093384,
+            "tokens": 4
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.195663222244808,
+            "tokens": 28
+          }
+        }
+      },
+      "intervention": "zero-source",
+      "mean_loss": 6.598399992051878,
+      "next_token_accuracy": 0.11090225563909774,
+      "previous_input_copy_rate": 0.10902255639097744,
+      "split": "development",
+      "teacher_prefix_eos_probability": 0.0007156228530220687,
+      "tokens": 532
+    },
+    {
+      "case_id": "det-dev-studio-visit",
+      "first_position": {
+        "entropy": 2.8493752479553223,
+        "previous_input_probability": 3.7167399113968713e-06,
+        "target_probability": 0.8072595596313477
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 5.229921817779541,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.452,
+          "mean_loss": 3.2367568713054062,
+          "tokens": 250
+        },
+        "reference_identity": {
+          "accuracy": 0.20952380952380953,
+          "mean_loss": 6.096017167255992,
+          "tokens": 105
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 5.771907091140747,
+          "tokens": 6
+        },
+        "value": {
+          "accuracy": 0.5047169811320754,
+          "mean_loss": 3.160201185295042,
+          "tokens": 212
+        },
+        "value_text": {
+          "accuracy": 0.045454545454545456,
+          "mean_loss": 9.146850791167129,
+          "tokens": 44
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 5.229921817779541,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.452,
+            "mean_loss": 3.2367568713054062,
+            "tokens": 250
+          }
+        },
+        "reference_identity": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 13.133245735168456,
+            "tokens": 25
+          },
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 11.253101825714111,
+            "tokens": 2
+          },
+          "10+": {
+            "accuracy": 0.28205128205128205,
+            "mean_loss": 3.7082622504005065,
+            "tokens": 78
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 5.771907091140747,
+            "tokens": 6
+          }
+        },
+        "value": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 12.684837818145752,
+            "tokens": 4
+          },
+          "10+": {
+            "accuracy": 0.5144230769230769,
+            "mean_loss": 2.9770350962017593,
+            "tokens": 208
+          }
+        },
+        "value_text": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 13.305070703679865,
+            "tokens": 11
+          },
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 11.51718266805013,
+            "tokens": 3
+          },
+          "10+": {
+            "accuracy": 0.06666666666666667,
+            "mean_loss": 7.3851369688908255,
+            "tokens": 30
+          }
+        }
+      },
+      "intervention": "matched",
+      "mean_loss": 4.1449133832471805,
+      "next_token_accuracy": 0.3948220064724919,
+      "previous_input_copy_rate": 0.16990291262135923,
+      "split": "development",
+      "teacher_prefix_eos_probability": 0.005353943910449743,
+      "tokens": 618
+    },
+    {
+      "case_id": "det-dev-studio-visit",
+      "first_position": {
+        "entropy": 2.8493752479553223,
+        "previous_input_probability": 3.7167399113968713e-06,
+        "target_probability": 0.8072595596313477
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 10.302602767944336,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.004,
+          "mean_loss": 10.11103114837408,
+          "tokens": 250
+        },
+        "reference_identity": {
+          "accuracy": 0.0,
+          "mean_loss": 11.0262921333313,
+          "tokens": 105
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 10.992931207021078,
+          "tokens": 6
+        },
+        "value": {
+          "accuracy": 0.0,
+          "mean_loss": 10.171329925645072,
+          "tokens": 212
+        },
+        "value_text": {
+          "accuracy": 0.0,
+          "mean_loss": 12.121459939263083,
+          "tokens": 44
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.302602767944336,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.004,
+            "mean_loss": 10.11103114837408,
+            "tokens": 250
+          }
+        },
+        "reference_identity": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 13.740808219909669,
+            "tokens": 25
+          },
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 13.33189868927002,
+            "tokens": 2
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.0971368092757,
+            "tokens": 78
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.992931207021078,
+            "tokens": 6
+          }
+        },
+        "value": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 13.746179580688477,
+            "tokens": 4
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.102582816894238,
+            "tokens": 208
+          }
+        },
+        "value_text": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 14.285423278808594,
+            "tokens": 11
+          },
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 13.070842107137045,
+            "tokens": 3
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 11.233068497975667,
+            "tokens": 30
+          }
+        }
+      },
+      "intervention": "all-BOS-teacher-input",
+      "mean_loss": 10.439231120821535,
+      "next_token_accuracy": 0.0016181229773462784,
+      "previous_input_copy_rate": 0.0,
+      "split": "development",
+      "teacher_prefix_eos_probability": 3.354566797497682e-05,
+      "tokens": 618
+    },
+    {
+      "case_id": "det-dev-studio-visit",
+      "first_position": {
+        "entropy": 9.098731994628906,
+        "previous_input_probability": 8.206526217691135e-06,
+        "target_probability": 0.30545592308044434
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 7.258208274841309,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.212,
+          "mean_loss": 5.85633452129364,
+          "tokens": 250
+        },
+        "reference_identity": {
+          "accuracy": 0.047619047619047616,
+          "mean_loss": 7.160327286947341,
+          "tokens": 105
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 7.267243941624959,
+          "tokens": 6
+        },
+        "value": {
+          "accuracy": 0.014150943396226415,
+          "mean_loss": 6.346116820596299,
+          "tokens": 212
+        },
+        "value_text": {
+          "accuracy": 0.0,
+          "mean_loss": 9.447176586497914,
+          "tokens": 44
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.258208274841309,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.212,
+            "mean_loss": 5.85633452129364,
+            "tokens": 250
+          }
+        },
+        "reference_identity": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 12.1007088470459,
+            "tokens": 25
+          },
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 11.113767147064209,
+            "tokens": 2
+          },
+          "10+": {
+            "accuracy": 0.0641025641025641,
+            "mean_loss": 5.4755014058871145,
+            "tokens": 78
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.267243941624959,
+            "tokens": 6
+          }
+        },
+        "value": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 11.97736382484436,
+            "tokens": 4
+          },
+          "10+": {
+            "accuracy": 0.014423076923076924,
+            "mean_loss": 6.237823608976144,
+            "tokens": 208
+          }
+        },
+        "value_text": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 13.093141295693137,
+            "tokens": 11
+          },
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 11.226286252339682,
+            "tokens": 3
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.932411893208822,
+            "tokens": 30
+          }
+        }
+      },
+      "intervention": "zero-source",
+      "mean_loss": 6.517527836811967,
+      "next_token_accuracy": 0.09870550161812297,
+      "previous_input_copy_rate": 0.0970873786407767,
+      "split": "development",
+      "teacher_prefix_eos_probability": 0.000704368925653398,
+      "tokens": 618
+    },
+    {
+      "case_id": "det-dev-studio-visit-unsettled",
+      "first_position": {
+        "entropy": 3.0137927532196045,
+        "previous_input_probability": 3.8478956412291154e-06,
+        "target_probability": 0.7951489686965942
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 5.229004383087158,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.525,
+          "mean_loss": 2.8954223796376026,
+          "tokens": 160
+        },
+        "reference_identity": {
+          "accuracy": 0.24347826086956523,
+          "mean_loss": 6.227479574003297,
+          "tokens": 115
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 5.24388370513916,
+          "tokens": 5
+        },
+        "value": {
+          "accuracy": 0.5032258064516129,
+          "mean_loss": 3.178069801808846,
+          "tokens": 155
+        },
+        "value_text": {
+          "accuracy": 0.041666666666666664,
+          "mean_loss": 9.523496646434069,
+          "tokens": 24
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 5.229004383087158,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.525,
+            "mean_loss": 2.8954223796376026,
+            "tokens": 160
+          }
+        },
+        "reference_identity": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 13.254566897516666,
+            "tokens": 23
+          },
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 11.398701667785645,
+            "tokens": 2
+          },
+          "10+": {
+            "accuracy": 0.3111111111111111,
+            "mean_loss": 4.31675232257694,
+            "tokens": 90
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 5.24388370513916,
+            "tokens": 5
+          }
+        },
+        "value": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 12.680323123931885,
+            "tokens": 2
+          },
+          "10+": {
+            "accuracy": 0.5098039215686274,
+            "mean_loss": 3.053857340081747,
+            "tokens": 153
+          }
+        },
+        "value_text": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 13.70950722694397,
+            "tokens": 8
+          },
+          "10+": {
+            "accuracy": 0.0625,
+            "mean_loss": 7.430491356179118,
+            "tokens": 16
+          }
+        }
+      },
+      "intervention": "matched",
+      "mean_loss": 4.20008889881732,
+      "next_token_accuracy": 0.4152173913043478,
+      "previous_input_copy_rate": 0.18478260869565216,
+      "split": "development",
+      "teacher_prefix_eos_probability": 0.005358858034014702,
+      "tokens": 460
+    },
+    {
+      "case_id": "det-dev-studio-visit-unsettled",
+      "first_position": {
+        "entropy": 3.0137927532196045,
+        "previous_input_probability": 3.8478956412291154e-06,
+        "target_probability": 0.7951489686965942
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 10.076810836791992,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.00625,
+          "mean_loss": 9.928542632702738,
+          "tokens": 160
+        },
+        "reference_identity": {
+          "accuracy": 0.0,
+          "mean_loss": 10.849327547653862,
+          "tokens": 115
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 10.826918601989746,
+          "tokens": 5
+        },
+        "value": {
+          "accuracy": 0.0,
+          "mean_loss": 9.935803748715307,
+          "tokens": 155
+        },
+        "value_text": {
+          "accuracy": 0.0,
+          "mean_loss": 12.097154021263123,
+          "tokens": 24
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.076810836791992,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.00625,
+            "mean_loss": 9.928542632702738,
+            "tokens": 160
+          }
+        },
+        "reference_identity": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 13.73792258552883,
+            "tokens": 23
+          },
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 13.281411170959473,
+            "tokens": 2
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.057084735234579,
+            "tokens": 90
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 10.826918601989746,
+            "tokens": 5
+          }
+        },
+        "value": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 13.686765193939209,
+            "tokens": 2
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 9.886771572960747,
+            "tokens": 153
+          }
+        },
+        "value_text": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 14.279971241950989,
+            "tokens": 8
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 11.00574541091919,
+            "tokens": 16
+          }
+        }
+      },
+      "intervention": "all-BOS-teacher-input",
+      "mean_loss": 10.28441776221861,
+      "next_token_accuracy": 0.002173913043478261,
+      "previous_input_copy_rate": 0.0,
+      "split": "development",
+      "teacher_prefix_eos_probability": 4.20432879764121e-05,
+      "tokens": 460
+    },
+    {
+      "case_id": "det-dev-studio-visit-unsettled",
+      "first_position": {
+        "entropy": 9.098731994628906,
+        "previous_input_probability": 8.206541679101065e-06,
+        "target_probability": 0.30545592308044434
+      },
+      "groups": {
+        "eos": {
+          "accuracy": 0.0,
+          "mean_loss": 7.208201885223389,
+          "tokens": 1
+        },
+        "key": {
+          "accuracy": 0.225,
+          "mean_loss": 5.765258151292801,
+          "tokens": 160
+        },
+        "reference_identity": {
+          "accuracy": 0.05217391304347826,
+          "mean_loss": 7.274194771310557,
+          "tokens": 115
+        },
+        "structure": {
+          "accuracy": 0.0,
+          "mean_loss": 7.1332355499267575,
+          "tokens": 5
+        },
+        "value": {
+          "accuracy": 0.0064516129032258064,
+          "mean_loss": 6.335054823660081,
+          "tokens": 155
+        },
+        "value_text": {
+          "accuracy": 0.0,
+          "mean_loss": 9.723248223463694,
+          "tokens": 24
+        }
+      },
+      "groups_by_positive_train_corpus_frequency": {
+        "eos": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.208201885223389,
+            "tokens": 1
+          }
+        },
+        "key": {
+          "10+": {
+            "accuracy": 0.225,
+            "mean_loss": 5.765258151292801,
+            "tokens": 160
+          }
+        },
+        "reference_identity": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 12.255710435950238,
+            "tokens": 23
+          },
+          "1-9": {
+            "accuracy": 0.0,
+            "mean_loss": 11.167540073394775,
+            "tokens": 2
+          },
+          "10+": {
+            "accuracy": 0.06666666666666667,
+            "mean_loss": 5.914621983634101,
+            "tokens": 90
+          }
+        },
+        "structure": {
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.1332355499267575,
+            "tokens": 5
+          }
+        },
+        "value": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 11.956337928771973,
+            "tokens": 2
+          },
+          "10+": {
+            "accuracy": 0.006535947712418301,
+            "mean_loss": 6.261573998756658,
+            "tokens": 153
+          }
+        },
+        "value_text": {
+          "0": {
+            "accuracy": 0.0,
+            "mean_loss": 13.342875719070435,
+            "tokens": 8
+          },
+          "10+": {
+            "accuracy": 0.0,
+            "mean_loss": 7.913434475660324,
+            "tokens": 16
+          }
+        }
+      },
+      "intervention": "zero-source",
+      "mean_loss": 6.55899899472361,
+      "next_token_accuracy": 0.09347826086956522,
+      "previous_input_copy_rate": 0.08695652173913043,
+      "split": "development",
+      "teacher_prefix_eos_probability": 0.0007404874195344746,
+      "tokens": 460
+    }
+  ],
+  "independent_gold": false,
+  "no_optimization_or_weight_export": true,
+  "parent_measure_implementation_sha256": "05c33f94adf2a4aa57ed17c476eb9ff1a9a8fb68ed4e2dc6e4c363c398c6ce22",
+  "positive_development_corpus_token_types": 365,
+  "positive_train_corpus_token_types": 582,
+  "qualified_for_product": false,
+  "record_sha256": "4c841f1afbd630db067290b496198a81fe8c0dab14858ae1a205b533fde149c9",
+  "retained_greedy_exact_teacher_divergence": [
+    {
+      "case_id": "det-dev-studio-plan",
+      "distinct_generated_tokens": 25,
+      "eos_observed": false,
+      "field_kind": "value",
+      "first_divergence_target_positive_train_corpus_count": 495,
+      "first_exact_teacher_divergence_token": 7,
+      "inside_reference_checked_prefix": true,
+      "retained_validation_status": "invalid"
+    },
+    {
+      "case_id": "det-dev-studio-visit",
+      "distinct_generated_tokens": 23,
+      "eos_observed": false,
+      "field_kind": "value",
+      "first_divergence_target_positive_train_corpus_count": 495,
+      "first_exact_teacher_divergence_token": 7,
+      "inside_reference_checked_prefix": true,
+      "retained_validation_status": "invalid"
+    },
+    {
+      "case_id": "det-dev-studio-visit-unsettled",
+      "distinct_generated_tokens": 24,
+      "eos_observed": false,
+      "field_kind": "value",
+      "first_divergence_target_positive_train_corpus_count": 495,
+      "first_exact_teacher_divergence_token": 7,
+      "inside_reference_checked_prefix": true,
+      "retained_validation_status": "invalid"
+    },
+    {
+      "case_id": "det-dev-studio-trial",
+      "distinct_generated_tokens": 24,
+      "eos_observed": false,
+      "field_kind": "value",
+      "first_divergence_target_positive_train_corpus_count": 495,
+      "first_exact_teacher_divergence_token": 7,
+      "inside_reference_checked_prefix": true,
+      "retained_validation_status": "invalid"
+    },
+    {
+      "case_id": "det-dev-studio-withdrawal",
+      "distinct_generated_tokens": 23,
+      "eos_observed": false,
+      "field_kind": "value",
+      "first_divergence_target_positive_train_corpus_count": 495,
+      "first_exact_teacher_divergence_token": 7,
+      "inside_reference_checked_prefix": true,
+      "retained_validation_status": "invalid"
+    },
+    {
+      "case_id": "det-dev-garden-plan",
+      "distinct_generated_tokens": 24,
+      "eos_observed": false,
+      "field_kind": "value",
+      "first_divergence_target_positive_train_corpus_count": 495,
+      "first_exact_teacher_divergence_token": 7,
+      "inside_reference_checked_prefix": true,
+      "retained_validation_status": "invalid"
+    },
+    {
+      "case_id": "det-dev-garden-walk",
+      "distinct_generated_tokens": 24,
+      "eos_observed": false,
+      "field_kind": "value",
+      "first_divergence_target_positive_train_corpus_count": 495,
+      "first_exact_teacher_divergence_token": 7,
+      "inside_reference_checked_prefix": true,
+      "retained_validation_status": "invalid"
+    },
+    {
+      "case_id": "det-dev-garden-trial",
+      "distinct_generated_tokens": 24,
+      "eos_observed": false,
+      "field_kind": "value",
+      "first_divergence_target_positive_train_corpus_count": 495,
+      "first_exact_teacher_divergence_token": 7,
+      "inside_reference_checked_prefix": true,
+      "retained_validation_status": "invalid"
+    },
+    {
+      "case_id": "det-dev-garden-withdrawal",
+      "distinct_generated_tokens": 23,
+      "eos_observed": false,
+      "field_kind": "value",
+      "first_divergence_target_positive_train_corpus_count": 495,
+      "first_exact_teacher_divergence_token": 7,
+      "inside_reference_checked_prefix": true,
+      "retained_validation_status": "invalid"
+    }
+  ],
+  "run_sha256": "ca47489b76129dd0e30f46eb2b983a76ec0f2568c8887d07b8b38a365e6cd80e",
+  "schema": "mfm-v16-decision-fit-language-analysis-v1",
+  "scope": "bounded language/identity transfer diagnosis; gold-prefix and token-membership proxies are not semantic grounding",
+  "seconds": 242.8667862340808,
+  "source_view_sha256": "0c10f71e4af006c159e7995d79d80ac6a8a7ae76fea98315faa719b04ca8fd60"
+}

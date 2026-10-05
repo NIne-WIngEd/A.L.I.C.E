@@ -1,7 +1,8 @@
 # MFM V1 continuation: recovered corpus and frozen-feature training
 
-Status: recovered CPU admission and new training implementation; learned
-capability remains unqualified. Continues `ae7d680286b84a5755caeb1d2e82e0d09c5176ae`.
+Status: corrected source view, stress/restart and teacher fit completed;
+all generated controls invalid. Read-only language diagnosis 576724 completed; construction continuation is being prepared.
+Capability remains unqualified. Continues `ae7d680286b84a5755caeb1d2e82e0d09c5176ae`.
 
 ## Destination and retained decisions
 
@@ -537,3 +538,92 @@ Existing fit/checkpoint54 and failed outputs remain intact. No paid compute,
 FINAL, memory activation or model qualification is involved. Detailed current
 status is in MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json; this paragraph records
 submission, not completed new training. Next read the actual job receipts.
+
+### Completed corrected construction and remaining language failure
+
+Source job **576714 completed**: all 441 cases retained, 439 original states
+reused, two corrected inputs exported, and zero remaining bounded reference
+gaps. Source-view seal: `0c10f71e4af006c159e7995d79d80ac6a8a7ae76fea98315faa719b04ca8fd60`.
+The public receipt is an aggregate projection; the protected original remains
+the complete row-level authority. All 50 source-runtime tests passed.
+
+Decision job **576715 completed, exit 0**, including 58 actual-runtime tests,
+the full 16-case stress/restart proof (zero next-weight and Adam-moment
+differences), all 432 train cases for two epochs / 54 updates, and all nine
+development completions in both matched controls. The fit took 4,387.6 seconds;
+final training-group loss was 3.1232 and development gold-prefix loss 4.2142
+versus seeded 12.5750. The original sealed probe, fit/run and diagnostic receipts
+are retained in `docs/receipts`; original failed weights and raw outputs remain
+in protected custody.
+
+**All nine trained and all nine seeded outputs are invalid without EOS at
+2,048 tokens.** The corrected model starts JSON then breaks ordinary actions
+and references before repetition. Initial malformed prefixes are inside each
+actual 32-step reference/cache comparison (argmax equal, maximum differences
+about 2.9e-6–3.8e-6). The cache therefore does not explain that initial failure.
+Completed construction and improved teacher loss do not establish useful MFM.
+
+Read-only job **576724** (`4b37c6b09e88a69dd50013133c98a37a26c270bf`) checks
+the whole admitted corpus, measures positive target corpus frequency and
+original input-token membership, and stratifies the same full gold-prefix
+forward passes by field and frequency (0 / 1–9 / 10+). It retains the original
+validity separately from exact teacher divergence. Unseen positive labels
+are not tokenizer OOVs and still receive negative softmax gradients. Source
+membership is only a proxy. Matched, all-BOS-prefix and zero-source observations
+are bounded sensitivity tests, not clean semantic counterfactuals. Twelve
+targeted tests pass locally and in the actual isolated runtime. No optimizer,
+new weights, new architecture or repaired completion is produced by this job.
+
+The next construction choice depends on whether ordinary trained fields are
+also poorly learned, whether errors concentrate in unseen/rare identities,
+and whether correct teacher prefixes conceal generation collapse. Do not
+blindly add epochs, pointer generation, EOS weighting, grammar repair or the
+byte interface. The byte proposal remains **ON HOLD**.
+
+Primary research checked before this decision: [pointer generation and its
+official implementation](https://github.com/abisee/pointer-generator/blob/master/model.py)
+mix learned vocabulary generation with source-position attention mass; its
+[paper](https://aclanthology.org/P17-1099/) treats repetition coverage separately.
+This is an option for source identity, not proof of our cause. The
+[pretrained seq2seq study](https://aclanthology.org/2020.tacl-1.18.pdf) compares
+initialization routes; even its pretrained-encoder/random-decoder baseline
+shares pretrained embeddings. Its task/data assumptions cannot be applied
+directly to our independently random lexical head. [MemReader](https://arxiv.org/html/2604.07877v2)
+explicitly builds its extraction/action models on Qwen3-0.6B/4B (§4.1–4.2),
+so its memory teaching assumes existing language competence. It keeps extraction
+and contextual memory actions in scope; neither its reported
+results nor [copy/recall steering of instruction-tuned models](https://arxiv.org/abs/2601.12075)
+provides scratch language competence or MFM authority. Frontier-watch exact
+head `3bea3318904ec2881d3f981d46a5b8d5bca91ba7` reinforces governed memory
+programming and verifier-owned outcome claims, without prescribing this neural
+repair. Full native modality, longitudinal decisions, independent semantic
+evidence and real consumer/outcome effects remain required.
+
+### Language diagnosis completed: 576724
+
+Completed in 4m52s, exit0, original seal
+`4c841f1afbd630db067290b496198a81fe8c0dab14858ae1a205b533fde149c9`.
+All441 corrected targets have 175,357 training tokens over582 positive token
+types; development has365 types,146 never-positive in training. Of1353 dev
+reference tokens,306 are unseen positive labels and270 ofthose occur in the
+original encoded source. In all measured unseen/rare frequency strata,
+top1 accuracy is zero. This is an open identity/lexical-alignment gap, not OOV.
+
+It is also insufficient to explain the broad failure: all9 retained completions
+first differ from the teacher at token7, whose expected common action token
+has495 corpus occurrences. With correct teacher prefixes, common keys are only
+44.6–52.5% accurate on3 training and3 development cases; EOS is never top1,
+with probability about0.004–0.007. Matched loss3.79–4.20 increases to6.33–6.60
+without source states and10.25–10.85 with all-BOS teacher input. Source states
+affect the model; those artificial controls do not prove correct decisions.
+The earliest exact divergence alone still does not locate first malformed text.
+
+The supported design diagnosis is broad incomplete sequence learning plus an
+additional sparse/no-positive lexical identity channel. A pointer, grammar or
+EOS-only patch cannot establish the missing common-field generation. The prior
+two-epoch fit was a matched numerical/contract construction comparison, not a
+defensible full training budget. Any continuation must bind its changed recipe,
+parent checkpoint/optimizer/RNG and full corpus; record train-only learning
+progress, finite budget and stop/failure interpretation; retain target-free
+generation and the unresolved open-identity/full-consumer requirements. Do not
+declare this analysis a semantic MFM pass or repeatedly extend a flat run.

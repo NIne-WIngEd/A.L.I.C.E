@@ -1,0 +1,44 @@
+{
+  "agreement_metric": "exact_teacher_decision_fields_not_semantic_entailment",
+  "component_sha256": "94d597caf7e2cd4cdd6de9da5642ed77a959305a06488224116e97bc114e01a0",
+  "decode": {
+    "device": "cpu",
+    "matched_between_controls": true,
+    "max_new_tokens": 2048,
+    "method": "FP32_incremental_first32_actual_greedy_reference_checked",
+    "specialist_dtype": "float32",
+    "target_visible": false,
+    "torch_version": "2.7.1+cu118"
+  },
+  "downstream_usefulness_established": false,
+  "final_payloads_opened": false,
+  "incremental_decoder_sha256": "c2ccc6e4ea3dff6a9f3e437b111b7fa655926ea5fb3ad7dfebae6383eafb0c0a",
+  "independent_gold": false,
+  "memory_gate_executed": false,
+  "outputs_sha256": {
+    "seeded-untrained": "6f85e11699146a0818e73046071567a9f96bcbc5244ecab966cb12cd4043a285",
+    "trained": "6cbe75a95898512c65db74d1a853c127893ff416572a18b68a86f17b26b9cf4d"
+  },
+  "qualified_for_product": false,
+  "record_sha256": "f8a9ecc26e55762c8b5364eab48e171fb8408fee25e1ba245b9b7724c7a0b47e",
+  "run_sha256": "ca47489b76129dd0e30f46eb2b983a76ec0f2568c8887d07b8b38a365e6cd80e",
+  "runner_sha256": "83d5ec6f1e45d1383a11d1818babf4bef5ccf16bf6261f15e2de4f3810eff5d9",
+  "schema": "mfm-v16-decision-generated-diagnostic-v1",
+  "source_view_sha256": "0c10f71e4af006c159e7995d79d80ac6a8a7ae76fea98315faa719b04ca8fd60",
+  "summary": {
+    "seeded-untrained": {
+      "cases": 9,
+      "exact_teacher_agreements": 0,
+      "grounded_outputs": 0,
+      "invalid_outputs": 9,
+      "proposals_in_grounded_outputs": 0
+    },
+    "trained": {
+      "cases": 9,
+      "exact_teacher_agreements": 0,
+      "grounded_outputs": 0,
+      "invalid_outputs": 9,
+      "proposals_in_grounded_outputs": 0
+    }
+  }
+}

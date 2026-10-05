@@ -1,0 +1,65 @@
+{
+  "full_fit": false,
+  "probe_only": true,
+  "qualified_for_product": false,
+  "record_sha256": "05ada08cd3eaf1b17a48805e097b4eb7d34f8037d0ccc0dc2d470dadaf1840cc",
+  "result": {
+    "backward_and_restart_passed": true,
+    "checkpoint_reload_executed": true,
+    "first_and_later_steps": [
+      {
+        "gradient_norm": 13.405906677246094,
+        "mean_loss": 12.552278876304626,
+        "train_examples": 16
+      },
+      {
+        "gradient_norm": 7.725474834442139,
+        "mean_loss": 11.261521637439728,
+        "train_examples": 16
+      }
+    ],
+    "model_max_abs_difference": 0.0,
+    "optimizer_max_abs_difference": 0.0,
+    "optimizer_steps": 3,
+    "probe_weights_sha256": "fcd81355b1140636ccd8dc0a5f255de650b21c8f9132755c0cd3a6756caa85ea",
+    "resumed_next_step": {
+      "gradient_norm": 6.155498504638672,
+      "mean_loss": 10.603920817375183,
+      "train_examples": 16
+    },
+    "stress_case_ids": [
+      "v16-seed-21",
+      "v16-seed-06",
+      "v16-seed-11",
+      "v16-seed-01",
+      "v16-seed-02",
+      "v16-seed-03",
+      "v16-seed-04",
+      "v16-seed-05",
+      "v16-seed-07",
+      "v16-seed-08",
+      "v16-seed-09",
+      "v16-seed-10",
+      "v16-seed-12",
+      "v16-seed-19",
+      "v16-seed-20",
+      "role-source-person-revocation"
+    ]
+  },
+  "run_sha256": "cbb03e11e3aeb15d743bc6a1b48b5b68da09fed073801d10e7af214a1e973449",
+  "schema": "mfm-v16-decision-specialist-artifact-v1",
+  "source_view_sha256": "0c10f71e4af006c159e7995d79d80ac6a8a7ae76fea98315faa719b04ca8fd60",
+  "specialist_config": {
+    "base_hidden_size": 3840,
+    "end_token_id": 1,
+    "heads": 12,
+    "layers": 6,
+    "logit_chunk_tokens": 64,
+    "max_target_tokens": 8192,
+    "pad_token_id": 0,
+    "start_token_id": 2,
+    "vocabulary_size": 262144,
+    "width": 768
+  },
+  "teacher_fit": true
+}

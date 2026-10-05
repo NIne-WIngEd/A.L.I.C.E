@@ -1,0 +1,32 @@
+{
+  "full_fit": false,
+  "probe_only": false,
+  "qualified_for_product": false,
+  "record_sha256": "94d597caf7e2cd4cdd6de9da5642ed77a959305a06488224116e97bc114e01a0",
+  "result": {
+    "all_train_epochs_completed": true,
+    "development_has_no_gradients": true,
+    "diagnostic_development_teacher_forced_loss": 4.214184115844497,
+    "generated_ability_established": false,
+    "independent_qualification": false,
+    "optimizer_steps": 54,
+    "seeded_development_teacher_forced_loss": 12.574968655240754,
+    "trained_weights_sha256": "23fbfa54602453d4377b4cb437394022c54a0357a7ef95c38636839b98bd63a7"
+  },
+  "run_sha256": "ca47489b76129dd0e30f46eb2b983a76ec0f2568c8887d07b8b38a365e6cd80e",
+  "schema": "mfm-v16-decision-specialist-artifact-v1",
+  "source_view_sha256": "0c10f71e4af006c159e7995d79d80ac6a8a7ae76fea98315faa719b04ca8fd60",
+  "specialist_config": {
+    "base_hidden_size": 3840,
+    "end_token_id": 1,
+    "heads": 12,
+    "layers": 6,
+    "logit_chunk_tokens": 64,
+    "max_target_tokens": 8192,
+    "pad_token_id": 0,
+    "start_token_id": 2,
+    "vocabulary_size": 262144,
+    "width": 768
+  },
+  "teacher_fit": true
+}
