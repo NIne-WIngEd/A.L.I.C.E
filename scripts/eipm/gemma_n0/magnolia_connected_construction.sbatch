@@ -6,6 +6,8 @@
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=120G
 #SBATCH --time=24:00:00
+#SBATCH --no-requeue
+#SBATCH --open-mode=append
 
 set -euo pipefail
 umask 077
@@ -14,6 +16,10 @@ umask 077
 : "${PERSONALITY_EXPECTED_REVISION:?externally tested exact commit}"
 : "${PRIVATE_PACKAGE_PATH:?exact curated source archive}"
 [[ $# == 0 && "$SLURM_JOB_ID" =~ ^[0-9]+$ && "$PERSONALITY_EXPECTED_REVISION" =~ ^[0-9a-f]{40}$ ]] || exit 2
+if [[ "${SLURM_RESTART_COUNT:-0}" != 0 ]]; then
+  echo "state=INTERRUPTED_RESTART_REFUSED job=$SLURM_JOB_ID explicit_pinned_continuation_required=true" >&2
+  exit 2
+fi
 [[ "$(id -un)" == mxrayan && "$(id -u)" == 1905 && "$(id -g)" == 100 ]] || exit 2
 COMPUTE_ROOT="$(realpath -e "$HOME/rayan-compute")"
 [[ "$COMPUTE_ROOT" == /homes/01/mxrayan/rayan-compute && "$(stat -c %U "$COMPUTE_ROOT")" == mxrayan && "$(stat -c %a "$COMPUTE_ROOT")" == 700 ]] || exit 2
@@ -39,7 +45,10 @@ for directory in "$COMPUTE_ROOT/rayan-personality" "$COMPUTE_ROOT/rayan-personal
   [[ "$(realpath -e "$directory")" == "$directory" && "$(stat -c %U "$directory")" == mxrayan && "$(stat -c %a "$directory")" == 700 ]] || exit 2
 done
 PERSONALITY_RUN_ROOT="$COMPUTE_ROOT/rayan-personality/private-compile/rayan-connected-personality-${SLURM_JOB_ID}"
-[[ ! -e "$PERSONALITY_RUN_ROOT" && ! -L "$PERSONALITY_RUN_ROOT" ]] || exit 2
+if [[ -e "$PERSONALITY_RUN_ROOT" || -L "$PERSONALITY_RUN_ROOT" ]]; then
+  echo "state=OCCUPIED_OUTPUT_REFUSED job=$SLURM_JOB_ID original_evidence_preserved=true" >&2
+  exit 2
+fi
 mkdir -m 700 "$PERSONALITY_RUN_ROOT"
 NAMESPACE_HELPER="$PERSONALITY_REPO_ROOT/scripts/eipm/n1/enter_private_network_namespace.py"
 AUDIT_HELPER="$PERSONALITY_REPO_ROOT/scripts/eipm/gemma_n0/construct_personality.py"

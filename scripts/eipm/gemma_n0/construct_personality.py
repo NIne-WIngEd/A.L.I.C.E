@@ -12,6 +12,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import re
 import stat
 import sys
 
@@ -137,6 +138,51 @@ def write(path,value):
     return file_hash(path)
 
 
+def restore_completed_features(reference, *, documents, source_package_sha256,
+        prepared_receipt_file_sha256, read_pinned_json, bounded_directory):
+    """Reuse an externally pinned, actually closed source interval after interruption.
+
+    Caller must already have established owner isolation and revalidated original
+    source/permission/target/preparation custody. This cannot adopt a partial store,
+    manufacture a new closure, resume unobserved optimizer steps, or change inputs.
+    """
+    from src.alice_personality.identity.contracts import IdentityModelConfig
+    from src.alice_personality.identity.feature_store import FrozenFeatureStore
+    from src.alice_personality.identity.feature_producer import FrozenFrameProducer
+    names={'token-cost-profile.json','feature-session.protected.json',
+        'frame-bindings.protected.json','model-config.protected.json','feature-store/manifest.json'}
+    if (type(reference) is not dict or set(reference)!={'directory','source_code_revision','file_sha256',
+            'feature_store_manifest_sha256','closed_session_sha256'}
+            or not re.fullmatch('[0-9a-f]{40}',reference['source_code_revision'])
+            or set(reference['file_sha256'])!=names
+            or any(not re.fullmatch('[0-9a-f]{64}',value) for value in
+                [*reference['file_sha256'].values(),reference['feature_store_manifest_sha256'],reference['closed_session_sha256']])):refuse()
+    directory=bounded_directory(reference['directory'])
+    values={name:read_pinned_json(str(directory/name),reference['file_sha256'][name]) for name in names}
+    store=FrozenFeatureStore.open(bounded_directory(str(directory/'feature-store')),
+        expected_manifest_sha256=reference['feature_store_manifest_sha256'])
+    config=IdentityModelConfig(**values['model-config.protected.json']);config.validate()
+    session=values['feature-session.protected.json'];bindings=values['frame-bindings.protected.json']
+    profile=values['token-cost-profile.json']
+    if (store.manifest['source_package_sha256']!=source_package_sha256
+            or session['prepared_receipt_file_sha256']!=prepared_receipt_file_sha256
+            or set(bindings)!=set(documents) or profile['document_count']!=len(documents)
+            or profile['unique_entries']!=len(store.manifest['entries'])
+            or profile['unique_source_tokens']!=sum(value['shape'][2] for value in store.manifest['entries'].values())
+            or profile['source_geometry']!=[config.provider_state_count,config.provider_width]):refuse()
+    for name,binding in bindings.items():
+        if (binding['document_sha256']!=documents[name].sha256
+                or binding['prepared_receipt_file_sha256']!=prepared_receipt_file_sha256
+                or binding['binding_sha256']!=sha256(canonical({k:v for k,v in binding.items() if k!='binding_sha256'})).hexdigest()):refuse()
+    if (len(session['frame_binding_sha256'])!=len(bindings)
+            or set(session['frame_binding_sha256'])!={b['binding_sha256'] for b in bindings.values()}):refuse()
+    # Reuse the real production validator, including exact encoder/runtime/code,
+    # store context and original closure. Per-entry bytes/masks are verified on
+    # actual replay; no publisher is loaded and the original directory is untouched.
+    FrozenFrameProducer.replay(store,config,session,expected_session_sha256=reference['closed_session_sha256'])
+    return store,config,session,bindings,profile
+
+
 def run(namespace):
     isolation=namespace._p2_guard()  # FIRST: no private path/stat/hash/profile before this.
     os.umask(0o077);sys.dont_write_bytecode=True
@@ -228,10 +274,19 @@ def run(namespace):
         if phase_counts!=index['phase_counts'] or any(not phase_counts[p] for p in ('n1','n2')):refuse()
         prepared=pin(PREPARED,artifacts['prepared_receipt']);preparation=verify_prepared(prepared.path)
         if preparation['runtime']['dtype']!='bfloat16':refuse()
-        processor=transformers.AutoProcessor.from_pretrained(preparation['snapshot_path'],local_files_only=True,trust_remote_code=False)
         geometry=preparation['model_geometry']
-        profile=token_cost_profile(list(documents.values()),processor.tokenizer,layers=geometry['hidden_state_count'],
-            width=geometry['hidden_size'],max_tokens=geometry['max_position_embeddings'])
+        completed=plan.get('completed_features')
+        if completed is not None:
+            store,config,session,bindings,profile=restore_completed_features(completed,documents=documents,
+                source_package_sha256=artifacts['source_package'],prepared_receipt_file_sha256=artifacts['prepared_receipt'],
+                read_pinned_json=lambda value,digest:load(pin(value,digest)),
+                bounded_directory=lambda value:namespace._bounded_path(value,root,file=False))
+            if [config.provider_state_count,config.provider_width]!=[geometry['hidden_state_count'],geometry['hidden_size']]:refuse()
+        else:
+            processor=transformers.AutoProcessor.from_pretrained(preparation['snapshot_path'],local_files_only=True,trust_remote_code=False)
+            profile=token_cost_profile(list(documents.values()),processor.tokenizer,layers=geometry['hidden_state_count'],
+                width=geometry['hidden_size'],max_tokens=geometry['max_position_embeddings'])
+            del processor;gc.collect()
         # Input float conversion and retained backward intermediates are explicitly
         # budgeted; this is a conservative operating estimate, not a measurement.
         estimate=48*1024**3+profile['largest_padded_frame_value_bytes']*12
@@ -241,21 +296,25 @@ def run(namespace):
         profile['actual_slurm_memory_bytes']=int(memory_environment)*1024**2 if memory_environment.isdecimal() else None
         write(output/'token-cost-profile.json',profile)
         verify_memory_allocation(plan['memory_budget_bytes'],estimate,memory_environment)
+        disk_required=plan['checkpoint_disk_budget_bytes']+(plan['feature_disk_budget_bytes'] if completed is None else 0)
         if (profile['state_value_bytes']+profile['serialization_overhead_budget_bytes']>plan['feature_disk_budget_bytes']
-                or os.statvfs(output).f_bavail*os.statvfs(output).f_frsize<plan['feature_disk_budget_bytes']+plan['checkpoint_disk_budget_bytes']):refuse()
-        del processor;gc.collect()
-        store=FrozenFeatureStore.create(output/'feature-store',source_package_sha256=artifacts['source_package'])
-        producer=FrozenFrameProducer.load(prepared.path,expected_file_sha256=artifacts['prepared_receipt'],device='cpu',feature_store=store)
-        config=producer.config
-        bindings={}
-        for number,(name,document) in enumerate(documents.items(),1):
-            produced=producer.produce(document);bindings[name]=produced.binding;del produced;gc.collect()
-            print(json.dumps({'stage':'source_closed_frame_production','completed_documents':number,'total_documents':len(documents)}),flush=True)
-        session=producer.close_and_verify()
+                or os.statvfs(output).f_bavail*os.statvfs(output).f_frsize<disk_required):refuse()
+        if completed is None:
+            store=FrozenFeatureStore.create(output/'feature-store',source_package_sha256=artifacts['source_package'])
+            producer=FrozenFrameProducer.load(prepared.path,expected_file_sha256=artifacts['prepared_receipt'],device='cpu',feature_store=store)
+            config=producer.config
+            bindings={}
+            for number,(name,document) in enumerate(documents.items(),1):
+                produced=producer.produce(document);bindings[name]=produced.binding;del produced;gc.collect()
+                print(json.dumps({'stage':'source_closed_frame_production','completed_documents':number,'total_documents':len(documents)}),flush=True)
+            session=producer.close_and_verify()
+            del producer;gc.collect()  # Frozen Gemma is released before learned stages.
+        else:
+            print(json.dumps({'stage':'completed_source_features_reused','document_count':len(documents),
+                'unique_entries':store.summary()['unique_entries'],'publisher_reloaded':False}),flush=True)
         write(output/'feature-session.protected.json',session)
         write(output/'frame-bindings.protected.json',bindings)
         write(output/'model-config.protected.json',asdict(config))
-        del producer;gc.collect()  # Frozen Gemma is not retained during learned-stage optimization.
         replay=FrozenFrameProducer.replay(store,config,session,expected_session_sha256=session['receipt_sha256'])
         torch.manual_seed(plan['model_initialization_seed'])
         model=IdentityModel(config);construction=ConnectedConstruction(model)
@@ -271,11 +330,13 @@ def run(namespace):
                 produced=replay.produce(case.document)
                 return materialize_case(case,produced,session,config,expected_case_sha256=case.sha256,
                     expected_artifact_sha256=artifacts,family_splits=allocation).batch
-            for c in selected:
+            for number,c in enumerate(selected,1):
                 batch=materialize(c);digest=batch.fingerprint();batch_cases[digest]=c
                 reviewed['reviewed_batches'][digest]={'split':batch.split,'case_ids':list(batch.case_ids),
                     'source_family_ids':[list(x) for x in batch.source_family_ids],'construction_lineage_sha256':fingerprint(batch.lineage)}
                 reviewed['batch_order']['TRAIN'].append(digest);del batch;gc.collect()
+                print(json.dumps({'stage':'reviewed_case_materialized','phase':phase,
+                    'completed_cases':number,'total_cases':len(selected)}),flush=True)
             if len(batch_cases)!=len(selected):refuse()
             arguments=dict(plan['recipes'][phase])
             if 'betas' in arguments:arguments['betas']=tuple(arguments['betas'])
@@ -321,6 +382,7 @@ def run(namespace):
             'owner':'mxrayan','code_commit':revision,'helper_sha256':file_hash(helper),'namespace_sha256':GUARD_SHA,'isolation':isolation,
             'packet_index_sha256':plan['packet_index_sha256'],'owner_run_plan_sha256':os.environ['PERSONALITY_CONSTRUCTION_PLAN_SHA256'],
             'processor_overlay_sha256':overlay_sha,'source_geometry':[config.provider_state_count,config.provider_width],
+            'completed_features_reused':completed is not None,'completed_feature_input':completed,
             'phase_results':phase_results,'response_count':len(documents),'protected_response_file_sha256':file_hash(response_path),
             'feature_store':store.summary(),'closed_session_sha256':session['receipt_sha256'],
             'n3_gradient_steps':0,'n3_outcomes_pending_primary_review':True,'numeric_voice_gold_created':False,
