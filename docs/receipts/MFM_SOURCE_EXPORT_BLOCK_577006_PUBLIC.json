@@ -1,0 +1,55 @@
+{
+  "schema": "mfm-public-source-export-block-recovery-v1",
+  "recorded_at_utc": "2026-10-07T18:50:50.571928+00:00",
+  "job": 577006,
+  "owner_account": "mxrayan",
+  "scheduler": {
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:31:29",
+    "allocated_cpus": 12
+  },
+  "terminal": {
+    "complete": false,
+    "completed": 144,
+    "public_conditional_feature_export_sha256": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+    "public_conditional_feature_progress_sha256": "55309a74fa753d7e3b38b150eff3953f80fd38b085627950cd92d48c0161f7a9",
+    "qualified_for_product": false,
+    "seconds": 1808.2830138616264,
+    "total": 4862
+  },
+  "runtime_tests": {
+    "passed": 91,
+    "seconds": 48.012
+  },
+  "resources": {
+    "time_v_peak_rss_kib": 22148824,
+    "time_v_elapsed": "31:19.45",
+    "scope": "GNU time across the allocated protected container process tree; includes runtime tests and full frozen base source export.",
+    "scheduler_batch_rss_kib": 742876,
+    "scheduler_rss_limitation": "Wrapper observation, not the full frozen model process peak."
+  },
+  "raw_evidence_sha256": {
+    "rayan-mfm-public-features-577006.err": "a2bd790197446f595130a05a139d56017e38bea5bd4f8e2437bfd2ed49d49e6a",
+    "rayan-mfm-public-features-577006.out": "e8b68893014fa9006929dc68f1e4e4596a5f2c613c9a3daf698938c16e94b5ab",
+    "rayan-mfm-public-features-577006.stdout": "8798f1b7e486c5d64fc1af606985925b1b0494ed042d38fdc80fdbce6b8f2618"
+  },
+  "continuation": {
+    "job": 577007,
+    "dependency": "afterok:577006",
+    "actual_parent_receipt_file_sha256": "2e11dad36c0d0b75b066d3b42186a3d86177f155b1831b02395de7fbf8df2d2c",
+    "actual_parent_cli_file_sha256": "8798f1b7e486c5d64fc1af606985925b1b0494ed042d38fdc80fdbce6b8f2618",
+    "parent_matches_actual_terminal": true,
+    "observed_child_state": "RUNNING",
+    "observed_committed_sources": 175
+  },
+  "complete_bank": false,
+  "trained_mfm": false,
+  "qualified_for_product": false,
+  "limits": [
+    "144 committed sources are a partial ordered bank, not training eligibility.",
+    "175 is a live child snapshot, not its terminal pin or a throughput forecast.",
+    "Full source-bank validation and learned full-role capability remain pending."
+  ],
+  "record_sha256": "cf3ea6fe4a22958beb67dafd4f12d355a05d7cf3397f4a7395fa2495e8dc44a3"
+}

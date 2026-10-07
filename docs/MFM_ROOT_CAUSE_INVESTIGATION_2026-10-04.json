@@ -1,6 +1,6 @@
 {
   "schema": "mfm-root-cause-investigation-state-v1",
-  "recorded_at_utc": "2026-10-07T18:21:18.767609+00:00",
+  "recorded_at_utc": "2026-10-07T18:50:50.571928+00:00",
   "source_export": {
     "jobs": {
       "576630": "TIMEOUT",
@@ -1912,7 +1912,7 @@
         "controller_sha256": "caeff2309eb1fb6fc237f2222fa6e88f04bc612552e9d4980121f850f112d752",
         "bundle_sha256": "482ca5597c54b6a59160b9f05b522c03c21aef848a4fa5af4bfd3837ea1cbe86",
         "runtime_checks_pending": false,
-        "source_measurement_pending": true,
+        "source_measurement_pending": false,
         "previous_feature_output_absent_verified": true,
         "original_failures_retained": [
           576999,
@@ -1928,7 +1928,21 @@
         "actual_runtime_tests_passed": 91,
         "actual_runtime_test_seconds": 48.012,
         "source_export_started": true,
-        "source_bank_complete": false
+        "source_bank_complete": false,
+        "actual_terminal": {
+          "complete": false,
+          "completed": 144,
+          "public_conditional_feature_export_sha256": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+          "public_conditional_feature_progress_sha256": "55309a74fa753d7e3b38b150eff3953f80fd38b085627950cd92d48c0161f7a9",
+          "qualified_for_product": false,
+          "seconds": 1808.2830138616264,
+          "total": 4862
+        },
+        "actual_scheduler_state": "COMPLETED",
+        "actual_exit_code": "0:0",
+        "actual_peak_process_tree_rss_kib": 22148824,
+        "scheduler_rss_is_wrapper_only": true,
+        "public_recovery_receipt": "docs/receipts/MFM_SOURCE_EXPORT_BLOCK_577006_PUBLIC.json"
       },
       "initial_source_export_block_recipe": {
         "path": "scripts/mfm/magnolia_public_conditional_features_v2_20261007.sbatch",
@@ -1954,10 +1968,23 @@
         "verify_complete_committed_prefix_before_model_load": true,
         "completed_checks_reused": "91 corrected actual-runtime checks48.012s; unchanged exporter/helper/base/census/runtime assumptions.",
         "complete_bank_required_before_training": true,
-        "submitted": false
+        "submitted": true,
+        "job": 577007,
+        "owner_account": "mxrayan",
+        "code_commit": "538882dd6f9e975521836e0fe96355fe2c7084f2",
+        "controller_sha256": "3ee02e1ebf84a85df0e56f7307d147ff691376b512b35fc0120560a6fdf577bf",
+        "bundle_sha256": "f2a318eb2e72e2d43a7cc62abdb2c195b44a8f25fa4c962adbc89212c6ae9142",
+        "actual_state_at_snapshot": "RUNNING",
+        "actual_parent_receipt_file_sha256": "2e11dad36c0d0b75b066d3b42186a3d86177f155b1831b02395de7fbf8df2d2c",
+        "actual_parent_cli_file_sha256": "8798f1b7e486c5d64fc1af606985925b1b0494ed042d38fdc80fdbce6b8f2618",
+        "actual_parent_progress_pin": "55309a74fa753d7e3b38b150eff3953f80fd38b085627950cd92d48c0161f7a9",
+        "actual_parent_completed_sources": 144,
+        "observed_child_committed_sources": 175,
+        "snapshot_is_not_terminal_pin": true,
+        "complete_bank": false
       }
     },
-    "next_action": "Submit the verified full-source continuation after successful577006; complete the entire4,862-source bank under unchanged bindings. Scheduling blocks are not model scope. Continue researched fresh MFM foundation training and full formation, typed identities/literals, native modalities and governed feedback. Archive stable verified public artifacts in Drive, preserve private custody and published MFM/FBM/Graphify context.",
+    "next_action": "Finish the same complete4,862-source bank via verified immediate-parent scheduling continuations. Build and review the public reader, parameter-free task binding and real full-roster trainer with exact restart. Then measure full-geometry learning resources on the complete bank, select the free allocation and learn the foundation; continue full formation with typed identities/literals, broader semantics, native modalities and governed feedback. Archive stable verified public artifacts in Drive; preserve original failures and exact MFM/FBM/Graphify context.",
     "full_role_gaps": [
       "expanded independently reviewed formation teaching",
       "learned typed selection and source-span copy integrated into semantic producer",
@@ -2221,6 +2248,22 @@
       "correction": "Finish the same entire4,862-source bank via verified scheduling continuations, then build and train the fresh foundation and full formation path. Reuse valid91 runtime checks; preserve historical immutable recipes and original failures.",
       "no_active_job_mutation_or_cancellation": true,
       "historical_receipts_preserved": true
+    },
+    "foundation_training_implementation": {
+      "contract": "docs/MFM_PUBLIC_FOUNDATION_PRODUCER_CONTRACT_2026-10-07.md",
+      "plan": "docs/superpowers/plans/2026-10-07-mfm-public-foundation-training.md",
+      "state": "TASK1_PUBLIC_READER_AND_OBJECTIVE_IMPLEMENTING",
+      "producer": "Fresh full-geometry FormationDecisionSpecialist; frozen Gemma source encoder only.",
+      "objective": "Sequence mean including EOS, then reference mean, then equal semantic-MR mean.",
+      "complete_training_pairs": 36597,
+      "complete_development_pairs": 4271,
+      "training_semantic_groups": 4356,
+      "development_semantic_groups": 506,
+      "parameter_free_task": "conditional_meaning_to_text",
+      "full_bank_external_pin_required": true,
+      "training_started": false,
+      "full_formation_transfer_required": true,
+      "product_qualification": false
     }
   }
 }
