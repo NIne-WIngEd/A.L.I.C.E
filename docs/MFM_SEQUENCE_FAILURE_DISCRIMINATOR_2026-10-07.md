@@ -107,3 +107,13 @@ producer. Complete caller inventories, exact source alignment, diverse rights-
 admitted conditional teaching, full-role cases and accepted-memory consumer
 evidence remain distinct work. No architecture or additional fit is selected
 solely because this candidate failed; no arbitrary training extension follows.
+
+Protected read-only diagnostic576984 submitted under mxrayan, immutable
+d3977bcbd2179144f5e2398163d7e84c9bd58a32, CPU12/64GiB/3h.89local
+targeted tests pass13.177s; independent review has no launch blocker. Original
+only-loopback namespace, UID1905/GID100 and CPU runtime verified. Actual tests,
+full441x2 metrics, objective reconciliation and41late checks remain pending.
+No optimizer or further training is submitted.
+
+Actual576984 runtime:89 tests pass22.447s; RUNNING00:02:17 at that snapshot.
+The full441x2/objective/source-sensitivity result remains pending.

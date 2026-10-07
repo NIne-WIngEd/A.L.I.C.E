@@ -1,6 +1,6 @@
 {
   "schema": "mfm-root-cause-investigation-state-v1",
-  "recorded_at_utc": "2026-10-07T15:13:43.944528+00:00",
+  "recorded_at_utc": "2026-10-07T15:20:35.260174+00:00",
   "source_export": {
     "jobs": {
       "576630": "TIMEOUT",
@@ -749,7 +749,7 @@
       "record_sha256": "fbbbd51e78a2748f6a3d66ac94c3ae0b3a04855ee81a07bafab7d32d063a0c2e"
     }
   },
-  "status": "SEQUENCE_FAILURE_VERIFIED_READ_ONLY_MECHANISM_DIAGNOSIS_IMPLEMENTED",
+  "status": "SEQUENCE_MECHANISM_DIAGNOSTIC_576984_RUNNING",
   "source_sequence_construction": {
     "state_at_snapshot": "COMPLETED_CAPACITY_AND_FIT_PASSED_NO_POSITIVE_FORMATION",
     "objective": "mfm-full-role-plus-source-sequence-29-strata-v1",
@@ -1003,7 +1003,7 @@
     }
   },
   "sequence_failure_discriminator": {
-    "state_at_snapshot": "IMPLEMENTED_LOCAL_VERIFICATION_BEFORE_SUBMISSION",
+    "state_at_snapshot": "RUNNING_ACTUAL_RUNTIME_TESTS_PASSED_ANALYSIS_PENDING",
     "plan": "docs/MFM_SEQUENCE_FAILURE_DISCRIMINATOR_2026-10-07.md",
     "parent_component_sha256": "485aa6397c1cab9351bef012ac6ed016c16128a992c31222fc6cc39fed841620",
     "original_diagnostic_sha256": "ba9dae2804c6414db62ebb6cecb9fa42ad2ded1821e98ca15402f794690c7ccf",
@@ -1025,6 +1025,27 @@
     "original_validators_unchanged": true,
     "exact_author_departure_is_semantic_failure": false,
     "qualified_for_product": false,
-    "paid_compute_used": false
+    "paid_compute_used": false,
+    "job": 576984,
+    "owner_account": "mxrayan",
+    "code_commit": "d3977bcbd2179144f5e2398163d7e84c9bd58a32",
+    "job_script_sha256": "1cd39f50cb8c996ad24092ac49f0a1e28f563465d9849f5a514b3d987178df0c",
+    "allocation_hours": 3,
+    "cpu_threads": 12,
+    "memory_gb": 64,
+    "local_targeted_tests_passed": 89,
+    "local_test_seconds": 13.177,
+    "independent_review_launch_blockers": 0,
+    "namespace_uid": 1905,
+    "namespace_gid": 100,
+    "namespace_interfaces": [
+      "lo"
+    ],
+    "actual_runtime_tests_passed": 89,
+    "actual_analysis_result_pending": true,
+    "output_dir": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-sequence-failure-576984",
+    "receipt_stdout": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-sequence-failure-576984.stdout",
+    "runtime_state_evidence": "576984RUNNING00:02:17 node043; onlyloopback UID1905GID100/privateCPU12Torch2.7.1. All89actual tests pass22.447s. Originalcustody verification/fullmeasurements remainpending; no completedanalysis asserted.",
+    "actual_runtime_test_seconds": 22.447
   }
 }
