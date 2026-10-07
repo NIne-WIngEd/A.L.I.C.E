@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "fa7e75b823680fc93491dc38c0a5d8723d9ca0ce",
+      "commit": "85054211fc044e007bca4734147a329fd3fb85d6",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -47,7 +47,7 @@
         {
           "path": "docs/MFM_V16_BUILD_CONTINUATION_2026-10-02.md",
           "purpose": "MFM recovered corpus, compute decisions and remaining full-capability roadmap",
-          "blob_sha": "50179f335ab71394363567c09a38f22fc66ef5dd"
+          "blob_sha": "b40f5ca4074bca1b41e66294c591acc357263735"
         },
         {
           "path": "docs/MFM_COMPUTE_RECOVERY_RECEIPTS_2026-10-02.json",
@@ -57,7 +57,7 @@
         {
           "path": "docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
           "purpose": "completed teacher fit, failed generated formation, actual causal analysis and corrected measurement handoff",
-          "blob_sha": "53d4a5c902b2fa875423adc2b3541f0a333ba256"
+          "blob_sha": "b5ceda2e42461e8015ec1a3a2a46b000b87589d1"
         },
         {
           "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576702.json",
@@ -107,7 +107,7 @@
         {
           "path": "docs/MFM_V16_OUTPUT_INTERFACE_SUCCESSOR_2026-10-04.md",
           "purpose": "root input/objective/evaluation audit, actual corpus boundary and full decision construction; byte proposal on hold",
-          "blob_sha": "281a25bef03aeeb58c3d8289b5b434bae2b77626"
+          "blob_sha": "daa072a5f880ae405a6c075f680b48070256ff54"
         },
         {
           "path": "docs/MFM_V1_ROLE_BOUNDARY_DIAGNOSTIC_2026-09-30.md",
@@ -208,6 +208,46 @@
           "path": "scripts/mfm/run_v16_budget_diagnostic.py",
           "purpose": "truthful plateau/cap completion and raw child/seed generation against byte-retained parent control",
           "blob_sha": "980776a5efa5a15ab0679cebe73e25bc179895a6"
+        },
+        {
+          "path": "scripts/mfm/analyze_v16_budget_failure.py",
+          "purpose": "all441 precise-field cohort measurements, fixed29 train generations and later retained parse/EOS cache parity; read-only",
+          "blob_sha": "0a49c2726edb2d1a67af8bbcd3b816e8c220c2c8"
+        },
+        {
+          "path": "scripts/mfm/magnolia_v16_budget_failure_20261006.sbatch",
+          "purpose": "protected owner-account complete-cohort diagnostic with immutable child and original raw controls",
+          "blob_sha": "b546f6867b8db90fe7e2f6a41696beb5bc5d6749"
+        },
+        {
+          "path": "tests/governance/test_mfm_v16_budget_failure_analysis.py",
+          "purpose": "cohort masking, precise source/scope fields, actual greedy/EOS replay and sealed objective remeasurement",
+          "blob_sha": "0f325c39f4b401d78295374a8f971a5108e18215"
+        },
+        {
+          "path": "docs/MFM_BUDGET_FAILURE_DISCRIMINATOR_2026-10-06.md",
+          "purpose": "mandatory diagnosis evidence and full-roster discriminator plan before architecture or further fit",
+          "blob_sha": "ddfacc7e94c9872fe11d37ee3e1f9b25edf2fcdc"
+        },
+        {
+          "path": "docs/receipts/MFM_V16_BUDGET_COMPONENT_576741.json",
+          "purpose": "completed8epoch216step bounded construction component; unqualified",
+          "blob_sha": "6547b00bba0bde7404c05a0261d2a6a027d743aa"
+        },
+        {
+          "path": "docs/receipts/MFM_V16_BUDGET_RUN_576741.json",
+          "purpose": "immutable parent/optimizer/source/code/recipe ancestry of bounded child",
+          "blob_sha": "7587725237f46fa92053b7aa6d58046d91ecb8c1"
+        },
+        {
+          "path": "docs/receipts/MFM_V16_BUDGET_PROGRESS_576741.json",
+          "purpose": "all432 train equal-case versus token-weighted progress and diverse train field failure aggregates",
+          "blob_sha": "757d27fc52d5bc5ba6f1b62d0b888a60c7e1db59"
+        },
+        {
+          "path": "docs/receipts/MFM_V16_BUDGET_DIAGNOSTIC_576741.json",
+          "purpose": "raw parent/child/seed control seals; all9child EOS but malformed JSON, zero grounded outputs",
+          "blob_sha": "05c4dff11cfdfe3fd85d3177c02baa3b7b5b1d12"
         },
         {
           "path": "scripts/mfm/magnolia_v16_budget_learning_20261004.sbatch",
@@ -438,7 +478,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "84290819bd6d308ac5ba9fb1bdea84f0e0041e53",
+      "commit": "2373f91ccf7c0c7a5ffd380afaaa17434d3f51a7",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -448,7 +488,7 @@
         {
           "path": "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
           "purpose": "FBM recovered teacher CPU evidence and frozen-feature build continuation",
-          "blob_sha": "b846042c59864f2ba7ca39d72f38ab6dfbefd35b"
+          "blob_sha": "6f13538e7076b96b2e2e6c955e2dd6cc247e78f5"
         },
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261002_MFM_RECOVERY_AND_FROZEN_FEATURE_ROUTE.jsonl",
@@ -518,7 +558,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "30776731163db0e2612ca2e2996bc899ef2b7d90"
+          "blob_sha": "4b6f6f0990d34935e6354007dd711d7fc5dde07a"
         }
       ]
     }
