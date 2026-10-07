@@ -1,0 +1,236 @@
+{
+  "schema": "mfm-public-feature-fixture-diagnosis-v1",
+  "job": 577003,
+  "state": "COMPLETED",
+  "exit": "0:0",
+  "elapsed_seconds": 38,
+  "max_rss_kib": 190852,
+  "owner_account": "mxrayan",
+  "unchanged_code_commit": "e614fba6bf3e78cdc1359e0e0ec9119e050a9492",
+  "external_diagnostic_file_sha256": "8339705785757f25da7207997c08b2651dcbc5a16d47b2288e427ca5e1a7110d",
+  "recipe_sha256": "349306b1658b209260123c670e7a0df95402f68d8dedd493f37baecbb7608ae8",
+  "diagnostic_script_sha256": "16f1fa748272900f81b63ea2187c07b51f0005f3ce9a1a264d9e1c3e50c6f096",
+  "runtime": {
+    "python": "3.11.16",
+    "torch": "2.7.1+cu118",
+    "safetensors": "0.8.0"
+  },
+  "original_code_hashes": {
+    "exporter_sha256": "62c4af1bf2f452f912a727f0277a2baf5e0e9f8ff8b28a080a39bbdf1326cb29",
+    "tests_sha256": "7d3b2375b0a68731aa828d8e447d7099ce30b15d74f75177f3d608fb5ec3a8a4"
+  },
+  "modes": [
+    {
+      "mode": "original_mapped_wrong_ids",
+      "before_load_accepted": true,
+      "retained_after_reseal": {
+        "receipt_predicates": {
+          "directory_children_exact": false,
+          "export_sha256_equal": true,
+          "serialized_tensors_exact_is_true": true,
+          "source_input_equal": true,
+          "target_visible_to_backbone_is_false": true
+        },
+        "hidden_nfs_files": 1,
+        "file_digest_matches": true,
+        "read_source": {
+          "accepted": false,
+          "exception_type": "ValueError",
+          "message": "public feature source receipt binding differs",
+          "tensor_validator_calls": []
+        }
+      },
+      "after_release": {
+        "all_receipt_predicates_match": true,
+        "hidden_nfs_files": 0,
+        "read_source": {
+          "accepted": false,
+          "exception_type": "ValueError",
+          "message": "public feature input or mask differs from source census",
+          "tensor_validator_calls": [
+            {
+              "input_ids": [
+                [
+                  2,
+                  5
+                ]
+              ],
+              "mask": [
+                [
+                  1,
+                  1
+                ]
+              ],
+              "states_dtype": "torch.bfloat16",
+              "states_shape": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "mode": "owned_clone_wrong_ids",
+      "before_load_accepted": true,
+      "retained_after_reseal": {
+        "receipt_predicates": {
+          "directory_children_exact": true,
+          "export_sha256_equal": true,
+          "serialized_tensors_exact_is_true": true,
+          "source_input_equal": true,
+          "target_visible_to_backbone_is_false": true
+        },
+        "hidden_nfs_files": 0,
+        "file_digest_matches": true,
+        "read_source": {
+          "accepted": false,
+          "exception_type": "ValueError",
+          "message": "public feature input or mask differs from source census",
+          "tensor_validator_calls": [
+            {
+              "input_ids": [
+                [
+                  2,
+                  5
+                ]
+              ],
+              "mask": [
+                [
+                  1,
+                  1
+                ]
+              ],
+              "states_dtype": "torch.bfloat16",
+              "states_shape": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        }
+      },
+      "after_release": {
+        "all_receipt_predicates_match": true,
+        "hidden_nfs_files": 0,
+        "read_source": {
+          "accepted": false,
+          "exception_type": "ValueError",
+          "message": "public feature input or mask differs from source census",
+          "tensor_validator_calls": [
+            {
+              "input_ids": [
+                [
+                  2,
+                  5
+                ]
+              ],
+              "mask": [
+                [
+                  1,
+                  1
+                ]
+              ],
+              "states_dtype": "torch.bfloat16",
+              "states_shape": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "mode": "owned_clone_valid",
+      "before_load_accepted": true,
+      "retained_after_reseal": {
+        "receipt_predicates": {
+          "directory_children_exact": true,
+          "export_sha256_equal": true,
+          "serialized_tensors_exact_is_true": true,
+          "source_input_equal": true,
+          "target_visible_to_backbone_is_false": true
+        },
+        "hidden_nfs_files": 0,
+        "file_digest_matches": true,
+        "read_source": {
+          "accepted": true,
+          "tensor_validator_calls": [
+            {
+              "input_ids": [
+                [
+                  2,
+                  4
+                ]
+              ],
+              "mask": [
+                [
+                  1,
+                  1
+                ]
+              ],
+              "states_dtype": "torch.bfloat16",
+              "states_shape": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        }
+      },
+      "after_release": {
+        "all_receipt_predicates_match": true,
+        "hidden_nfs_files": 0,
+        "read_source": {
+          "accepted": true,
+          "tensor_validator_calls": [
+            {
+              "input_ids": [
+                [
+                  2,
+                  4
+                ]
+              ],
+              "mask": [
+                [
+                  1,
+                  1
+                ]
+              ],
+              "states_dtype": "torch.bfloat16",
+              "states_shape": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cause": "The adversarial fixture retained mapped tensors while safetensors atomically replaced the same file on NFS. The retained old inode appeared as a hidden .nfs file, violating the exact directory roster before tensor validation. Released independent clones remove that unintended setup condition.",
+  "correction_scope": "Test-owned tensor storage and explicit guard-reaching corruption controls. Production exporter and its strict directory/input/geometry guards unchanged.",
+  "model_forward": "Only the real tiny fixture embedding source forward. Gemma weights, optimizer and owner inputs were not opened.",
+  "source_export_measured": false,
+  "mfm_learning_proved": false,
+  "qualified_for_product": false,
+  "primary_sources": [
+    "https://github.com/huggingface/safetensors/blob/v0.8.0/safetensors/src/tensor.rs#L288",
+    "https://github.com/huggingface/safetensors/blob/v0.8.0/bindings/python/src/lib.rs#L556",
+    "https://github.com/torvalds/linux/blob/v3.10/fs/nfs/unlink.c#L418"
+  ],
+  "preserved_raw_sha256": {
+    "diagnostic.json": "8339705785757f25da7207997c08b2651dcbc5a16d47b2288e427ca5e1a7110d",
+    "independent-review.json": "004d78501b5c75ca1434626689a4d45d9c5a96ffd7692be610d9b71cda0a7e3d",
+    "rayan-mfm-feature-fixture-diag-577003.err": "f5716cbfda7d4ff63e6149de0201a66bf5a253603fa45252d9951a999b0b62d5",
+    "rayan-mfm-feature-fixture-diag-577003.out": "9243bab6d2fd23792311a3947d9e2cd01af22e9ed8c9fd47d7f8664b43f00eed",
+    "rayan-mfm-feature-fixture-diag-577003.stdout": "60ea7899167754f93c272a1f82de6ce36d65ac0824a2a82fc18237d0d9fb5f44"
+  }
+}

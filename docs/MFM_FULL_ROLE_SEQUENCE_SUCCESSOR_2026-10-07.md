@@ -12,6 +12,13 @@ accepted-memory consumer feedback remain required subsequent construction.
 
 ## Decision and research boundary
 
+The owner reaffirmed the foundation-before-personalization boundary on October 7.
+Gemma supplies the frozen base source representations in this selected route;
+MFM builds its own learned foundation, formation objectives and governed consumer
+contract on top. No Gemma answer head or pretrained language bridge is adopted.
+The public conditional stage is a foundation prerequisite; it does not substitute
+for full formation learning or owner-independent Alice/Fable qualification.
+
 The measured failure is incomplete source-conditioned authored sequence learning:
 rare and unseen references, semantic text and composition remain wrong under
 correct prefixes. Cache/EOS-only repair, unchanged extra epochs, arbitrary syntax

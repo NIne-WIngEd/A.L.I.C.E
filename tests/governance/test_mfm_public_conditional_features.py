@@ -1,6 +1,7 @@
 """Real custody/CPU tensor tests; a tiny backbone does not prove MFM learning."""
 from hashlib import sha256
 from contextlib import redirect_stdout
+import gc
 import importlib
 import importlib.util
 from io import StringIO
@@ -11,6 +12,7 @@ import subprocess
 import sys
 from tempfile import TemporaryDirectory
 from types import SimpleNamespace
+import traceback
 import unittest
 from unittest.mock import patch
 
@@ -283,21 +285,97 @@ module.run_export(Path(root), census, sources, export, TinyBase(), stop_after_se
             module.run_export(self.output, census, sources, export, TinyBase(), stop_after_seconds=60)
         self.assertFalse((self.output / 'sources' / sources[1]['source_key']).exists())
 
-    def test_resealed_wrong_input_ids_or_geometry_rejected(self):
-        module = self.interface()
+    def rewrite_owned_source_tensors(self, module, replacements):
+        """Keep the corruption fixture independent of the original mmap inode."""
         census, sources, export = self.binding(module)
         module.run_export(self.output, census, sources, export, TinyBase(), stop_after_seconds=60)
         directory = self.output / 'sources' / sources[0]['source_key']
         tensor_path = directory / 'features.safetensors'
-        tensors = load_file(str(tensor_path))
-        tensors['input_ids'][0, 1] = 5
-        save_file(tensors, str(tensor_path))
+        mapped = load_file(str(tensor_path))
+        owned = {name: tensor.clone() for name, tensor in mapped.items()}
+        del mapped
+        gc.collect()
+        # v0.8 save_file replaces the destination inode. Retaining mapped
+        # tensors during replacement creates .nfs files on the actual runtime,
+        # so receipt-directory rejection would hide the tensor claim under test.
+        self.assertEqual({p.name for p in directory.iterdir()}, {'source.json', 'features.safetensors'})
+        owned.update(replacements)
+        save_file(owned, str(tensor_path))
         row = json.loads((directory / 'source.json').read_text())
         row.pop('record_sha256')
         row['features_sha256'] = shared._digest(tensor_path)
         (directory / 'source.json').write_bytes(canonical_json_bytes(shared._seal(row)))
-        with self.assertRaisesRegex(ValueError, 'input.*differs'):
-            module.verify_bank(self.output, census, sources, export)
+        receipt = module._read_sealed(directory / 'source.json', module.FEATURE_SCHEMA)
+        # Establish every preceding custody predicate before claiming a tensor
+        # guard was exercised. These checks intentionally retain the strict
+        # production directory and digest contracts.
+        self.assertEqual({p.name for p in directory.iterdir()}, {'source.json', 'features.safetensors'})
+        self.assertEqual(receipt['features_sha256'], shared._digest(tensor_path))
+        self.assertEqual(receipt['source_input'], sources[0])
+        self.assertEqual(receipt['export_sha256'], export['record_sha256'])
+        self.assertIs(receipt['serialized_tensors_exact'], True)
+        self.assertIs(receipt['target_visible_to_backbone'], False)
+        return census, sources, export
+
+    def assert_source_and_bank_tensor_guard(self, module, census, sources, export, pattern):
+        readers = [('source', lambda: module.read_source(self.output, sources[0],
+                                                        export['record_sha256'], census['base_hidden_size'])),
+                   ('bank', lambda: module.verify_bank(self.output, census, sources, export))]
+        for name, read in readers:
+            with self.subTest(reader=name):
+                try:
+                    read()
+                except ValueError as error:
+                    self.assertRegex(str(error), pattern)
+                    # Inspect the real exception path rather than replacing or
+                    # mocking the validator. An earlier custody rejection must
+                    # never count as evidence for this semantic guard.
+                    frames = traceback.extract_tb(error.__traceback__)
+                    self.assertIn('_validate_tensors', [frame.name for frame in frames])
+                else:
+                    self.fail('tampered tensor was accepted by ' + name)
+
+    def test_resealed_wrong_input_ids_reach_tensor_guard_and_reject_bank(self):
+        module = self.interface()
+        census, sources, export = self.rewrite_owned_source_tensors(
+            module, {'input_ids': torch.tensor([[2, 5]], dtype=torch.int64)})
+        self.assert_source_and_bank_tensor_guard(module, census, sources, export, 'input.*differs')
+
+    def test_resealed_wrong_mask_reaches_tensor_guard_and_rejects_bank(self):
+        module = self.interface()
+        census, sources, export = self.rewrite_owned_source_tensors(
+            module, {'attention_mask': torch.tensor([[1, 0]], dtype=torch.int64)})
+        self.assert_source_and_bank_tensor_guard(module, census, sources, export, 'mask.*differs')
+
+    def test_resealed_wrong_state_geometry_reaches_tensor_guard_and_rejects_bank(self):
+        module = self.interface()
+        census, sources, export = self.rewrite_owned_source_tensors(
+            module, {'states': torch.zeros((1, 2, 4), dtype=torch.bfloat16)})
+        self.assert_source_and_bank_tensor_guard(module, census, sources, export, 'geometry differs')
+
+    def test_resealed_wrong_state_dtype_reaches_tensor_guard_and_rejects_bank(self):
+        module = self.interface()
+        census, sources, export = self.rewrite_owned_source_tensors(
+            module, {'states': torch.tensor([[[6, 7, 8], [12, 13, 14]]], dtype=torch.float32)})
+        self.assert_source_and_bank_tensor_guard(module, census, sources, export, 'dtype.*differs')
+
+    def test_resealed_nonfinite_states_reach_tensor_guard_and_reject_bank(self):
+        module = self.interface()
+        census, sources, export = self.rewrite_owned_source_tensors(
+            module, {'states': torch.tensor([[[float('nan'), 7, 8], [12, 13, 14]]], dtype=torch.bfloat16)})
+        self.assert_source_and_bank_tensor_guard(module, census, sources, export, 'finite.*differs')
+
+    def test_valid_owned_clone_rewrite_preserves_source_and_complete_bank(self):
+        module = self.interface()
+        census, sources, export = self.rewrite_owned_source_tensors(module, {})
+        receipt, tensors = module.read_source(self.output, sources[0], export['record_sha256'], 3)
+        self.assertTrue(torch.equal(tensors['states'], torch.tensor([[[6, 7, 8], [12, 13, 14]]], dtype=torch.bfloat16)))
+        self.assertTrue(torch.equal(tensors['input_ids'], torch.tensor([[2, 4]], dtype=torch.int64)))
+        self.assertTrue(torch.equal(tensors['attention_mask'], torch.tensor([[1, 1]], dtype=torch.int64)))
+        del tensors
+        bank = module.verify_bank(self.output, census, sources, export)
+        self.assertTrue(bank['complete'])
+        self.assertEqual(bank['sources'][0]['source_receipt_sha256'], receipt['record_sha256'])
 
     def test_complete_bank_rejects_unlisted_artifact_and_receipt_tamper(self):
         module = self.interface()

@@ -1,0 +1,89 @@
+{
+  "schema": "mfm-drive-scoped-storage-gate-public-v1",
+  "observed_at_utc": "2026-10-07T17:43:31Z",
+  "scopes": [
+    {
+      "name": "Rayan-Compute",
+      "files": 20,
+      "logical_bytes": 178404
+    },
+    {
+      "name": "MFM_public_source_custody",
+      "files": 10,
+      "logical_bytes": 79112393
+    }
+  ],
+  "combined": {
+    "distinct_scopes": 2,
+    "distinct_folders_including_roots": 27,
+    "distinct_files": 30,
+    "logical_bytes": 79290797
+  },
+  "listing_repeat": {
+    "completed_by_utc": "2026-10-07T17:43:31Z",
+    "time_basis": "Clock read after the unchanged final listing pass",
+    "folder_count": 27,
+    "unchanged_count": 27,
+    "changed_count": 0,
+    "failed_count": 0
+  },
+  "checks": {
+    "distinct_file_ids": true,
+    "distinct_scope_trees": true,
+    "listed_child_parent_links_checked": 55,
+    "listed_child_parent_links_matching": 55,
+    "file_sizes_present": 30,
+    "unknown_file_sizes": 0,
+    "pending_descendant_folders": 0,
+    "failed_initial_listings": 0,
+    "failed_metadata_reads": 0,
+    "largest_listing_children": 10,
+    "listing_limit": 1000,
+    "limit_reached_folders": 0,
+    "truncation_indicated": false,
+    "connector_visible_inventory_complete": true,
+    "shortcuts_or_native_document_files": 0
+  },
+  "policy": {
+    "source": "alice-compute-recovery/references/artifact-custody.md recorded policy and parent-supplied current caps",
+    "operational_soft_bytes": 380000000000,
+    "hard_bytes": 400000000000,
+    "reserve_bytes": 20000000000,
+    "provider_quota": false,
+    "provider_total_usage_bytes": null,
+    "provider_quota_bytes": null,
+    "policy_change_check": "No policy contents re-read in this metadata-only task; supplied caps applied"
+  },
+  "prospective": {
+    "purpose": "Next bounded public conditional source bank archive; no model-training capacity claim",
+    "bf16_state_bytes_lower_bound": 1848875520,
+    "state_token_count": 240739,
+    "state_width": 3840,
+    "bytes_per_state_scalar": 2,
+    "bf16_lower_bound_excludes": [
+      "token IDs",
+      "attention masks",
+      "metadata",
+      "archive overhead",
+      "temporary or duplicate storage"
+    ],
+    "conservative_next_archive_allowance_bytes": 3000000000,
+    "projected_combined_with_archive_allowance_bytes": 3079290797,
+    "operational_headroom_after_archive_allowance_bytes": 376920709203,
+    "hard_headroom_after_archive_allowance_bytes": 396920709203,
+    "reserve_preserved_under_scoped_policy": true,
+    "scoped_logical_gate_below_operational_cap": true,
+    "final_write_condition": "Reconcile actual complete archive bytes and any additional retained copies against this allowance before writing; storage outside these measured scopes is not covered"
+  },
+  "limitations": {
+    "scope": "Connected-Drive-visible descendants of the two exact observed roots only",
+    "provider_wide_usage": "Unknown; not scanned",
+    "provider_quota": "Unknown; not measured",
+    "trashed_items_and_revision_storage": "Unknown; excluded from scoped current logical file sizes",
+    "atomicity": "Read-only metadata observation with a repeated unchanged listing pass; not an atomic provider-wide snapshot",
+    "archive_hash_verification": "Earlier round-trip SHA256 verification reported by parent; this metadata audit did not re-download file contents"
+  },
+  "upload_before_gate_process_gap_preserved": true,
+  "private_metadata_receipt_sha256": "e3e7c037befea6838abce9f0760d564e662e2d9731ff7950d8c21be461cfe4b6",
+  "qualified_for_product": false
+}

@@ -114,3 +114,12 @@ admission or learned capability.
 Actual census submitted as Magnolia **576995**, immutable code `480f8bff7334d8691f84d5896de09de0deaeb815`, under `mxrayan`. The completed0:0 census and external pin `0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d` are verified. All40,868 original pairs and4,862 exact processed source inputs reconcile. The prepared material transferred with exact original hashes.
 
 The first actual frozen-feature job is a **30-minute pilot** with a two-hour scheduler safety limit. It reuses the complete pinned source roster and preserves its verified ordered prefix for later same-code resume. Throughput, setup, peak memory and disk are measured before selecting the longer continuation. The longest source has71 tokens; if absent from the pilot prefix, measure it before fixing the full export/training budget.
+
+Pilot576999 failed before Gemma because the adversarial test retained a mapped
+file during same-path replacement on NFS. The unchanged-runtime577003 controls
+confirm that exact cause. The [ordered diagnosis](../../MFM_SOURCE_FEATURE_FIXTURE_DIAGNOSIS_2026-10-07.md)
+preserves original failures, every custody predicate and valid controls. The
+test-only correction expands ID/mask/geometry/dtype/nonfinite and valid-bank
+coverage;31 focused independent and91 affected root local tests pass. The v2
+recipe gates real source export on those91 checks in the actual protected runtime.
+Measured export and its budget remain outstanding.

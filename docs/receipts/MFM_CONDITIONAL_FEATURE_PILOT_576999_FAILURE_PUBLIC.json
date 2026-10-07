@@ -1,0 +1,33 @@
+{
+  "schema": "mfm-public-feature-pilot-runtime-failure-v1",
+  "job": 576999,
+  "owner_account": "mxrayan",
+  "scheduler_state": "FAILED",
+  "scheduler_exit": "1:0",
+  "elapsed": "00:01:08",
+  "max_rss_kib": 404236,
+  "code_commit": "e614fba6bf3e78cdc1359e0e0ec9119e050a9492",
+  "job_script_sha256": "0dfb184f8861e2b44eba7edf85999a7a137821a0d8bfdc7f16048545318c82ed",
+  "runtime_tests_run": 86,
+  "runtime_tests_passed": 85,
+  "runtime_test_failures": 1,
+  "runtime_test_seconds": 45.67,
+  "failing_test": "test_resealed_wrong_input_ids_or_geometry_rejected",
+  "first_rejection": "public feature source receipt binding differs",
+  "expected_test_branch": "input or mask differs from source census",
+  "tensor_validation_reached": false,
+  "original_failure_preserved": true,
+  "raw_log_sha256": {
+    "rayan-mfm-public-features-576999.err": "9d09d4bd9985790711b406f28e41471c7d54d995ca29bbcbdce1265547cbf52c",
+    "rayan-mfm-public-features-576999.out": "33c1cd729bb4d55e76387808e2211e454f5ba2d9a78a0bb1f7012d10a267a5df"
+  },
+  "established": "The fixture was rejected by a prior source receipt/directory predicate; it did not prove its intended tensor-validation branch. Logs alone do not identify which predicate differs.",
+  "hypothesis_pending_actual_control": "Retained safetensors mmap during same-path replacement may leave an NFS hidden inode, changing the exact directory roster. Confirm each predicate and original mapped versus owned-copy control in actual unchanged runtime.",
+  "model_weights_loaded": false,
+  "source_feature_export_started": false,
+  "optimizer_created": false,
+  "authority_written": false,
+  "qualified_for_product": false,
+  "final_payloads_opened": false,
+  "paid_compute_used": false
+}
