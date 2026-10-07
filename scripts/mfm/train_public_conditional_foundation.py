@@ -561,21 +561,9 @@ def _run_locked(args, prepared):
     if args.measure_only:
         execution.update(end_cursor=cursor, seconds=perf_counter() - started, status='construction-measured-no-fit')
         return shared._write_new(root / f'execution-{uuid4().hex}.json', execution)
-    latest = None
-    while cursor['epoch'] < args.epochs:
-        if args.session_seconds is not None and perf_counter() - started >= args.session_seconds:
-            break
-        batch, following = next_batch(prepared, seed=args.seed, epochs=args.epochs, batch_size=args.batch_size, cursor=cursor)
-        optimizer_step(view, optimizer, batch, prepared=prepared)
-        cursor = following
-        if cursor['step'] % args.save_every_steps == 0 or cursor['epoch'] == args.epochs:
-            latest = save_checkpoint(root, model, optimizer, binding=binding, cursor=cursor)
-    path = root / f"checkpoint-{cursor['step']:08d}"
-    if not path.exists():
-        latest = save_checkpoint(root, model, optimizer, binding=binding, cursor=cursor)
-    else:
-        latest = path
-        verify_checkpoint(latest, binding=binding)
+    cursor, latest = fit_epochs(view, optimizer, prepared, output_dir=root, binding=binding,
+        seed=args.seed, cursor=cursor, save_every_steps=args.save_every_steps,
+        started=started, session_seconds=args.session_seconds, purpose=manifest['purpose'])
     if cursor['epoch'] == args.epochs:
         model.load_state_dict(load_file(str(latest / 'specialist.safetensors')), strict=True)
         learned_generation = _generation(view, prepared, tokenizer, cap=args.generation_tokens)
@@ -603,6 +591,41 @@ def _run_locked(args, prepared):
         checkpoint_sha256=verify_checkpoint(latest, binding=binding)['record_sha256'],
         status='full-roster-fit-complete-unqualified' if cursor['epoch'] == args.epochs else 'scheduled-complete-boundary-stop')
     return shared._write_new(root / f'execution-{uuid4().hex}.json', execution)
+
+
+def fit_epochs(view, optimizer, prepared, *, output_dir, binding, seed, cursor,
+               save_every_steps, started, session_seconds, purpose):
+    """Prescribed fitting lifecycle, shared by the production orchestration."""
+    if purpose != 'full-roster-public-fit':
+        raise ValueError('measurement-only construction cannot enter or resume fitting')
+    root = _safe_root(output_dir)
+    _cursor(cursor, train_cases=binding['train_cases'], batch_size=binding['batch_size'], epochs=binding['epochs'])
+    latest = None
+    if cursor['step'] == 0:
+        # Construction has restored the persisted fresh model, empty Adam and
+        # RNG. Publish that actual boundary in the fitting run before any step
+        # (or scheduled stop); nested control checkpoints cannot resume fitting.
+        latest = root / 'checkpoint-00000000'
+        if latest.exists():
+            verify_checkpoint(latest, binding=binding)
+        else:
+            latest = save_checkpoint(root, view.specialist, optimizer, binding=binding, cursor=cursor)
+    while cursor['epoch'] < binding['epochs']:
+        if session_seconds is not None and perf_counter() - started >= session_seconds:
+            break
+        batch, following = next_batch(prepared, seed=seed, epochs=binding['epochs'],
+            batch_size=binding['batch_size'], cursor=cursor)
+        optimizer_step(view, optimizer, batch, prepared=prepared)
+        cursor = following
+        if cursor['step'] % save_every_steps == 0 or cursor['epoch'] == binding['epochs']:
+            latest = save_checkpoint(root, view.specialist, optimizer, binding=binding, cursor=cursor)
+    path = root / f"checkpoint-{cursor['step']:08d}"
+    if not path.exists():
+        latest = save_checkpoint(root, view.specialist, optimizer, binding=binding, cursor=cursor)
+    else:
+        latest = path
+        verify_checkpoint(latest, binding=binding)
+    return cursor, latest
 
 
 def arguments(argv=None):
