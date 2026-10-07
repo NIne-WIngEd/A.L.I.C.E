@@ -1,0 +1,375 @@
+{
+  "schema": "mfm-sequence-failure-public-aggregate-v1",
+  "recorded_at_utc": "2026-10-07T16:04:07.783147+00:00",
+  "job": 576984,
+  "scheduler_state": "COMPLETED",
+  "scheduler_exit": "0:0",
+  "elapsed": "00:20:00",
+  "max_rss_kib": 2426928,
+  "owner_account": "mxrayan",
+  "code_commit": "d3977bcbd2179144f5e2398163d7e84c9bd58a32",
+  "job_script_sha256": "1cd39f50cb8c996ad24092ac49f0a1e28f563465d9849f5a514b3d987178df0c",
+  "private_analysis_sha256": "350ac0ad3fa8f340db5596473f89cec026ff3c25827e2323bc6b50b0ef9de1d0",
+  "actual_runtime_tests_passed": 89,
+  "teacher_case_task_measurements": 882,
+  "retained_generation_measurements": 41,
+  "full_train_remeasurement": {
+    "atol": 1e-05,
+    "balanced_two_task_objective": 1.7077439000161767,
+    "matched": true,
+    "maximum_case_task_loss_difference": 4.300729190553909e-07,
+    "rtol": 1e-05,
+    "tolerance_reason": "per-token FP32 projection loss versus original chunk-mean FP32 reduction"
+  },
+  "teacher_prefix_metrics": {
+    "formation": {
+      "all-train": {
+        "cases": 432,
+        "equal_case_ce": 0.3715740667538217,
+        "token_weighted_ce": 0.5086650992919678,
+        "fields": {
+          "eos": {
+            "tokens": 432,
+            "ce": 0.013212620123306772,
+            "top1": 1.0
+          },
+          "key": {
+            "tokens": 66223,
+            "ce": 0.24797756345848004,
+            "top1": 0.9355661930145116
+          },
+          "other_reference": {
+            "tokens": 15083,
+            "ce": 0.7263941645550335,
+            "top1": 0.8334548829808394
+          },
+          "scope_label": {
+            "tokens": 8021,
+            "ce": 0.8596853649935238,
+            "top1": 0.7969081161949881
+          },
+          "source_reference": {
+            "tokens": 31652,
+            "ce": 0.4478415113199393,
+            "top1": 0.873752053582712
+          },
+          "structure": {
+            "tokens": 1628,
+            "ce": 0.5951451188163873,
+            "top1": 0.8673218673218673
+          },
+          "value": {
+            "tokens": 42201,
+            "ce": 0.5448795423256859,
+            "top1": 0.8524679509964219
+          },
+          "value_text": {
+            "tokens": 10117,
+            "ce": 1.6586224125454885,
+            "top1": 0.6961549866561234
+          }
+        }
+      },
+      "base-train": {
+        "cases": 16,
+        "equal_case_ce": 0.9385013034556342,
+        "token_weighted_ce": 1.1992001391041243,
+        "fields": {
+          "eos": {
+            "tokens": 16,
+            "ce": 0.014315620413981378,
+            "top1": 1.0
+          },
+          "key": {
+            "tokens": 3023,
+            "ce": 0.564075991472604,
+            "top1": 0.8339397949057228
+          },
+          "other_reference": {
+            "tokens": 819,
+            "ce": 1.6126843727134357,
+            "top1": 0.6715506715506715
+          },
+          "scope_label": {
+            "tokens": 181,
+            "ce": 1.6169401331867723,
+            "top1": 0.712707182320442
+          },
+          "source_reference": {
+            "tokens": 1092,
+            "ce": 1.450788467947966,
+            "top1": 0.7042124542124543
+          },
+          "structure": {
+            "tokens": 60,
+            "ce": 1.6510253318585455,
+            "top1": 0.5666666666666667
+          },
+          "value": {
+            "tokens": 1937,
+            "ce": 1.0895776849742629,
+            "top1": 0.7268972638100155
+          },
+          "value_text": {
+            "tokens": 401,
+            "ce": 4.778199269580295,
+            "top1": 0.33915211970074816
+          }
+        }
+      },
+      "development": {
+        "cases": 9,
+        "equal_case_ce": 3.3152318639351908,
+        "token_weighted_ce": 3.395370078009175,
+        "fields": {
+          "eos": {
+            "tokens": 9,
+            "ce": 0.06015933553377787,
+            "top1": 1.0
+          },
+          "key": {
+            "tokens": 3084,
+            "ce": 1.547516294637456,
+            "top1": 0.6335927367055771
+          },
+          "other_reference": {
+            "tokens": 470,
+            "ce": 7.053321698415737,
+            "top1": 0.21914893617021278
+          },
+          "scope_label": {
+            "tokens": 265,
+            "ce": 6.563629884199011,
+            "top1": 0.27547169811320754
+          },
+          "source_reference": {
+            "tokens": 886,
+            "ce": 6.572126950770769,
+            "top1": 0.29006772009029347
+          },
+          "structure": {
+            "tokens": 69,
+            "ce": 4.0207641719691996,
+            "top1": 0.15942028985507245
+          },
+          "value": {
+            "tokens": 1914,
+            "ce": 2.308189338140648,
+            "top1": 0.5344827586206896
+          },
+          "value_text": {
+            "tokens": 491,
+            "ce": 8.269254006171321,
+            "top1": 0.1079429735234216
+          }
+        }
+      },
+      "longitudinal-train": {
+        "cases": 416,
+        "equal_case_ce": 0.34976917303452076,
+        "token_weighted_ce": 0.47768672670368856,
+        "fields": {
+          "eos": {
+            "tokens": 416,
+            "ce": 0.013170197035203902,
+            "top1": 1.0
+          },
+          "key": {
+            "tokens": 63200,
+            "ce": 0.23285785542229814,
+            "top1": 0.9404272151898734
+          },
+          "other_reference": {
+            "tokens": 14264,
+            "ce": 0.6755057966020236,
+            "top1": 0.8427509814918677
+          },
+          "scope_label": {
+            "tokens": 7840,
+            "ce": 0.8422028250645724,
+            "top1": 0.7988520408163265
+          },
+          "source_reference": {
+            "tokens": 30560,
+            "ce": 0.4120032234718436,
+            "top1": 0.8798102094240837
+          },
+          "structure": {
+            "tokens": 1568,
+            "ce": 0.5547415392356925,
+            "top1": 0.8788265306122449
+          },
+          "value": {
+            "tokens": 40264,
+            "ce": 0.5186754815689233,
+            "top1": 0.8585088416451421
+          },
+          "value_text": {
+            "tokens": 9716,
+            "ce": 1.5298708357987862,
+            "top1": 0.7108892548373816
+          }
+        }
+      }
+    },
+    "source_reconstruction": {
+      "all-train": {
+        "cases": 432,
+        "equal_case_ce": 2.126545841791576,
+        "token_weighted_ce": 2.216863866244566,
+        "fields": {
+          "eos": {
+            "tokens": 432,
+            "ce": 0.04827800816942558,
+            "top1": 1.0
+          },
+          "key": {
+            "tokens": 5312,
+            "ce": 0.09582805600031685,
+            "top1": 0.9849397590361446
+          },
+          "source_reference": {
+            "tokens": 12865,
+            "ce": 0.5685957794662712,
+            "top1": 0.8473377380489701
+          },
+          "source_text": {
+            "tokens": 28358,
+            "ce": 3.4221337179641473,
+            "top1": 0.4031666549121941
+          },
+          "structure": {
+            "tokens": 432,
+            "ce": 0.43375691264453864,
+            "top1": 0.9884259259259259
+          }
+        }
+      },
+      "base-train": {
+        "cases": 16,
+        "equal_case_ce": 3.2759843375492306,
+        "token_weighted_ce": 3.716299581731053,
+        "fields": {
+          "eos": {
+            "tokens": 16,
+            "ce": 0.10837562684901059,
+            "top1": 1.0
+          },
+          "key": {
+            "tokens": 192,
+            "ce": 0.09808051793758447,
+            "top1": 0.984375
+          },
+          "source_reference": {
+            "tokens": 433,
+            "ce": 1.3480567608956746,
+            "top1": 0.745958429561201
+          },
+          "source_text": {
+            "tokens": 1238,
+            "ce": 5.191943435054814,
+            "top1": 0.23667205169628433
+          },
+          "structure": {
+            "tokens": 16,
+            "ce": 0.6554804900661111,
+            "top1": 0.875
+          }
+        }
+      },
+      "development": {
+        "cases": 9,
+        "equal_case_ce": 6.080475702113784,
+        "token_weighted_ce": 6.170210472838365,
+        "fields": {
+          "eos": {
+            "tokens": 9,
+            "ce": 0.18670906954341465,
+            "top1": 1.0
+          },
+          "key": {
+            "tokens": 163,
+            "ce": 0.1560691104019118,
+            "top1": 0.9815950920245399
+          },
+          "source_reference": {
+            "tokens": 280,
+            "ce": 5.4875312336088555,
+            "top1": 0.32857142857142857
+          },
+          "source_text": {
+            "tokens": 822,
+            "ce": 7.7097342767811625,
+            "top1": 0.11070559610705596
+          },
+          "structure": {
+            "tokens": 9,
+            "ce": 1.7055632339583502,
+            "top1": 0.4444444444444444
+          }
+        }
+      },
+      "longitudinal-train": {
+        "cases": 416,
+        "equal_case_ce": 2.0823366688778195,
+        "token_weighted_ce": 2.15442032983355,
+        "fields": {
+          "eos": {
+            "tokens": 416,
+            "ce": 0.04596656129713385,
+            "top1": 1.0
+          },
+          "key": {
+            "tokens": 5120,
+            "ce": 0.09574358867766933,
+            "top1": 0.9849609375
+          },
+          "source_reference": {
+            "tokens": 12432,
+            "ce": 0.5414475647816724,
+            "top1": 0.8508687258687259
+          },
+          "source_text": {
+            "tokens": 27120,
+            "ce": 3.3413437316161296,
+            "top1": 0.4107669616519174
+          },
+          "structure": {
+            "tokens": 416,
+            "ce": 0.4252290827437089,
+            "top1": 0.9927884615384616
+          }
+        }
+      }
+    }
+  },
+  "nonexact_first_departures": 39,
+  "correct_prefix_wrong_target_top1": 39,
+  "zero_source_argmax_changed": 39,
+  "foreign_source_argmax_changed": 7,
+  "development_foreign_source_argmax_changed": 0,
+  "development_foreign_paired_probability_and_rank_change": true,
+  "development_foreign_equal_aggregate_explanation": "Same-template common-prefix source permutations preserve cohort averages; per-case predictions change.",
+  "original_positive_grounded_proposals": 0,
+  "original_generation_failure_preserved": true,
+  "supported_findings": [
+    "Incomplete authored sequence learning, including semantic text, references and syntax.",
+    "Source channel responds; source sensitivity is not proof of source entailment.",
+    "Cache and exclusively rollout/EOS explanations do not account for the measured first departures.",
+    "Unseen identifiers and rare lexical values are poorly learned by the fresh open-vocabulary head."
+  ],
+  "not_established": [
+    "Encoder inadequacy",
+    "Auxiliary interference alone",
+    "Sufficient architecture or data budget",
+    "Full MFM capability"
+  ],
+  "optimizer_created": false,
+  "authority_written": false,
+  "independent_gold": false,
+  "qualified_for_product": false,
+  "final_payloads_opened": false,
+  "paid_compute_used": false,
+  "raw_custody": "Protected owner runtime and private local recovery; public projection contains aggregate methods only.",
+  "record_sha256": "dbd5244cc561313a9da3270a78ee908c108c15d4f9c0b11a621a656fd13b8fed"
+}

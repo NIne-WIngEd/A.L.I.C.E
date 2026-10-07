@@ -30,7 +30,46 @@ strict source equality is therefore not the explanation for this run's failures.
 See the [public aggregate projection](receipts/MFM_V16_SEQUENCE_576945_PUBLIC.json).
 Private raw bytes, names and per-case measures stay in owner custody.
 
-## Architecture and unresolved alternatives
+## Completed discriminator: Magnolia 576984
+
+576984 completed 0:0 in 20m00s, with 2,426,928 KiB maximum RSS. All 89
+actual-runtime tests passed. Independent verification matched the external
+terminal analysis pin, both private raw-file hashes, all 882 unique case/task
+measurements, all 41 retained generations and 24 immutable code bindings.
+The public result is [the aggregate projection](receipts/MFM_V16_SEQUENCE_FAILURE_576984_PUBLIC.json).
+The external analysis digest is
+`350ac0ad3fa8f340db5596473f89cec026ff3c25827e2323bc6b50b0ef9de1d0`.
+
+All 432 training cases on both tasks reproduce the final objective. Maximum
+per-case loss difference is 4.31e-7; the recomputed balanced objective is
+1.707743900 against 1.707743879. All 41 later cached/full decoder checks agree.
+Every one of the 39 non-exact first departures is already wrong under the
+correct teacher prefix. This rules out an exclusively rollout, cache or EOS
+account for those departures; later rollout can still compound the errors.
+
+Development formation value text has 10.79% teacher-prefix top1, compared with
+33.92% in the diverse training cases and 71.09% in longitudinal training.
+Source text reconstruction reaches 11.07%, 23.67% and 41.08%, respectively.
+All 534 rare training source-text positions remain incorrect. Every development
+first departure requires a source-reference token never positively taught to
+formation; its median correct-prefix rank is 65,590. These are separate lexical,
+reference and composition gaps, rather than a strict wording evaluator artifact.
+
+Zero source changes all 39 first-departure argmaxes. Foreign source swaps change
+seven, all in formation training. Development swaps change paired probabilities
+and ranks even though the greedy choice does not change. Equal development
+cohort averages arise from a permutation of source-conditioned distributions at
+a common prefix; they do **not** establish equal per-case outputs or source
+blindness. Source sensitivity is not proof of entailment or an adequate encoder.
+
+The original zero-positive-proposal failure remains unchanged. This diagnostic
+passes as evidence recovery and localization, not as MFM qualification. The
+next construction must cover authored meaning and source/registry selection
+together. It must compare language-transfer assumptions with the selected
+fresh-decoder path before changing initialization; a pointer or syntax-only
+improvement cannot close the full role.
+
+## Architecture and alternatives investigated
 
 The frozen bank retains processed token IDs as well as states and masks. The
 fresh formation decoder receives states and mask; its fresh tied262144-token

@@ -1,0 +1,54 @@
+{
+  "schema": "mfm-public-conditional-source-pin-v1",
+  "material_role": "conditional_meaning_to_text_only",
+  "upstream_repository": "https://github.com/tuetschek/e2e-dataset",
+  "upstream_revision": "ab0d967dd5729ce455ef14ba9ffafc456a335264",
+  "train": {
+    "filename": "trainset.csv",
+    "url": "https://raw.githubusercontent.com/tuetschek/e2e-dataset/ab0d967dd5729ce455ef14ba9ffafc456a335264/trainset.csv",
+    "bytes": 9340189,
+    "sha256": "f27d48df45815288ab15619d47a79028c300fbb7f42e373668aba0b98c1d57c6",
+    "rows": 42061
+  },
+  "readme": {
+    "filename": "README.md",
+    "url": "https://raw.githubusercontent.com/tuetschek/e2e-dataset/ab0d967dd5729ce455ef14ba9ffafc456a335264/README.md",
+    "bytes": 2489,
+    "sha256": "aa8ca6da1e1aad56807d0ee5e3a430a4c12f665b19bb8e5f893d10047cc2402f"
+  },
+  "legal_notice": {
+    "filename": "CC-BY-SA-4.0-legalcode.txt",
+    "url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt",
+    "bytes": 20138,
+    "sha256": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5"
+  },
+  "license": "CC-BY-SA-4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "authors": ["Jekaterina Novikova", "Ondrej Dusek", "Verena Rieser"],
+  "citation": "Novikova, Dusek and Rieser (2017). The E2E Dataset: New Challenges for End-to-End Generation. SIGDIAL 2017. https://aclanthology.org/W17-5525/",
+  "rights_review": "Owner-authorized original grant inspection 2026-10-07; conditional human MR-to-text training only. Retain original grant, attribution, license, raw cache and transformation notices. No automatic conclusion about trained-weight ShareAlike or full model distribution.",
+  "privacy_origin_limits": "Public crowd-authored restaurant NLG observations only; no private owner histories, inferred personal consent, or formation authority. This does not assert that every reference is semantically correct or individually privacy-reviewed.",
+  "reserved_official_files": [
+    {
+      "filename": "devset.csv",
+      "url": "https://raw.githubusercontent.com/tuetschek/e2e-dataset/ab0d967dd5729ce455ef14ba9ffafc456a335264/devset.csv",
+      "sha256": "fc26b78cdb849c80545f513b223d1e051138b43882eeb79e3eb153e689c864f9"
+    },
+    {
+      "filename": "testset.csv",
+      "url": "https://raw.githubusercontent.com/tuetschek/e2e-dataset/ab0d967dd5729ce455ef14ba9ffafc456a335264/testset.csv",
+      "sha256": "9b90c8f88feae14d9e1ef37350b14d17294c5958e90a3f1a7846590ee97bdbb9"
+    },
+    {
+      "filename": "testset_w_refs.csv",
+      "url": "https://raw.githubusercontent.com/tuetschek/e2e-dataset/ab0d967dd5729ce455ef14ba9ffafc456a335264/testset_w_refs.csv",
+      "sha256": "edc8db685e39bb9824d5bd70c18b1c9b0412d14b527aa960e2d1c8251ee15ccd"
+    }
+  ],
+  "split_rule": "semantic_mr_sha256_mod10_0_development_v1",
+  "semantic_slots": ["name", "eatType", "food", "priceRange", "customer rating", "area", "familyFriendly", "near"],
+  "conditional_training_eligible": true,
+  "formation_training_eligible": false,
+  "qualified": false,
+  "authority": false
+}
