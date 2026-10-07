@@ -838,7 +838,7 @@
     "latest_analysis_code_commit": "64be770d8f8f4770d76c6d65f04abab582c1a2b2",
     "root_cause_investigation_20261004": {
       "schema": "mfm-root-cause-investigation-state-v1",
-      "recorded_at_utc": "2026-10-07T16:51:12.173377+00:00",
+      "recorded_at_utc": "2026-10-07T18:50:50.571928+00:00",
       "source_export": {
         "jobs": {
           "576630": "TIMEOUT",
@@ -2290,7 +2290,7 @@
         "reference": "docs/MFM_SEQUENCE_FAILURE_DISCRIMINATOR_2026-10-07.md"
       },
       "full_role_sequence_successor": {
-        "state_at_snapshot": "ACTUAL_PROCESSOR_CENSUS_SUBMITTED_SOURCE_EXPORT_RECOVERY_IN_REVIEW",
+        "state_at_snapshot": "FULL_SOURCE_BANK_EXPORT_IN_PROGRESS_WITH_VERIFIED_CONTINUATION",
         "goal": "Full semantic MFM for Alice and Fable V1; source meaning, prior state, time, uncertainty, native modalities and governed accepted-memory outcomes remain required.",
         "retained_failure_analysis_sha256": "350ac0ad3fa8f340db5596473f89cec026ff3c25827e2323bc6b50b0ef9de1d0",
         "research_documents": [
@@ -2335,11 +2335,15 @@
           "scripts/mfm/magnolia_public_conditional_census_20261007.sbatch": "f5361661deaa9d13f60eadf68f2a46951d0572381c0ef2ca3fb37ed75f5910fd"
         },
         "local_verification": {
-          "scoped_tests": 60,
+          "scoped_tests": 86,
           "passed": true,
-          "seconds": 2.781,
+          "seconds": 34.9,
           "full_material_pairs_verified": 40868,
-          "evidence_scope": "Mock processor/clone/isolation fixtures prove caller, material and census contracts; actual Gemma token representability and runtime remain the pending job result."
+          "evidence_scope": "Mock processor/clone/isolation fixtures prove caller, material and census contracts; actual Gemma token representability and runtime remain the pending job result.",
+          "setup": "Existing personality-venv with repo/src, repo and work/runtime; no package installation.",
+          "independent_exporter_tests": 26,
+          "independent_exporter_test_seconds": 26.715,
+          "exporter_test_scope": "Real tiny BF16 source forward and safetensors, real abrupt child exits, OS lock, exact tensor preservation, quarantine tamper/rename recovery, CLI connection with mocked large model loader and clone hashing. Full Gemma performance remains the pilot result."
         },
         "broader_windows_suite": {
           "passed": 1897,
@@ -2351,8 +2355,474 @@
           "evidence_scope": "Snapshot taken while new modules were in TDD. Frozen fixture CRLF differs from its pinned Git LF blob; Windows lacks geteuid assumed by namespace test patch; literal capability scanner misclassifies public-material lane phrasing. Preserve failures; no unrelated runtime changes or broad green claim."
         },
         "ordered_diagnosis_used": true,
-        "source_feature_export": "Reviewed source-only frozen Gemma producer is being completed, including custody-preserving recovery of uncommitted abrupt-interruption artifacts. No source export or training launched yet.",
-        "next_action": "Retrieve and verify576995 external terminal census pin, complete40868 roster, actual token roundtrip/counts, source key geometry and code/clone/runtime/material lineage. After a sound census, export target-free frozen source states in bounded resumable passes. If census fails, follow ordered eight-step diagnosis before correction; do not blindly retry. Feature interruption recovery is being finished in parallel.",
+        "source_feature_export": {
+          "state_at_snapshot": "REVIEWED_86_LOCAL_TESTS_PASSED_PILOT_READY",
+          "exporter_sha256": "62c4af1bf2f452f912a727f0277a2baf5e0e9f8ff8b28a080a39bbdf1326cb29",
+          "tests_sha256": "7d3b2375b0a68731aa828d8e447d7099ce30b15d74f75177f3d608fb5ec3a8a4",
+          "job_script_sha256": "0dfb184f8861e2b44eba7edf85999a7a137821a0d8bfdc7f16048545318c82ed",
+          "actual_census_sha256": "0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d",
+          "source_inputs": 4862,
+          "source_tokens": 240739,
+          "longest_source_tokens": 71,
+          "planned_bf16_state_bytes": 1848875520,
+          "backbone": "Same exact frozen Gemma role clone, BF16 CPU base.model.last_hidden_state only; no language head or labels.",
+          "soft_stop_seconds": 1800,
+          "scheduler_limit": "02:00:00",
+          "owner_account": "mxrayan",
+          "full_export_budget_selected": false,
+          "fit_budget_selected": false,
+          "recovery": "Recognized uncommitted scratch retained with sealed same-root quarantine; previously committed tensors always reverified and unchanged. OS worker lock covers verification, recovery, model loading and publication.",
+          "independent_review": "No launch blocker; 26 tests and Bash syntax pass. Dedicated actual census terminal pin and complete roster verified.",
+          "result_pending": false,
+          "qualified_for_product": false,
+          "pilot_job": 576999,
+          "pilot_code_commit": "e614fba6bf3e78cdc1359e0e0ec9119e050a9492",
+          "pilot_scheduler_state": "FAILED",
+          "pilot_scheduler_exit": "1:0",
+          "actual_feature_measurement_pending": true,
+          "first_pilot_failure": {
+            "schema": "mfm-public-feature-pilot-runtime-failure-v1",
+            "job": 576999,
+            "owner_account": "mxrayan",
+            "scheduler_state": "FAILED",
+            "scheduler_exit": "1:0",
+            "elapsed": "00:01:08",
+            "max_rss_kib": 404236,
+            "code_commit": "e614fba6bf3e78cdc1359e0e0ec9119e050a9492",
+            "job_script_sha256": "0dfb184f8861e2b44eba7edf85999a7a137821a0d8bfdc7f16048545318c82ed",
+            "runtime_tests_run": 86,
+            "runtime_tests_passed": 85,
+            "runtime_test_failures": 1,
+            "runtime_test_seconds": 45.67,
+            "failing_test": "test_resealed_wrong_input_ids_or_geometry_rejected",
+            "first_rejection": "public feature source receipt binding differs",
+            "expected_test_branch": "input or mask differs from source census",
+            "tensor_validation_reached": false,
+            "original_failure_preserved": true,
+            "raw_log_sha256": {
+              "rayan-mfm-public-features-576999.err": "9d09d4bd9985790711b406f28e41471c7d54d995ca29bbcbdce1265547cbf52c",
+              "rayan-mfm-public-features-576999.out": "33c1cd729bb4d55e76387808e2211e454f5ba2d9a78a0bb1f7012d10a267a5df"
+            },
+            "established": "The fixture was rejected by a prior source receipt/directory predicate; it did not prove its intended tensor-validation branch. Logs alone do not identify which predicate differs.",
+            "hypothesis_pending_actual_control": "Retained safetensors mmap during same-path replacement may leave an NFS hidden inode, changing the exact directory roster. Confirm each predicate and original mapped versus owned-copy control in actual unchanged runtime.",
+            "model_weights_loaded": false,
+            "source_feature_export_started": false,
+            "optimizer_created": false,
+            "authority_written": false,
+            "qualified_for_product": false,
+            "final_payloads_opened": false,
+            "paid_compute_used": false
+          },
+          "failure_public_projection": "docs/receipts/MFM_CONDITIONAL_FEATURE_PILOT_576999_FAILURE_PUBLIC.json",
+          "fixture_diagnostic": {
+            "job": 577003,
+            "owner_account": "mxrayan",
+            "code_commit": "e614fba6bf3e78cdc1359e0e0ec9119e050a9492",
+            "script_sha256": "349306b1658b209260123c670e7a0df95402f68d8dedd493f37baecbb7608ae8",
+            "diagnostic_sha256": "16f1fa748272900f81b63ea2187c07b51f0005f3ce9a1a264d9e1c3e50c6f096",
+            "cpus": 2,
+            "memory_gib": 4,
+            "scheduler_cap_minutes": 15,
+            "pending": false,
+            "scope": "Actual original mapped wrong-ID, released owned-clone wrong-ID and valid owned-clone controls; record every source receipt predicate and exact directory roster before and after release. No Gemma or optimizer.",
+            "setup_failure_preserved": {
+              "job": 577002,
+              "state": "FAILED",
+              "exit": "2:0",
+              "elapsed_seconds": 2,
+              "original_recipe_sha256": "5abb9e22818a18381bcb555968d306fe8cf8279092347043c15185b55a6fc38b",
+              "unchanged_repository_commit": "e614fba6bf3e78cdc1359e0e0ec9119e050a9492",
+              "ordered_diagnosis": [
+                {
+                  "step": 1,
+                  "evidence": "The actual log reports shell -c unexpected EOF. Only namespace entry ran; no container, fixture, Gemma or optimizer reached. Preserve original recipe and both logs."
+                },
+                {
+                  "step": 2,
+                  "claim": "Measure original mapped versus released-clone fixture guards in the exact source runtime; failed setup establishes none of that claim."
+                },
+                {
+                  "step": 3,
+                  "trace": "Allocated batch -> private namespace -> outer bash -c -> container command parsing. MFM code remains unchanged."
+                },
+                {
+                  "step": 4,
+                  "cause": "An unescaped single quote in the inner sha256 cut delimiter closed the enclosing outer single-quoted shell argument. Original bash -n checked only the outer recipe and missed the decoded nested boundary."
+                },
+                {
+                  "step": 5,
+                  "guarantees": "The wrapper must retain own-account allocation, namespace checks, runtime lock, immutable code, diagnostic hash and separate output custody. No import/compute on login host."
+                },
+                {
+                  "step": 6,
+                  "correction": "Use quoted Bash parameter suffix removal for the checksum, with no literal inner single quotes. Decode both shell arguments and verify all three syntax layers. Preserve original job; use distinct v2 recipe/submission receipt."
+                },
+                {
+                  "step": 7,
+                  "research": "GNU Bash manual single-quote and parameter-expansion rules; existing protected wrapper responsibility. No production architecture change."
+                },
+                {
+                  "step": 8,
+                  "verification": "Original outer-only syntax check was insufficient. Corrected recipe, decoded namespace wrapper and decoded container guest all pass real Bash syntax validation. Actual runtime fixture evidence remains pending the bounded v2 diagnostic."
+                }
+              ],
+              "primary_sources": [
+                "https://www.gnu.org/software/bash/manual/html_node/Single-Quotes.html",
+                "https://www.gnu.org/s/bash/manual/html_node/Shell-Parameter-Expansion.html"
+              ],
+              "v2_recipe_sha256": "349306b1658b209260123c670e7a0df95402f68d8dedd493f37baecbb7608ae8",
+              "raw_log_sha256": {
+                "rayan-mfm-feature-fixture-diag-577002.err": "46ae4b1ca3cb6c0b686fb3a19c64c56681d99cacf6d801c5175c47e39d574bfb",
+                "rayan-mfm-feature-fixture-diag-577002.out": "9c1fc52655037420cbb67a1bab0dc58a32092e1d17454abe9c19e68dec585185"
+              },
+              "production_modified": false,
+              "gemma_loaded": false,
+              "optimizer_created": false,
+              "qualified_for_product": false
+            },
+            "result": {
+              "schema": "mfm-public-feature-fixture-diagnosis-v1",
+              "job": 577003,
+              "state": "COMPLETED",
+              "exit": "0:0",
+              "elapsed_seconds": 38,
+              "max_rss_kib": 190852,
+              "owner_account": "mxrayan",
+              "unchanged_code_commit": "e614fba6bf3e78cdc1359e0e0ec9119e050a9492",
+              "external_diagnostic_file_sha256": "8339705785757f25da7207997c08b2651dcbc5a16d47b2288e427ca5e1a7110d",
+              "recipe_sha256": "349306b1658b209260123c670e7a0df95402f68d8dedd493f37baecbb7608ae8",
+              "diagnostic_script_sha256": "16f1fa748272900f81b63ea2187c07b51f0005f3ce9a1a264d9e1c3e50c6f096",
+              "runtime": {
+                "python": "3.11.16",
+                "torch": "2.7.1+cu118",
+                "safetensors": "0.8.0"
+              },
+              "original_code_hashes": {
+                "exporter_sha256": "62c4af1bf2f452f912a727f0277a2baf5e0e9f8ff8b28a080a39bbdf1326cb29",
+                "tests_sha256": "7d3b2375b0a68731aa828d8e447d7099ce30b15d74f75177f3d608fb5ec3a8a4"
+              },
+              "modes": [
+                {
+                  "mode": "original_mapped_wrong_ids",
+                  "before_load_accepted": true,
+                  "retained_after_reseal": {
+                    "receipt_predicates": {
+                      "directory_children_exact": false,
+                      "export_sha256_equal": true,
+                      "serialized_tensors_exact_is_true": true,
+                      "source_input_equal": true,
+                      "target_visible_to_backbone_is_false": true
+                    },
+                    "hidden_nfs_files": 1,
+                    "file_digest_matches": true,
+                    "read_source": {
+                      "accepted": false,
+                      "exception_type": "ValueError",
+                      "message": "public feature source receipt binding differs",
+                      "tensor_validator_calls": []
+                    }
+                  },
+                  "after_release": {
+                    "all_receipt_predicates_match": true,
+                    "hidden_nfs_files": 0,
+                    "read_source": {
+                      "accepted": false,
+                      "exception_type": "ValueError",
+                      "message": "public feature input or mask differs from source census",
+                      "tensor_validator_calls": [
+                        {
+                          "input_ids": [
+                            [
+                              2,
+                              5
+                            ]
+                          ],
+                          "mask": [
+                            [
+                              1,
+                              1
+                            ]
+                          ],
+                          "states_dtype": "torch.bfloat16",
+                          "states_shape": [
+                            1,
+                            2,
+                            3
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "mode": "owned_clone_wrong_ids",
+                  "before_load_accepted": true,
+                  "retained_after_reseal": {
+                    "receipt_predicates": {
+                      "directory_children_exact": true,
+                      "export_sha256_equal": true,
+                      "serialized_tensors_exact_is_true": true,
+                      "source_input_equal": true,
+                      "target_visible_to_backbone_is_false": true
+                    },
+                    "hidden_nfs_files": 0,
+                    "file_digest_matches": true,
+                    "read_source": {
+                      "accepted": false,
+                      "exception_type": "ValueError",
+                      "message": "public feature input or mask differs from source census",
+                      "tensor_validator_calls": [
+                        {
+                          "input_ids": [
+                            [
+                              2,
+                              5
+                            ]
+                          ],
+                          "mask": [
+                            [
+                              1,
+                              1
+                            ]
+                          ],
+                          "states_dtype": "torch.bfloat16",
+                          "states_shape": [
+                            1,
+                            2,
+                            3
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "after_release": {
+                    "all_receipt_predicates_match": true,
+                    "hidden_nfs_files": 0,
+                    "read_source": {
+                      "accepted": false,
+                      "exception_type": "ValueError",
+                      "message": "public feature input or mask differs from source census",
+                      "tensor_validator_calls": [
+                        {
+                          "input_ids": [
+                            [
+                              2,
+                              5
+                            ]
+                          ],
+                          "mask": [
+                            [
+                              1,
+                              1
+                            ]
+                          ],
+                          "states_dtype": "torch.bfloat16",
+                          "states_shape": [
+                            1,
+                            2,
+                            3
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "mode": "owned_clone_valid",
+                  "before_load_accepted": true,
+                  "retained_after_reseal": {
+                    "receipt_predicates": {
+                      "directory_children_exact": true,
+                      "export_sha256_equal": true,
+                      "serialized_tensors_exact_is_true": true,
+                      "source_input_equal": true,
+                      "target_visible_to_backbone_is_false": true
+                    },
+                    "hidden_nfs_files": 0,
+                    "file_digest_matches": true,
+                    "read_source": {
+                      "accepted": true,
+                      "tensor_validator_calls": [
+                        {
+                          "input_ids": [
+                            [
+                              2,
+                              4
+                            ]
+                          ],
+                          "mask": [
+                            [
+                              1,
+                              1
+                            ]
+                          ],
+                          "states_dtype": "torch.bfloat16",
+                          "states_shape": [
+                            1,
+                            2,
+                            3
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "after_release": {
+                    "all_receipt_predicates_match": true,
+                    "hidden_nfs_files": 0,
+                    "read_source": {
+                      "accepted": true,
+                      "tensor_validator_calls": [
+                        {
+                          "input_ids": [
+                            [
+                              2,
+                              4
+                            ]
+                          ],
+                          "mask": [
+                            [
+                              1,
+                              1
+                            ]
+                          ],
+                          "states_dtype": "torch.bfloat16",
+                          "states_shape": [
+                            1,
+                            2,
+                            3
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "cause": "The adversarial fixture retained mapped tensors while safetensors atomically replaced the same file on NFS. The retained old inode appeared as a hidden .nfs file, violating the exact directory roster before tensor validation. Released independent clones remove that unintended setup condition.",
+              "correction_scope": "Test-owned tensor storage and explicit guard-reaching corruption controls. Production exporter and its strict directory/input/geometry guards unchanged.",
+              "model_forward": "Only the real tiny fixture embedding source forward. Gemma weights, optimizer and owner inputs were not opened.",
+              "source_export_measured": false,
+              "mfm_learning_proved": false,
+              "qualified_for_product": false,
+              "primary_sources": [
+                "https://github.com/huggingface/safetensors/blob/v0.8.0/safetensors/src/tensor.rs#L288",
+                "https://github.com/huggingface/safetensors/blob/v0.8.0/bindings/python/src/lib.rs#L556",
+                "https://github.com/torvalds/linux/blob/v3.10/fs/nfs/unlink.c#L418"
+              ],
+              "preserved_raw_sha256": {
+                "diagnostic.json": "8339705785757f25da7207997c08b2651dcbc5a16d47b2288e427ca5e1a7110d",
+                "independent-review.json": "004d78501b5c75ca1434626689a4d45d9c5a96ffd7692be610d9b71cda0a7e3d",
+                "rayan-mfm-feature-fixture-diag-577003.err": "f5716cbfda7d4ff63e6149de0201a66bf5a253603fa45252d9951a999b0b62d5",
+                "rayan-mfm-feature-fixture-diag-577003.out": "9243bab6d2fd23792311a3947d9e2cd01af22e9ed8c9fd47d7f8664b43f00eed",
+                "rayan-mfm-feature-fixture-diag-577003.stdout": "60ea7899167754f93c272a1f82de6ce36d65ac0824a2a82fc18237d0d9fb5f44"
+              }
+            },
+            "public_projection": "docs/receipts/MFM_CONDITIONAL_FEATURE_FIXTURE_DIAGNOSIS_577003_PUBLIC.json"
+          },
+          "fixture_correction": {
+            "corrected_tests_sha256": "52e5a196f217bfbe35d88e3732727ce91c3b41b1f6363f2032daaebe7fa0c6ce",
+            "production_exporter_unchanged": true,
+            "production_exporter_sha256": "62c4af1bf2f452f912a727f0277a2baf5e0e9f8ff8b28a080a39bbdf1326cb29",
+            "author_focused_tests": 31,
+            "author_seconds": 30.13,
+            "independent_focused_tests": 31,
+            "independent_seconds": 37.619,
+            "root_affected_tests": 91,
+            "root_seconds": 29.66,
+            "root_local_log_sha256": "1528ccad50762fc618f1778951125c0dc45bbcc8cd53ad3b376d3e054c47fc9b",
+            "matrix": [
+              "Wrong source IDs",
+              "Wrong mask",
+              "Wrong state shape",
+              "Wrong state dtype",
+              "Nonfinite states",
+              "Valid owned-clone complete-bank roundtrip"
+            ],
+            "guard_reached": "Real exception traceback includes _validate_tensors for every corrupt source and complete-bank reader after all earlier receipt predicates match.",
+            "actual_corrected_runtime_pending": true,
+            "real_gemma_export_pending": true,
+            "qualified_for_product": false
+          },
+          "current_source_export_submission": {
+            "job": 577006,
+            "owner_account": "mxrayan",
+            "code_commit": "db1929fa71f528dae707267f14391c5f1d49ddcc",
+            "recipe_sha256": "8b8da9e96e6d84902ec4e7b1bee957754398f4d38ffebb8acfb8cdcb43a015de",
+            "controller_sha256": "caeff2309eb1fb6fc237f2222fa6e88f04bc612552e9d4980121f850f112d752",
+            "bundle_sha256": "482ca5597c54b6a59160b9f05b522c03c21aef848a4fa5af4bfd3837ea1cbe86",
+            "runtime_checks_pending": false,
+            "source_measurement_pending": false,
+            "previous_feature_output_absent_verified": true,
+            "original_failures_retained": [
+              576999,
+              577002
+            ],
+            "unchanged_diagnostic_control": 577003,
+            "frozen_backbone_only": true,
+            "language_answer_head_used": false,
+            "targets_visible_to_backbone": false,
+            "optimizer_created": false,
+            "full_fit_budget_selected": false,
+            "qualified_for_product": false,
+            "actual_runtime_tests_passed": 91,
+            "actual_runtime_test_seconds": 48.012,
+            "source_export_started": true,
+            "source_bank_complete": false,
+            "actual_terminal": {
+              "complete": false,
+              "completed": 144,
+              "public_conditional_feature_export_sha256": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+              "public_conditional_feature_progress_sha256": "55309a74fa753d7e3b38b150eff3953f80fd38b085627950cd92d48c0161f7a9",
+              "qualified_for_product": false,
+              "seconds": 1808.2830138616264,
+              "total": 4862
+            },
+            "actual_scheduler_state": "COMPLETED",
+            "actual_exit_code": "0:0",
+            "actual_peak_process_tree_rss_kib": 22148824,
+            "scheduler_rss_is_wrapper_only": true,
+            "public_recovery_receipt": "docs/receipts/MFM_SOURCE_EXPORT_BLOCK_577006_PUBLIC.json"
+          },
+          "initial_source_export_block_recipe": {
+            "path": "scripts/mfm/magnolia_public_conditional_features_v2_20261007.sbatch",
+            "sha256": "8b8da9e96e6d84902ec4e7b1bee957754398f4d38ffebb8acfb8cdcb43a015de",
+            "outer_and_both_decoded_shell_layers_syntax_verified": true,
+            "same_roster_and_frozen_base": true,
+            "actual_corrected_91_test_gate_before_model_load": true,
+            "soft_stop_seconds": 1800,
+            "scheduler_cap_hours": 2,
+            "full_fit_budget_selected": false,
+            "role": "The first scheduled block of the same complete source-bank export, not a reduced model or an independently sufficient development stage."
+          },
+          "full_source_export_continuation": {
+            "recipe": "scripts/mfm/magnolia_public_conditional_source_export_20261007.sbatch",
+            "recipe_sha256": "5fbbac46b329806b158a56aa09cbceeb3ab07bf26555251fd567b384d45469e5",
+            "parent_job": 577006,
+            "dependency": "afterok:577006",
+            "worker_scheduling_block_seconds": 28800,
+            "scheduler_limit_hours": 12,
+            "entire_source_roster": 4862,
+            "same_export_pin": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+            "verify_parent_terminal_and_progress_pin_before_resume": true,
+            "verify_complete_committed_prefix_before_model_load": true,
+            "completed_checks_reused": "91 corrected actual-runtime checks48.012s; unchanged exporter/helper/base/census/runtime assumptions.",
+            "complete_bank_required_before_training": true,
+            "submitted": true,
+            "job": 577007,
+            "owner_account": "mxrayan",
+            "code_commit": "538882dd6f9e975521836e0fe96355fe2c7084f2",
+            "controller_sha256": "3ee02e1ebf84a85df0e56f7307d147ff691376b512b35fc0120560a6fdf577bf",
+            "bundle_sha256": "f2a318eb2e72e2d43a7cc62abdb2c195b44a8f25fa4c962adbc89212c6ae9142",
+            "actual_state_at_snapshot": "RUNNING",
+            "actual_parent_receipt_file_sha256": "2e11dad36c0d0b75b066d3b42186a3d86177f155b1831b02395de7fbf8df2d2c",
+            "actual_parent_cli_file_sha256": "8798f1b7e486c5d64fc1af606985925b1b0494ed042d38fdc80fdbce6b8f2618",
+            "actual_parent_progress_pin": "55309a74fa753d7e3b38b150eff3953f80fd38b085627950cd92d48c0161f7a9",
+            "actual_parent_completed_sources": 144,
+            "observed_child_committed_sources": 175,
+            "snapshot_is_not_terminal_pin": true,
+            "complete_bank": false
+          }
+        },
+        "next_action": "Finish the same complete4,862-source bank via verified immediate-parent scheduling continuations. Build and review the public reader, parameter-free task binding and real full-roster trainer with exact restart. Then measure full-geometry learning resources on the complete bank, select the free allocation and learn the foundation; continue full formation with typed identities/literals, broader semantics, native modalities and governed feedback. Archive stable verified public artifacts in Drive; preserve original failures and exact MFM/FBM/Graphify context.",
         "full_role_gaps": [
           "expanded independently reviewed formation teaching",
           "learned typed selection and source-span copy integrated into semantic producer",
@@ -2376,9 +2846,262 @@
           "cpu_threads": 12,
           "memory_gib": 64,
           "time_limit": "03:00:00",
-          "result_pending": true,
+          "result_pending": false,
           "local_batch_independent_review": "Bash syntax, exact CLI flags/pins,60 fresh recipe-selected tests and preserved protected wrapper reviewed independently; no launch blocker.",
-          "outputs": "Owner-only rayan-mfm/runs/rayan-mfm-public-census-576995; external terminal pin must be verified before export."
+          "outputs": "Owner-only rayan-mfm/runs/rayan-mfm-public-census-576995; external terminal pin must be verified before export.",
+          "scheduler_state": "COMPLETED",
+          "scheduler_exit": "0:0",
+          "elapsed": "00:03:19",
+          "max_rss_kib": 842744,
+          "census_sha256": "0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d",
+          "public_projection": "docs/receipts/MFM_CONDITIONAL_CENSUS_576995_PUBLIC.json",
+          "result": {
+            "schema": "mfm-public-conditional-census-aggregate-v1",
+            "recorded_at_utc": "2026-10-07T17:00:07.430834+00:00",
+            "job": 576995,
+            "owner_account": "mxrayan",
+            "scheduler_state": "COMPLETED",
+            "scheduler_exit": "0:0",
+            "elapsed": "00:03:19",
+            "max_rss_kib": 842744,
+            "actual_runtime_tests_passed": 60,
+            "actual_runtime_test_seconds": 1.166,
+            "code_commit": "480f8bff7334d8691f84d5896de09de0deaeb815",
+            "job_script_sha256": "f5361661deaa9d13f60eadf68f2a46951d0572381c0ef2ca3fb37ed75f5910fd",
+            "externally_published_census_sha256": "0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d",
+            "census_file_sha256": "e61ba06467a4812c4c30697aaa7c123862c113e82599e391bf5c67191732ca95",
+            "encoded_pairs_sha256": "490a84406ad4d1988d42e929782206c4437fce9aea447e3f2098086e283e11c0",
+            "source_inputs_sha256": "721567a70c7f9c287c6a29569fbd8defd03dde7e94e099ec86b7c2fb5843f172",
+            "material_receipt_file_sha256": "4fbc533ff9373e6f54d598bd57aadf8c476da36831df76e6b91400299c4edb36",
+            "prepared_clone_receipt_sha256": "54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7",
+            "base_hidden_size": 3840,
+            "foundation_vocabulary": 262144,
+            "torch_version": "2.7.1+cu118",
+            "transformers_version": "5.17.0",
+            "complete_census_seconds": 42.56000903248787,
+            "complete_token_roundtrip_checked": true,
+            "bos_eos": {
+              "bos": 2,
+              "eos": 1
+            },
+            "rows": 40868,
+            "split_counts": {
+              "development": 4271,
+              "train": 36597
+            },
+            "source_tokens": {
+              "development": 207784,
+              "train": 1779143
+            },
+            "target_tokens": {
+              "development": 133337,
+              "train": 1138566
+            },
+            "largest_source_tokens": 71,
+            "largest_target_tokens": 84,
+            "largest_train_source_target_pairs": 5520,
+            "train_positive_label_types": 3341,
+            "train_label_types_once": 1173,
+            "train_label_types_2_to_9": 1176,
+            "unique_source_inputs": 4862,
+            "unique_source_tokens": 240739,
+            "planned_states_bf16_bytes": 1848875520,
+            "original_pair_and_source_rosters_verified": true,
+            "independent_statistics_reconciled": true,
+            "census_pass_scope": "Complete original-material encoding and source/target bookkeeping under actual prepared Gemma processor. No conditional generation learned or formation capability established.",
+            "model_weights_loaded": false,
+            "optimizer_created": false,
+            "authority_written": false,
+            "qualified_for_product": false,
+            "independent_gold": false,
+            "final_payloads_opened": false,
+            "paid_compute_used": false,
+            "record_sha256": "ec2831151ac6bb628862b29186df202d9ebf58ed4526b815057fffe8623ff604"
+          }
+        },
+        "local_runtime_diagnosis": {
+          "original_result": "61 selected tests: 60 pass, feature module import error before behavior; wrong runtime search path.",
+          "preserved_original": "Private local work/receipts/mfm-feature-local-runtime-import-error-20261007.txt",
+          "steps_in_order": [
+            "1. Import stopped before feature assertions; no product failure verdict.",
+            "2. Intended proof is actual feature serialization and interruption-safe preparation for full MFM.",
+            "3. Trace test environment routing; no exporter/model departure observed.",
+            "4. Missing safetensors from the chosen venv search path, existing package found outside it.",
+            "5. safetensors 0.8.0 already exists in work/runtime; independent global Python 3.13/Torch 2.7.1 route also runs the same 26 tests.",
+            "6. Include the existing runtime explicitly without installation, implementation change or assertion weakening.",
+            "7. Follow compute recovery and the existing primary safetensors implementation and Python module routing.",
+            "8. Fresh same combined 86-test selection passes in 34.900s; real serialization/recovery controls retained."
+          ]
+        },
+        "durable_storage": {
+          "preferred": "Owner Google Drive; Magnolia is the required working copy during protected jobs.",
+          "user_direction": "Prefer Drive to conserve Magnolia storage.",
+          "folder_id": "1o0m59Mhsikxqbj9qQxDPqXnYN1wlHaq_",
+          "folder_url": "https://drive.google.com/drive/folders/1o0m59Mhsikxqbj9qQxDPqXnYN1wlHaq_",
+          "material_census_archive_file_id": "1Cdf0MS1Z_AuIcLTS-moS8rACmZxOv5QK",
+          "material_census_archive_url": "https://drive.google.com/file/d/1Cdf0MS1Z_AuIcLTS-moS8rACmZxOv5QK/view?usp=drivesdk",
+          "archive_bytes": 24358812,
+          "archive_sha256": "857f472bd04e52208579ad3b195a6e317086cafa03cd9ae09c13416567ada512",
+          "archive_member_pins_verified": 19,
+          "authenticated_full_download_sha256_matches": true,
+          "sharing": "Owner only; no external permission added.",
+          "quota_exposed_by_connector": false,
+          "model_weights_included": false,
+          "private_evidence_included": false,
+          "next_storage_action": "Archive completed frozen-source features and receipts to this Drive folder with complete file hashes and authenticated restore verification. Keep every live export/fit dependency until its durable copy and restoration are verified; no historical artifact removed.",
+          "archive_drive_name": "sha256-857f472bd04e52208579ad3b195a6e317086cafa03cd9ae09c13416567ada512.zip",
+          "direct_magnolia_drive_route": {
+            "binary": "Existing rclone v1.75.0",
+            "alias": "rayan_gdrive",
+            "probe_result": "about and exact observed-folder metadata probe both reject stored OAuth grant as invalid_grant before storage reads. No quota, identity or transfer success established. Expired/revoked/client rejection alternatives remain undistinguished.",
+            "retry_or_reauthentication_performed": false,
+            "working_fallback": "Connected owner Drive upload plus full authenticated restore was verified.",
+            "primary_docs": [
+              "https://rclone.org/commands/rclone_config_reconnect/",
+              "https://rclone.org/drive/"
+            ]
+          },
+          "storage_policy": {
+            "operational_bytes": 380000000000,
+            "hard_bytes": 400000000000,
+            "reserve_bytes": 20000000000,
+            "provider_quota_measured": false,
+            "current_usage_gate_pending": false,
+            "process_gap": "The 24.36 MB public archive was uploaded and restored before the canonical storage-budget usage gate was independently recomputed; do not claim that gate passed retroactively. No further bulk archive upload until current scoped usage and prospective bytes are checked.",
+            "next_check": "Before an actual bank archive write, reconcile complete archive size and additional retained copies with the prospective 3,000,000,000-byte allowance. Provider quota remains unknown.",
+            "current_scoped_gate": {
+              "schema": "mfm-drive-scoped-storage-gate-public-v1",
+              "observed_at_utc": "2026-10-07T17:43:31Z",
+              "scopes": [
+                {
+                  "name": "Rayan-Compute",
+                  "files": 20,
+                  "logical_bytes": 178404
+                },
+                {
+                  "name": "MFM_public_source_custody",
+                  "files": 10,
+                  "logical_bytes": 79112393
+                }
+              ],
+              "combined": {
+                "distinct_scopes": 2,
+                "distinct_folders_including_roots": 27,
+                "distinct_files": 30,
+                "logical_bytes": 79290797
+              },
+              "listing_repeat": {
+                "completed_by_utc": "2026-10-07T17:43:31Z",
+                "time_basis": "Clock read after the unchanged final listing pass",
+                "folder_count": 27,
+                "unchanged_count": 27,
+                "changed_count": 0,
+                "failed_count": 0
+              },
+              "checks": {
+                "distinct_file_ids": true,
+                "distinct_scope_trees": true,
+                "listed_child_parent_links_checked": 55,
+                "listed_child_parent_links_matching": 55,
+                "file_sizes_present": 30,
+                "unknown_file_sizes": 0,
+                "pending_descendant_folders": 0,
+                "failed_initial_listings": 0,
+                "failed_metadata_reads": 0,
+                "largest_listing_children": 10,
+                "listing_limit": 1000,
+                "limit_reached_folders": 0,
+                "truncation_indicated": false,
+                "connector_visible_inventory_complete": true,
+                "shortcuts_or_native_document_files": 0
+              },
+              "policy": {
+                "source": "alice-compute-recovery/references/artifact-custody.md recorded policy and parent-supplied current caps",
+                "operational_soft_bytes": 380000000000,
+                "hard_bytes": 400000000000,
+                "reserve_bytes": 20000000000,
+                "provider_quota": false,
+                "provider_total_usage_bytes": null,
+                "provider_quota_bytes": null,
+                "policy_change_check": "No policy contents re-read in this metadata-only task; supplied caps applied"
+              },
+              "prospective": {
+                "purpose": "Next bounded public conditional source bank archive; no model-training capacity claim",
+                "bf16_state_bytes_lower_bound": 1848875520,
+                "state_token_count": 240739,
+                "state_width": 3840,
+                "bytes_per_state_scalar": 2,
+                "bf16_lower_bound_excludes": [
+                  "token IDs",
+                  "attention masks",
+                  "metadata",
+                  "archive overhead",
+                  "temporary or duplicate storage"
+                ],
+                "conservative_next_archive_allowance_bytes": 3000000000,
+                "projected_combined_with_archive_allowance_bytes": 3079290797,
+                "operational_headroom_after_archive_allowance_bytes": 376920709203,
+                "hard_headroom_after_archive_allowance_bytes": 396920709203,
+                "reserve_preserved_under_scoped_policy": true,
+                "scoped_logical_gate_below_operational_cap": true,
+                "final_write_condition": "Reconcile actual complete archive bytes and any additional retained copies against this allowance before writing; storage outside these measured scopes is not covered"
+              },
+              "limitations": {
+                "scope": "Connected-Drive-visible descendants of the two exact observed roots only",
+                "provider_wide_usage": "Unknown; not scanned",
+                "provider_quota": "Unknown; not measured",
+                "trashed_items_and_revision_storage": "Unknown; excluded from scoped current logical file sizes",
+                "atomicity": "Read-only metadata observation with a repeated unchanged listing pass; not an atomic provider-wide snapshot",
+                "archive_hash_verification": "Earlier round-trip SHA256 verification reported by parent; this metadata audit did not re-download file contents"
+              },
+              "upload_before_gate_process_gap_preserved": true,
+              "private_metadata_receipt_sha256": "e3e7c037befea6838abce9f0760d564e662e2d9731ff7950d8c21be461cfe4b6",
+              "qualified_for_product": false
+            },
+            "gate_public_projection": "docs/receipts/MFM_DRIVE_SCOPED_STORAGE_GATE_20261007_PUBLIC.json"
+          },
+          "measured_storage": {
+            "local_free_bytes": 52029239296,
+            "magnolia_shared_used_percent": 98,
+            "magnolia_shared_available_bytes": 2771475496960,
+            "mfm_runs_bytes": 206612362403,
+            "old_feature_bank_raw_bytes": 3929411750
+          },
+          "old_private_artifacts_destination": "Preserve separate existing private teacher custody; public E2E archives do not change their classification."
+        },
+        "gemma_foundation_boundary": {
+          "user_reaffirmed_20261007": true,
+          "gemma_role": "Base source encoder; MFM foundation is constructed on top with separately learned formation-specific weights, objectives and consumer contracts.",
+          "language_answer_head_used": false,
+          "pretrained_language_bridge_adopted": false,
+          "foundation_before_owner_personalization": true,
+          "current_trained_producer_changed": false
+        },
+        "owner_full_build_constraint": {
+          "reaffirmed_20261007": true,
+          "prohibited_label": "pilot",
+          "reduced_model_or_capability_delivery_allowed": false,
+          "scope": "Full-capability MFM for Alice/Fable V1; foundation before personalization. Finite allocations and test diagnostics serve this construction and do not become a smaller development mode.",
+          "root_error": "The agent used the prohibited label and introduced a separate30minute measurement stopping point. The source roster, model width, processor lengths and frozen weights were complete, but the framing and next-step boundary were wrong.",
+          "correction": "Finish the same entire4,862-source bank via verified scheduling continuations, then build and train the fresh foundation and full formation path. Reuse valid91 runtime checks; preserve historical immutable recipes and original failures.",
+          "no_active_job_mutation_or_cancellation": true,
+          "historical_receipts_preserved": true
+        },
+        "foundation_training_implementation": {
+          "contract": "docs/MFM_PUBLIC_FOUNDATION_PRODUCER_CONTRACT_2026-10-07.md",
+          "plan": "docs/superpowers/plans/2026-10-07-mfm-public-foundation-training.md",
+          "state": "TASK1_PUBLIC_READER_AND_OBJECTIVE_IMPLEMENTING",
+          "producer": "Fresh full-geometry FormationDecisionSpecialist; frozen Gemma source encoder only.",
+          "objective": "Sequence mean including EOS, then reference mean, then equal semantic-MR mean.",
+          "complete_training_pairs": 36597,
+          "complete_development_pairs": 4271,
+          "training_semantic_groups": 4356,
+          "development_semantic_groups": 506,
+          "parameter_free_task": "conditional_meaning_to_text",
+          "full_bank_external_pin_required": true,
+          "training_started": false,
+          "full_formation_transfer_required": true,
+          "product_qualification": false
         }
       }
     },
@@ -3527,7 +4250,7 @@
       "reference": "docs/MFM_SEQUENCE_FAILURE_DISCRIMINATOR_2026-10-07.md"
     },
     "full_role_sequence_successor_20261007": {
-      "state_at_snapshot": "ACTUAL_PROCESSOR_CENSUS_SUBMITTED_SOURCE_EXPORT_RECOVERY_IN_REVIEW",
+      "state_at_snapshot": "FULL_SOURCE_BANK_EXPORT_IN_PROGRESS_WITH_VERIFIED_CONTINUATION",
       "goal": "Full semantic MFM for Alice and Fable V1; source meaning, prior state, time, uncertainty, native modalities and governed accepted-memory outcomes remain required.",
       "retained_failure_analysis_sha256": "350ac0ad3fa8f340db5596473f89cec026ff3c25827e2323bc6b50b0ef9de1d0",
       "research_documents": [
@@ -3572,11 +4295,15 @@
         "scripts/mfm/magnolia_public_conditional_census_20261007.sbatch": "f5361661deaa9d13f60eadf68f2a46951d0572381c0ef2ca3fb37ed75f5910fd"
       },
       "local_verification": {
-        "scoped_tests": 60,
+        "scoped_tests": 86,
         "passed": true,
-        "seconds": 2.781,
+        "seconds": 34.9,
         "full_material_pairs_verified": 40868,
-        "evidence_scope": "Mock processor/clone/isolation fixtures prove caller, material and census contracts; actual Gemma token representability and runtime remain the pending job result."
+        "evidence_scope": "Mock processor/clone/isolation fixtures prove caller, material and census contracts; actual Gemma token representability and runtime remain the pending job result.",
+        "setup": "Existing personality-venv with repo/src, repo and work/runtime; no package installation.",
+        "independent_exporter_tests": 26,
+        "independent_exporter_test_seconds": 26.715,
+        "exporter_test_scope": "Real tiny BF16 source forward and safetensors, real abrupt child exits, OS lock, exact tensor preservation, quarantine tamper/rename recovery, CLI connection with mocked large model loader and clone hashing. Full Gemma performance remains the pilot result."
       },
       "broader_windows_suite": {
         "passed": 1897,
@@ -3588,8 +4315,474 @@
         "evidence_scope": "Snapshot taken while new modules were in TDD. Frozen fixture CRLF differs from its pinned Git LF blob; Windows lacks geteuid assumed by namespace test patch; literal capability scanner misclassifies public-material lane phrasing. Preserve failures; no unrelated runtime changes or broad green claim."
       },
       "ordered_diagnosis_used": true,
-      "source_feature_export": "Reviewed source-only frozen Gemma producer is being completed, including custody-preserving recovery of uncommitted abrupt-interruption artifacts. No source export or training launched yet.",
-      "next_action": "Retrieve and verify576995 external terminal census pin, complete40868 roster, actual token roundtrip/counts, source key geometry and code/clone/runtime/material lineage. After a sound census, export target-free frozen source states in bounded resumable passes. If census fails, follow ordered eight-step diagnosis before correction; do not blindly retry. Feature interruption recovery is being finished in parallel.",
+      "source_feature_export": {
+        "state_at_snapshot": "REVIEWED_86_LOCAL_TESTS_PASSED_PILOT_READY",
+        "exporter_sha256": "62c4af1bf2f452f912a727f0277a2baf5e0e9f8ff8b28a080a39bbdf1326cb29",
+        "tests_sha256": "7d3b2375b0a68731aa828d8e447d7099ce30b15d74f75177f3d608fb5ec3a8a4",
+        "job_script_sha256": "0dfb184f8861e2b44eba7edf85999a7a137821a0d8bfdc7f16048545318c82ed",
+        "actual_census_sha256": "0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d",
+        "source_inputs": 4862,
+        "source_tokens": 240739,
+        "longest_source_tokens": 71,
+        "planned_bf16_state_bytes": 1848875520,
+        "backbone": "Same exact frozen Gemma role clone, BF16 CPU base.model.last_hidden_state only; no language head or labels.",
+        "soft_stop_seconds": 1800,
+        "scheduler_limit": "02:00:00",
+        "owner_account": "mxrayan",
+        "full_export_budget_selected": false,
+        "fit_budget_selected": false,
+        "recovery": "Recognized uncommitted scratch retained with sealed same-root quarantine; previously committed tensors always reverified and unchanged. OS worker lock covers verification, recovery, model loading and publication.",
+        "independent_review": "No launch blocker; 26 tests and Bash syntax pass. Dedicated actual census terminal pin and complete roster verified.",
+        "result_pending": false,
+        "qualified_for_product": false,
+        "pilot_job": 576999,
+        "pilot_code_commit": "e614fba6bf3e78cdc1359e0e0ec9119e050a9492",
+        "pilot_scheduler_state": "FAILED",
+        "pilot_scheduler_exit": "1:0",
+        "actual_feature_measurement_pending": true,
+        "first_pilot_failure": {
+          "schema": "mfm-public-feature-pilot-runtime-failure-v1",
+          "job": 576999,
+          "owner_account": "mxrayan",
+          "scheduler_state": "FAILED",
+          "scheduler_exit": "1:0",
+          "elapsed": "00:01:08",
+          "max_rss_kib": 404236,
+          "code_commit": "e614fba6bf3e78cdc1359e0e0ec9119e050a9492",
+          "job_script_sha256": "0dfb184f8861e2b44eba7edf85999a7a137821a0d8bfdc7f16048545318c82ed",
+          "runtime_tests_run": 86,
+          "runtime_tests_passed": 85,
+          "runtime_test_failures": 1,
+          "runtime_test_seconds": 45.67,
+          "failing_test": "test_resealed_wrong_input_ids_or_geometry_rejected",
+          "first_rejection": "public feature source receipt binding differs",
+          "expected_test_branch": "input or mask differs from source census",
+          "tensor_validation_reached": false,
+          "original_failure_preserved": true,
+          "raw_log_sha256": {
+            "rayan-mfm-public-features-576999.err": "9d09d4bd9985790711b406f28e41471c7d54d995ca29bbcbdce1265547cbf52c",
+            "rayan-mfm-public-features-576999.out": "33c1cd729bb4d55e76387808e2211e454f5ba2d9a78a0bb1f7012d10a267a5df"
+          },
+          "established": "The fixture was rejected by a prior source receipt/directory predicate; it did not prove its intended tensor-validation branch. Logs alone do not identify which predicate differs.",
+          "hypothesis_pending_actual_control": "Retained safetensors mmap during same-path replacement may leave an NFS hidden inode, changing the exact directory roster. Confirm each predicate and original mapped versus owned-copy control in actual unchanged runtime.",
+          "model_weights_loaded": false,
+          "source_feature_export_started": false,
+          "optimizer_created": false,
+          "authority_written": false,
+          "qualified_for_product": false,
+          "final_payloads_opened": false,
+          "paid_compute_used": false
+        },
+        "failure_public_projection": "docs/receipts/MFM_CONDITIONAL_FEATURE_PILOT_576999_FAILURE_PUBLIC.json",
+        "fixture_diagnostic": {
+          "job": 577003,
+          "owner_account": "mxrayan",
+          "code_commit": "e614fba6bf3e78cdc1359e0e0ec9119e050a9492",
+          "script_sha256": "349306b1658b209260123c670e7a0df95402f68d8dedd493f37baecbb7608ae8",
+          "diagnostic_sha256": "16f1fa748272900f81b63ea2187c07b51f0005f3ce9a1a264d9e1c3e50c6f096",
+          "cpus": 2,
+          "memory_gib": 4,
+          "scheduler_cap_minutes": 15,
+          "pending": false,
+          "scope": "Actual original mapped wrong-ID, released owned-clone wrong-ID and valid owned-clone controls; record every source receipt predicate and exact directory roster before and after release. No Gemma or optimizer.",
+          "setup_failure_preserved": {
+            "job": 577002,
+            "state": "FAILED",
+            "exit": "2:0",
+            "elapsed_seconds": 2,
+            "original_recipe_sha256": "5abb9e22818a18381bcb555968d306fe8cf8279092347043c15185b55a6fc38b",
+            "unchanged_repository_commit": "e614fba6bf3e78cdc1359e0e0ec9119e050a9492",
+            "ordered_diagnosis": [
+              {
+                "step": 1,
+                "evidence": "The actual log reports shell -c unexpected EOF. Only namespace entry ran; no container, fixture, Gemma or optimizer reached. Preserve original recipe and both logs."
+              },
+              {
+                "step": 2,
+                "claim": "Measure original mapped versus released-clone fixture guards in the exact source runtime; failed setup establishes none of that claim."
+              },
+              {
+                "step": 3,
+                "trace": "Allocated batch -> private namespace -> outer bash -c -> container command parsing. MFM code remains unchanged."
+              },
+              {
+                "step": 4,
+                "cause": "An unescaped single quote in the inner sha256 cut delimiter closed the enclosing outer single-quoted shell argument. Original bash -n checked only the outer recipe and missed the decoded nested boundary."
+              },
+              {
+                "step": 5,
+                "guarantees": "The wrapper must retain own-account allocation, namespace checks, runtime lock, immutable code, diagnostic hash and separate output custody. No import/compute on login host."
+              },
+              {
+                "step": 6,
+                "correction": "Use quoted Bash parameter suffix removal for the checksum, with no literal inner single quotes. Decode both shell arguments and verify all three syntax layers. Preserve original job; use distinct v2 recipe/submission receipt."
+              },
+              {
+                "step": 7,
+                "research": "GNU Bash manual single-quote and parameter-expansion rules; existing protected wrapper responsibility. No production architecture change."
+              },
+              {
+                "step": 8,
+                "verification": "Original outer-only syntax check was insufficient. Corrected recipe, decoded namespace wrapper and decoded container guest all pass real Bash syntax validation. Actual runtime fixture evidence remains pending the bounded v2 diagnostic."
+              }
+            ],
+            "primary_sources": [
+              "https://www.gnu.org/software/bash/manual/html_node/Single-Quotes.html",
+              "https://www.gnu.org/s/bash/manual/html_node/Shell-Parameter-Expansion.html"
+            ],
+            "v2_recipe_sha256": "349306b1658b209260123c670e7a0df95402f68d8dedd493f37baecbb7608ae8",
+            "raw_log_sha256": {
+              "rayan-mfm-feature-fixture-diag-577002.err": "46ae4b1ca3cb6c0b686fb3a19c64c56681d99cacf6d801c5175c47e39d574bfb",
+              "rayan-mfm-feature-fixture-diag-577002.out": "9c1fc52655037420cbb67a1bab0dc58a32092e1d17454abe9c19e68dec585185"
+            },
+            "production_modified": false,
+            "gemma_loaded": false,
+            "optimizer_created": false,
+            "qualified_for_product": false
+          },
+          "result": {
+            "schema": "mfm-public-feature-fixture-diagnosis-v1",
+            "job": 577003,
+            "state": "COMPLETED",
+            "exit": "0:0",
+            "elapsed_seconds": 38,
+            "max_rss_kib": 190852,
+            "owner_account": "mxrayan",
+            "unchanged_code_commit": "e614fba6bf3e78cdc1359e0e0ec9119e050a9492",
+            "external_diagnostic_file_sha256": "8339705785757f25da7207997c08b2651dcbc5a16d47b2288e427ca5e1a7110d",
+            "recipe_sha256": "349306b1658b209260123c670e7a0df95402f68d8dedd493f37baecbb7608ae8",
+            "diagnostic_script_sha256": "16f1fa748272900f81b63ea2187c07b51f0005f3ce9a1a264d9e1c3e50c6f096",
+            "runtime": {
+              "python": "3.11.16",
+              "torch": "2.7.1+cu118",
+              "safetensors": "0.8.0"
+            },
+            "original_code_hashes": {
+              "exporter_sha256": "62c4af1bf2f452f912a727f0277a2baf5e0e9f8ff8b28a080a39bbdf1326cb29",
+              "tests_sha256": "7d3b2375b0a68731aa828d8e447d7099ce30b15d74f75177f3d608fb5ec3a8a4"
+            },
+            "modes": [
+              {
+                "mode": "original_mapped_wrong_ids",
+                "before_load_accepted": true,
+                "retained_after_reseal": {
+                  "receipt_predicates": {
+                    "directory_children_exact": false,
+                    "export_sha256_equal": true,
+                    "serialized_tensors_exact_is_true": true,
+                    "source_input_equal": true,
+                    "target_visible_to_backbone_is_false": true
+                  },
+                  "hidden_nfs_files": 1,
+                  "file_digest_matches": true,
+                  "read_source": {
+                    "accepted": false,
+                    "exception_type": "ValueError",
+                    "message": "public feature source receipt binding differs",
+                    "tensor_validator_calls": []
+                  }
+                },
+                "after_release": {
+                  "all_receipt_predicates_match": true,
+                  "hidden_nfs_files": 0,
+                  "read_source": {
+                    "accepted": false,
+                    "exception_type": "ValueError",
+                    "message": "public feature input or mask differs from source census",
+                    "tensor_validator_calls": [
+                      {
+                        "input_ids": [
+                          [
+                            2,
+                            5
+                          ]
+                        ],
+                        "mask": [
+                          [
+                            1,
+                            1
+                          ]
+                        ],
+                        "states_dtype": "torch.bfloat16",
+                        "states_shape": [
+                          1,
+                          2,
+                          3
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "mode": "owned_clone_wrong_ids",
+                "before_load_accepted": true,
+                "retained_after_reseal": {
+                  "receipt_predicates": {
+                    "directory_children_exact": true,
+                    "export_sha256_equal": true,
+                    "serialized_tensors_exact_is_true": true,
+                    "source_input_equal": true,
+                    "target_visible_to_backbone_is_false": true
+                  },
+                  "hidden_nfs_files": 0,
+                  "file_digest_matches": true,
+                  "read_source": {
+                    "accepted": false,
+                    "exception_type": "ValueError",
+                    "message": "public feature input or mask differs from source census",
+                    "tensor_validator_calls": [
+                      {
+                        "input_ids": [
+                          [
+                            2,
+                            5
+                          ]
+                        ],
+                        "mask": [
+                          [
+                            1,
+                            1
+                          ]
+                        ],
+                        "states_dtype": "torch.bfloat16",
+                        "states_shape": [
+                          1,
+                          2,
+                          3
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "after_release": {
+                  "all_receipt_predicates_match": true,
+                  "hidden_nfs_files": 0,
+                  "read_source": {
+                    "accepted": false,
+                    "exception_type": "ValueError",
+                    "message": "public feature input or mask differs from source census",
+                    "tensor_validator_calls": [
+                      {
+                        "input_ids": [
+                          [
+                            2,
+                            5
+                          ]
+                        ],
+                        "mask": [
+                          [
+                            1,
+                            1
+                          ]
+                        ],
+                        "states_dtype": "torch.bfloat16",
+                        "states_shape": [
+                          1,
+                          2,
+                          3
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "mode": "owned_clone_valid",
+                "before_load_accepted": true,
+                "retained_after_reseal": {
+                  "receipt_predicates": {
+                    "directory_children_exact": true,
+                    "export_sha256_equal": true,
+                    "serialized_tensors_exact_is_true": true,
+                    "source_input_equal": true,
+                    "target_visible_to_backbone_is_false": true
+                  },
+                  "hidden_nfs_files": 0,
+                  "file_digest_matches": true,
+                  "read_source": {
+                    "accepted": true,
+                    "tensor_validator_calls": [
+                      {
+                        "input_ids": [
+                          [
+                            2,
+                            4
+                          ]
+                        ],
+                        "mask": [
+                          [
+                            1,
+                            1
+                          ]
+                        ],
+                        "states_dtype": "torch.bfloat16",
+                        "states_shape": [
+                          1,
+                          2,
+                          3
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "after_release": {
+                  "all_receipt_predicates_match": true,
+                  "hidden_nfs_files": 0,
+                  "read_source": {
+                    "accepted": true,
+                    "tensor_validator_calls": [
+                      {
+                        "input_ids": [
+                          [
+                            2,
+                            4
+                          ]
+                        ],
+                        "mask": [
+                          [
+                            1,
+                            1
+                          ]
+                        ],
+                        "states_dtype": "torch.bfloat16",
+                        "states_shape": [
+                          1,
+                          2,
+                          3
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            ],
+            "cause": "The adversarial fixture retained mapped tensors while safetensors atomically replaced the same file on NFS. The retained old inode appeared as a hidden .nfs file, violating the exact directory roster before tensor validation. Released independent clones remove that unintended setup condition.",
+            "correction_scope": "Test-owned tensor storage and explicit guard-reaching corruption controls. Production exporter and its strict directory/input/geometry guards unchanged.",
+            "model_forward": "Only the real tiny fixture embedding source forward. Gemma weights, optimizer and owner inputs were not opened.",
+            "source_export_measured": false,
+            "mfm_learning_proved": false,
+            "qualified_for_product": false,
+            "primary_sources": [
+              "https://github.com/huggingface/safetensors/blob/v0.8.0/safetensors/src/tensor.rs#L288",
+              "https://github.com/huggingface/safetensors/blob/v0.8.0/bindings/python/src/lib.rs#L556",
+              "https://github.com/torvalds/linux/blob/v3.10/fs/nfs/unlink.c#L418"
+            ],
+            "preserved_raw_sha256": {
+              "diagnostic.json": "8339705785757f25da7207997c08b2651dcbc5a16d47b2288e427ca5e1a7110d",
+              "independent-review.json": "004d78501b5c75ca1434626689a4d45d9c5a96ffd7692be610d9b71cda0a7e3d",
+              "rayan-mfm-feature-fixture-diag-577003.err": "f5716cbfda7d4ff63e6149de0201a66bf5a253603fa45252d9951a999b0b62d5",
+              "rayan-mfm-feature-fixture-diag-577003.out": "9243bab6d2fd23792311a3947d9e2cd01af22e9ed8c9fd47d7f8664b43f00eed",
+              "rayan-mfm-feature-fixture-diag-577003.stdout": "60ea7899167754f93c272a1f82de6ce36d65ac0824a2a82fc18237d0d9fb5f44"
+            }
+          },
+          "public_projection": "docs/receipts/MFM_CONDITIONAL_FEATURE_FIXTURE_DIAGNOSIS_577003_PUBLIC.json"
+        },
+        "fixture_correction": {
+          "corrected_tests_sha256": "52e5a196f217bfbe35d88e3732727ce91c3b41b1f6363f2032daaebe7fa0c6ce",
+          "production_exporter_unchanged": true,
+          "production_exporter_sha256": "62c4af1bf2f452f912a727f0277a2baf5e0e9f8ff8b28a080a39bbdf1326cb29",
+          "author_focused_tests": 31,
+          "author_seconds": 30.13,
+          "independent_focused_tests": 31,
+          "independent_seconds": 37.619,
+          "root_affected_tests": 91,
+          "root_seconds": 29.66,
+          "root_local_log_sha256": "1528ccad50762fc618f1778951125c0dc45bbcc8cd53ad3b376d3e054c47fc9b",
+          "matrix": [
+            "Wrong source IDs",
+            "Wrong mask",
+            "Wrong state shape",
+            "Wrong state dtype",
+            "Nonfinite states",
+            "Valid owned-clone complete-bank roundtrip"
+          ],
+          "guard_reached": "Real exception traceback includes _validate_tensors for every corrupt source and complete-bank reader after all earlier receipt predicates match.",
+          "actual_corrected_runtime_pending": true,
+          "real_gemma_export_pending": true,
+          "qualified_for_product": false
+        },
+        "current_source_export_submission": {
+          "job": 577006,
+          "owner_account": "mxrayan",
+          "code_commit": "db1929fa71f528dae707267f14391c5f1d49ddcc",
+          "recipe_sha256": "8b8da9e96e6d84902ec4e7b1bee957754398f4d38ffebb8acfb8cdcb43a015de",
+          "controller_sha256": "caeff2309eb1fb6fc237f2222fa6e88f04bc612552e9d4980121f850f112d752",
+          "bundle_sha256": "482ca5597c54b6a59160b9f05b522c03c21aef848a4fa5af4bfd3837ea1cbe86",
+          "runtime_checks_pending": false,
+          "source_measurement_pending": false,
+          "previous_feature_output_absent_verified": true,
+          "original_failures_retained": [
+            576999,
+            577002
+          ],
+          "unchanged_diagnostic_control": 577003,
+          "frozen_backbone_only": true,
+          "language_answer_head_used": false,
+          "targets_visible_to_backbone": false,
+          "optimizer_created": false,
+          "full_fit_budget_selected": false,
+          "qualified_for_product": false,
+          "actual_runtime_tests_passed": 91,
+          "actual_runtime_test_seconds": 48.012,
+          "source_export_started": true,
+          "source_bank_complete": false,
+          "actual_terminal": {
+            "complete": false,
+            "completed": 144,
+            "public_conditional_feature_export_sha256": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+            "public_conditional_feature_progress_sha256": "55309a74fa753d7e3b38b150eff3953f80fd38b085627950cd92d48c0161f7a9",
+            "qualified_for_product": false,
+            "seconds": 1808.2830138616264,
+            "total": 4862
+          },
+          "actual_scheduler_state": "COMPLETED",
+          "actual_exit_code": "0:0",
+          "actual_peak_process_tree_rss_kib": 22148824,
+          "scheduler_rss_is_wrapper_only": true,
+          "public_recovery_receipt": "docs/receipts/MFM_SOURCE_EXPORT_BLOCK_577006_PUBLIC.json"
+        },
+        "initial_source_export_block_recipe": {
+          "path": "scripts/mfm/magnolia_public_conditional_features_v2_20261007.sbatch",
+          "sha256": "8b8da9e96e6d84902ec4e7b1bee957754398f4d38ffebb8acfb8cdcb43a015de",
+          "outer_and_both_decoded_shell_layers_syntax_verified": true,
+          "same_roster_and_frozen_base": true,
+          "actual_corrected_91_test_gate_before_model_load": true,
+          "soft_stop_seconds": 1800,
+          "scheduler_cap_hours": 2,
+          "full_fit_budget_selected": false,
+          "role": "The first scheduled block of the same complete source-bank export, not a reduced model or an independently sufficient development stage."
+        },
+        "full_source_export_continuation": {
+          "recipe": "scripts/mfm/magnolia_public_conditional_source_export_20261007.sbatch",
+          "recipe_sha256": "5fbbac46b329806b158a56aa09cbceeb3ab07bf26555251fd567b384d45469e5",
+          "parent_job": 577006,
+          "dependency": "afterok:577006",
+          "worker_scheduling_block_seconds": 28800,
+          "scheduler_limit_hours": 12,
+          "entire_source_roster": 4862,
+          "same_export_pin": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+          "verify_parent_terminal_and_progress_pin_before_resume": true,
+          "verify_complete_committed_prefix_before_model_load": true,
+          "completed_checks_reused": "91 corrected actual-runtime checks48.012s; unchanged exporter/helper/base/census/runtime assumptions.",
+          "complete_bank_required_before_training": true,
+          "submitted": true,
+          "job": 577007,
+          "owner_account": "mxrayan",
+          "code_commit": "538882dd6f9e975521836e0fe96355fe2c7084f2",
+          "controller_sha256": "3ee02e1ebf84a85df0e56f7307d147ff691376b512b35fc0120560a6fdf577bf",
+          "bundle_sha256": "f2a318eb2e72e2d43a7cc62abdb2c195b44a8f25fa4c962adbc89212c6ae9142",
+          "actual_state_at_snapshot": "RUNNING",
+          "actual_parent_receipt_file_sha256": "2e11dad36c0d0b75b066d3b42186a3d86177f155b1831b02395de7fbf8df2d2c",
+          "actual_parent_cli_file_sha256": "8798f1b7e486c5d64fc1af606985925b1b0494ed042d38fdc80fdbce6b8f2618",
+          "actual_parent_progress_pin": "55309a74fa753d7e3b38b150eff3953f80fd38b085627950cd92d48c0161f7a9",
+          "actual_parent_completed_sources": 144,
+          "observed_child_committed_sources": 175,
+          "snapshot_is_not_terminal_pin": true,
+          "complete_bank": false
+        }
+      },
+      "next_action": "Finish the same complete4,862-source bank via verified immediate-parent scheduling continuations. Build and review the public reader, parameter-free task binding and real full-roster trainer with exact restart. Then measure full-geometry learning resources on the complete bank, select the free allocation and learn the foundation; continue full formation with typed identities/literals, broader semantics, native modalities and governed feedback. Archive stable verified public artifacts in Drive; preserve original failures and exact MFM/FBM/Graphify context.",
       "full_role_gaps": [
         "expanded independently reviewed formation teaching",
         "learned typed selection and source-span copy integrated into semantic producer",
@@ -3613,9 +4806,262 @@
         "cpu_threads": 12,
         "memory_gib": 64,
         "time_limit": "03:00:00",
-        "result_pending": true,
+        "result_pending": false,
         "local_batch_independent_review": "Bash syntax, exact CLI flags/pins,60 fresh recipe-selected tests and preserved protected wrapper reviewed independently; no launch blocker.",
-        "outputs": "Owner-only rayan-mfm/runs/rayan-mfm-public-census-576995; external terminal pin must be verified before export."
+        "outputs": "Owner-only rayan-mfm/runs/rayan-mfm-public-census-576995; external terminal pin must be verified before export.",
+        "scheduler_state": "COMPLETED",
+        "scheduler_exit": "0:0",
+        "elapsed": "00:03:19",
+        "max_rss_kib": 842744,
+        "census_sha256": "0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d",
+        "public_projection": "docs/receipts/MFM_CONDITIONAL_CENSUS_576995_PUBLIC.json",
+        "result": {
+          "schema": "mfm-public-conditional-census-aggregate-v1",
+          "recorded_at_utc": "2026-10-07T17:00:07.430834+00:00",
+          "job": 576995,
+          "owner_account": "mxrayan",
+          "scheduler_state": "COMPLETED",
+          "scheduler_exit": "0:0",
+          "elapsed": "00:03:19",
+          "max_rss_kib": 842744,
+          "actual_runtime_tests_passed": 60,
+          "actual_runtime_test_seconds": 1.166,
+          "code_commit": "480f8bff7334d8691f84d5896de09de0deaeb815",
+          "job_script_sha256": "f5361661deaa9d13f60eadf68f2a46951d0572381c0ef2ca3fb37ed75f5910fd",
+          "externally_published_census_sha256": "0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d",
+          "census_file_sha256": "e61ba06467a4812c4c30697aaa7c123862c113e82599e391bf5c67191732ca95",
+          "encoded_pairs_sha256": "490a84406ad4d1988d42e929782206c4437fce9aea447e3f2098086e283e11c0",
+          "source_inputs_sha256": "721567a70c7f9c287c6a29569fbd8defd03dde7e94e099ec86b7c2fb5843f172",
+          "material_receipt_file_sha256": "4fbc533ff9373e6f54d598bd57aadf8c476da36831df76e6b91400299c4edb36",
+          "prepared_clone_receipt_sha256": "54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7",
+          "base_hidden_size": 3840,
+          "foundation_vocabulary": 262144,
+          "torch_version": "2.7.1+cu118",
+          "transformers_version": "5.17.0",
+          "complete_census_seconds": 42.56000903248787,
+          "complete_token_roundtrip_checked": true,
+          "bos_eos": {
+            "bos": 2,
+            "eos": 1
+          },
+          "rows": 40868,
+          "split_counts": {
+            "development": 4271,
+            "train": 36597
+          },
+          "source_tokens": {
+            "development": 207784,
+            "train": 1779143
+          },
+          "target_tokens": {
+            "development": 133337,
+            "train": 1138566
+          },
+          "largest_source_tokens": 71,
+          "largest_target_tokens": 84,
+          "largest_train_source_target_pairs": 5520,
+          "train_positive_label_types": 3341,
+          "train_label_types_once": 1173,
+          "train_label_types_2_to_9": 1176,
+          "unique_source_inputs": 4862,
+          "unique_source_tokens": 240739,
+          "planned_states_bf16_bytes": 1848875520,
+          "original_pair_and_source_rosters_verified": true,
+          "independent_statistics_reconciled": true,
+          "census_pass_scope": "Complete original-material encoding and source/target bookkeeping under actual prepared Gemma processor. No conditional generation learned or formation capability established.",
+          "model_weights_loaded": false,
+          "optimizer_created": false,
+          "authority_written": false,
+          "qualified_for_product": false,
+          "independent_gold": false,
+          "final_payloads_opened": false,
+          "paid_compute_used": false,
+          "record_sha256": "ec2831151ac6bb628862b29186df202d9ebf58ed4526b815057fffe8623ff604"
+        }
+      },
+      "local_runtime_diagnosis": {
+        "original_result": "61 selected tests: 60 pass, feature module import error before behavior; wrong runtime search path.",
+        "preserved_original": "Private local work/receipts/mfm-feature-local-runtime-import-error-20261007.txt",
+        "steps_in_order": [
+          "1. Import stopped before feature assertions; no product failure verdict.",
+          "2. Intended proof is actual feature serialization and interruption-safe preparation for full MFM.",
+          "3. Trace test environment routing; no exporter/model departure observed.",
+          "4. Missing safetensors from the chosen venv search path, existing package found outside it.",
+          "5. safetensors 0.8.0 already exists in work/runtime; independent global Python 3.13/Torch 2.7.1 route also runs the same 26 tests.",
+          "6. Include the existing runtime explicitly without installation, implementation change or assertion weakening.",
+          "7. Follow compute recovery and the existing primary safetensors implementation and Python module routing.",
+          "8. Fresh same combined 86-test selection passes in 34.900s; real serialization/recovery controls retained."
+        ]
+      },
+      "durable_storage": {
+        "preferred": "Owner Google Drive; Magnolia is the required working copy during protected jobs.",
+        "user_direction": "Prefer Drive to conserve Magnolia storage.",
+        "folder_id": "1o0m59Mhsikxqbj9qQxDPqXnYN1wlHaq_",
+        "folder_url": "https://drive.google.com/drive/folders/1o0m59Mhsikxqbj9qQxDPqXnYN1wlHaq_",
+        "material_census_archive_file_id": "1Cdf0MS1Z_AuIcLTS-moS8rACmZxOv5QK",
+        "material_census_archive_url": "https://drive.google.com/file/d/1Cdf0MS1Z_AuIcLTS-moS8rACmZxOv5QK/view?usp=drivesdk",
+        "archive_bytes": 24358812,
+        "archive_sha256": "857f472bd04e52208579ad3b195a6e317086cafa03cd9ae09c13416567ada512",
+        "archive_member_pins_verified": 19,
+        "authenticated_full_download_sha256_matches": true,
+        "sharing": "Owner only; no external permission added.",
+        "quota_exposed_by_connector": false,
+        "model_weights_included": false,
+        "private_evidence_included": false,
+        "next_storage_action": "Archive completed frozen-source features and receipts to this Drive folder with complete file hashes and authenticated restore verification. Keep every live export/fit dependency until its durable copy and restoration are verified; no historical artifact removed.",
+        "archive_drive_name": "sha256-857f472bd04e52208579ad3b195a6e317086cafa03cd9ae09c13416567ada512.zip",
+        "direct_magnolia_drive_route": {
+          "binary": "Existing rclone v1.75.0",
+          "alias": "rayan_gdrive",
+          "probe_result": "about and exact observed-folder metadata probe both reject stored OAuth grant as invalid_grant before storage reads. No quota, identity or transfer success established. Expired/revoked/client rejection alternatives remain undistinguished.",
+          "retry_or_reauthentication_performed": false,
+          "working_fallback": "Connected owner Drive upload plus full authenticated restore was verified.",
+          "primary_docs": [
+            "https://rclone.org/commands/rclone_config_reconnect/",
+            "https://rclone.org/drive/"
+          ]
+        },
+        "storage_policy": {
+          "operational_bytes": 380000000000,
+          "hard_bytes": 400000000000,
+          "reserve_bytes": 20000000000,
+          "provider_quota_measured": false,
+          "current_usage_gate_pending": false,
+          "process_gap": "The 24.36 MB public archive was uploaded and restored before the canonical storage-budget usage gate was independently recomputed; do not claim that gate passed retroactively. No further bulk archive upload until current scoped usage and prospective bytes are checked.",
+          "next_check": "Before an actual bank archive write, reconcile complete archive size and additional retained copies with the prospective 3,000,000,000-byte allowance. Provider quota remains unknown.",
+          "current_scoped_gate": {
+            "schema": "mfm-drive-scoped-storage-gate-public-v1",
+            "observed_at_utc": "2026-10-07T17:43:31Z",
+            "scopes": [
+              {
+                "name": "Rayan-Compute",
+                "files": 20,
+                "logical_bytes": 178404
+              },
+              {
+                "name": "MFM_public_source_custody",
+                "files": 10,
+                "logical_bytes": 79112393
+              }
+            ],
+            "combined": {
+              "distinct_scopes": 2,
+              "distinct_folders_including_roots": 27,
+              "distinct_files": 30,
+              "logical_bytes": 79290797
+            },
+            "listing_repeat": {
+              "completed_by_utc": "2026-10-07T17:43:31Z",
+              "time_basis": "Clock read after the unchanged final listing pass",
+              "folder_count": 27,
+              "unchanged_count": 27,
+              "changed_count": 0,
+              "failed_count": 0
+            },
+            "checks": {
+              "distinct_file_ids": true,
+              "distinct_scope_trees": true,
+              "listed_child_parent_links_checked": 55,
+              "listed_child_parent_links_matching": 55,
+              "file_sizes_present": 30,
+              "unknown_file_sizes": 0,
+              "pending_descendant_folders": 0,
+              "failed_initial_listings": 0,
+              "failed_metadata_reads": 0,
+              "largest_listing_children": 10,
+              "listing_limit": 1000,
+              "limit_reached_folders": 0,
+              "truncation_indicated": false,
+              "connector_visible_inventory_complete": true,
+              "shortcuts_or_native_document_files": 0
+            },
+            "policy": {
+              "source": "alice-compute-recovery/references/artifact-custody.md recorded policy and parent-supplied current caps",
+              "operational_soft_bytes": 380000000000,
+              "hard_bytes": 400000000000,
+              "reserve_bytes": 20000000000,
+              "provider_quota": false,
+              "provider_total_usage_bytes": null,
+              "provider_quota_bytes": null,
+              "policy_change_check": "No policy contents re-read in this metadata-only task; supplied caps applied"
+            },
+            "prospective": {
+              "purpose": "Next bounded public conditional source bank archive; no model-training capacity claim",
+              "bf16_state_bytes_lower_bound": 1848875520,
+              "state_token_count": 240739,
+              "state_width": 3840,
+              "bytes_per_state_scalar": 2,
+              "bf16_lower_bound_excludes": [
+                "token IDs",
+                "attention masks",
+                "metadata",
+                "archive overhead",
+                "temporary or duplicate storage"
+              ],
+              "conservative_next_archive_allowance_bytes": 3000000000,
+              "projected_combined_with_archive_allowance_bytes": 3079290797,
+              "operational_headroom_after_archive_allowance_bytes": 376920709203,
+              "hard_headroom_after_archive_allowance_bytes": 396920709203,
+              "reserve_preserved_under_scoped_policy": true,
+              "scoped_logical_gate_below_operational_cap": true,
+              "final_write_condition": "Reconcile actual complete archive bytes and any additional retained copies against this allowance before writing; storage outside these measured scopes is not covered"
+            },
+            "limitations": {
+              "scope": "Connected-Drive-visible descendants of the two exact observed roots only",
+              "provider_wide_usage": "Unknown; not scanned",
+              "provider_quota": "Unknown; not measured",
+              "trashed_items_and_revision_storage": "Unknown; excluded from scoped current logical file sizes",
+              "atomicity": "Read-only metadata observation with a repeated unchanged listing pass; not an atomic provider-wide snapshot",
+              "archive_hash_verification": "Earlier round-trip SHA256 verification reported by parent; this metadata audit did not re-download file contents"
+            },
+            "upload_before_gate_process_gap_preserved": true,
+            "private_metadata_receipt_sha256": "e3e7c037befea6838abce9f0760d564e662e2d9731ff7950d8c21be461cfe4b6",
+            "qualified_for_product": false
+          },
+          "gate_public_projection": "docs/receipts/MFM_DRIVE_SCOPED_STORAGE_GATE_20261007_PUBLIC.json"
+        },
+        "measured_storage": {
+          "local_free_bytes": 52029239296,
+          "magnolia_shared_used_percent": 98,
+          "magnolia_shared_available_bytes": 2771475496960,
+          "mfm_runs_bytes": 206612362403,
+          "old_feature_bank_raw_bytes": 3929411750
+        },
+        "old_private_artifacts_destination": "Preserve separate existing private teacher custody; public E2E archives do not change their classification."
+      },
+      "gemma_foundation_boundary": {
+        "user_reaffirmed_20261007": true,
+        "gemma_role": "Base source encoder; MFM foundation is constructed on top with separately learned formation-specific weights, objectives and consumer contracts.",
+        "language_answer_head_used": false,
+        "pretrained_language_bridge_adopted": false,
+        "foundation_before_owner_personalization": true,
+        "current_trained_producer_changed": false
+      },
+      "owner_full_build_constraint": {
+        "reaffirmed_20261007": true,
+        "prohibited_label": "pilot",
+        "reduced_model_or_capability_delivery_allowed": false,
+        "scope": "Full-capability MFM for Alice/Fable V1; foundation before personalization. Finite allocations and test diagnostics serve this construction and do not become a smaller development mode.",
+        "root_error": "The agent used the prohibited label and introduced a separate30minute measurement stopping point. The source roster, model width, processor lengths and frozen weights were complete, but the framing and next-step boundary were wrong.",
+        "correction": "Finish the same entire4,862-source bank via verified scheduling continuations, then build and train the fresh foundation and full formation path. Reuse valid91 runtime checks; preserve historical immutable recipes and original failures.",
+        "no_active_job_mutation_or_cancellation": true,
+        "historical_receipts_preserved": true
+      },
+      "foundation_training_implementation": {
+        "contract": "docs/MFM_PUBLIC_FOUNDATION_PRODUCER_CONTRACT_2026-10-07.md",
+        "plan": "docs/superpowers/plans/2026-10-07-mfm-public-foundation-training.md",
+        "state": "TASK1_PUBLIC_READER_AND_OBJECTIVE_IMPLEMENTING",
+        "producer": "Fresh full-geometry FormationDecisionSpecialist; frozen Gemma source encoder only.",
+        "objective": "Sequence mean including EOS, then reference mean, then equal semantic-MR mean.",
+        "complete_training_pairs": 36597,
+        "complete_development_pairs": 4271,
+        "training_semantic_groups": 4356,
+        "development_semantic_groups": 506,
+        "parameter_free_task": "conditional_meaning_to_text",
+        "full_bank_external_pin_required": true,
+        "training_started": false,
+        "full_formation_transfer_required": true,
+        "product_qualification": false
       }
     }
   }
