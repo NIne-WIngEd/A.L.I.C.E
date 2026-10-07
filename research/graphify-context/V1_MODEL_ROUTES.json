@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "156cfa4cb9d099e787542291cb39a285565a85dd",
+      "commit": "ef9c45ec19b086e742517f270b551f48c078e5f4",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -57,7 +57,7 @@
         {
           "path": "docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
           "purpose": "completed teacher fit, failed generated formation, actual causal analysis and corrected measurement handoff",
-          "blob_sha": "538ee23af902a5249cf0210b14afee747de5bc3c"
+          "blob_sha": "4b4b37e2754f8f38da003e912ae82f21d5ff473c"
         },
         {
           "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576702.json",
@@ -370,6 +370,16 @@
           "blob_sha": "7b867a65f2b371994c12d5533b46aee8d2386f05"
         },
         {
+          "path": "scripts/mfm/train_public_conditional_foundation.py",
+          "purpose": "complete-roster fresh conditional foundation construction, actual Adam/RNG checkpoint continuation and public lineage; actual resource fit and learning require execution",
+          "blob_sha": "f5511fe37f11f3d0bb5eb4bf94a5838442078514"
+        },
+        {
+          "path": "tests/governance/test_mfm_public_conditional_foundation.py",
+          "purpose": "real weighted gradients, full sampler boundaries, actual checkpoint and different-next-batch restart controls; component fixtures do not establish full learned MFM",
+          "blob_sha": "d45707f27de35668c1e7b5a981013629c9e15ab4"
+        },
+        {
           "path": "docs/MFM_SOURCE_FEATURE_FIXTURE_DIAGNOSIS_2026-10-07.md",
           "purpose": "ordered eight-step fixture diagnosis, primary file-lifecycle research, exact guard-reaching verification and foundation/storage continuation",
           "blob_sha": "9956eadee58fe65bffa43017ce879f53076a6b8c"
@@ -378,6 +388,16 @@
           "path": "docs/receipts/MFM_DRIVE_SCOPED_STORAGE_GATE_20261007_PUBLIC.json",
           "purpose": "repeated exact-scope metadata inventory and prospective archive envelope; no provider quota claim and original upload-before-gate gap retained",
           "blob_sha": "1c387e5bb987900574163a3076e5844e9a7f9ac1"
+        },
+        {
+          "path": "docs/receipts/MFM_TOKENIZER_METADATA_DRIVE_20261007_PUBLIC.json",
+          "purpose": "exact original seven-asset metadata subset, fresh prewrite storage gate, completed Drive upload and full archive restore; no weights or processor compatibility claim",
+          "blob_sha": "c8c8d5623620c824a5156d6df4ed3ab0179671f4"
+        },
+        {
+          "path": "docs/receipts/MFM_PUBLIC_FOUNDATION_IMPLEMENTATION_20261007_PUBLIC.json",
+          "purpose": "reviewed full-roster implementation, real component interruption/objective evidence and precise pending bank/resource/tokenizer/learning/full-role work",
+          "blob_sha": "a690e48869ee919da93c700f069196d59f4846e2"
         },
         {
           "path": "docs/receipts/MFM_V16_SEQUENCE_FAILURE_576984_PUBLIC.json",
@@ -743,7 +763,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "4201e96904508a28cb6a06e2faf6c5fb416735aa",
+      "commit": "7f649a9ce476ba40297fc4ffe7bfce3a8a95b5d4",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -753,7 +773,7 @@
         {
           "path": "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
           "purpose": "FBM recovered teacher CPU evidence and frozen-feature build continuation",
-          "blob_sha": "1268b967c2dcf9c2cc3e086b4815393a20dd5076"
+          "blob_sha": "66a27229dadc52a8eb8488dd025c297b342eabc6"
         },
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261002_MFM_RECOVERY_AND_FROZEN_FEATURE_ROUTE.jsonl",
@@ -823,7 +843,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "500e0e9e1f89b35e1a39cdeccf1188d4f797181d"
+          "blob_sha": "a9ba79ee78cb3e495986c59489e98ef650647bf4"
         }
       ]
     }
