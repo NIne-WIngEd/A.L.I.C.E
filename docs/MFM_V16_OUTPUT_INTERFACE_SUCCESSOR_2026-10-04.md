@@ -412,3 +412,24 @@ andEOS. See [diagnostic plan](MFM_BUDGET_FAILURE_DISCRIMINATOR_2026-10-06.md).
 No copying, grammar, byte, EOS-only or pretrained architecture is selected.
 Native modalities, full governed consumer/outcome loop and independent Alice/
 Fable qualification remain required; this candidate is still unqualified.
+
+### Whole-roster diagnostic submitted576915
+
+Immutable `9a1bb7f0a70c913664971ee3da2b035a764b489f`; protectedCPU12/64GiB,
+3h allocation under mxrayan. Thirtylocal tests and independent code review pass.
+The diagnostic performs no optimization or architecture change. It separates
+all441teacher-prefix measurements by cohort and precise field, repeats the
+sealed full-train objective, generates the fixed29training cases, reuses9dev
+and original negative controls, and checks later cached/reference parse/EOS
+prefixes. Actual full-roster measurements remain pending.
+
+First submission576914 failed2seconds at the required code-version environment
+guard, before private data or models. The local controller's global placeholder
+replacement renamed that environment identifier. Exact placeholder replacement
+and explicit surviving-environment assertion corrected the controller;576915
+uses the identical reviewed recipe. Original controller/job/receipt are retained.
+
+Actual runtime:576915RUNNING at1m32s; all30tests pass in18.382s. These
+fixtures verify diagnostic machinery only. Full-roster teacher/generation
+results remain pending; unit-test training rows in Slurm output are not MFM
+learning. The read-only analysis uses its separate receipts stdout.

@@ -1,6 +1,6 @@
 {
   "schema": "mfm-root-cause-investigation-state-v1",
-  "recorded_at_utc": "2026-10-07T04:08:24.608924+00:00",
+  "recorded_at_utc": "2026-10-07T04:14:12.658469+00:00",
   "source_export": {
     "jobs": {
       "576630": "TIMEOUT",
@@ -587,7 +587,7 @@
     "no_automatic_budget_extension": true
   },
   "budget_failure_diagnostic": {
-    "state_at_snapshot": "IMPLEMENTED_REVIEW_PENDING",
+    "state_at_snapshot": "RUNNING",
     "owner_account": "mxrayan",
     "purpose": "Distinguish dominant-template fit, diverse-role underlearning, precise source/scope/reference gaps and later cache errors before selecting a coherent correction",
     "teacher_prefix_cases": 441,
@@ -609,7 +609,38 @@
     "qualified_for_product": false,
     "independent_gold": false,
     "final_payloads_opened": false,
-    "paid_compute_used": false
+    "paid_compute_used": false,
+    "job": 576915,
+    "code_commit": "9a1bb7f0a70c913664971ee3da2b035a764b489f",
+    "job_script_sha256": "0ff5055037f93dd65a0700bf82baec109d46a909b0ba00149a89cecd4a701697",
+    "allocation_hours": 3,
+    "cpu_threads": 12,
+    "memory_gb": 64,
+    "local_targeted_tests_passed": 30,
+    "independent_review_launch_blockers": 0,
+    "run_dir": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-budget-failure-576915",
+    "stdout": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-budget-failure-576915.stdout",
+    "actual_runtime_tests_passed": 30,
+    "actual_full_roster_measurement_complete": false,
+    "packaging_failure_preserved": {
+      "job": 576914,
+      "state": "FAILED",
+      "exit_code": "1:0",
+      "elapsed": "00:00:02",
+      "first_failure": "required MFM_CODE_COMMIT environment guard at batch line10",
+      "private_data_opened": false,
+      "models_or_training_executed": false,
+      "cause": "Global replacement of COMMIT placeholder also renamed MFM_CODE_COMMIT identifier in local submission controller.",
+      "correction": "Replace only exact commit=COMMIT assignment and digest comparison, assert original environment assignment survives. Preserve original submission controller/job/receipt; new versioned controller submits identical immutable recipe.",
+      "primary_reference": "https://docs.python.org/3.11/library/stdtypes.html#str.replace"
+    },
+    "corrected_unit_test_fixture": {
+      "original_failure": "EOSfixture boosted positional start-token1, while tiny configuration end-token2; ended=False",
+      "correction": "Use model.config.end_token_id; assert actualEOS and reference parity at its retained position.",
+      "verification": "30local tests pass; production decoder unchanged."
+    },
+    "actual_runtime_test_seconds": 18.382,
+    "runtime_state_evidence": "576915RUNNING at00:01:32; required code/environment, owner and loopback namespace checks passed; all30actual runtime tests passed; full-roster measurements not yet observed"
   },
-  "status": "BOUNDED_FIT_COMPLETE_INVALID_GENERATION_FULL_ROSTER_DIAGNOSIS_PREPARED"
+  "status": "BOUNDED_FIT_INVALID_GENERATION_FULL_ROSTER_DIAGNOSTIC_RUNNING"
 }
