@@ -1,6 +1,6 @@
 {
   "schema": "mfm-root-cause-investigation-state-v1",
-  "recorded_at_utc": "2026-10-07T16:47:36.292789+00:00",
+  "recorded_at_utc": "2026-10-07T16:51:12.173377+00:00",
   "source_export": {
     "jobs": {
       "576630": "TIMEOUT",
@@ -1452,7 +1452,7 @@
     "reference": "docs/MFM_SEQUENCE_FAILURE_DISCRIMINATOR_2026-10-07.md"
   },
   "full_role_sequence_successor": {
-    "state_at_snapshot": "CONDITIONAL_MATERIAL_AND_CALLER_INPUT_PREPARED_ACTUAL_PROCESSOR_CENSUS_PENDING",
+    "state_at_snapshot": "ACTUAL_PROCESSOR_CENSUS_SUBMITTED_SOURCE_EXPORT_RECOVERY_IN_REVIEW",
     "goal": "Full semantic MFM for Alice and Fable V1; source meaning, prior state, time, uncertainty, native modalities and governed accepted-memory outcomes remain required.",
     "retained_failure_analysis_sha256": "350ac0ad3fa8f340db5596473f89cec026ff3c25827e2323bc6b50b0ef9de1d0",
     "research_documents": [
@@ -1514,7 +1514,7 @@
     },
     "ordered_diagnosis_used": true,
     "source_feature_export": "Reviewed source-only frozen Gemma producer is being completed, including custody-preserving recovery of uncommitted abrupt-interruption artifacts. No source export or training launched yet.",
-    "next_action": "Deploy exact committed census code and original public material under mxrayan. Complete actual processor census; then use its externally published pin and same prepared clone for bounded resumable source-only features. Measure geometry/time/storage before fixing learned producer fit budget.",
+    "next_action": "Retrieve and verify576995 external terminal census pin, complete40868 roster, actual token roundtrip/counts, source key geometry and code/clone/runtime/material lineage. After a sound census, export target-free frozen source states in bounded resumable passes. If census fails, follow ordered eight-step diagnosis before correction; do not blindly retry. Feature interruption recovery is being finished in parallel.",
     "full_role_gaps": [
       "expanded independently reviewed formation teaching",
       "learned typed selection and source-span copy integrated into semantic producer",
@@ -1527,6 +1527,20 @@
     "authority_written": false,
     "qualified_for_product": false,
     "final_payloads_opened": false,
-    "paid_compute_purchased": false
+    "paid_compute_purchased": false,
+    "processor_census": {
+      "job": 576995,
+      "owner_account": "mxrayan",
+      "state_at_submission": "SUBMITTED",
+      "code_commit": "480f8bff7334d8691f84d5896de09de0deaeb815",
+      "job_script_sha256": "f5361661deaa9d13f60eadf68f2a46951d0572381c0ef2ca3fb37ed75f5910fd",
+      "runtime": "rayan-mfm-source-cpu-20261002",
+      "cpu_threads": 12,
+      "memory_gib": 64,
+      "time_limit": "03:00:00",
+      "result_pending": true,
+      "local_batch_independent_review": "Bash syntax, exact CLI flags/pins,60 fresh recipe-selected tests and preserved protected wrapper reviewed independently; no launch blocker.",
+      "outputs": "Owner-only rayan-mfm/runs/rayan-mfm-public-census-576995; external terminal pin must be verified before export."
+    }
   }
 }
