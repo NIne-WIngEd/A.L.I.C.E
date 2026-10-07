@@ -1,0 +1,101 @@
+{
+  "schema": "mfm-budget-failure-public-projection-v1",
+  "original_analysis_sha256": "887ad699dc7680428c4b28afafe103b7f5af896c9ed5b0c31378c05c37a427eb",
+  "projection_is_original_sealed_record": false,
+  "original_raw_custody": "protected owner runtime and private local recovery",
+  "job": 576915,
+  "state": "COMPLETED",
+  "exit_code": "0:0",
+  "elapsed": "00:21:52",
+  "teacher_measurement_cases": 441,
+  "target_free_training_cases": 29,
+  "late_cache_checked_cases": 38,
+  "train_objective_remeasurement": {
+    "absolute_tolerance": 1e-05,
+    "final_progress_sha256": "7c13d19472151dcab21feeef278a72d1bfa0eebf42150fb326ed9489a2f31362",
+    "matched": true,
+    "relative_tolerance": 1e-05
+  },
+  "cohorts": {
+    "all-train": {
+      "cases": 432,
+      "tokens": 175357,
+      "equal_case_mean_loss": 0.37844300712294215,
+      "token_weighted_mean_loss": 0.5240755117414315,
+      "per_case_loss_distribution": {
+        "maximum": 2.531212480141127,
+        "median": 0.310015316260805,
+        "minimum": 0.03317616767448823,
+        "p90_nearest_rank": 0.6750221177844038
+      }
+    },
+    "base-train": {
+      "cases": 16,
+      "tokens": 7529,
+      "equal_case_mean_loss": 1.5309877899163258,
+      "token_weighted_mean_loss": 1.8450155246484916,
+      "per_case_loss_distribution": {
+        "maximum": 2.531212480141127,
+        "median": 1.6966595259351003,
+        "minimum": 0.2930496260191181,
+        "p90_nearest_rank": 1.9786989327086701
+      }
+    },
+    "development": {
+      "cases": 9,
+      "tokens": 7188,
+      "equal_case_mean_loss": 3.5206756402178025,
+      "token_weighted_mean_loss": 3.6017457186840107,
+      "per_case_loss_distribution": {
+        "maximum": 4.013128723073787,
+        "median": 3.52405289535691,
+        "minimum": 2.813899588849955,
+        "p90_nearest_rank": 4.013128723073787
+      }
+    },
+    "longitudinal-train": {
+      "cases": 416,
+      "tokens": 167828,
+      "equal_case_mean_loss": 0.3341143616308892,
+      "token_weighted_mean_loss": 0.4648162858841416,
+      "per_case_loss_distribution": {
+        "maximum": 1.0254694454589237,
+        "median": 0.30735693161633165,
+        "minimum": 0.03317616767448823,
+        "p90_nearest_rank": 0.6585937403896961
+      }
+    }
+  },
+  "generation": {
+    "base_train": {
+      "cases": 16,
+      "malformed_json": 15,
+      "duplicate_json": 1,
+      "positive_grounded_proposals": 0
+    },
+    "longitudinal_train": {
+      "cases": 13,
+      "malformed_json": 9,
+      "codec_invalid": 1,
+      "valid_empty_decisions": 3,
+      "positive_grounded_proposals": 0
+    },
+    "development": {
+      "cases": 9,
+      "malformed_json": 9,
+      "positive_grounded_proposals": 0
+    }
+  },
+  "exact_development_divergence": {
+    "first_token": 13,
+    "path": "source_reference:dispositions.*.evidence_refs.*",
+    "target_positive_formation_frequency": 0,
+    "semantic_mismatch_established": false
+  },
+  "original_seal_raw_hashes_rosters_code_verified": true,
+  "late_cache_reference_argmaxes_equal": true,
+  "optimization_executed": false,
+  "qualified_for_product": false,
+  "independent_gold": false,
+  "record_sha256": "fbbbd51e78a2748f6a3d66ac94c3ae0b3a04855ee81a07bafab7d32d063a0c2e"
+}

@@ -125,3 +125,17 @@ Actual runtime:576915RUNNING at1m32s; all30tests pass in18.382s. These
 fixtures verify diagnostic machinery only. Full-roster teacher/generation
 results remain pending; unit-test training rows in Slurm output are not MFM
 learning. The read-only analysis uses its separate receipts stdout.
+
+### Completed576915 and new construction, October7
+
+Whole-roster analysis576915 completed0:0. Original seal
+887ad699dc7680428c4b28afafe103b7f5af896c9ed5b0c31378c05c37a427eb,
+allrawhashes,441teacher/29train rosters and immutablecode verify. All38later
+cache/reference checks match. All16diverse train outputs invalid; longitudinal13
+has only threevalidempty decisions, zero positive proposals. The aggregate432CE
+concealed a broad diverse/lexical gap. See MFM_SOURCE_SEQUENCE_CONSTRUCTION_2026-10-07.md
+for the coherent researched correction: explicit source-sequence teaching,
+balanced29strata/full432roster, exactparentmigration, resetAdam/newseedcontrol,
+newlexicalcapacity/restart proof and four-epoch cap with separate task outcomes.
+Referencecatalog work preserves typed caller authority but is not learned pointer
+evidence. Full Alice/Fable role and independent connected outcomes remain required.
