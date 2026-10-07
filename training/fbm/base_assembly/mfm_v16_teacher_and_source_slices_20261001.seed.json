@@ -838,7 +838,7 @@
     "latest_analysis_code_commit": "64be770d8f8f4770d76c6d65f04abab582c1a2b2",
     "root_cause_investigation_20261004": {
       "schema": "mfm-root-cause-investigation-state-v1",
-      "recorded_at_utc": "2026-10-07T15:26:19.093406+00:00",
+      "recorded_at_utc": "2026-10-07T16:51:12.173377+00:00",
       "source_export": {
         "jobs": {
           "576630": "TIMEOUT",
@@ -1587,7 +1587,7 @@
           "record_sha256": "fbbbd51e78a2748f6a3d66ac94c3ae0b3a04855ee81a07bafab7d32d063a0c2e"
         }
       },
-      "status": "SEQUENCE_MECHANISM_DIAGNOSTIC_576984_RUNNING",
+      "status": "VERIFIED_SEQUENCE_LEARNING_GAPS_CONDITIONAL_MATERIAL_INPUT_PREPARATION",
       "source_sequence_construction": {
         "state_at_snapshot": "COMPLETED_CAPACITY_AND_FIT_PASSED_NO_POSITIVE_FORMATION",
         "objective": "mfm-full-role-plus-source-sequence-29-strata-v1",
@@ -1841,7 +1841,7 @@
         }
       },
       "sequence_failure_discriminator": {
-        "state_at_snapshot": "RUNNING_ACTUAL_RUNTIME_TESTS_PASSED_ANALYSIS_PENDING",
+        "state_at_snapshot": "COMPLETED_VERIFIED_LEARNING_GAPS_RESEARCH_ROUTE_SELECTION",
         "plan": "docs/MFM_SEQUENCE_FAILURE_DISCRIMINATOR_2026-10-07.md",
         "parent_component_sha256": "485aa6397c1cab9351bef012ac6ed016c16128a992c31222fc6cc39fed841620",
         "original_diagnostic_sha256": "ba9dae2804c6414db62ebb6cecb9fa42ad2ded1821e98ca15402f794690c7ccf",
@@ -1880,11 +1880,393 @@
           "lo"
         ],
         "actual_runtime_tests_passed": 89,
-        "actual_analysis_result_pending": true,
+        "actual_analysis_result_pending": false,
         "output_dir": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-sequence-failure-576984",
         "receipt_stdout": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-sequence-failure-576984.stdout",
-        "runtime_state_evidence": "576984RUNNING00:02:17 node043; onlyloopback UID1905GID100/privateCPU12Torch2.7.1. All89actual tests pass22.447s. Originalcustody verification/fullmeasurements remainpending; no completedanalysis asserted.",
-        "actual_runtime_test_seconds": 22.447
+        "runtime_state_evidence": "Completed 0:0; external terminal seal, both raw hashes, 882 unique case/task rows, 41 retained rows and 24 code bindings verified independently. All 89 actual-runtime tests passed.",
+        "actual_runtime_test_seconds": 22.447,
+        "scheduler_state": "COMPLETED",
+        "scheduler_exit": "0:0",
+        "elapsed": "00:20:00",
+        "max_rss_kib": 2426928,
+        "analysis_sha256": "350ac0ad3fa8f340db5596473f89cec026ff3c25827e2323bc6b50b0ef9de1d0",
+        "public_projection": "docs/receipts/MFM_V16_SEQUENCE_FAILURE_576984_PUBLIC.json",
+        "public_projection_sha256": "dbd5244cc561313a9da3270a78ee908c108c15d4f9c0b11a621a656fd13b8fed",
+        "result": {
+          "schema": "mfm-sequence-failure-public-aggregate-v1",
+          "recorded_at_utc": "2026-10-07T16:04:07.783147+00:00",
+          "job": 576984,
+          "scheduler_state": "COMPLETED",
+          "scheduler_exit": "0:0",
+          "elapsed": "00:20:00",
+          "max_rss_kib": 2426928,
+          "owner_account": "mxrayan",
+          "code_commit": "d3977bcbd2179144f5e2398163d7e84c9bd58a32",
+          "job_script_sha256": "1cd39f50cb8c996ad24092ac49f0a1e28f563465d9849f5a514b3d987178df0c",
+          "private_analysis_sha256": "350ac0ad3fa8f340db5596473f89cec026ff3c25827e2323bc6b50b0ef9de1d0",
+          "actual_runtime_tests_passed": 89,
+          "teacher_case_task_measurements": 882,
+          "retained_generation_measurements": 41,
+          "full_train_remeasurement": {
+            "atol": 1e-05,
+            "balanced_two_task_objective": 1.7077439000161767,
+            "matched": true,
+            "maximum_case_task_loss_difference": 4.300729190553909e-07,
+            "rtol": 1e-05,
+            "tolerance_reason": "per-token FP32 projection loss versus original chunk-mean FP32 reduction"
+          },
+          "teacher_prefix_metrics": {
+            "formation": {
+              "all-train": {
+                "cases": 432,
+                "equal_case_ce": 0.3715740667538217,
+                "token_weighted_ce": 0.5086650992919678,
+                "fields": {
+                  "eos": {
+                    "tokens": 432,
+                    "ce": 0.013212620123306772,
+                    "top1": 1.0
+                  },
+                  "key": {
+                    "tokens": 66223,
+                    "ce": 0.24797756345848004,
+                    "top1": 0.9355661930145116
+                  },
+                  "other_reference": {
+                    "tokens": 15083,
+                    "ce": 0.7263941645550335,
+                    "top1": 0.8334548829808394
+                  },
+                  "scope_label": {
+                    "tokens": 8021,
+                    "ce": 0.8596853649935238,
+                    "top1": 0.7969081161949881
+                  },
+                  "source_reference": {
+                    "tokens": 31652,
+                    "ce": 0.4478415113199393,
+                    "top1": 0.873752053582712
+                  },
+                  "structure": {
+                    "tokens": 1628,
+                    "ce": 0.5951451188163873,
+                    "top1": 0.8673218673218673
+                  },
+                  "value": {
+                    "tokens": 42201,
+                    "ce": 0.5448795423256859,
+                    "top1": 0.8524679509964219
+                  },
+                  "value_text": {
+                    "tokens": 10117,
+                    "ce": 1.6586224125454885,
+                    "top1": 0.6961549866561234
+                  }
+                }
+              },
+              "base-train": {
+                "cases": 16,
+                "equal_case_ce": 0.9385013034556342,
+                "token_weighted_ce": 1.1992001391041243,
+                "fields": {
+                  "eos": {
+                    "tokens": 16,
+                    "ce": 0.014315620413981378,
+                    "top1": 1.0
+                  },
+                  "key": {
+                    "tokens": 3023,
+                    "ce": 0.564075991472604,
+                    "top1": 0.8339397949057228
+                  },
+                  "other_reference": {
+                    "tokens": 819,
+                    "ce": 1.6126843727134357,
+                    "top1": 0.6715506715506715
+                  },
+                  "scope_label": {
+                    "tokens": 181,
+                    "ce": 1.6169401331867723,
+                    "top1": 0.712707182320442
+                  },
+                  "source_reference": {
+                    "tokens": 1092,
+                    "ce": 1.450788467947966,
+                    "top1": 0.7042124542124543
+                  },
+                  "structure": {
+                    "tokens": 60,
+                    "ce": 1.6510253318585455,
+                    "top1": 0.5666666666666667
+                  },
+                  "value": {
+                    "tokens": 1937,
+                    "ce": 1.0895776849742629,
+                    "top1": 0.7268972638100155
+                  },
+                  "value_text": {
+                    "tokens": 401,
+                    "ce": 4.778199269580295,
+                    "top1": 0.33915211970074816
+                  }
+                }
+              },
+              "development": {
+                "cases": 9,
+                "equal_case_ce": 3.3152318639351908,
+                "token_weighted_ce": 3.395370078009175,
+                "fields": {
+                  "eos": {
+                    "tokens": 9,
+                    "ce": 0.06015933553377787,
+                    "top1": 1.0
+                  },
+                  "key": {
+                    "tokens": 3084,
+                    "ce": 1.547516294637456,
+                    "top1": 0.6335927367055771
+                  },
+                  "other_reference": {
+                    "tokens": 470,
+                    "ce": 7.053321698415737,
+                    "top1": 0.21914893617021278
+                  },
+                  "scope_label": {
+                    "tokens": 265,
+                    "ce": 6.563629884199011,
+                    "top1": 0.27547169811320754
+                  },
+                  "source_reference": {
+                    "tokens": 886,
+                    "ce": 6.572126950770769,
+                    "top1": 0.29006772009029347
+                  },
+                  "structure": {
+                    "tokens": 69,
+                    "ce": 4.0207641719691996,
+                    "top1": 0.15942028985507245
+                  },
+                  "value": {
+                    "tokens": 1914,
+                    "ce": 2.308189338140648,
+                    "top1": 0.5344827586206896
+                  },
+                  "value_text": {
+                    "tokens": 491,
+                    "ce": 8.269254006171321,
+                    "top1": 0.1079429735234216
+                  }
+                }
+              },
+              "longitudinal-train": {
+                "cases": 416,
+                "equal_case_ce": 0.34976917303452076,
+                "token_weighted_ce": 0.47768672670368856,
+                "fields": {
+                  "eos": {
+                    "tokens": 416,
+                    "ce": 0.013170197035203902,
+                    "top1": 1.0
+                  },
+                  "key": {
+                    "tokens": 63200,
+                    "ce": 0.23285785542229814,
+                    "top1": 0.9404272151898734
+                  },
+                  "other_reference": {
+                    "tokens": 14264,
+                    "ce": 0.6755057966020236,
+                    "top1": 0.8427509814918677
+                  },
+                  "scope_label": {
+                    "tokens": 7840,
+                    "ce": 0.8422028250645724,
+                    "top1": 0.7988520408163265
+                  },
+                  "source_reference": {
+                    "tokens": 30560,
+                    "ce": 0.4120032234718436,
+                    "top1": 0.8798102094240837
+                  },
+                  "structure": {
+                    "tokens": 1568,
+                    "ce": 0.5547415392356925,
+                    "top1": 0.8788265306122449
+                  },
+                  "value": {
+                    "tokens": 40264,
+                    "ce": 0.5186754815689233,
+                    "top1": 0.8585088416451421
+                  },
+                  "value_text": {
+                    "tokens": 9716,
+                    "ce": 1.5298708357987862,
+                    "top1": 0.7108892548373816
+                  }
+                }
+              }
+            },
+            "source_reconstruction": {
+              "all-train": {
+                "cases": 432,
+                "equal_case_ce": 2.126545841791576,
+                "token_weighted_ce": 2.216863866244566,
+                "fields": {
+                  "eos": {
+                    "tokens": 432,
+                    "ce": 0.04827800816942558,
+                    "top1": 1.0
+                  },
+                  "key": {
+                    "tokens": 5312,
+                    "ce": 0.09582805600031685,
+                    "top1": 0.9849397590361446
+                  },
+                  "source_reference": {
+                    "tokens": 12865,
+                    "ce": 0.5685957794662712,
+                    "top1": 0.8473377380489701
+                  },
+                  "source_text": {
+                    "tokens": 28358,
+                    "ce": 3.4221337179641473,
+                    "top1": 0.4031666549121941
+                  },
+                  "structure": {
+                    "tokens": 432,
+                    "ce": 0.43375691264453864,
+                    "top1": 0.9884259259259259
+                  }
+                }
+              },
+              "base-train": {
+                "cases": 16,
+                "equal_case_ce": 3.2759843375492306,
+                "token_weighted_ce": 3.716299581731053,
+                "fields": {
+                  "eos": {
+                    "tokens": 16,
+                    "ce": 0.10837562684901059,
+                    "top1": 1.0
+                  },
+                  "key": {
+                    "tokens": 192,
+                    "ce": 0.09808051793758447,
+                    "top1": 0.984375
+                  },
+                  "source_reference": {
+                    "tokens": 433,
+                    "ce": 1.3480567608956746,
+                    "top1": 0.745958429561201
+                  },
+                  "source_text": {
+                    "tokens": 1238,
+                    "ce": 5.191943435054814,
+                    "top1": 0.23667205169628433
+                  },
+                  "structure": {
+                    "tokens": 16,
+                    "ce": 0.6554804900661111,
+                    "top1": 0.875
+                  }
+                }
+              },
+              "development": {
+                "cases": 9,
+                "equal_case_ce": 6.080475702113784,
+                "token_weighted_ce": 6.170210472838365,
+                "fields": {
+                  "eos": {
+                    "tokens": 9,
+                    "ce": 0.18670906954341465,
+                    "top1": 1.0
+                  },
+                  "key": {
+                    "tokens": 163,
+                    "ce": 0.1560691104019118,
+                    "top1": 0.9815950920245399
+                  },
+                  "source_reference": {
+                    "tokens": 280,
+                    "ce": 5.4875312336088555,
+                    "top1": 0.32857142857142857
+                  },
+                  "source_text": {
+                    "tokens": 822,
+                    "ce": 7.7097342767811625,
+                    "top1": 0.11070559610705596
+                  },
+                  "structure": {
+                    "tokens": 9,
+                    "ce": 1.7055632339583502,
+                    "top1": 0.4444444444444444
+                  }
+                }
+              },
+              "longitudinal-train": {
+                "cases": 416,
+                "equal_case_ce": 2.0823366688778195,
+                "token_weighted_ce": 2.15442032983355,
+                "fields": {
+                  "eos": {
+                    "tokens": 416,
+                    "ce": 0.04596656129713385,
+                    "top1": 1.0
+                  },
+                  "key": {
+                    "tokens": 5120,
+                    "ce": 0.09574358867766933,
+                    "top1": 0.9849609375
+                  },
+                  "source_reference": {
+                    "tokens": 12432,
+                    "ce": 0.5414475647816724,
+                    "top1": 0.8508687258687259
+                  },
+                  "source_text": {
+                    "tokens": 27120,
+                    "ce": 3.3413437316161296,
+                    "top1": 0.4107669616519174
+                  },
+                  "structure": {
+                    "tokens": 416,
+                    "ce": 0.4252290827437089,
+                    "top1": 0.9927884615384616
+                  }
+                }
+              }
+            }
+          },
+          "nonexact_first_departures": 39,
+          "correct_prefix_wrong_target_top1": 39,
+          "zero_source_argmax_changed": 39,
+          "foreign_source_argmax_changed": 7,
+          "development_foreign_source_argmax_changed": 0,
+          "development_foreign_paired_probability_and_rank_change": true,
+          "development_foreign_equal_aggregate_explanation": "Same-template common-prefix source permutations preserve cohort averages; per-case predictions change.",
+          "original_positive_grounded_proposals": 0,
+          "original_generation_failure_preserved": true,
+          "supported_findings": [
+            "Incomplete authored sequence learning, including semantic text, references and syntax.",
+            "Source channel responds; source sensitivity is not proof of source entailment.",
+            "Cache and exclusively rollout/EOS explanations do not account for the measured first departures.",
+            "Unseen identifiers and rare lexical values are poorly learned by the fresh open-vocabulary head."
+          ],
+          "not_established": [
+            "Encoder inadequacy",
+            "Auxiliary interference alone",
+            "Sufficient architecture or data budget",
+            "Full MFM capability"
+          ],
+          "optimizer_created": false,
+          "authority_written": false,
+          "independent_gold": false,
+          "qualified_for_product": false,
+          "final_payloads_opened": false,
+          "paid_compute_used": false,
+          "raw_custody": "Protected owner runtime and private local recovery; public projection contains aggregate methods only.",
+          "record_sha256": "dbd5244cc561313a9da3270a78ee908c108c15d4f9c0b11a621a656fd13b8fed"
+        }
       },
       "next_route_data_and_frontier_audit": {
         "frontier_commit": "756bf294f6a93e9ea7dcc12dba932a556d6080e0",
@@ -1906,6 +2288,98 @@
         "current_new_architecture_adopted": false,
         "new_training_recipe_selected": false,
         "reference": "docs/MFM_SEQUENCE_FAILURE_DISCRIMINATOR_2026-10-07.md"
+      },
+      "full_role_sequence_successor": {
+        "state_at_snapshot": "ACTUAL_PROCESSOR_CENSUS_SUBMITTED_SOURCE_EXPORT_RECOVERY_IN_REVIEW",
+        "goal": "Full semantic MFM for Alice and Fable V1; source meaning, prior state, time, uncertainty, native modalities and governed accepted-memory outcomes remain required.",
+        "retained_failure_analysis_sha256": "350ac0ad3fa8f340db5596473f89cec026ff3c25827e2323bc6b50b0ef9de1d0",
+        "research_documents": [
+          "docs/research/MFM_SEQUENCE_ROUTE_COMPARISON_2026-10-07.md",
+          "docs/research/MFM_NEXT_ROUTE_DESIGN_REVIEW_2026-10-07.md",
+          "docs/research/MFM_CONDITIONAL_TEACHING_MATERIALS_2026-10-07.md"
+        ],
+        "construction_spec": "docs/MFM_FULL_ROLE_SEQUENCE_SUCCESSOR_2026-10-07.md",
+        "route": "Prepare broader conditional sequence teaching and independent caller input inventories before a versioned full-semantic producer with learned typed selection and aligned source copy. No lexical bridge or pretrained answer decoder adopted.",
+        "pretrained_language_route_adopted": false,
+        "current_trained_producer_changed": false,
+        "public_material": {
+          "upstream_revision": "ab0d967dd5729ce455ef14ba9ffafc456a335264",
+          "source_train_sha256": "f27d48df45815288ab15619d47a79028c300fbb7f42e373668aba0b98c1d57c6",
+          "source_csv_rows": 42061,
+          "rows": 40868,
+          "split_counts": {
+            "development": 4271,
+            "train": 36597
+          },
+          "manifest_sha256": "94139a9edaa5bf845bcb372af3b95301013e18000391a5abb8fef20a05c1ce19",
+          "pairs_sha256": "5efe2bf155bcfcac89649d7d2e7ebaf12c3ea84467b0b18c100a78bea9380c1d",
+          "receipt_sha256": "ae459c233b8f069a5920dad23c6ef29146058894923122eab7c1b6b69ce3a581",
+          "conditional_training_eligible": true,
+          "formation_training_eligible": false,
+          "official_splits_used": false,
+          "independent_mfm_final": false,
+          "qualified": false,
+          "authority": false
+        },
+        "material_receipt_file_sha256": "4fbc533ff9373e6f54d598bd57aadf8c476da36831df76e6b91400299c4edb36",
+        "semantic_input_groups": 4862,
+        "teaching_groups": 4356,
+        "development_groups": 506,
+        "material_ancestry": "All 42,061 original training rows preserved; 1,193 exact pair duplicates coalesced into 40,868 pairs. Alternative references remain in the same semantic split. No official development/test used.",
+        "input_boundary": "Exact FormationContextV16 and ordered opened source bytes plus explicit scoped read-only registry; candidate paths derived from caller registrations, never teacher decisions or raw identifier mentions. Scopes remain semantic labels.",
+        "files_sha256": {
+          "scripts/mfm/prepare_public_conditional_material.py": "ddb580d79f2c02be2eb0d3cb8d7ca43d5c93b5947728991eb3b5312673999f74",
+          "scripts/mfm/formation_caller_input.py": "d6d422ef775b9b6f9cbf5f496e06f5c79972ba60662a32aabfe91ec880691f18",
+          "scripts/mfm/preflight_public_conditional_material.py": "e959437d732e282514d96207aaa4b4d8bc028aac147c1b08464328b8ed3e21a5",
+          "configs/mfm/e2e_conditional_material_v1.json": "94139a9edaa5bf845bcb372af3b95301013e18000391a5abb8fef20a05c1ce19",
+          "scripts/mfm/magnolia_public_conditional_census_20261007.sbatch": "f5361661deaa9d13f60eadf68f2a46951d0572381c0ef2ca3fb37ed75f5910fd"
+        },
+        "local_verification": {
+          "scoped_tests": 60,
+          "passed": true,
+          "seconds": 2.781,
+          "full_material_pairs_verified": 40868,
+          "evidence_scope": "Mock processor/clone/isolation fixtures prove caller, material and census contracts; actual Gemma token representability and runtime remain the pending job result."
+        },
+        "broader_windows_suite": {
+          "passed": 1897,
+          "failed": 71,
+          "errors": 19,
+          "skipped": 1,
+          "subtests": 156,
+          "complete_suite_green": false,
+          "evidence_scope": "Snapshot taken while new modules were in TDD. Frozen fixture CRLF differs from its pinned Git LF blob; Windows lacks geteuid assumed by namespace test patch; literal capability scanner misclassifies public-material lane phrasing. Preserve failures; no unrelated runtime changes or broad green claim."
+        },
+        "ordered_diagnosis_used": true,
+        "source_feature_export": "Reviewed source-only frozen Gemma producer is being completed, including custody-preserving recovery of uncommitted abrupt-interruption artifacts. No source export or training launched yet.",
+        "next_action": "Retrieve and verify576995 external terminal census pin, complete40868 roster, actual token roundtrip/counts, source key geometry and code/clone/runtime/material lineage. After a sound census, export target-free frozen source states in bounded resumable passes. If census fails, follow ordered eight-step diagnosis before correction; do not blindly retry. Feature interruption recovery is being finished in parallel.",
+        "full_role_gaps": [
+          "expanded independently reviewed formation teaching",
+          "learned typed selection and source-span copy integrated into semantic producer",
+          "valid uncertainty and interval end learning",
+          "native multimodal formation",
+          "accepted-memory consumer feedback",
+          "independent Alice/Fable qualification"
+        ],
+        "optimizer_created": false,
+        "authority_written": false,
+        "qualified_for_product": false,
+        "final_payloads_opened": false,
+        "paid_compute_purchased": false,
+        "processor_census": {
+          "job": 576995,
+          "owner_account": "mxrayan",
+          "state_at_submission": "SUBMITTED",
+          "code_commit": "480f8bff7334d8691f84d5896de09de0deaeb815",
+          "job_script_sha256": "f5361661deaa9d13f60eadf68f2a46951d0572381c0ef2ca3fb37ed75f5910fd",
+          "runtime": "rayan-mfm-source-cpu-20261002",
+          "cpu_threads": 12,
+          "memory_gib": 64,
+          "time_limit": "03:00:00",
+          "result_pending": true,
+          "local_batch_independent_review": "Bash syntax, exact CLI flags/pins,60 fresh recipe-selected tests and preserved protected wrapper reviewed independently; no launch blocker.",
+          "outputs": "Owner-only rayan-mfm/runs/rayan-mfm-public-census-576995; external terminal pin must be verified before export."
+        }
       }
     },
     "latest_decision_model_code_commit": "532bdeb1c5e537b334e62cdacc391737b1335715",
@@ -2604,7 +3078,7 @@
     },
     "latest_source_sequence_execution_commit": "c84f943d6625e26ffefc34b80c5bf323c70044e5",
     "sequence_failure_discriminator_20261007": {
-      "state_at_snapshot": "RUNNING_ACTUAL_RUNTIME_TESTS_PASSED_ANALYSIS_PENDING",
+      "state_at_snapshot": "COMPLETED_VERIFIED_LEARNING_GAPS_RESEARCH_ROUTE_SELECTION",
       "plan": "docs/MFM_SEQUENCE_FAILURE_DISCRIMINATOR_2026-10-07.md",
       "parent_component_sha256": "485aa6397c1cab9351bef012ac6ed016c16128a992c31222fc6cc39fed841620",
       "original_diagnostic_sha256": "ba9dae2804c6414db62ebb6cecb9fa42ad2ded1821e98ca15402f794690c7ccf",
@@ -2643,11 +3117,393 @@
         "lo"
       ],
       "actual_runtime_tests_passed": 89,
-      "actual_analysis_result_pending": true,
+      "actual_analysis_result_pending": false,
       "output_dir": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-sequence-failure-576984",
       "receipt_stdout": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-sequence-failure-576984.stdout",
-      "runtime_state_evidence": "576984RUNNING00:02:17 node043; onlyloopback UID1905GID100/privateCPU12Torch2.7.1. All89actual tests pass22.447s. Originalcustody verification/fullmeasurements remainpending; no completedanalysis asserted.",
-      "actual_runtime_test_seconds": 22.447
+      "runtime_state_evidence": "Completed 0:0; external terminal seal, both raw hashes, 882 unique case/task rows, 41 retained rows and 24 code bindings verified independently. All 89 actual-runtime tests passed.",
+      "actual_runtime_test_seconds": 22.447,
+      "scheduler_state": "COMPLETED",
+      "scheduler_exit": "0:0",
+      "elapsed": "00:20:00",
+      "max_rss_kib": 2426928,
+      "analysis_sha256": "350ac0ad3fa8f340db5596473f89cec026ff3c25827e2323bc6b50b0ef9de1d0",
+      "public_projection": "docs/receipts/MFM_V16_SEQUENCE_FAILURE_576984_PUBLIC.json",
+      "public_projection_sha256": "dbd5244cc561313a9da3270a78ee908c108c15d4f9c0b11a621a656fd13b8fed",
+      "result": {
+        "schema": "mfm-sequence-failure-public-aggregate-v1",
+        "recorded_at_utc": "2026-10-07T16:04:07.783147+00:00",
+        "job": 576984,
+        "scheduler_state": "COMPLETED",
+        "scheduler_exit": "0:0",
+        "elapsed": "00:20:00",
+        "max_rss_kib": 2426928,
+        "owner_account": "mxrayan",
+        "code_commit": "d3977bcbd2179144f5e2398163d7e84c9bd58a32",
+        "job_script_sha256": "1cd39f50cb8c996ad24092ac49f0a1e28f563465d9849f5a514b3d987178df0c",
+        "private_analysis_sha256": "350ac0ad3fa8f340db5596473f89cec026ff3c25827e2323bc6b50b0ef9de1d0",
+        "actual_runtime_tests_passed": 89,
+        "teacher_case_task_measurements": 882,
+        "retained_generation_measurements": 41,
+        "full_train_remeasurement": {
+          "atol": 1e-05,
+          "balanced_two_task_objective": 1.7077439000161767,
+          "matched": true,
+          "maximum_case_task_loss_difference": 4.300729190553909e-07,
+          "rtol": 1e-05,
+          "tolerance_reason": "per-token FP32 projection loss versus original chunk-mean FP32 reduction"
+        },
+        "teacher_prefix_metrics": {
+          "formation": {
+            "all-train": {
+              "cases": 432,
+              "equal_case_ce": 0.3715740667538217,
+              "token_weighted_ce": 0.5086650992919678,
+              "fields": {
+                "eos": {
+                  "tokens": 432,
+                  "ce": 0.013212620123306772,
+                  "top1": 1.0
+                },
+                "key": {
+                  "tokens": 66223,
+                  "ce": 0.24797756345848004,
+                  "top1": 0.9355661930145116
+                },
+                "other_reference": {
+                  "tokens": 15083,
+                  "ce": 0.7263941645550335,
+                  "top1": 0.8334548829808394
+                },
+                "scope_label": {
+                  "tokens": 8021,
+                  "ce": 0.8596853649935238,
+                  "top1": 0.7969081161949881
+                },
+                "source_reference": {
+                  "tokens": 31652,
+                  "ce": 0.4478415113199393,
+                  "top1": 0.873752053582712
+                },
+                "structure": {
+                  "tokens": 1628,
+                  "ce": 0.5951451188163873,
+                  "top1": 0.8673218673218673
+                },
+                "value": {
+                  "tokens": 42201,
+                  "ce": 0.5448795423256859,
+                  "top1": 0.8524679509964219
+                },
+                "value_text": {
+                  "tokens": 10117,
+                  "ce": 1.6586224125454885,
+                  "top1": 0.6961549866561234
+                }
+              }
+            },
+            "base-train": {
+              "cases": 16,
+              "equal_case_ce": 0.9385013034556342,
+              "token_weighted_ce": 1.1992001391041243,
+              "fields": {
+                "eos": {
+                  "tokens": 16,
+                  "ce": 0.014315620413981378,
+                  "top1": 1.0
+                },
+                "key": {
+                  "tokens": 3023,
+                  "ce": 0.564075991472604,
+                  "top1": 0.8339397949057228
+                },
+                "other_reference": {
+                  "tokens": 819,
+                  "ce": 1.6126843727134357,
+                  "top1": 0.6715506715506715
+                },
+                "scope_label": {
+                  "tokens": 181,
+                  "ce": 1.6169401331867723,
+                  "top1": 0.712707182320442
+                },
+                "source_reference": {
+                  "tokens": 1092,
+                  "ce": 1.450788467947966,
+                  "top1": 0.7042124542124543
+                },
+                "structure": {
+                  "tokens": 60,
+                  "ce": 1.6510253318585455,
+                  "top1": 0.5666666666666667
+                },
+                "value": {
+                  "tokens": 1937,
+                  "ce": 1.0895776849742629,
+                  "top1": 0.7268972638100155
+                },
+                "value_text": {
+                  "tokens": 401,
+                  "ce": 4.778199269580295,
+                  "top1": 0.33915211970074816
+                }
+              }
+            },
+            "development": {
+              "cases": 9,
+              "equal_case_ce": 3.3152318639351908,
+              "token_weighted_ce": 3.395370078009175,
+              "fields": {
+                "eos": {
+                  "tokens": 9,
+                  "ce": 0.06015933553377787,
+                  "top1": 1.0
+                },
+                "key": {
+                  "tokens": 3084,
+                  "ce": 1.547516294637456,
+                  "top1": 0.6335927367055771
+                },
+                "other_reference": {
+                  "tokens": 470,
+                  "ce": 7.053321698415737,
+                  "top1": 0.21914893617021278
+                },
+                "scope_label": {
+                  "tokens": 265,
+                  "ce": 6.563629884199011,
+                  "top1": 0.27547169811320754
+                },
+                "source_reference": {
+                  "tokens": 886,
+                  "ce": 6.572126950770769,
+                  "top1": 0.29006772009029347
+                },
+                "structure": {
+                  "tokens": 69,
+                  "ce": 4.0207641719691996,
+                  "top1": 0.15942028985507245
+                },
+                "value": {
+                  "tokens": 1914,
+                  "ce": 2.308189338140648,
+                  "top1": 0.5344827586206896
+                },
+                "value_text": {
+                  "tokens": 491,
+                  "ce": 8.269254006171321,
+                  "top1": 0.1079429735234216
+                }
+              }
+            },
+            "longitudinal-train": {
+              "cases": 416,
+              "equal_case_ce": 0.34976917303452076,
+              "token_weighted_ce": 0.47768672670368856,
+              "fields": {
+                "eos": {
+                  "tokens": 416,
+                  "ce": 0.013170197035203902,
+                  "top1": 1.0
+                },
+                "key": {
+                  "tokens": 63200,
+                  "ce": 0.23285785542229814,
+                  "top1": 0.9404272151898734
+                },
+                "other_reference": {
+                  "tokens": 14264,
+                  "ce": 0.6755057966020236,
+                  "top1": 0.8427509814918677
+                },
+                "scope_label": {
+                  "tokens": 7840,
+                  "ce": 0.8422028250645724,
+                  "top1": 0.7988520408163265
+                },
+                "source_reference": {
+                  "tokens": 30560,
+                  "ce": 0.4120032234718436,
+                  "top1": 0.8798102094240837
+                },
+                "structure": {
+                  "tokens": 1568,
+                  "ce": 0.5547415392356925,
+                  "top1": 0.8788265306122449
+                },
+                "value": {
+                  "tokens": 40264,
+                  "ce": 0.5186754815689233,
+                  "top1": 0.8585088416451421
+                },
+                "value_text": {
+                  "tokens": 9716,
+                  "ce": 1.5298708357987862,
+                  "top1": 0.7108892548373816
+                }
+              }
+            }
+          },
+          "source_reconstruction": {
+            "all-train": {
+              "cases": 432,
+              "equal_case_ce": 2.126545841791576,
+              "token_weighted_ce": 2.216863866244566,
+              "fields": {
+                "eos": {
+                  "tokens": 432,
+                  "ce": 0.04827800816942558,
+                  "top1": 1.0
+                },
+                "key": {
+                  "tokens": 5312,
+                  "ce": 0.09582805600031685,
+                  "top1": 0.9849397590361446
+                },
+                "source_reference": {
+                  "tokens": 12865,
+                  "ce": 0.5685957794662712,
+                  "top1": 0.8473377380489701
+                },
+                "source_text": {
+                  "tokens": 28358,
+                  "ce": 3.4221337179641473,
+                  "top1": 0.4031666549121941
+                },
+                "structure": {
+                  "tokens": 432,
+                  "ce": 0.43375691264453864,
+                  "top1": 0.9884259259259259
+                }
+              }
+            },
+            "base-train": {
+              "cases": 16,
+              "equal_case_ce": 3.2759843375492306,
+              "token_weighted_ce": 3.716299581731053,
+              "fields": {
+                "eos": {
+                  "tokens": 16,
+                  "ce": 0.10837562684901059,
+                  "top1": 1.0
+                },
+                "key": {
+                  "tokens": 192,
+                  "ce": 0.09808051793758447,
+                  "top1": 0.984375
+                },
+                "source_reference": {
+                  "tokens": 433,
+                  "ce": 1.3480567608956746,
+                  "top1": 0.745958429561201
+                },
+                "source_text": {
+                  "tokens": 1238,
+                  "ce": 5.191943435054814,
+                  "top1": 0.23667205169628433
+                },
+                "structure": {
+                  "tokens": 16,
+                  "ce": 0.6554804900661111,
+                  "top1": 0.875
+                }
+              }
+            },
+            "development": {
+              "cases": 9,
+              "equal_case_ce": 6.080475702113784,
+              "token_weighted_ce": 6.170210472838365,
+              "fields": {
+                "eos": {
+                  "tokens": 9,
+                  "ce": 0.18670906954341465,
+                  "top1": 1.0
+                },
+                "key": {
+                  "tokens": 163,
+                  "ce": 0.1560691104019118,
+                  "top1": 0.9815950920245399
+                },
+                "source_reference": {
+                  "tokens": 280,
+                  "ce": 5.4875312336088555,
+                  "top1": 0.32857142857142857
+                },
+                "source_text": {
+                  "tokens": 822,
+                  "ce": 7.7097342767811625,
+                  "top1": 0.11070559610705596
+                },
+                "structure": {
+                  "tokens": 9,
+                  "ce": 1.7055632339583502,
+                  "top1": 0.4444444444444444
+                }
+              }
+            },
+            "longitudinal-train": {
+              "cases": 416,
+              "equal_case_ce": 2.0823366688778195,
+              "token_weighted_ce": 2.15442032983355,
+              "fields": {
+                "eos": {
+                  "tokens": 416,
+                  "ce": 0.04596656129713385,
+                  "top1": 1.0
+                },
+                "key": {
+                  "tokens": 5120,
+                  "ce": 0.09574358867766933,
+                  "top1": 0.9849609375
+                },
+                "source_reference": {
+                  "tokens": 12432,
+                  "ce": 0.5414475647816724,
+                  "top1": 0.8508687258687259
+                },
+                "source_text": {
+                  "tokens": 27120,
+                  "ce": 3.3413437316161296,
+                  "top1": 0.4107669616519174
+                },
+                "structure": {
+                  "tokens": 416,
+                  "ce": 0.4252290827437089,
+                  "top1": 0.9927884615384616
+                }
+              }
+            }
+          }
+        },
+        "nonexact_first_departures": 39,
+        "correct_prefix_wrong_target_top1": 39,
+        "zero_source_argmax_changed": 39,
+        "foreign_source_argmax_changed": 7,
+        "development_foreign_source_argmax_changed": 0,
+        "development_foreign_paired_probability_and_rank_change": true,
+        "development_foreign_equal_aggregate_explanation": "Same-template common-prefix source permutations preserve cohort averages; per-case predictions change.",
+        "original_positive_grounded_proposals": 0,
+        "original_generation_failure_preserved": true,
+        "supported_findings": [
+          "Incomplete authored sequence learning, including semantic text, references and syntax.",
+          "Source channel responds; source sensitivity is not proof of source entailment.",
+          "Cache and exclusively rollout/EOS explanations do not account for the measured first departures.",
+          "Unseen identifiers and rare lexical values are poorly learned by the fresh open-vocabulary head."
+        ],
+        "not_established": [
+          "Encoder inadequacy",
+          "Auxiliary interference alone",
+          "Sufficient architecture or data budget",
+          "Full MFM capability"
+        ],
+        "optimizer_created": false,
+        "authority_written": false,
+        "independent_gold": false,
+        "qualified_for_product": false,
+        "final_payloads_opened": false,
+        "paid_compute_used": false,
+        "raw_custody": "Protected owner runtime and private local recovery; public projection contains aggregate methods only.",
+        "record_sha256": "dbd5244cc561313a9da3270a78ee908c108c15d4f9c0b11a621a656fd13b8fed"
+      }
     },
     "next_route_data_and_frontier_audit_20261007": {
       "frontier_commit": "756bf294f6a93e9ea7dcc12dba932a556d6080e0",
@@ -2669,6 +3525,98 @@
       "current_new_architecture_adopted": false,
       "new_training_recipe_selected": false,
       "reference": "docs/MFM_SEQUENCE_FAILURE_DISCRIMINATOR_2026-10-07.md"
+    },
+    "full_role_sequence_successor_20261007": {
+      "state_at_snapshot": "ACTUAL_PROCESSOR_CENSUS_SUBMITTED_SOURCE_EXPORT_RECOVERY_IN_REVIEW",
+      "goal": "Full semantic MFM for Alice and Fable V1; source meaning, prior state, time, uncertainty, native modalities and governed accepted-memory outcomes remain required.",
+      "retained_failure_analysis_sha256": "350ac0ad3fa8f340db5596473f89cec026ff3c25827e2323bc6b50b0ef9de1d0",
+      "research_documents": [
+        "docs/research/MFM_SEQUENCE_ROUTE_COMPARISON_2026-10-07.md",
+        "docs/research/MFM_NEXT_ROUTE_DESIGN_REVIEW_2026-10-07.md",
+        "docs/research/MFM_CONDITIONAL_TEACHING_MATERIALS_2026-10-07.md"
+      ],
+      "construction_spec": "docs/MFM_FULL_ROLE_SEQUENCE_SUCCESSOR_2026-10-07.md",
+      "route": "Prepare broader conditional sequence teaching and independent caller input inventories before a versioned full-semantic producer with learned typed selection and aligned source copy. No lexical bridge or pretrained answer decoder adopted.",
+      "pretrained_language_route_adopted": false,
+      "current_trained_producer_changed": false,
+      "public_material": {
+        "upstream_revision": "ab0d967dd5729ce455ef14ba9ffafc456a335264",
+        "source_train_sha256": "f27d48df45815288ab15619d47a79028c300fbb7f42e373668aba0b98c1d57c6",
+        "source_csv_rows": 42061,
+        "rows": 40868,
+        "split_counts": {
+          "development": 4271,
+          "train": 36597
+        },
+        "manifest_sha256": "94139a9edaa5bf845bcb372af3b95301013e18000391a5abb8fef20a05c1ce19",
+        "pairs_sha256": "5efe2bf155bcfcac89649d7d2e7ebaf12c3ea84467b0b18c100a78bea9380c1d",
+        "receipt_sha256": "ae459c233b8f069a5920dad23c6ef29146058894923122eab7c1b6b69ce3a581",
+        "conditional_training_eligible": true,
+        "formation_training_eligible": false,
+        "official_splits_used": false,
+        "independent_mfm_final": false,
+        "qualified": false,
+        "authority": false
+      },
+      "material_receipt_file_sha256": "4fbc533ff9373e6f54d598bd57aadf8c476da36831df76e6b91400299c4edb36",
+      "semantic_input_groups": 4862,
+      "teaching_groups": 4356,
+      "development_groups": 506,
+      "material_ancestry": "All 42,061 original training rows preserved; 1,193 exact pair duplicates coalesced into 40,868 pairs. Alternative references remain in the same semantic split. No official development/test used.",
+      "input_boundary": "Exact FormationContextV16 and ordered opened source bytes plus explicit scoped read-only registry; candidate paths derived from caller registrations, never teacher decisions or raw identifier mentions. Scopes remain semantic labels.",
+      "files_sha256": {
+        "scripts/mfm/prepare_public_conditional_material.py": "ddb580d79f2c02be2eb0d3cb8d7ca43d5c93b5947728991eb3b5312673999f74",
+        "scripts/mfm/formation_caller_input.py": "d6d422ef775b9b6f9cbf5f496e06f5c79972ba60662a32aabfe91ec880691f18",
+        "scripts/mfm/preflight_public_conditional_material.py": "e959437d732e282514d96207aaa4b4d8bc028aac147c1b08464328b8ed3e21a5",
+        "configs/mfm/e2e_conditional_material_v1.json": "94139a9edaa5bf845bcb372af3b95301013e18000391a5abb8fef20a05c1ce19",
+        "scripts/mfm/magnolia_public_conditional_census_20261007.sbatch": "f5361661deaa9d13f60eadf68f2a46951d0572381c0ef2ca3fb37ed75f5910fd"
+      },
+      "local_verification": {
+        "scoped_tests": 60,
+        "passed": true,
+        "seconds": 2.781,
+        "full_material_pairs_verified": 40868,
+        "evidence_scope": "Mock processor/clone/isolation fixtures prove caller, material and census contracts; actual Gemma token representability and runtime remain the pending job result."
+      },
+      "broader_windows_suite": {
+        "passed": 1897,
+        "failed": 71,
+        "errors": 19,
+        "skipped": 1,
+        "subtests": 156,
+        "complete_suite_green": false,
+        "evidence_scope": "Snapshot taken while new modules were in TDD. Frozen fixture CRLF differs from its pinned Git LF blob; Windows lacks geteuid assumed by namespace test patch; literal capability scanner misclassifies public-material lane phrasing. Preserve failures; no unrelated runtime changes or broad green claim."
+      },
+      "ordered_diagnosis_used": true,
+      "source_feature_export": "Reviewed source-only frozen Gemma producer is being completed, including custody-preserving recovery of uncommitted abrupt-interruption artifacts. No source export or training launched yet.",
+      "next_action": "Retrieve and verify576995 external terminal census pin, complete40868 roster, actual token roundtrip/counts, source key geometry and code/clone/runtime/material lineage. After a sound census, export target-free frozen source states in bounded resumable passes. If census fails, follow ordered eight-step diagnosis before correction; do not blindly retry. Feature interruption recovery is being finished in parallel.",
+      "full_role_gaps": [
+        "expanded independently reviewed formation teaching",
+        "learned typed selection and source-span copy integrated into semantic producer",
+        "valid uncertainty and interval end learning",
+        "native multimodal formation",
+        "accepted-memory consumer feedback",
+        "independent Alice/Fable qualification"
+      ],
+      "optimizer_created": false,
+      "authority_written": false,
+      "qualified_for_product": false,
+      "final_payloads_opened": false,
+      "paid_compute_purchased": false,
+      "processor_census": {
+        "job": 576995,
+        "owner_account": "mxrayan",
+        "state_at_submission": "SUBMITTED",
+        "code_commit": "480f8bff7334d8691f84d5896de09de0deaeb815",
+        "job_script_sha256": "f5361661deaa9d13f60eadf68f2a46951d0572381c0ef2ca3fb37ed75f5910fd",
+        "runtime": "rayan-mfm-source-cpu-20261002",
+        "cpu_threads": 12,
+        "memory_gib": 64,
+        "time_limit": "03:00:00",
+        "result_pending": true,
+        "local_batch_independent_review": "Bash syntax, exact CLI flags/pins,60 fresh recipe-selected tests and preserved protected wrapper reviewed independently; no launch blocker.",
+        "outputs": "Owner-only rayan-mfm/runs/rayan-mfm-public-census-576995; external terminal pin must be verified before export."
+      }
     }
   }
 }
