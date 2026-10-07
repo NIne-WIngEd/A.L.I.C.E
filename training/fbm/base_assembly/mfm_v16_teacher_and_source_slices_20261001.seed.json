@@ -838,7 +838,7 @@
     "latest_analysis_code_commit": "64be770d8f8f4770d76c6d65f04abab582c1a2b2",
     "root_cause_investigation_20261004": {
       "schema": "mfm-root-cause-investigation-state-v1",
-      "recorded_at_utc": "2026-10-07T04:14:12.658469+00:00",
+      "recorded_at_utc": "2026-10-07T05:42:08.032736+00:00",
       "source_export": {
         "jobs": {
           "576630": "TIMEOUT",
@@ -1425,7 +1425,7 @@
         "no_automatic_budget_extension": true
       },
       "budget_failure_diagnostic": {
-        "state_at_snapshot": "RUNNING",
+        "state_at_snapshot": "COMPLETED",
         "owner_account": "mxrayan",
         "purpose": "Distinguish dominant-template fit, diverse-role underlearning, precise source/scope/reference gaps and later cache errors before selecting a coherent correction",
         "teacher_prefix_cases": 441,
@@ -1459,7 +1459,7 @@
         "run_dir": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-budget-failure-576915",
         "stdout": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-budget-failure-576915.stdout",
         "actual_runtime_tests_passed": 30,
-        "actual_full_roster_measurement_complete": false,
+        "actual_full_roster_measurement_complete": true,
         "packaging_failure_preserved": {
           "job": 576914,
           "state": "FAILED",
@@ -1478,9 +1478,171 @@
           "verification": "30local tests pass; production decoder unchanged."
         },
         "actual_runtime_test_seconds": 18.382,
-        "runtime_state_evidence": "576915RUNNING at00:01:32; required code/environment, owner and loopback namespace checks passed; all30actual runtime tests passed; full-roster measurements not yet observed"
+        "runtime_state_evidence": "Completed full441 teacher measurements,29target-free train generations, original9dev reuse and38later cache/reference checks. No optimizer or model writes.",
+        "exit_code": "0:0",
+        "elapsed": "00:21:52",
+        "original_analysis_sha256": "887ad699dc7680428c4b28afafe103b7f5af896c9ed5b0c31378c05c37a427eb",
+        "original_seal_raw_hashes_rosters_code_verified": true,
+        "actual_late_cache_checked_cases": 38,
+        "actual_late_cache_reference_argmaxes_equal": true,
+        "public_projection": {
+          "schema": "mfm-budget-failure-public-projection-v1",
+          "original_analysis_sha256": "887ad699dc7680428c4b28afafe103b7f5af896c9ed5b0c31378c05c37a427eb",
+          "projection_is_original_sealed_record": false,
+          "original_raw_custody": "protected owner runtime and private local recovery",
+          "job": 576915,
+          "state": "COMPLETED",
+          "exit_code": "0:0",
+          "elapsed": "00:21:52",
+          "teacher_measurement_cases": 441,
+          "target_free_training_cases": 29,
+          "late_cache_checked_cases": 38,
+          "train_objective_remeasurement": {
+            "absolute_tolerance": 1e-05,
+            "final_progress_sha256": "7c13d19472151dcab21feeef278a72d1bfa0eebf42150fb326ed9489a2f31362",
+            "matched": true,
+            "relative_tolerance": 1e-05
+          },
+          "cohorts": {
+            "all-train": {
+              "cases": 432,
+              "tokens": 175357,
+              "equal_case_mean_loss": 0.37844300712294215,
+              "token_weighted_mean_loss": 0.5240755117414315,
+              "per_case_loss_distribution": {
+                "maximum": 2.531212480141127,
+                "median": 0.310015316260805,
+                "minimum": 0.03317616767448823,
+                "p90_nearest_rank": 0.6750221177844038
+              }
+            },
+            "base-train": {
+              "cases": 16,
+              "tokens": 7529,
+              "equal_case_mean_loss": 1.5309877899163258,
+              "token_weighted_mean_loss": 1.8450155246484916,
+              "per_case_loss_distribution": {
+                "maximum": 2.531212480141127,
+                "median": 1.6966595259351003,
+                "minimum": 0.2930496260191181,
+                "p90_nearest_rank": 1.9786989327086701
+              }
+            },
+            "development": {
+              "cases": 9,
+              "tokens": 7188,
+              "equal_case_mean_loss": 3.5206756402178025,
+              "token_weighted_mean_loss": 3.6017457186840107,
+              "per_case_loss_distribution": {
+                "maximum": 4.013128723073787,
+                "median": 3.52405289535691,
+                "minimum": 2.813899588849955,
+                "p90_nearest_rank": 4.013128723073787
+              }
+            },
+            "longitudinal-train": {
+              "cases": 416,
+              "tokens": 167828,
+              "equal_case_mean_loss": 0.3341143616308892,
+              "token_weighted_mean_loss": 0.4648162858841416,
+              "per_case_loss_distribution": {
+                "maximum": 1.0254694454589237,
+                "median": 0.30735693161633165,
+                "minimum": 0.03317616767448823,
+                "p90_nearest_rank": 0.6585937403896961
+              }
+            }
+          },
+          "generation": {
+            "base_train": {
+              "cases": 16,
+              "malformed_json": 15,
+              "duplicate_json": 1,
+              "positive_grounded_proposals": 0
+            },
+            "longitudinal_train": {
+              "cases": 13,
+              "malformed_json": 9,
+              "codec_invalid": 1,
+              "valid_empty_decisions": 3,
+              "positive_grounded_proposals": 0
+            },
+            "development": {
+              "cases": 9,
+              "malformed_json": 9,
+              "positive_grounded_proposals": 0
+            }
+          },
+          "exact_development_divergence": {
+            "first_token": 13,
+            "path": "source_reference:dispositions.*.evidence_refs.*",
+            "target_positive_formation_frequency": 0,
+            "semantic_mismatch_established": false
+          },
+          "original_seal_raw_hashes_rosters_code_verified": true,
+          "late_cache_reference_argmaxes_equal": true,
+          "optimization_executed": false,
+          "qualified_for_product": false,
+          "independent_gold": false,
+          "record_sha256": "fbbbd51e78a2748f6a3d66ac94c3ae0b3a04855ee81a07bafab7d32d063a0c2e"
+        }
       },
-      "status": "BOUNDED_FIT_INVALID_GENERATION_FULL_ROSTER_DIAGNOSTIC_RUNNING"
+      "status": "SOURCE_SEQUENCE_CONSTRUCTION_576945_RUNNING",
+      "source_sequence_construction": {
+        "state_at_snapshot": "RUNNING_OWNER_NAMESPACE_VERIFIED",
+        "objective": "mfm-full-role-plus-source-sequence-29-strata-v1",
+        "parent_component_sha256": "009d65a404a207bff82fb5cec88fa0d5370533ce49ade2d1a152cb77e0b1258c",
+        "parent_weights_sha256": "f5b61a306f7c88ec71e7d6d727ad7d61e70d26fbdd9edf2d1fd5389398a6a18c",
+        "full_train_cases": 432,
+        "diagnostic_development_cases": 9,
+        "construction_strata": 29,
+        "task_mixture": [
+          0.5,
+          0.5
+        ],
+        "source_task": "complete canonical exact UTF8 opened text/code/structured source JSON",
+        "source_targets_use_teacher_decisions": false,
+        "zero_formation_task_preserves_parent": true,
+        "optimizer_reset_declared": true,
+        "same_seed_new_task_negative_control": true,
+        "epochs_maximum": 4,
+        "optimizer_steps_maximum": 108,
+        "new_actual_runtime_lexical_capacity_and_restart_required": true,
+        "native_media_supported_by_this_auxiliary": false,
+        "reference_catalog_status": "implemented typed caller contract, checksum outside learnable target; not integrated or learned pointer",
+        "formation_and_source_measured_separately": true,
+        "qualified_for_product": false,
+        "paid_compute_used": false,
+        "job": 576945,
+        "owner_account": "mxrayan",
+        "code_commit": "c84f943d6625e26ffefc34b80c5bf323c70044e5",
+        "job_script_sha256": "bcf881c2cac9e7d88706ba00f1b43cc2a2d4029ee2f5e64a90338dfaa84efb68",
+        "allocation_hours": 24,
+        "cpu_threads": 12,
+        "memory_gb": 64,
+        "local_targeted_tests_passed": 69,
+        "independent_review_launch_blockers": 0,
+        "actual_runtime_tests_passed": null,
+        "actual_capacity_restart_result_pending": true,
+        "node_at_initial_snapshot": "node068",
+        "namespace_uid": 1905,
+        "namespace_gid": 100,
+        "namespace_interfaces": [
+          "lo"
+        ],
+        "parent_fitted_weights_unchanged": true,
+        "run_dirs": {
+          "probe": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-sequence-probe-576945",
+          "fit": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-sequence-fit-576945",
+          "generated": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-sequence-generated-576945"
+        },
+        "receipt_stdout": {
+          "probe": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-sequence-probe-576945.stdout",
+          "fit": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-sequence-fit-576945.stdout",
+          "generated": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-sequence-generated-576945.stdout"
+        },
+        "runtime_state_evidence": "sacct RUNNING at00:00:20 onnode068; namespace UID1905 GID100 with onlylo; immutablecode and batch verification completed before sbatch; capacity/learning results not yet observed."
+      }
     },
     "latest_decision_model_code_commit": "532bdeb1c5e537b334e62cdacc391737b1335715",
     "decision_pipeline_20261004": {
@@ -1762,7 +1924,7 @@
     },
     "latest_bounded_learning_code_commit": "a4fd0c5fcf34755299fe33907793e7262e137d9d",
     "budget_failure_diagnostic_20261006": {
-      "state_at_snapshot": "RUNNING",
+      "state_at_snapshot": "COMPLETED",
       "owner_account": "mxrayan",
       "purpose": "Distinguish dominant-template fit, diverse-role underlearning, precise source/scope/reference gaps and later cache errors before selecting a coherent correction",
       "teacher_prefix_cases": 441,
@@ -1796,7 +1958,7 @@
       "run_dir": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-budget-failure-576915",
       "stdout": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-budget-failure-576915.stdout",
       "actual_runtime_tests_passed": 30,
-      "actual_full_roster_measurement_complete": false,
+      "actual_full_roster_measurement_complete": true,
       "packaging_failure_preserved": {
         "job": 576914,
         "state": "FAILED",
@@ -1815,7 +1977,170 @@
         "verification": "30local tests pass; production decoder unchanged."
       },
       "actual_runtime_test_seconds": 18.382,
-      "runtime_state_evidence": "576915RUNNING at00:01:32; required code/environment, owner and loopback namespace checks passed; all30actual runtime tests passed; full-roster measurements not yet observed"
-    }
+      "runtime_state_evidence": "Completed full441 teacher measurements,29target-free train generations, original9dev reuse and38later cache/reference checks. No optimizer or model writes.",
+      "exit_code": "0:0",
+      "elapsed": "00:21:52",
+      "original_analysis_sha256": "887ad699dc7680428c4b28afafe103b7f5af896c9ed5b0c31378c05c37a427eb",
+      "original_seal_raw_hashes_rosters_code_verified": true,
+      "actual_late_cache_checked_cases": 38,
+      "actual_late_cache_reference_argmaxes_equal": true,
+      "public_projection": {
+        "schema": "mfm-budget-failure-public-projection-v1",
+        "original_analysis_sha256": "887ad699dc7680428c4b28afafe103b7f5af896c9ed5b0c31378c05c37a427eb",
+        "projection_is_original_sealed_record": false,
+        "original_raw_custody": "protected owner runtime and private local recovery",
+        "job": 576915,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:21:52",
+        "teacher_measurement_cases": 441,
+        "target_free_training_cases": 29,
+        "late_cache_checked_cases": 38,
+        "train_objective_remeasurement": {
+          "absolute_tolerance": 1e-05,
+          "final_progress_sha256": "7c13d19472151dcab21feeef278a72d1bfa0eebf42150fb326ed9489a2f31362",
+          "matched": true,
+          "relative_tolerance": 1e-05
+        },
+        "cohorts": {
+          "all-train": {
+            "cases": 432,
+            "tokens": 175357,
+            "equal_case_mean_loss": 0.37844300712294215,
+            "token_weighted_mean_loss": 0.5240755117414315,
+            "per_case_loss_distribution": {
+              "maximum": 2.531212480141127,
+              "median": 0.310015316260805,
+              "minimum": 0.03317616767448823,
+              "p90_nearest_rank": 0.6750221177844038
+            }
+          },
+          "base-train": {
+            "cases": 16,
+            "tokens": 7529,
+            "equal_case_mean_loss": 1.5309877899163258,
+            "token_weighted_mean_loss": 1.8450155246484916,
+            "per_case_loss_distribution": {
+              "maximum": 2.531212480141127,
+              "median": 1.6966595259351003,
+              "minimum": 0.2930496260191181,
+              "p90_nearest_rank": 1.9786989327086701
+            }
+          },
+          "development": {
+            "cases": 9,
+            "tokens": 7188,
+            "equal_case_mean_loss": 3.5206756402178025,
+            "token_weighted_mean_loss": 3.6017457186840107,
+            "per_case_loss_distribution": {
+              "maximum": 4.013128723073787,
+              "median": 3.52405289535691,
+              "minimum": 2.813899588849955,
+              "p90_nearest_rank": 4.013128723073787
+            }
+          },
+          "longitudinal-train": {
+            "cases": 416,
+            "tokens": 167828,
+            "equal_case_mean_loss": 0.3341143616308892,
+            "token_weighted_mean_loss": 0.4648162858841416,
+            "per_case_loss_distribution": {
+              "maximum": 1.0254694454589237,
+              "median": 0.30735693161633165,
+              "minimum": 0.03317616767448823,
+              "p90_nearest_rank": 0.6585937403896961
+            }
+          }
+        },
+        "generation": {
+          "base_train": {
+            "cases": 16,
+            "malformed_json": 15,
+            "duplicate_json": 1,
+            "positive_grounded_proposals": 0
+          },
+          "longitudinal_train": {
+            "cases": 13,
+            "malformed_json": 9,
+            "codec_invalid": 1,
+            "valid_empty_decisions": 3,
+            "positive_grounded_proposals": 0
+          },
+          "development": {
+            "cases": 9,
+            "malformed_json": 9,
+            "positive_grounded_proposals": 0
+          }
+        },
+        "exact_development_divergence": {
+          "first_token": 13,
+          "path": "source_reference:dispositions.*.evidence_refs.*",
+          "target_positive_formation_frequency": 0,
+          "semantic_mismatch_established": false
+        },
+        "original_seal_raw_hashes_rosters_code_verified": true,
+        "late_cache_reference_argmaxes_equal": true,
+        "optimization_executed": false,
+        "qualified_for_product": false,
+        "independent_gold": false,
+        "record_sha256": "fbbbd51e78a2748f6a3d66ac94c3ae0b3a04855ee81a07bafab7d32d063a0c2e"
+      }
+    },
+    "source_sequence_construction_20261007": {
+      "state_at_snapshot": "RUNNING_OWNER_NAMESPACE_VERIFIED",
+      "objective": "mfm-full-role-plus-source-sequence-29-strata-v1",
+      "parent_component_sha256": "009d65a404a207bff82fb5cec88fa0d5370533ce49ade2d1a152cb77e0b1258c",
+      "parent_weights_sha256": "f5b61a306f7c88ec71e7d6d727ad7d61e70d26fbdd9edf2d1fd5389398a6a18c",
+      "full_train_cases": 432,
+      "diagnostic_development_cases": 9,
+      "construction_strata": 29,
+      "task_mixture": [
+        0.5,
+        0.5
+      ],
+      "source_task": "complete canonical exact UTF8 opened text/code/structured source JSON",
+      "source_targets_use_teacher_decisions": false,
+      "zero_formation_task_preserves_parent": true,
+      "optimizer_reset_declared": true,
+      "same_seed_new_task_negative_control": true,
+      "epochs_maximum": 4,
+      "optimizer_steps_maximum": 108,
+      "new_actual_runtime_lexical_capacity_and_restart_required": true,
+      "native_media_supported_by_this_auxiliary": false,
+      "reference_catalog_status": "implemented typed caller contract, checksum outside learnable target; not integrated or learned pointer",
+      "formation_and_source_measured_separately": true,
+      "qualified_for_product": false,
+      "paid_compute_used": false,
+      "job": 576945,
+      "owner_account": "mxrayan",
+      "code_commit": "c84f943d6625e26ffefc34b80c5bf323c70044e5",
+      "job_script_sha256": "bcf881c2cac9e7d88706ba00f1b43cc2a2d4029ee2f5e64a90338dfaa84efb68",
+      "allocation_hours": 24,
+      "cpu_threads": 12,
+      "memory_gb": 64,
+      "local_targeted_tests_passed": 69,
+      "independent_review_launch_blockers": 0,
+      "actual_runtime_tests_passed": null,
+      "actual_capacity_restart_result_pending": true,
+      "node_at_initial_snapshot": "node068",
+      "namespace_uid": 1905,
+      "namespace_gid": 100,
+      "namespace_interfaces": [
+        "lo"
+      ],
+      "parent_fitted_weights_unchanged": true,
+      "run_dirs": {
+        "probe": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-sequence-probe-576945",
+        "fit": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-sequence-fit-576945",
+        "generated": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-sequence-generated-576945"
+      },
+      "receipt_stdout": {
+        "probe": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-sequence-probe-576945.stdout",
+        "fit": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-sequence-fit-576945.stdout",
+        "generated": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-sequence-generated-576945.stdout"
+      },
+      "runtime_state_evidence": "sacct RUNNING at00:00:20 onnode068; namespace UID1905 GID100 with onlylo; immutablecode and batch verification completed before sbatch; capacity/learning results not yet observed."
+    },
+    "latest_source_sequence_execution_commit": "c84f943d6625e26ffefc34b80c5bf323c70044e5"
   }
 }
