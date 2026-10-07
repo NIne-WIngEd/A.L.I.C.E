@@ -1,6 +1,6 @@
 {
   "schema": "mfm-root-cause-investigation-state-v1",
-  "recorded_at_utc": "2026-10-07T05:44:16.490345+00:00",
+  "recorded_at_utc": "2026-10-07T15:13:43.944528+00:00",
   "source_export": {
     "jobs": {
       "576630": "TIMEOUT",
@@ -749,9 +749,9 @@
       "record_sha256": "fbbbd51e78a2748f6a3d66ac94c3ae0b3a04855ee81a07bafab7d32d063a0c2e"
     }
   },
-  "status": "SOURCE_SEQUENCE_CONSTRUCTION_576945_RUNNING",
+  "status": "SEQUENCE_FAILURE_VERIFIED_READ_ONLY_MECHANISM_DIAGNOSIS_IMPLEMENTED",
   "source_sequence_construction": {
-    "state_at_snapshot": "RUNNING_ACTUAL_RUNTIME_TESTS_PASSED_CAPACITY_PENDING",
+    "state_at_snapshot": "COMPLETED_CAPACITY_AND_FIT_PASSED_NO_POSITIVE_FORMATION",
     "objective": "mfm-full-role-plus-source-sequence-29-strata-v1",
     "parent_component_sha256": "009d65a404a207bff82fb5cec88fa0d5370533ce49ade2d1a152cb77e0b1258c",
     "parent_weights_sha256": "f5b61a306f7c88ec71e7d6d727ad7d61e70d26fbdd9edf2d1fd5389398a6a18c",
@@ -785,7 +785,7 @@
     "local_targeted_tests_passed": 69,
     "independent_review_launch_blockers": 0,
     "actual_runtime_tests_passed": 69,
-    "actual_capacity_restart_result_pending": true,
+    "actual_capacity_restart_result_pending": false,
     "node_at_initial_snapshot": "node068",
     "namespace_uid": 1905,
     "namespace_gid": 100,
@@ -803,7 +803,228 @@
       "fit": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-sequence-fit-576945.stdout",
       "generated": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-sequence-generated-576945.stdout"
     },
-    "runtime_state_evidence": "576945RUNNING at00:02:41; sameownerloopback-only namespace andCPU12Torch2.7.1 verified. All69actual runtime tests pass18.057seconds. New actualmixedbackward/restart andfit results notyetobserved.",
-    "actual_runtime_test_seconds": 18.057
+    "runtime_state_evidence": "Completed0:0;69actualtests; fullmixedtask capacity/restart and4completeepochs. All38formationEOS,34malformed+1duplicate+1groundinginvalid+2validempty; source3allinvalid. Originalseals/rawhashes/code/rosters/progress verified.",
+    "actual_runtime_test_seconds": 18.057,
+    "exit_code": "0:0",
+    "elapsed": "04:49:09",
+    "max_rss_kb": 10598944,
+    "actual_capacity_backward_restart_passed": true,
+    "all_train_epochs_completed": true,
+    "new_optimizer_steps": 108,
+    "actual_generation_completed": true,
+    "positive_grounded_proposals": 0,
+    "public_projection": {
+      "schema": "mfm-sequence-result-public-projection-v1",
+      "projection_is_original_sealed_record": false,
+      "job": 576945,
+      "owner_account": "mxrayan",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "04:49:09",
+      "max_rss_kb": 10598944,
+      "original_component_sha256": "485aa6397c1cab9351bef012ac6ed016c16128a992c31222fc6cc39fed841620",
+      "original_run_sha256": "3e191e0d0363beda84e5194954ba85e48fc45208d2284aacd6807679421fc2fb",
+      "original_probe_sha256": "13d6bfa4dbd4c83e14ad9d0fd4c20233016d745a8675b84251c69527e6f059ee",
+      "original_diagnostic_sha256": "ba9dae2804c6414db62ebb6cecb9fa42ad2ded1821e98ca15402f794690c7ccf",
+      "original_curriculum_sha256": "6dbce35e911c014f082e78d1ab4c3288922b1e3fcdf7f81515bc030f814c252e",
+      "original_weights_sha256": "738cecccbfe266cdf1197db8f29eaaa2642f1e19887c6a265d1fa1d77a7062e7",
+      "original_raw_outputs_sha256": {
+        "seeded-untrained-formation": "d3ff79eefbe8771a0757ba5cbc4f8997b04db624e3f8a15f4abaed6f6a8d863b",
+        "seeded-untrained-source_reconstruction": "1c20ea588283d4ded50496d41ddb6fd0b8f0c5e465dad304aaedefb3e75cfc74",
+        "trained-formation": "25a225865fd17ed52394f090a20438ae833814162ad99e9c06cab83027807c71",
+        "trained-source_reconstruction": "a75e2ffa1d45af4bed27760856435567170f7fac17f6ec050e95fc764123f9c1"
+      },
+      "code_commit": "c84f943d6625e26ffefc34b80c5bf323c70044e5",
+      "code_batch_sha256": "bcf881c2cac9e7d88706ba00f1b43cc2a2d4029ee2f5e64a90338dfaa84efb68",
+      "runtime_tests_passed": 69,
+      "runtime_test_seconds": 18.057,
+      "epochs_completed": 4,
+      "new_optimizer_steps": 108,
+      "actual_capacity_backward_restart_passed": true,
+      "migration_bit_exact": true,
+      "model_adam_next_step_max_difference": 0.0,
+      "task_progress": [
+        {
+          "step": 0,
+          "progress_sha256": "cc65c48747e7496eaa067679070111936abaf2cfe9f38ad3284e92f0ddfa0746",
+          "balanced_objective": 4.484378144136984,
+          "balanced_formation": 0.9944583023256012,
+          "balanced_source": 7.974297985948366,
+          "base_formation": 1.5309877544641495,
+          "base_source": 8.149101227521896,
+          "long_formation": 0.33411436123200333,
+          "long_source": 7.759155534780943
+        },
+        {
+          "step": 27,
+          "progress_sha256": "24214feb9283946ba2eb0679996d9d5da3f36e29558774fa7ff7405bce30a04f",
+          "balanced_objective": 3.1453098275393634,
+          "balanced_formation": 1.053451992234151,
+          "balanced_source": 5.237167662844576,
+          "base_formation": 1.4792492110282183,
+          "base_source": 5.694509401917458,
+          "long_formation": 0.5293938767952988,
+          "long_source": 4.674285522447183
+        },
+        {
+          "step": 54,
+          "progress_sha256": "6f3fa57a063c40d98c880b16c146076dd50e9193a7cc345dee3c7e085523d56e",
+          "balanced_objective": 2.4941280947291644,
+          "balanced_formation": 0.9645963679870655,
+          "balanced_source": 4.023659821471264,
+          "base_formation": 1.2978088594973087,
+          "base_source": 4.525840476155281,
+          "long_formation": 0.5544886861283046,
+          "long_source": 3.405591323398627
+        },
+        {
+          "step": 81,
+          "progress_sha256": "1b24ff2b842af06c16320d3d610f6c9405f8d81e8f48d9992a524398b334ad75",
+          "balanced_objective": 2.0963689415426603,
+          "balanced_formation": 0.8125414165571846,
+          "balanced_source": 3.380196466528136,
+          "base_formation": 1.122212840244174,
+          "base_source": 3.9035976380109787,
+          "long_formation": 0.43140735663473606,
+          "long_source": 2.736010409318484
+        },
+        {
+          "step": 108,
+          "progress_sha256": "615898c197de590d363c7beda938824107959c7f5f728b69cf4fde5b7d434a16",
+          "balanced_objective": 1.7077438792892217,
+          "balanced_formation": 0.6745869053792658,
+          "balanced_source": 2.740900853199178,
+          "base_formation": 0.9385013105347753,
+          "base_source": 3.2759842574596405,
+          "long_formation": 0.34976917595710033,
+          "long_source": 2.0823366633401466
+        }
+      ],
+      "generation_summary": {
+        "seeded-untrained": {
+          "formation": {
+            "base-train": {
+              "cases": 16,
+              "eos_outputs": 0,
+              "exact_teacher_agreements": 0,
+              "grounded_outputs": 0,
+              "invalid_outputs": 16,
+              "proposals_in_grounded_outputs": 0
+            },
+            "development": {
+              "cases": 9,
+              "eos_outputs": 0,
+              "exact_teacher_agreements": 0,
+              "grounded_outputs": 0,
+              "invalid_outputs": 9,
+              "proposals_in_grounded_outputs": 0
+            },
+            "longitudinal-train": {
+              "cases": 13,
+              "eos_outputs": 0,
+              "exact_teacher_agreements": 0,
+              "grounded_outputs": 0,
+              "invalid_outputs": 13,
+              "proposals_in_grounded_outputs": 0
+            }
+          },
+          "source_reconstruction": {
+            "base-train": {
+              "cases": 3,
+              "eos_outputs": 0,
+              "exact_source_reconstructions": 0,
+              "invalid_outputs": 3
+            }
+          }
+        },
+        "trained": {
+          "formation": {
+            "base-train": {
+              "cases": 16,
+              "eos_outputs": 16,
+              "exact_teacher_agreements": 1,
+              "grounded_outputs": 1,
+              "invalid_outputs": 15,
+              "proposals_in_grounded_outputs": 0
+            },
+            "development": {
+              "cases": 9,
+              "eos_outputs": 9,
+              "exact_teacher_agreements": 0,
+              "grounded_outputs": 0,
+              "invalid_outputs": 9,
+              "proposals_in_grounded_outputs": 0
+            },
+            "longitudinal-train": {
+              "cases": 13,
+              "eos_outputs": 13,
+              "exact_teacher_agreements": 1,
+              "grounded_outputs": 1,
+              "invalid_outputs": 12,
+              "proposals_in_grounded_outputs": 0
+            }
+          },
+          "source_reconstruction": {
+            "base-train": {
+              "cases": 3,
+              "eos_outputs": 3,
+              "exact_source_reconstructions": 0,
+              "invalid_outputs": 3
+            }
+          }
+        }
+      },
+      "independent_json_parse": {
+        "formation": {
+          "malformed": 34,
+          "duplicate_keys": 1,
+          "parsed": 3
+        },
+        "source_reconstruction": {
+          "duplicate_keys": 1,
+          "malformed": 2
+        }
+      },
+      "formation_parsed_invalid_grounding": 1,
+      "positive_grounded_proposals": 0,
+      "longitudinal_formation_case_losses_worsened": 307,
+      "all_diverse_formation_losses_improved": true,
+      "source_train_target_tokens_per_epoch": 47399,
+      "source_positive_train_token_types": 697,
+      "source_train_token_types_once": 142,
+      "source_train_token_types_2_to_9": 148,
+      "external_stdout_raw_rosters_progress_code_verified": true,
+      "original_raw_custody": "protected owner runtime and private local recovery",
+      "qualified_for_product": false,
+      "independent_gold": false,
+      "final_payloads_opened": false,
+      "authority_written": false,
+      "record_sha256": "2d80d911c90563916116cc4892f286aef6999df16ec59bdf28726c3a8f5d3b3b"
+    }
+  },
+  "sequence_failure_discriminator": {
+    "state_at_snapshot": "IMPLEMENTED_LOCAL_VERIFICATION_BEFORE_SUBMISSION",
+    "plan": "docs/MFM_SEQUENCE_FAILURE_DISCRIMINATOR_2026-10-07.md",
+    "parent_component_sha256": "485aa6397c1cab9351bef012ac6ed016c16128a992c31222fc6cc39fed841620",
+    "original_diagnostic_sha256": "ba9dae2804c6414db62ebb6cecb9fa42ad2ded1821e98ca15402f794690c7ccf",
+    "full_teacher_cases": 441,
+    "tasks": [
+      "formation",
+      "source_reconstruction"
+    ],
+    "retained_late_parity_cases": 41,
+    "train_objective_remeasurement": "all432bothtasks plus29strata",
+    "interventions": [
+      "original_correct_teacher_prefix",
+      "zero_states_same_mask",
+      "foreign_case_states_and_its_mask"
+    ],
+    "foreign_map": "cyclic sorted IDs same family;longitudinal same operation next host; target independent",
+    "no_source_row_shuffle": true,
+    "optimizer_created": false,
+    "original_validators_unchanged": true,
+    "exact_author_departure_is_semantic_failure": false,
+    "qualified_for_product": false,
+    "paid_compute_used": false
   }
 }

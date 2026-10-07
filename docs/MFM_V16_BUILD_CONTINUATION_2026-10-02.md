@@ -723,3 +723,17 @@ The reviewed batch executes newstress/restart first, then fourfull432caseepochs
 withresetAdam and balanced29strata/two-task teaching, then raw38formation cases
 permatchedcontrol plus lexicalstress. Incompletefit skipsgeneration andpreserves
 checkpoints. Originalparent, controls and576915failures remainimmutable.
+
+### Completed576945: capacity passed, generated formation remains unresolved
+
+576945 completed0:0 in4h49m09s.69actual tests, mixed-task capacity, exact
+parent migration and next-step model/Adam restart passed. Fourfull432caseepochs
+completed108newupdates. BalancedformationCE0.99446→0.67459 andsourceCE7.97430→2.74090.
+All16diverse formation losses improve;307/416long losses worsen.38trainedformation
+outputs allEOS, but34malformed+1duplicate+1groundinginvalid+2validempty yield
+zero positive grounded proposals. Three source stress outputs are malformed or
+duplicate JSON; exact wording comparison did not cause those failures. Original
+seals/raw/code/rosters/progress independently verify. This supersedes earlier
+pending snapshots. See MFM_SEQUENCE_FAILURE_DISCRIMINATOR_2026-10-07.md and
+receipts/MFM_V16_SEQUENCE_576945_PUBLIC.json for the bounded read-only next step.
+No training extension or new architecture follows automatically.
