@@ -1,0 +1,117 @@
+{
+  "schema": "mfm-public-foundation-implementation-public-v1",
+  "recorded_at_utc": "2026-10-07T20:39:45.073362+00:00",
+  "classification": "PUBLIC_METHOD_ONLY",
+  "implementation_commit": "8037a83267f3c48e3856d838cb9d2a52b7a4da4c",
+  "goal": "Full MFM foundation and full semantic formation for Alice and Fable V1; foundation before personalization",
+  "contract": "docs/MFM_PUBLIC_FOUNDATION_PRODUCER_CONTRACT_2026-10-07.md",
+  "plan": "docs/superpowers/plans/2026-10-07-mfm-public-foundation-training.md",
+  "implemented_paths": [
+    "scripts/mfm/public_conditional_training.py",
+    "src/cognitive_kernel/formation_conditional_task.py",
+    "scripts/mfm/train_public_conditional_foundation.py"
+  ],
+  "producer": {
+    "class": "FormationDecisionSpecialist",
+    "width": 768,
+    "layers": 6,
+    "heads": 12,
+    "vocabulary": 262144,
+    "source_width": 3840,
+    "target_positions": 8192,
+    "arithmetic": "FP32",
+    "initialization": "fresh-token-position-scale-0.02-v1"
+  },
+  "source_boundary": "Detached frozen Gemma source states only; no imported language head, old task vector or failed checkpoint.",
+  "task": "conditional_meaning_to_text",
+  "objective": "Complete sequence mean including EOS, reference mean, equal semantic-MR mean; exact fixed-checkpoint all-train report separate from development.",
+  "material": {
+    "pairs": 40868,
+    "train_pairs": 36597,
+    "development_pairs": 4271,
+    "sources": 4862,
+    "train_groups": 4356,
+    "development_groups": 506,
+    "census_sha256": "0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d"
+  },
+  "reviews": {
+    "reader": "PASS after external returned-bank pin and exact sampler correction",
+    "task_view": "PASS",
+    "trainer": "PASS after actual first-step interruption recovery correction",
+    "broad_final": "PASS after exact fixed-model objective reporting correction",
+    "parked_or_deferred_code_findings": []
+  },
+  "verification": [
+    {
+      "commit": "436e90d5cd04e56f2e46884c8a278ff559866ebf",
+      "scope": "Root affected trainer/reader/task/cache/source/preflight interfaces",
+      "tests_passed": 85,
+      "subtests_passed": 51,
+      "seconds": 60.53
+    },
+    {
+      "commit": "8037a83267f3c48e3856d838cb9d2a52b7a4da4c",
+      "scope": "Final changed trainer/objective/reader and actual interruption/report/replay controls",
+      "tests_passed": 34,
+      "subtests_passed": 19,
+      "seconds": 84.28
+    }
+  ],
+  "test_proof_scope": "Real tiny-model gradients, serialized Adam/RNG/cursors, subprocess interruption, complete fixture artifact and independent dense-CE controls only; not production resource fit or learning.",
+  "broader_failures_preserved": {
+    "task_view_windows_tests": 30,
+    "windows_failures": 2,
+    "windows_setup_errors": 5,
+    "new_view_reached_by_failures": false,
+    "whole_suite_collection_errors": 15,
+    "whole_suite_tests_executed": false,
+    "missing_dependencies": [
+      "cryptography",
+      "PIL"
+    ],
+    "full_suite_pass_claimed": false
+  },
+  "measurement_input_extrema": {
+    "original_encoded_pairs_sha256": "490a84406ad4d1988d42e929782206c4437fce9aea447e3f2098086e283e11c0",
+    "train_equals_all_source_max": 71,
+    "train_equals_all_target_max": 84,
+    "train_equals_all_source_plus_target_max": 149,
+    "development_enters_measurement_gradients": false,
+    "actual_resource_measurement": false
+  },
+  "scheduler_snapshot": {
+    "observed_at_utc": "2026-10-07 20:37:48 UTC",
+    "job_577007": "RUNNING",
+    "job_577007_elapsed": "02:00:53",
+    "job_577008": "PENDING afterok577007",
+    "raw_snapshot_sha256": "cabbd8cf557d77b85d80d63ecb23ca0dfd8f4890c41d17531c5312ed5480a973",
+    "account": "mxrayan",
+    "cpus": 12,
+    "live_counts_are_terminal": false
+  },
+  "durable_metadata_receipt": "docs/receipts/MFM_TOKENIZER_METADATA_DRIVE_20261007_PUBLIC.json",
+  "free_compute": {
+    "kaggle_gpu_hours_remaining_reported": 29.99,
+    "quota_observed_at_utc": "2026-10-07 19:11:28 UTC",
+    "accelerator_assigned": false,
+    "quota_is_reservation": false,
+    "paid_compute_authorized_or_used": false
+  },
+  "complete_bank_available": false,
+  "full_geometry_construction_executed": false,
+  "actual_processor_compatibility_verified": false,
+  "actual_cuda_replay_verified": false,
+  "public_training_started": false,
+  "learned_public_foundation_exported": false,
+  "full_semantic_formation_built": false,
+  "product_qualification": false,
+  "required_next_action": "Recover the complete source bank and independent terminal pin; verify and archive/restore it in Drive; execute full-geometry construction on the selected actual free runtime, choose fit allocation from its measurements, train every prescribed full-roster epoch, then continue the separately versioned full semantic formation stage.",
+  "remaining_full_role_construction": [
+    "Broader rights-admitted conditional and full-role teaching",
+    "Typed caller-candidate selection",
+    "Exact literal-byte/token alignment and copying",
+    "Semantic formation and temporal correction/deletion",
+    "Native modality formation",
+    "Independent Claim-controlled accepted-memory consumers, action/outcome/revision and second-host transfer"
+  ]
+}

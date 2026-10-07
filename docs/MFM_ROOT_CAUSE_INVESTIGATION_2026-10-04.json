@@ -1,6 +1,6 @@
 {
   "schema": "mfm-root-cause-investigation-state-v1",
-  "recorded_at_utc": "2026-10-07T19:13:28.368025+00:00",
+  "recorded_at_utc": "2026-10-07T20:39:45.073362+00:00",
   "source_export": {
     "jobs": {
       "576630": "TIMEOUT",
@@ -2010,7 +2010,7 @@
       },
       "continuation_scheduling_rule": "At most one successor ahead of the active block. Each binds its immediate successful parent dedicated terminal/progress. Preserve no-advance/failure/unknown-submission evidence and diagnose before repeat; stop at verified complete4,862-source bank. Do not reuse prior-parent recipes or prequeue a long fixed chain."
     },
-    "next_action": "Complete reviewed fresh public task binding and the real full-roster foundation trainer with exact optimizer-boundary restart while577007 exports and577008 remains its queued successful-parent continuation. Recover the actual terminal/complete bank before training; if partial, bind only the immediate predecessor for subsequent scheduling. Measure full producer learning resources on the complete material and select the existing free runtime, then train shared foundation and continue full formation. Preserve all original failures, qualified boundaries, Drive custody and exact MFM/FBM/Graphify publications.",
+    "next_action": "Recover the complete source bank and independent terminal pin; verify and archive/restore it in Drive; execute full-geometry construction on the selected actual free runtime, choose fit allocation from its measurements, train every prescribed full-roster epoch, then continue the separately versioned full semantic formation stage.",
     "full_role_gaps": [
       "expanded independently reviewed formation teaching",
       "learned typed selection and source-span copy integrated into semantic producer",
@@ -2278,7 +2278,7 @@
     "foundation_training_implementation": {
       "contract": "docs/MFM_PUBLIC_FOUNDATION_PRODUCER_CONTRACT_2026-10-07.md",
       "plan": "docs/superpowers/plans/2026-10-07-mfm-public-foundation-training.md",
-      "state": "READER_AND_TASK_BINDING_REVIEWED_REAL_TRAINER_IMPLEMENTING",
+      "state": "FULL_ROSTER_IMPLEMENTATION_REVIEWED_ACTUAL_CONSTRUCTION_PENDING_COMPLETE_BANK",
       "producer": "Fresh full-geometry FormationDecisionSpecialist; frozen Gemma source encoder only.",
       "objective": "Sequence mean including EOS, then reference mean, then equal semantic-MR mean.",
       "complete_training_pairs": 36597,
@@ -2319,8 +2319,35 @@
       },
       "task_binding_review_passed": true,
       "task_binding_affected_test_seconds": 2.997,
-      "trainer_implemented": false,
-      "runtime_checks_and_fit_still_pending": true
+      "trainer_implemented": true,
+      "runtime_checks_and_fit_still_pending": true,
+      "trainer_initial_commit": "f0b0f2c32c2911e8538f6a088c128787f5d317e0",
+      "initial_checkpoint_fix_commit": "436e90d5cd04e56f2e46884c8a278ff559866ebf",
+      "trainer_task_review_passed": true,
+      "trainer_final_review_passed": true,
+      "trainer_final_review_open_findings": [],
+      "construction_resource_executed": false,
+      "processor_compatibility_executed": false,
+      "learned_public_foundation_exported": false,
+      "trainer_commit": "8037a83267f3c48e3856d838cb9d2a52b7a4da4c",
+      "final_objective_report_implemented": true,
+      "verification": [
+        {
+          "commit": "436e90d5cd04e56f2e46884c8a278ff559866ebf",
+          "scope": "Root affected trainer/reader/task/cache/source/preflight interfaces",
+          "tests_passed": 85,
+          "subtests_passed": 51,
+          "seconds": 60.53
+        },
+        {
+          "commit": "8037a83267f3c48e3856d838cb9d2a52b7a4da4c",
+          "scope": "Final changed trainer/objective/reader and actual interruption/report/replay controls",
+          "tests_passed": 34,
+          "subtests_passed": 19,
+          "seconds": 84.28
+        }
+      ],
+      "implementation_receipt": "docs/receipts/MFM_PUBLIC_FOUNDATION_IMPLEMENTATION_20261007_PUBLIC.json"
     },
     "free_training_compute": {
       "kaggle_existing_cli": "Kaggle CLI2.2.4 outside PATH, existing anaconda runtime",
@@ -2336,6 +2363,107 @@
       "new_jobs_submitted": false,
       "paid_compute_authorized_or_used": false,
       "next_requirement": "Complete-bank custody and actual full-geometry public learning/restart measurement before long-fit placement."
+    },
+    "tokenizer_metadata_subset_custody": {
+      "schema": "mfm-tokenizer-metadata-drive-custody-public-v1",
+      "verified_at_utc": "2026-10-07T20:29:46.980340+00:00",
+      "scope": "Exact seven original nonweight Gemma metadata assets, original clone receipt and subset manifest only",
+      "drive_file_id": "11hsBTMuKUabYkiFXn-ACJZrIcrSWhGGD",
+      "drive_url": "https://drive.google.com/file/d/11hsBTMuKUabYkiFXn-ACJZrIcrSWhGGD/view?usp=drivesdk",
+      "parent_folder_id": "1o0m59Mhsikxqbj9qQxDPqXnYN1wlHaq_",
+      "drive_file_name": "sha256-2fb695850b4311e0727794059d4eee5eb6a95bc4174621024444e8991145a0bb.zip",
+      "archive_bytes": 5410238,
+      "archive_sha256": "2fb695850b4311e0727794059d4eee5eb6a95bc4174621024444e8991145a0bb",
+      "original_clone_receipt_sha256": "54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7",
+      "subset_custody_receipt_sha256": "c6e13229b4b453938dc092c76c234145105a606a897d1d47c9cc0e5c0e69da4c",
+      "metadata_asset_bytes": 32206920,
+      "metadata_asset_count": 7,
+      "archive_entry_count": 9,
+      "archive_entries": [
+        {
+          "name": ".gitattributes",
+          "bytes": 1624,
+          "sha256": "484fac0cb8b057eefe1992c8b72ac6e7438c7d17bd60c0e278b401c2190f7e72"
+        },
+        {
+          "name": "README.md",
+          "bytes": 28340,
+          "sha256": "131e26f7f1fa69445dc4b0ab98a2251811f8c3128426bf09fcef6ac5ee16e7e4"
+        },
+        {
+          "name": "config.json",
+          "bytes": 4383,
+          "sha256": "14f38c5492ffc9cbcdf808647ca0c025bb5b9b4eb737526347134d500ace6098"
+        },
+        {
+          "name": "generation_config.json",
+          "bytes": 233,
+          "sha256": "02b56bd11e1cd1e363e701a85a2fd7fbaa2992ec3358c1cd7cc44ead7208f505"
+        },
+        {
+          "name": "mfm-clone-576486.json",
+          "bytes": 1507,
+          "sha256": "cd6170e52e2ee739788ae1bd85c60cbb68ea29c3602c7ec18d6b690d69e8d526"
+        },
+        {
+          "name": "processor_config.json",
+          "bytes": 1382,
+          "sha256": "6b938e76555b3e9946890770e1abcd442a4718f34041a58e8139dc8ad34545c9"
+        },
+        {
+          "name": "subset-manifest.json",
+          "bytes": 1945,
+          "sha256": "5233a2ffc88621a6433793ba52b4461625ec8af3afb06ac38e18419fb30d2d35"
+        },
+        {
+          "name": "tokenizer.json",
+          "bytes": 32170070,
+          "sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6"
+        },
+        {
+          "name": "tokenizer_config.json",
+          "bytes": 888,
+          "sha256": "522a38334973725dba8f7c645195b19dda0c284f403f43273f77837679ba2eab"
+        }
+      ],
+      "prewrite_storage_gate": {
+        "observed_at_utc": "2026-10-07T20:24:45Z",
+        "receipt_file_sha256": "ea48d279fc93f0f9154ab9f8dd8163588e3ec70afd07385f77a4567e30b407ba",
+        "scoped_folders": 27,
+        "scoped_files": 30,
+        "scoped_logical_bytes": 79290797,
+        "repeated_listings_unchanged": 27,
+        "owned_metadata_nodes_checked": 57,
+        "prospective_archive_bytes": 5410238,
+        "projected_scoped_logical_bytes": 84701035,
+        "operational_headroom_bytes": 379915298965,
+        "provider_quota_measured": false,
+        "provider_wide_usage_measured": false,
+        "earlier_material_upload_before_gate_gap_erased": false
+      },
+      "upload_completed": true,
+      "drive_metadata_size_name_parent_verified": true,
+      "authenticated_full_archive_restore_sha256_verified": true,
+      "all_entries_crc_and_bytes_verified": true,
+      "durable_drive_custody": true,
+      "weights_transferred_or_loaded": false,
+      "complete_clone_reverified": false,
+      "source_parent_bytes_reverified": false,
+      "actual_processor_compatibility_verified": false,
+      "source_bank_complete": false,
+      "learned_mfm_verified": false,
+      "product_qualification": false,
+      "next_action": "Consume the exact metadata subset through local-only AutoProcessor in the actual complete-bank construction runtime; source export remains active."
+    },
+    "source_scheduler_snapshot": {
+      "observed_at_utc": "2026-10-07 20:37:48 UTC",
+      "job_577007": "RUNNING",
+      "job_577007_elapsed": "02:00:53",
+      "job_577008": "PENDING afterok577007",
+      "raw_snapshot_sha256": "cabbd8cf557d77b85d80d63ecb23ca0dfd8f4890c41d17531c5312ed5480a973",
+      "account": "mxrayan",
+      "cpus": 12,
+      "live_counts_are_terminal": false
     }
   }
 }

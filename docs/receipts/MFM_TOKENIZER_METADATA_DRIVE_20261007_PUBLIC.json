@@ -1,0 +1,91 @@
+{
+  "schema": "mfm-tokenizer-metadata-drive-custody-public-v1",
+  "verified_at_utc": "2026-10-07T20:29:46.980340+00:00",
+  "scope": "Exact seven original nonweight Gemma metadata assets, original clone receipt and subset manifest only",
+  "drive_file_id": "11hsBTMuKUabYkiFXn-ACJZrIcrSWhGGD",
+  "drive_url": "https://drive.google.com/file/d/11hsBTMuKUabYkiFXn-ACJZrIcrSWhGGD/view?usp=drivesdk",
+  "parent_folder_id": "1o0m59Mhsikxqbj9qQxDPqXnYN1wlHaq_",
+  "drive_file_name": "sha256-2fb695850b4311e0727794059d4eee5eb6a95bc4174621024444e8991145a0bb.zip",
+  "archive_bytes": 5410238,
+  "archive_sha256": "2fb695850b4311e0727794059d4eee5eb6a95bc4174621024444e8991145a0bb",
+  "original_clone_receipt_sha256": "54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7",
+  "subset_custody_receipt_sha256": "c6e13229b4b453938dc092c76c234145105a606a897d1d47c9cc0e5c0e69da4c",
+  "metadata_asset_bytes": 32206920,
+  "metadata_asset_count": 7,
+  "archive_entry_count": 9,
+  "archive_entries": [
+    {
+      "name": ".gitattributes",
+      "bytes": 1624,
+      "sha256": "484fac0cb8b057eefe1992c8b72ac6e7438c7d17bd60c0e278b401c2190f7e72"
+    },
+    {
+      "name": "README.md",
+      "bytes": 28340,
+      "sha256": "131e26f7f1fa69445dc4b0ab98a2251811f8c3128426bf09fcef6ac5ee16e7e4"
+    },
+    {
+      "name": "config.json",
+      "bytes": 4383,
+      "sha256": "14f38c5492ffc9cbcdf808647ca0c025bb5b9b4eb737526347134d500ace6098"
+    },
+    {
+      "name": "generation_config.json",
+      "bytes": 233,
+      "sha256": "02b56bd11e1cd1e363e701a85a2fd7fbaa2992ec3358c1cd7cc44ead7208f505"
+    },
+    {
+      "name": "mfm-clone-576486.json",
+      "bytes": 1507,
+      "sha256": "cd6170e52e2ee739788ae1bd85c60cbb68ea29c3602c7ec18d6b690d69e8d526"
+    },
+    {
+      "name": "processor_config.json",
+      "bytes": 1382,
+      "sha256": "6b938e76555b3e9946890770e1abcd442a4718f34041a58e8139dc8ad34545c9"
+    },
+    {
+      "name": "subset-manifest.json",
+      "bytes": 1945,
+      "sha256": "5233a2ffc88621a6433793ba52b4461625ec8af3afb06ac38e18419fb30d2d35"
+    },
+    {
+      "name": "tokenizer.json",
+      "bytes": 32170070,
+      "sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6"
+    },
+    {
+      "name": "tokenizer_config.json",
+      "bytes": 888,
+      "sha256": "522a38334973725dba8f7c645195b19dda0c284f403f43273f77837679ba2eab"
+    }
+  ],
+  "prewrite_storage_gate": {
+    "observed_at_utc": "2026-10-07T20:24:45Z",
+    "receipt_file_sha256": "ea48d279fc93f0f9154ab9f8dd8163588e3ec70afd07385f77a4567e30b407ba",
+    "scoped_folders": 27,
+    "scoped_files": 30,
+    "scoped_logical_bytes": 79290797,
+    "repeated_listings_unchanged": 27,
+    "owned_metadata_nodes_checked": 57,
+    "prospective_archive_bytes": 5410238,
+    "projected_scoped_logical_bytes": 84701035,
+    "operational_headroom_bytes": 379915298965,
+    "provider_quota_measured": false,
+    "provider_wide_usage_measured": false,
+    "earlier_material_upload_before_gate_gap_erased": false
+  },
+  "upload_completed": true,
+  "drive_metadata_size_name_parent_verified": true,
+  "authenticated_full_archive_restore_sha256_verified": true,
+  "all_entries_crc_and_bytes_verified": true,
+  "durable_drive_custody": true,
+  "weights_transferred_or_loaded": false,
+  "complete_clone_reverified": false,
+  "source_parent_bytes_reverified": false,
+  "actual_processor_compatibility_verified": false,
+  "source_bank_complete": false,
+  "learned_mfm_verified": false,
+  "product_qualification": false,
+  "next_action": "Consume the exact metadata subset through local-only AutoProcessor in the actual complete-bank construction runtime; source export remains active."
+}
