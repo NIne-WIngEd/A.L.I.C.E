@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "85054211fc044e007bca4734147a329fd3fb85d6",
+      "commit": "bc64e5f26f86f7c06ff44f85099455e5beb4afbb",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -47,7 +47,7 @@
         {
           "path": "docs/MFM_V16_BUILD_CONTINUATION_2026-10-02.md",
           "purpose": "MFM recovered corpus, compute decisions and remaining full-capability roadmap",
-          "blob_sha": "b40f5ca4074bca1b41e66294c591acc357263735"
+          "blob_sha": "e0379c7883327f10994ebfb2d059edb75c04c7ff"
         },
         {
           "path": "docs/MFM_COMPUTE_RECOVERY_RECEIPTS_2026-10-02.json",
@@ -57,7 +57,7 @@
         {
           "path": "docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
           "purpose": "completed teacher fit, failed generated formation, actual causal analysis and corrected measurement handoff",
-          "blob_sha": "b5ceda2e42461e8015ec1a3a2a46b000b87589d1"
+          "blob_sha": "62f1f9886a0dfa84961f58a59f83e29b59cc10da"
         },
         {
           "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576702.json",
@@ -107,7 +107,7 @@
         {
           "path": "docs/MFM_V16_OUTPUT_INTERFACE_SUCCESSOR_2026-10-04.md",
           "purpose": "root input/objective/evaluation audit, actual corpus boundary and full decision construction; byte proposal on hold",
-          "blob_sha": "daa072a5f880ae405a6c075f680b48070256ff54"
+          "blob_sha": "5936ec09c640c0502c27a40ba4c3554e7623bc35"
         },
         {
           "path": "docs/MFM_V1_ROLE_BOUNDARY_DIAGNOSTIC_2026-09-30.md",
@@ -227,7 +227,72 @@
         {
           "path": "docs/MFM_BUDGET_FAILURE_DISCRIMINATOR_2026-10-06.md",
           "purpose": "mandatory diagnosis evidence and full-roster discriminator plan before architecture or further fit",
-          "blob_sha": "ddfacc7e94c9872fe11d37ee3e1f9b25edf2fcdc"
+          "blob_sha": "6a62ed28ef72ce24471f3e246c492097dce3c8b3"
+        },
+        {
+          "path": "docs/receipts/MFM_V16_BUDGET_FAILURE_576915_PUBLIC.json",
+          "purpose": "verified public projection of completed full441/29 diagnosis; original private seal separate, no positive formation established",
+          "blob_sha": "a3b6e48456fc585a3fe163248ab3ce2465e08c1c"
+        },
+        {
+          "path": "docs/MFM_SOURCE_SEQUENCE_CONSTRUCTION_2026-10-07.md",
+          "purpose": "researched balanced full-role and source sequence construction after complete diagnosis; full Alice/Fable destination and limits",
+          "blob_sha": "cc1ead411adc15de137faeed48131b7ce700c995"
+        },
+        {
+          "path": "src/cognitive_kernel/formation_sequence_specialist.py",
+          "purpose": "explicit learned formation/source task vectors, exact parent migration and shared fresh head; caches require task binding",
+          "blob_sha": "c27311de90cfbe8cea30cc9926c69485e4f2e0c8"
+        },
+        {
+          "path": "scripts/mfm/formation_sequence_curriculum.py",
+          "purpose": "complete source-only UTF8 sequence targets and full432case29stratum objective; no teacher target or truncation",
+          "blob_sha": "9f57311d912246270f9ed299ad6d6b1aab82b9ef"
+        },
+        {
+          "path": "scripts/mfm/train_v16_sequence_specialist.py",
+          "purpose": "externally pinned parent weights, reset Adam, new task seed and actual lexical stress/restart before bounded full-roster teaching",
+          "blob_sha": "4a1dec23672654fbe45a1385d82c49d66fec810f"
+        },
+        {
+          "path": "scripts/mfm/run_v16_sequence_diagnostic.py",
+          "purpose": "target-free task-bound matched38formation controls and exact source stress with separate metrics/raw failures",
+          "blob_sha": "3cc5766ddeb438753ea30f2ab35d88b12a708ed3"
+        },
+        {
+          "path": "scripts/mfm/magnolia_v16_sequence_learning_20261007.sbatch",
+          "purpose": "protected owner-account CPU source/formation stress, four-epoch teaching and matched generated diagnostics",
+          "blob_sha": "fe3a8709fa9b60d2a50c7c833036b5668d0a4a7f"
+        },
+        {
+          "path": "scripts/mfm/formation_reference_catalog.py",
+          "purpose": "unintegrated explicit caller reference catalog and lossless typed codec; checksums outside learning, no learned pointer evidence",
+          "blob_sha": "f7f43892e475538d55d501c2e4d689a1155d3ac1"
+        },
+        {
+          "path": "tests/governance/test_mfm_task_specialist.py",
+          "purpose": "zero-task migration, task gradients, late cache/reference and actual task-bound routes; component evidence only",
+          "blob_sha": "76d6ef7032b52d52c46e25b54c9df180b734d624"
+        },
+        {
+          "path": "tests/governance/test_mfm_sequence_curriculum.py",
+          "purpose": "source-only custody, exact roundtrip, complete29strata/432roster weights and differentiable two-task objective",
+          "blob_sha": "b3e0352a535926b5284c8a457fd9a27d21dc931a"
+        },
+        {
+          "path": "tests/governance/test_mfm_sequence_training.py",
+          "purpose": "global minibatch weights, lexical/prior-memory stress and canonical progress order regression",
+          "blob_sha": "72f9708774d74f7eb00e9e05c1cc7bad1db5036b"
+        },
+        {
+          "path": "tests/governance/test_mfm_sequence_diagnostic.py",
+          "purpose": "complete candidate/checkpoint/progress/seed ancestry, target-free task routing and separate outcomes",
+          "blob_sha": "8890d45af5cc3907a7c90bdfa57d7488ed2a23b4"
+        },
+        {
+          "path": "tests/governance/test_mfm_reference_catalog.py",
+          "purpose": "typed caller inventory gaps, lossless decision semantics and caller-only catalog binding; no model qualification",
+          "blob_sha": "4266eb0279d96dec838529220efb7281963f0c27"
         },
         {
           "path": "docs/receipts/MFM_V16_BUDGET_COMPONENT_576741.json",
@@ -478,7 +543,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "2373f91ccf7c0c7a5ffd380afaaa17434d3f51a7",
+      "commit": "b5391fb087c3f01c837019e8061b869e919048be",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -488,7 +553,7 @@
         {
           "path": "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
           "purpose": "FBM recovered teacher CPU evidence and frozen-feature build continuation",
-          "blob_sha": "6f13538e7076b96b2e2e6c955e2dd6cc247e78f5"
+          "blob_sha": "6eb293119f4f83271a6da53bab67292076e779cf"
         },
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261002_MFM_RECOVERY_AND_FROZEN_FEATURE_ROUTE.jsonl",
@@ -558,7 +623,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "4b6f6f0990d34935e6354007dd711d7fc5dde07a"
+          "blob_sha": "5d598652b038ae5bedfeb6b945d3ef758ed4d2da"
         }
       ]
     }
