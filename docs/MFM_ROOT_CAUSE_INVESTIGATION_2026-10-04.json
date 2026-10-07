@@ -1,6 +1,6 @@
 {
   "schema": "mfm-root-cause-investigation-state-v1",
-  "recorded_at_utc": "2026-10-07T18:50:50.571928+00:00",
+  "recorded_at_utc": "2026-10-07T19:13:28.368025+00:00",
   "source_export": {
     "jobs": {
       "576630": "TIMEOUT",
@@ -1982,9 +1982,35 @@
         "observed_child_committed_sources": 175,
         "snapshot_is_not_terminal_pin": true,
         "complete_bank": false
-      }
+      },
+      "queued_immediate_parent_continuation": {
+        "code_commit": "324af6a522c03e6e010bf610922b825161d8ae08",
+        "parent_job": 577007,
+        "dependency": "afterok:577007",
+        "recipe_sha256": "64bef3608ff047b1e537f76f97aa35859b2155d6480232e7d64ed13a6f46f925",
+        "controller_sha256": "ef74e467838613054eb0afc9c4cd03b7392b9802c0b58f49ef52ea4663dfa41b",
+        "bundle_sha256": "16e820926b9315391aca8802ce36961a0d3fe23ec16f54f219ceb73ef68200e7",
+        "full_sources": 4862,
+        "submitted": true,
+        "job": 577008,
+        "owner_account": "mxrayan",
+        "actual_state_at_snapshot": "PENDING",
+        "actual_reason": "Dependency",
+        "actual_dependency": "afterok:577007(unfulfilled)",
+        "submission_time_magnolia": "2026-10-07T14:01:19",
+        "worker_scheduling_block_seconds": 28800,
+        "scheduler_limit_hours": 12,
+        "source_exporter_sha256": "62c4af1bf2f452f912a727f0277a2baf5e0e9f8ff8b28a080a39bbdf1326cb29",
+        "export_pin": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+        "actual_parent_terminal_and_progress_pin_pending": true,
+        "parent_must_complete_successfully": true,
+        "namespace_runtime_bank_locks_unchanged": true,
+        "qualified_for_product": false,
+        "recipe": "scripts/mfm/magnolia_public_conditional_source_export_parent577007_20261007.sbatch"
+      },
+      "continuation_scheduling_rule": "At most one successor ahead of the active block. Each binds its immediate successful parent dedicated terminal/progress. Preserve no-advance/failure/unknown-submission evidence and diagnose before repeat; stop at verified complete4,862-source bank. Do not reuse prior-parent recipes or prequeue a long fixed chain."
     },
-    "next_action": "Finish the same complete4,862-source bank via verified immediate-parent scheduling continuations. Build and review the public reader, parameter-free task binding and real full-roster trainer with exact restart. Then measure full-geometry learning resources on the complete bank, select the free allocation and learn the foundation; continue full formation with typed identities/literals, broader semantics, native modalities and governed feedback. Archive stable verified public artifacts in Drive; preserve original failures and exact MFM/FBM/Graphify context.",
+    "next_action": "Complete reviewed fresh public task binding and the real full-roster foundation trainer with exact optimizer-boundary restart while577007 exports and577008 remains its queued successful-parent continuation. Recover the actual terminal/complete bank before training; if partial, bind only the immediate predecessor for subsequent scheduling. Measure full producer learning resources on the complete material and select the existing free runtime, then train shared foundation and continue full formation. Preserve all original failures, qualified boundaries, Drive custody and exact MFM/FBM/Graphify publications.",
     "full_role_gaps": [
       "expanded independently reviewed formation teaching",
       "learned typed selection and source-span copy integrated into semantic producer",
@@ -2252,7 +2278,7 @@
     "foundation_training_implementation": {
       "contract": "docs/MFM_PUBLIC_FOUNDATION_PRODUCER_CONTRACT_2026-10-07.md",
       "plan": "docs/superpowers/plans/2026-10-07-mfm-public-foundation-training.md",
-      "state": "TASK1_PUBLIC_READER_AND_OBJECTIVE_IMPLEMENTING",
+      "state": "READER_AND_TASK_BINDING_REVIEWED_REAL_TRAINER_IMPLEMENTING",
       "producer": "Fresh full-geometry FormationDecisionSpecialist; frozen Gemma source encoder only.",
       "objective": "Sequence mean including EOS, then reference mean, then equal semantic-MR mean.",
       "complete_training_pairs": 36597,
@@ -2263,7 +2289,53 @@
       "full_bank_external_pin_required": true,
       "training_started": false,
       "full_formation_transfer_required": true,
-      "product_qualification": false
+      "product_qualification": false,
+      "reader_commit": "748b354b9cf150a668f4a080d00202d72f9ab2b8",
+      "reader_review_passed": true,
+      "reader_tests": {
+        "focused": 16,
+        "affected_public": 65,
+        "affected_seconds": 21.994,
+        "proof_scope": "Synthetic real safetensor custody, exact external verified-bank binding, prescribed sampler and direct loss/gradient controls; not actual learning."
+      },
+      "task_binding_commit": "5dea7ce711bf0ec18d2919af3819d83a219855e1",
+      "task_binding_review_pending": false,
+      "task_binding_affected_tests_passed": 14,
+      "broader_windows_test_result": {
+        "tests": 30,
+        "failures": 2,
+        "errors": 5,
+        "diagnosis_pending_review": false,
+        "full_suite_pass_claimed": false,
+        "reported_setup_causes": [
+          "Linux namespace guard before admission assertions",
+          "CRLF checkout differs from pinned LF diagnostic bytes"
+        ],
+        "original_evidence_retained": true,
+        "guards_or_original_fixtures_weakened": false,
+        "independently_reviewed": true,
+        "new_task_view_reached": false,
+        "status": "PRESERVED_UNRESOLVED_UNSUPPORTED_RUNTIME_SETUP; NOT A WHOLE_SUITE_PASS"
+      },
+      "task_binding_review_passed": true,
+      "task_binding_affected_test_seconds": 2.997,
+      "trainer_implemented": false,
+      "runtime_checks_and_fit_still_pending": true
+    },
+    "free_training_compute": {
+      "kaggle_existing_cli": "Kaggle CLI2.2.4 outside PATH, existing anaconda runtime",
+      "current_quota_read_at_utc": "2026-10-07 19:11:28 UTC",
+      "gpu_hours_used_rounded": 0.01,
+      "gpu_hours_remaining_rounded": 29.99,
+      "gpu_hours_total_rounded": 30.0,
+      "quota_refresh_literal": "2026-10-10T00:00:00",
+      "quota_refresh_timezone_supplied": false,
+      "exact_existing_mfm_notebook_state": "COMPLETE",
+      "current_gpu_assignment_verified": false,
+      "quota_is_reservation": false,
+      "new_jobs_submitted": false,
+      "paid_compute_authorized_or_used": false,
+      "next_requirement": "Complete-bank custody and actual full-geometry public learning/restart measurement before long-fit placement."
     }
   }
 }
