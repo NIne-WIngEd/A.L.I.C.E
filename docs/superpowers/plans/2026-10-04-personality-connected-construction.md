@@ -69,7 +69,7 @@
 
 - [x] Prove identical entry reuse across documents performs one extraction, while changed source/text/tokenizer/encoder/implementation/mask refuses stale entries. Retain all states and tokens; bound caller retention honestly.
 - [x] Stream complete frames and reviewed batches into the actual admitted trainer; retain resumable states and exact phase coverage. Calibrate only when real reviewed outcomes are supplied, not from invented confidence.
-- [ ] Measure actual unique feature counts/bytes and training geometry before choosing compute resources. Run producer/controller/consumer integration tests and commit.
+- [x] Measure actual unique feature counts/bytes and training geometry before choosing compute resources. Run producer/controller/consumer integration tests and commit.
 
 ## Task 6: Governing curriculum and actual owner compute
 

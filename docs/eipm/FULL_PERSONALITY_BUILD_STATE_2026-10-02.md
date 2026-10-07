@@ -1,10 +1,11 @@
 # Full Alice personality build state
 
-**Current snapshot:** see the [connected implementation and owner run](#connected-implementation-and-owner-run--4-october-2026).
-The owner-authorized route correction is implemented and checked. Magnolia job
-576704 is running as `mxrayan` to construct N1 followed by N2 and retain actual
-connected responses. Job postconditions, N3 learning and model approval remain
-pending; the earlier route audit below is preserved as historical evidence.
+**Current snapshot:** see the [interruption recovery and continuation](#interruption-recovery-and-continuation--6-october-2026).
+Job 576704 completed its source feature closure before a node failure. Guarded
+recovery verified 643 sealed entries and 60 closed documents, with no published
+checkpoint or response. Continuation 576893 is running as `mxrayan`, reusing
+that source closure for governing-layer construction. N3 and approval remain
+pending; earlier snapshots below are historical.
 
 The owner requires the full Alice personality described in the comic and
 contracts, with its construction captured for full Fable v1 FBM. There is no
@@ -983,3 +984,55 @@ construction method and actual submission. Immutable v4 procedure seed parents
 v3 by exact SHA; no FBM weights, independent transfer, training eligibility or
 evaluation eligibility are claimed. Stop when only the external run remains;
 the owner will report completion.
+
+## Interruption recovery and continuation — 6 October 2026
+
+The mandatory diagonosis workflow first validated the evidence. Default Slurm
+accounting showed only a six-second failure with empty logs. Complete attempt
+history showed the original **21:52:22 run on node023 ending NODE_FAIL**, followed
+by a six-second `FAILED2:0` restart on node049. Cluster defaults restart from the
+beginning and truncate logs. The original output remained occupied, so the
+wrapper could not restart there. An earlier shell failure cannot be excluded
+from the erased console; occupied-output refusal is a guaranteed obstruction.
+This scheduler result establishes no model or curriculum defect. Both attempts
+and all original artifacts are preserved.
+
+Read-only owner recovery **576892 COMPLETED0:0 in 13 seconds** under the original
+USER+NET/P2 guard. It verified a sealed **643-entry store / 10,790,098,211 bytes**,
+60 closed source-bound documents and original config/session. The actual profile
+has 28,668 unique source tokens at all 49 states/width3840. Estimated live memory
+73,852,372,992 bytes fits the actual 120 GiB allocation; peak memory is unmeasured.
+No checkpoint, response or Python failure-detail was published. Unpublished
+optimizer progress is unknown. Tensor payloads are reverified on actual replay.
+
+Scientific code `333fcd0c8239fc81a6459b13d53bbe592b33fda6` keeps occupied-output
+protection, disables automatic requeue, appends logs and emits fixed refusal
+reasons. A new owner plan pins the original store/session/config/bindings/profile.
+The helper rechecks original source, permissions, reviewed cases, implementation
+and document membership before using the existing closed replay path. It cannot
+manufacture a new publisher interval or adopt an unsealed store. Sources, targets,
+architecture, recipe and seed are unchanged. Without a published checkpoint,
+optimization starts from the prescribed initial state; no learned progress is
+invented. The old directory is read-only input, and Gemma extraction is not repeated.
+
+**158 affected tests and 38 subtests passed**, including admitted public N1/N2
+optimization and response consumption from restored values. Changed documents,
+rebound metadata, corrupt payloads, wrong source and unsealed stores refuse.
+Forced restart refuses before owner/private I/O. Four governance validators and
+the capability audit passed. The original c111 publication's five CI checks
+succeeded. Current checks establish recovery mechanics, not learned personality.
+
+**Continuation576893** was observed RUNNING as `mxrayan` on node017 with
+16 CPUs/120 GiB/24 hours, `Requeue=0`, `Restarts=0` and actual namespace isolation.
+It retains epoch checkpoints and actual connected responses for separate primary
+N3 review. Its model/output postconditions remain pending. Full ALICE/Fable v1
+remains the destination; FloRA, external teachers, weight surgery and paid compute
+are excluded.
+
+The paired FBM trace preserves all 13 earlier rows and adds validated failure
+classification and continuation. Immutable v5 parents v4 by exact SHA. No private
+payload, FBM weight update, training/evaluation eligibility, independent transfer,
+N0 approval, full personality qualification or owner/spoken acceptance is claimed.
+See [diagnosis](../../evaluation/eipm/gemma_n0/receipts/magnolia_576704_interruption_diagnosis_20261006.json),
+[guarded inventory](../../evaluation/eipm/gemma_n0/receipts/magnolia_576892_connected_interruption_inventory.json)
+and [submission](../../evaluation/eipm/gemma_n0/receipts/magnolia_576893_closed_feature_continuation_submission.json).
