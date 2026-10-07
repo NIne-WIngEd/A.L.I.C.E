@@ -1,0 +1,63 @@
+{
+  "schema": "mfm-public-conditional-census-aggregate-v1",
+  "recorded_at_utc": "2026-10-07T17:00:07.430834+00:00",
+  "job": 576995,
+  "owner_account": "mxrayan",
+  "scheduler_state": "COMPLETED",
+  "scheduler_exit": "0:0",
+  "elapsed": "00:03:19",
+  "max_rss_kib": 842744,
+  "actual_runtime_tests_passed": 60,
+  "actual_runtime_test_seconds": 1.166,
+  "code_commit": "480f8bff7334d8691f84d5896de09de0deaeb815",
+  "job_script_sha256": "f5361661deaa9d13f60eadf68f2a46951d0572381c0ef2ca3fb37ed75f5910fd",
+  "externally_published_census_sha256": "0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d",
+  "census_file_sha256": "e61ba06467a4812c4c30697aaa7c123862c113e82599e391bf5c67191732ca95",
+  "encoded_pairs_sha256": "490a84406ad4d1988d42e929782206c4437fce9aea447e3f2098086e283e11c0",
+  "source_inputs_sha256": "721567a70c7f9c287c6a29569fbd8defd03dde7e94e099ec86b7c2fb5843f172",
+  "material_receipt_file_sha256": "4fbc533ff9373e6f54d598bd57aadf8c476da36831df76e6b91400299c4edb36",
+  "prepared_clone_receipt_sha256": "54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7",
+  "base_hidden_size": 3840,
+  "foundation_vocabulary": 262144,
+  "torch_version": "2.7.1+cu118",
+  "transformers_version": "5.17.0",
+  "complete_census_seconds": 42.56000903248787,
+  "complete_token_roundtrip_checked": true,
+  "bos_eos": {
+    "bos": 2,
+    "eos": 1
+  },
+  "rows": 40868,
+  "split_counts": {
+    "development": 4271,
+    "train": 36597
+  },
+  "source_tokens": {
+    "development": 207784,
+    "train": 1779143
+  },
+  "target_tokens": {
+    "development": 133337,
+    "train": 1138566
+  },
+  "largest_source_tokens": 71,
+  "largest_target_tokens": 84,
+  "largest_train_source_target_pairs": 5520,
+  "train_positive_label_types": 3341,
+  "train_label_types_once": 1173,
+  "train_label_types_2_to_9": 1176,
+  "unique_source_inputs": 4862,
+  "unique_source_tokens": 240739,
+  "planned_states_bf16_bytes": 1848875520,
+  "original_pair_and_source_rosters_verified": true,
+  "independent_statistics_reconciled": true,
+  "census_pass_scope": "Complete original-material encoding and source/target bookkeeping under actual prepared Gemma processor. No conditional generation learned or formation capability established.",
+  "model_weights_loaded": false,
+  "optimizer_created": false,
+  "authority_written": false,
+  "qualified_for_product": false,
+  "independent_gold": false,
+  "final_payloads_opened": false,
+  "paid_compute_used": false,
+  "record_sha256": "ec2831151ac6bb628862b29186df202d9ebf58ed4526b815057fffe8623ff604"
+}

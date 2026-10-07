@@ -64,30 +64,30 @@ admission or learned capability.
   positive-frequency counters. Validate round trips, interior BOS/EOS, original
   notices, grouped splits and the independent target-free source export contract.
   Local material/preflight tests pass; this does not establish actual Gemma counts.
-- [ ] Deploy immutable code and actual material to an owner-only new Magnolia
+- [x] Deploy immutable code and actual material to an owner-only new Magnolia
   CPU job. Reuse the proven runtime, owner account and namespace wrapper.
-- [ ] Recover and verify the complete actual processor census and its external
+- [x] Recover and verify the complete actual processor census and its external
   receipt-file pin, source-input roster, encoded-pair hashes, length maxima and
   training-only frequencies. Preserve incomplete results and stop when that
   external result is the remaining dependency.
 
 ## Task 3b: Target-free frozen source-feature export preparation
 
-- [ ] Create `scripts/mfm/export_public_conditional_source_view.py` and
-  `tests/governance/test_mfm_public_conditional_source_view.py` through a test-first
+- [x] Create `scripts/mfm/export_public_conditional_features.py` and
+  `tests/governance/test_mfm_public_conditional_features.py` through a test-first
   cycle. Consume only the completed census's independent `source-inputs.jsonl`
   roster and receipt; never open teaching labels, encoded pairs or teacher targets.
   Bind the exact task, source IDs/masks, original payload hashes, split and opaque
   case associations. Preserve semantic MR grouping separately from feature keys.
-- [ ] Require the census's external receipt-file pin and source-input file hash,
-  the same exact prepared Gemma clone receipt with its external file pin,
+- [x] Require the census's externally published terminal record pin and source-input
+  file hash, the same exact prepared Gemma clone receipt bound by that census,
   processor and weight pins, and immutable exporter/helper code bindings.
   Feature reuse requires exactly
   identical processed IDs and masks under those bindings. Preserve every raw
   payload hash when normalized processing collides, and keep slot-order variants
   distinct whenever their processed inputs differ. No base-head answers, optimizer,
   private evidence or authority writes enter this export.
-- [ ] Implement a bounded, resumable CPU export using the existing protected
+- [x] Implement a bounded, resumable CPU export using the existing protected
   owner route, frozen evaluation mode and complete source lengths. Write shards
   to staging, verify their source roster, finite tensors, dtype, complete shape,
   IDs/masks and byte hashes, then atomically commit their manifest entries.
@@ -111,4 +111,6 @@ admission or learned capability.
   and private handoff. Publish exact heads. Do not claim learned improvement
   from data preparation or independent qualification from same-author material.
 
-Actual census submitted as Magnolia **576995**, immutable code `480f8bff7334d8691f84d5896de09de0deaeb815`, under `mxrayan`. Result and externally published census pin remain pending. The prepared material transferred with exact original hashes.
+Actual census submitted as Magnolia **576995**, immutable code `480f8bff7334d8691f84d5896de09de0deaeb815`, under `mxrayan`. The completed0:0 census and external pin `0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d` are verified. All40,868 original pairs and4,862 exact processed source inputs reconcile. The prepared material transferred with exact original hashes.
+
+The first actual frozen-feature job is a **30-minute pilot** with a two-hour scheduler safety limit. It reuses the complete pinned source roster and preserves its verified ordered prefix for later same-code resume. Throughput, setup, peak memory and disk are measured before selecting the longer continuation. The longest source has71 tokens; if absent from the pilot prefix, measure it before fixing the full export/training budget.

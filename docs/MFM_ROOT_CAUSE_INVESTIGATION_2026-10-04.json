@@ -1,6 +1,6 @@
 {
   "schema": "mfm-root-cause-investigation-state-v1",
-  "recorded_at_utc": "2026-10-07T16:51:12.173377+00:00",
+  "recorded_at_utc": "2026-10-07T17:12:17.643596+00:00",
   "source_export": {
     "jobs": {
       "576630": "TIMEOUT",
@@ -1452,7 +1452,7 @@
     "reference": "docs/MFM_SEQUENCE_FAILURE_DISCRIMINATOR_2026-10-07.md"
   },
   "full_role_sequence_successor": {
-    "state_at_snapshot": "ACTUAL_PROCESSOR_CENSUS_SUBMITTED_SOURCE_EXPORT_RECOVERY_IN_REVIEW",
+    "state_at_snapshot": "ACTUAL_PROCESSOR_CENSUS_VERIFIED_SOURCE_FEATURE_PILOT_PREPARATION",
     "goal": "Full semantic MFM for Alice and Fable V1; source meaning, prior state, time, uncertainty, native modalities and governed accepted-memory outcomes remain required.",
     "retained_failure_analysis_sha256": "350ac0ad3fa8f340db5596473f89cec026ff3c25827e2323bc6b50b0ef9de1d0",
     "research_documents": [
@@ -1497,11 +1497,15 @@
       "scripts/mfm/magnolia_public_conditional_census_20261007.sbatch": "f5361661deaa9d13f60eadf68f2a46951d0572381c0ef2ca3fb37ed75f5910fd"
     },
     "local_verification": {
-      "scoped_tests": 60,
+      "scoped_tests": 86,
       "passed": true,
-      "seconds": 2.781,
+      "seconds": 34.9,
       "full_material_pairs_verified": 40868,
-      "evidence_scope": "Mock processor/clone/isolation fixtures prove caller, material and census contracts; actual Gemma token representability and runtime remain the pending job result."
+      "evidence_scope": "Mock processor/clone/isolation fixtures prove caller, material and census contracts; actual Gemma token representability and runtime remain the pending job result.",
+      "setup": "Existing personality-venv with repo/src, repo and work/runtime; no package installation.",
+      "independent_exporter_tests": 26,
+      "independent_exporter_test_seconds": 26.715,
+      "exporter_test_scope": "Real tiny BF16 source forward and safetensors, real abrupt child exits, OS lock, exact tensor preservation, quarantine tamper/rename recovery, CLI connection with mocked large model loader and clone hashing. Full Gemma performance remains the pilot result."
     },
     "broader_windows_suite": {
       "passed": 1897,
@@ -1513,8 +1517,28 @@
       "evidence_scope": "Snapshot taken while new modules were in TDD. Frozen fixture CRLF differs from its pinned Git LF blob; Windows lacks geteuid assumed by namespace test patch; literal capability scanner misclassifies public-material lane phrasing. Preserve failures; no unrelated runtime changes or broad green claim."
     },
     "ordered_diagnosis_used": true,
-    "source_feature_export": "Reviewed source-only frozen Gemma producer is being completed, including custody-preserving recovery of uncommitted abrupt-interruption artifacts. No source export or training launched yet.",
-    "next_action": "Retrieve and verify576995 external terminal census pin, complete40868 roster, actual token roundtrip/counts, source key geometry and code/clone/runtime/material lineage. After a sound census, export target-free frozen source states in bounded resumable passes. If census fails, follow ordered eight-step diagnosis before correction; do not blindly retry. Feature interruption recovery is being finished in parallel.",
+    "source_feature_export": {
+      "state_at_snapshot": "REVIEWED_86_LOCAL_TESTS_PASSED_PILOT_READY",
+      "exporter_sha256": "62c4af1bf2f452f912a727f0277a2baf5e0e9f8ff8b28a080a39bbdf1326cb29",
+      "tests_sha256": "7d3b2375b0a68731aa828d8e447d7099ce30b15d74f75177f3d608fb5ec3a8a4",
+      "job_script_sha256": "0dfb184f8861e2b44eba7edf85999a7a137821a0d8bfdc7f16048545318c82ed",
+      "actual_census_sha256": "0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d",
+      "source_inputs": 4862,
+      "source_tokens": 240739,
+      "longest_source_tokens": 71,
+      "planned_bf16_state_bytes": 1848875520,
+      "backbone": "Same exact frozen Gemma role clone, BF16 CPU base.model.last_hidden_state only; no language head or labels.",
+      "soft_stop_seconds": 1800,
+      "scheduler_limit": "02:00:00",
+      "owner_account": "mxrayan",
+      "full_export_budget_selected": false,
+      "fit_budget_selected": false,
+      "recovery": "Recognized uncommitted scratch retained with sealed same-root quarantine; previously committed tensors always reverified and unchanged. OS worker lock covers verification, recovery, model loading and publication.",
+      "independent_review": "No launch blocker; 26 tests and Bash syntax pass. Dedicated actual census terminal pin and complete roster verified.",
+      "result_pending": true,
+      "qualified_for_product": false
+    },
+    "next_action": "Complete reviewed interruption-safe target-free exporter and launch a30min actual source-feature pilot under mxrayan. Its externally published partial/complete receipt, committed tensors, setup/throughput/RSS/disk and longest-source measurement determine the continuation export budget before any fit allocation. Fullsemantic learning and selection/copy remain the successor objective; no current model pass.",
     "full_role_gaps": [
       "expanded independently reviewed formation teaching",
       "learned typed selection and source-span copy integrated into semantic producer",
@@ -1538,9 +1562,109 @@
       "cpu_threads": 12,
       "memory_gib": 64,
       "time_limit": "03:00:00",
-      "result_pending": true,
+      "result_pending": false,
       "local_batch_independent_review": "Bash syntax, exact CLI flags/pins,60 fresh recipe-selected tests and preserved protected wrapper reviewed independently; no launch blocker.",
-      "outputs": "Owner-only rayan-mfm/runs/rayan-mfm-public-census-576995; external terminal pin must be verified before export."
+      "outputs": "Owner-only rayan-mfm/runs/rayan-mfm-public-census-576995; external terminal pin must be verified before export.",
+      "scheduler_state": "COMPLETED",
+      "scheduler_exit": "0:0",
+      "elapsed": "00:03:19",
+      "max_rss_kib": 842744,
+      "census_sha256": "0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d",
+      "public_projection": "docs/receipts/MFM_CONDITIONAL_CENSUS_576995_PUBLIC.json",
+      "result": {
+        "schema": "mfm-public-conditional-census-aggregate-v1",
+        "recorded_at_utc": "2026-10-07T17:00:07.430834+00:00",
+        "job": 576995,
+        "owner_account": "mxrayan",
+        "scheduler_state": "COMPLETED",
+        "scheduler_exit": "0:0",
+        "elapsed": "00:03:19",
+        "max_rss_kib": 842744,
+        "actual_runtime_tests_passed": 60,
+        "actual_runtime_test_seconds": 1.166,
+        "code_commit": "480f8bff7334d8691f84d5896de09de0deaeb815",
+        "job_script_sha256": "f5361661deaa9d13f60eadf68f2a46951d0572381c0ef2ca3fb37ed75f5910fd",
+        "externally_published_census_sha256": "0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d",
+        "census_file_sha256": "e61ba06467a4812c4c30697aaa7c123862c113e82599e391bf5c67191732ca95",
+        "encoded_pairs_sha256": "490a84406ad4d1988d42e929782206c4437fce9aea447e3f2098086e283e11c0",
+        "source_inputs_sha256": "721567a70c7f9c287c6a29569fbd8defd03dde7e94e099ec86b7c2fb5843f172",
+        "material_receipt_file_sha256": "4fbc533ff9373e6f54d598bd57aadf8c476da36831df76e6b91400299c4edb36",
+        "prepared_clone_receipt_sha256": "54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7",
+        "base_hidden_size": 3840,
+        "foundation_vocabulary": 262144,
+        "torch_version": "2.7.1+cu118",
+        "transformers_version": "5.17.0",
+        "complete_census_seconds": 42.56000903248787,
+        "complete_token_roundtrip_checked": true,
+        "bos_eos": {
+          "bos": 2,
+          "eos": 1
+        },
+        "rows": 40868,
+        "split_counts": {
+          "development": 4271,
+          "train": 36597
+        },
+        "source_tokens": {
+          "development": 207784,
+          "train": 1779143
+        },
+        "target_tokens": {
+          "development": 133337,
+          "train": 1138566
+        },
+        "largest_source_tokens": 71,
+        "largest_target_tokens": 84,
+        "largest_train_source_target_pairs": 5520,
+        "train_positive_label_types": 3341,
+        "train_label_types_once": 1173,
+        "train_label_types_2_to_9": 1176,
+        "unique_source_inputs": 4862,
+        "unique_source_tokens": 240739,
+        "planned_states_bf16_bytes": 1848875520,
+        "original_pair_and_source_rosters_verified": true,
+        "independent_statistics_reconciled": true,
+        "census_pass_scope": "Complete original-material encoding and source/target bookkeeping under actual prepared Gemma processor. No conditional generation learned or formation capability established.",
+        "model_weights_loaded": false,
+        "optimizer_created": false,
+        "authority_written": false,
+        "qualified_for_product": false,
+        "independent_gold": false,
+        "final_payloads_opened": false,
+        "paid_compute_used": false,
+        "record_sha256": "ec2831151ac6bb628862b29186df202d9ebf58ed4526b815057fffe8623ff604"
+      }
+    },
+    "local_runtime_diagnosis": {
+      "original_result": "61 selected tests: 60 pass, feature module import error before behavior; wrong runtime search path.",
+      "preserved_original": "Private local work/receipts/mfm-feature-local-runtime-import-error-20261007.txt",
+      "steps_in_order": [
+        "1. Import stopped before feature assertions; no product failure verdict.",
+        "2. Intended proof is actual feature serialization and interruption-safe preparation for full MFM.",
+        "3. Trace test environment routing; no exporter/model departure observed.",
+        "4. Missing safetensors from the chosen venv search path, existing package found outside it.",
+        "5. safetensors 0.8.0 already exists in work/runtime; independent global Python 3.13/Torch 2.7.1 route also runs the same 26 tests.",
+        "6. Include the existing runtime explicitly without installation, implementation change or assertion weakening.",
+        "7. Follow compute recovery and the existing primary safetensors implementation and Python module routing.",
+        "8. Fresh same combined 86-test selection passes in 34.900s; real serialization/recovery controls retained."
+      ]
+    },
+    "durable_storage": {
+      "preferred": "Owner Google Drive; Magnolia is the required working copy during protected jobs.",
+      "user_direction": "Prefer Drive to conserve Magnolia storage.",
+      "folder_id": "1o0m59Mhsikxqbj9qQxDPqXnYN1wlHaq_",
+      "folder_url": "https://drive.google.com/drive/folders/1o0m59Mhsikxqbj9qQxDPqXnYN1wlHaq_",
+      "material_census_archive_file_id": "1Cdf0MS1Z_AuIcLTS-moS8rACmZxOv5QK",
+      "material_census_archive_url": "https://drive.google.com/file/d/1Cdf0MS1Z_AuIcLTS-moS8rACmZxOv5QK/view?usp=drivesdk",
+      "archive_bytes": 24358812,
+      "archive_sha256": "857f472bd04e52208579ad3b195a6e317086cafa03cd9ae09c13416567ada512",
+      "archive_member_pins_verified": 19,
+      "authenticated_full_download_sha256_matches": true,
+      "sharing": "Owner only; no external permission added.",
+      "quota_exposed_by_connector": false,
+      "model_weights_included": false,
+      "private_evidence_included": false,
+      "next_storage_action": "Archive completed frozen-source features and receipts to this Drive folder with complete file hashes and authenticated restore verification. Keep every live export/fit dependency until its durable copy and restoration are verified; no historical artifact removed."
     }
   }
 }
