@@ -567,30 +567,87 @@ def _run_locked(args, prepared):
     if cursor['epoch'] == args.epochs:
         model.load_state_dict(load_file(str(latest / 'specialist.safetensors')), strict=True)
         learned_generation = _generation(view, prepared, tokenizer, cap=args.generation_tokens)
-        development_weights = reader.case_weights(prepared.pairs, split='development')
-        model.eval()
-        development_loss = 0.
-        with torch.inference_mode():
-            for pair in prepared.development:
-                _, loss = view.forward(**reader.payload(prepared, pair, device=device))
-                development_loss += development_weights[pair['case_id']] * float(loss.cpu())
-        staging = root / f'.component-{uuid4().hex}'
-        staging.mkdir()
-        save_file({k: v.detach().cpu().contiguous() for k, v in model.state_dict().items()}, str(staging / 'specialist.safetensors'))
-        component = shared._write_new(staging / 'component.json', {'schema': COMPONENT_SCHEMA, 'task': TASK,
-            'objective': OBJECTIVE, 'run_sha256': binding['run'], 'curriculum_sha256': curriculum['record_sha256'],
-            'seed_sha256': binding['seed'], 'checkpoint_sha256': verify_checkpoint(latest, binding=binding)['record_sha256'],
-            'checkpoint_lineage': [verify_checkpoint(p, binding=binding)['record_sha256'] for p in sorted(root.glob('checkpoint-*'))],
-            'specialist_sha256': shared._digest(staging / 'specialist.safetensors'), 'specialist_config': config.record(),
-            'cursor': cursor, 'generation': learned_generation, 'development_teacher_objective': development_loss,
-            'development_selection_effect': False, 'qualified_for_product': False,
-            'transfer': 'direct learned tensor parent; new full formation objective requires new task contract and optimizer'})
-        staging.rename(root / 'component')
+        component = publish_component(view, prepared, output_dir=root, binding=binding,
+            curriculum=curriculum, cursor=cursor, checkpoint=latest, generation=learned_generation)
         execution['component_sha256'] = component['record_sha256']
     execution.update(end_cursor=cursor, seconds=perf_counter() - started,
         checkpoint_sha256=verify_checkpoint(latest, binding=binding)['record_sha256'],
         status='full-roster-fit-complete-unqualified' if cursor['epoch'] == args.epochs else 'scheduled-complete-boundary-stop')
     return shared._write_new(root / f'execution-{uuid4().hex}.json', execution)
+
+
+def publish_component(view, prepared, *, output_dir, binding, curriculum, cursor, checkpoint, generation):
+    """Actual final component publication used by full production orchestration."""
+    from safetensors.torch import save_file
+    root = _safe_root(output_dir)
+    model = view.specialist
+    final = _safe_child(root, 'component')
+    if final.exists():
+        raise ValueError('completed public component cannot be overwritten')
+    receipt = verify_checkpoint(checkpoint, binding=binding)
+    if _safe_root(checkpoint).parent != root or receipt['cursor'] != cursor or cursor['epoch'] != binding['epochs']:
+        raise ValueError('public component requires its run-root final completed checkpoint')
+    training = evaluate_objective(view, prepared, split='train', checkpoint=checkpoint, binding=binding)
+    development = evaluate_objective(view, prepared, split='development', checkpoint=checkpoint, binding=binding)
+    staging = root / f'.component-{uuid4().hex}'
+    staging.mkdir()
+    save_file({k: v.detach().cpu().contiguous() for k, v in model.state_dict().items()}, str(staging / 'specialist.safetensors'))
+    component = shared._write_new(staging / 'component.json', {'schema': COMPONENT_SCHEMA, 'task': TASK,
+        'objective': OBJECTIVE, 'run_sha256': binding['run'], 'curriculum_sha256': curriculum['record_sha256'],
+        'seed_sha256': binding['seed'], 'checkpoint_sha256': receipt['record_sha256'],
+        'checkpoint_lineage': [verify_checkpoint(p, binding=binding)['record_sha256'] for p in sorted(root.glob('checkpoint-*'))],
+        'specialist_sha256': shared._digest(staging / 'specialist.safetensors'), 'specialist_config': model.config.record(),
+        'cursor': cursor, 'generation': generation, 'training_teacher_objective': training['value'],
+        'training_objective_report': training, 'development_objective_report': development,
+        'development_teacher_objective': development['value'],
+        'development_selection_effect': False, 'qualified_for_product': False,
+        'transfer': 'direct learned tensor parent; new full formation objective requires new task contract and optimizer'})
+    staging.rename(final)
+    return component
+
+
+def evaluate_objective(view, prepared, *, split, checkpoint, binding):
+    """Complete fixed-checkpoint J, never a changing-model minibatch estimate.
+
+    Full-objective coefficients are recomputed from the entire declared roster;
+    no N/B multiplier or token pooling belongs in this reporting reduction.
+    """
+    import torch
+    from safetensors.torch import load_file
+    if getattr(view, 'task', None) != TASK or not hasattr(view, 'specialist'):
+        raise ValueError('exact objective reporting requires explicit public task binding')
+    weights = reader.case_weights(prepared.pairs, split=split)
+    selected = tuple(p for p in prepared.pairs if p['split'] == split)
+    if selected != getattr(prepared, split):
+        raise ValueError('exact objective report requires complete declared split roster')
+    receipt = verify_checkpoint(checkpoint, binding=binding)
+    persisted_weights = load_file(str(Path(checkpoint) / 'specialist.safetensors'))
+    compare_tree(view.state_dict(), persisted_weights, atol=0, rtol=0)
+    del persisted_weights
+    model = view.specialist
+    device = next(model.parameters()).device
+    modes = [(module, module.training) for module in model.modules()]
+    terms = []
+    try:
+        model.eval()
+        # Evaluation cannot perturb a later continuation's CPU/CUDA RNG even
+        # if an actual future processor/model implementation consumes randomness.
+        with torch.random.fork_rng(devices=list(range(torch.cuda.device_count()))), torch.no_grad():
+            for pair in selected:
+                _, loss = view.forward(**reader.payload(prepared, pair, device=device))
+                if not torch.isfinite(loss):
+                    raise ValueError('fixed-checkpoint public objective is nonfinite')
+                terms.append(weights[pair['case_id']] * float(loss.detach().cpu()))
+    finally:
+        for module, mode in modes:
+            module.training = mode
+    return {'schema': 'mfm-public-conditional-foundation-objective-report-v1',
+        'split': split, 'objective': OBJECTIVE, 'value': math.fsum(terms),
+        'cases': len(selected), 'semantic_groups': len({p['semantic_input_sha256'] for p in selected}),
+        'label_tokens': sum(len(p['labels']) for p in selected), 'weights_sha256': canonical_sha256(weights),
+        'case_order_sha256': canonical_sha256([p['case_id'] for p in selected]),
+        'checkpoint_sha256': receipt['record_sha256'], 'specialist_sha256': receipt['specialist_sha256'],
+        'cursor': dict(receipt['cursor']), 'no_gradient': True, 'selection_effect': False}
 
 
 def fit_epochs(view, optimizer, prepared, *, output_dir, binding, seed, cursor,

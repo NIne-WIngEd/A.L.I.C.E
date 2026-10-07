@@ -337,6 +337,100 @@ m.fit_epochs(view, adam, prepared, output_dir=root, binding=binding, seed=123,
         self.assertFalse(self.optimizer.state)
         self.assertTrue(torch.equal(torch.random.get_rng_state(), rng))
 
+    def direct_fixed_training_objective(self):
+        from scripts.mfm.public_conditional_training import payload
+        self.model.eval()
+        losses = []
+        with torch.no_grad():
+            for pair in self.prepared.train:
+                data = payload(self.prepared, pair, device='cpu')
+                logits = self.view.forward(**{k: v for k, v in data.items() if k != 'labels'})
+                ce = torch.nn.functional.cross_entropy(logits.reshape(-1, 16), data['labels'].reshape(-1), reduction='none')
+                losses.append(float(ce.mean()))
+        return ((losses[0] + losses[1]) / 2 + losses[2]) / 2
+
+    def test_final_artifact_persists_exact_fixed_model_complete_train_objective(self):
+        m = self.module()
+        binding = {'run': 'a' * 64, 'seed': 'b' * 64, 'epochs': 2, 'batch_size': 2, 'train_cases': 3}
+        cursor, checkpoint = m.fit_epochs(self.view, self.optimizer, self.prepared, output_dir=self.root,
+            binding=binding, seed=123, cursor=dict(epoch=0, next_case=0, step=0), save_every_steps=99,
+            started=perf_counter(), session_seconds=None, purpose='full-roster-public-fit')
+        expected = self.direct_fixed_training_objective()
+        component = m.publish_component(self.view, self.prepared, output_dir=self.root, binding=binding,
+            curriculum={'record_sha256': 'c' * 64}, cursor=cursor, checkpoint=checkpoint,
+            generation={'cases': [], 'meaning': 'fixture supplies no generation qualification'})
+        self.assertIn('training_objective_report', component, 'actual completed artifact omits declared fixed-model J_train')
+        from scripts.mfm import train_v1_formation_specialist as shared
+        persisted = shared._read_sealed(self.root / 'component' / 'component.json', m.COMPONENT_SCHEMA)
+        report = persisted['training_objective_report']
+        self.assertAlmostEqual(report['value'], expected, places=6)
+        self.assertEqual(report['cases'], 3)
+        self.assertEqual(report['label_tokens'], 9)
+        self.assertEqual(report['checkpoint_sha256'], persisted['checkpoint_sha256'])
+        self.assertEqual(report['specialist_sha256'], persisted['specialist_sha256'])
+        self.assertEqual(report['cursor'], dict(epoch=2, next_case=0, step=4))
+        self.assertEqual(persisted['development_objective_report']['split'], 'development')
+        self.assertFalse(persisted['development_selection_effect'])
+
+    def test_fixed_checkpoint_evaluation_preserves_all_state_and_different_next_update(self):
+        m = self.module()
+        binding = {'run': 'a' * 64, 'seed': 'b' * 64, 'epochs': 2, 'batch_size': 2, 'train_cases': 3}
+        batch, cursor = m.next_batch(self.prepared, seed=123, epochs=2, batch_size=2,
+            cursor=dict(epoch=0, next_case=0, step=0))
+        m.optimizer_step(self.view, self.optimizer, batch, prepared=self.prepared)
+        checkpoint = m.save_checkpoint(self.root, self.model, self.optimizer, binding=binding, cursor=cursor)
+        expected = self.direct_fixed_training_objective()
+        self.model.train()
+        self.model.decoder.layers[0].eval()
+        # Existing caller gradients are state too; no-grad evaluation must not
+        # clear them even though the next real optimizer step will do so.
+        self.model.output_bias.grad = torch.ones_like(self.model.output_bias)
+        model_before = cached._cpu_tree(self.model.state_dict())
+        adam_before = cached._cpu_tree(self.optimizer.state_dict())
+        modes = [module.training for module in self.model.modules()]
+        gradients = [None if p.grad is None else p.grad.clone() for p in self.model.parameters()]
+        rng = torch.random.get_rng_state().clone()
+        cuda_rng = cached._cpu_tree(torch.cuda.get_rng_state_all())
+        original_cursor = dict(cursor)
+        self.assertTrue(hasattr(m, 'evaluate_objective'), 'checkpoint-bound complete objective evaluator is missing')
+        report = m.evaluate_objective(self.view, self.prepared, split='train', checkpoint=checkpoint, binding=binding)
+        self.assertAlmostEqual(report['value'], expected, places=6)
+        self.assertEqual(report['cases'], 3)
+        self.assertEqual(report['label_tokens'], 9)
+        self.assertEqual(cursor, original_cursor)
+        self.assertEqual([module.training for module in self.model.modules()], modes)
+        cached.compare_tree(self.model.state_dict(), model_before, atol=0, rtol=0)
+        cached.compare_tree(self.optimizer.state_dict(), adam_before, atol=0, rtol=0)
+        self.assertTrue(torch.equal(torch.random.get_rng_state(), rng))
+        cached.compare_tree(cached._cpu_tree(torch.cuda.get_rng_state_all()), cuda_rng, atol=0, rtol=0)
+        for p, grad in zip(self.model.parameters(), gradients):
+            self.assertIsNone(p.grad) if grad is None else torch.testing.assert_close(p.grad, grad, atol=0, rtol=0)
+        following, next_cursor = m.next_batch(self.prepared, seed=123, epochs=2, batch_size=2, cursor=cursor)
+        self.assertEqual([p['case_id'] for p in following], ['a'])
+        measured = m.optimizer_step(self.view, self.optimizer, following, prepared=self.prepared)
+        measured_model = cached._cpu_tree(self.model.state_dict())
+        measured_adam = cached._cpu_tree(self.optimizer.state_dict())
+        measured_rng = torch.random.get_rng_state().clone()
+        restored_cursor = m.resume_checkpoint(checkpoint, self.root, self.model, self.optimizer, binding=binding)
+        replay, replay_cursor = m.next_batch(self.prepared, seed=123, epochs=2, batch_size=2, cursor=restored_cursor)
+        self.assertEqual(replay_cursor, next_cursor)
+        control = m.optimizer_step(self.view, self.optimizer, replay, prepared=self.prepared)
+        self.assertEqual(control, measured)
+        cached.compare_tree(self.model.state_dict(), measured_model, atol=0, rtol=0)
+        cached.compare_tree(self.optimizer.state_dict(), measured_adam, atol=0, rtol=0)
+        self.assertTrue(torch.equal(torch.random.get_rng_state(), measured_rng))
+
+    def test_fixed_objective_refuses_weights_different_from_bound_checkpoint(self):
+        m = self.module()
+        binding = {'run': 'a' * 64, 'seed': 'b' * 64, 'epochs': 2, 'batch_size': 2, 'train_cases': 3}
+        checkpoint = m.save_checkpoint(self.root, self.model, self.optimizer, binding=binding,
+            cursor=dict(epoch=0, next_case=0, step=0))
+        with torch.no_grad():
+            self.model.token_embedding.weight[0, 0].add_(.1)
+        from cognitive_kernel.canonical import CognitiveKernelContractError
+        with self.assertRaises(CognitiveKernelContractError):
+            m.evaluate_objective(self.view, self.prepared, split='train', checkpoint=checkpoint, binding=binding)
+
 
 if __name__ == '__main__':
     unittest.main()
