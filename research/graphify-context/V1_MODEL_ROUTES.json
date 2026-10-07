@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "50da73a6297f579eab828bbe43389996d5cc6003",
+      "commit": "156cfa4cb9d099e787542291cb39a285565a85dd",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -57,7 +57,7 @@
         {
           "path": "docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
           "purpose": "completed teacher fit, failed generated formation, actual causal analysis and corrected measurement handoff",
-          "blob_sha": "686991bb948bc44e05beca341f1de11dd8fc8d8b"
+          "blob_sha": "538ee23af902a5249cf0210b14afee747de5bc3c"
         },
         {
           "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576702.json",
@@ -272,7 +272,7 @@
         {
           "path": "docs/MFM_SEQUENCE_FAILURE_DISCRIMINATOR_2026-10-07.md",
           "purpose": "completed source/formation failure diagnosis and bounded fixed-prefix sensitivity interpretation",
-          "blob_sha": "5e1d74437d20dd8dec5c30a6b82a88bd1e3e42a8"
+          "blob_sha": "6431508e0223794e7ae8f5456828c2e65a2906d2"
         },
         {
           "path": "scripts/mfm/analyze_v16_sequence_failure.py",
@@ -303,6 +303,166 @@
           "path": "tests/governance/test_mfm_sequence_failure_custody.py",
           "purpose": "real external pins, seals/raw hashes, complete rosters and correctly resealed task/control/weight tamper rejection",
           "blob_sha": "6ba512f83fab7384377cee0f4f8d84ef70d8f8cb"
+        },
+        {
+          "path": "docs/receipts/MFM_CONDITIONAL_CENSUS_576995_PUBLIC.json",
+          "purpose": "externally sealed actual complete40,868-pair Gemma census,4,862 exact source inputs and measured encoding/resource geometry; no model forward or fit",
+          "blob_sha": "491fadd457f34eca990e66cbb70c83cc14913fff"
+        },
+        {
+          "path": "docs/receipts/MFM_CONDITIONAL_FEATURE_PILOT_576999_FAILURE_PUBLIC.json",
+          "purpose": "preserved actual runtime failure before Gemma; fixture rejected at earlier receipt binding and intended tensor guard was not reached",
+          "blob_sha": "a50ba4ec8749bede90d3833b7424468a6ef0f44d"
+        },
+        {
+          "path": "docs/receipts/MFM_CONDITIONAL_FEATURE_FIXTURE_DIAGNOSIS_577003_PUBLIC.json",
+          "purpose": "externally pinned unchanged-runtime mapped/released/owned tensor controls establish NFS fixture lifetime cause; no Gemma forward or learning claim",
+          "blob_sha": "0ba5976dc2b0348844a52e61b8e839cd012af3dc"
+        },
+        {
+          "path": "scripts/mfm/magnolia_public_conditional_features_v2_20261007.sbatch",
+          "purpose": "historical first source export block with actual91-test gate before frozen Gemma source construction; full-roster target retained",
+          "blob_sha": "f3990c747eb200aaa69783ae2a51a59ec1afaa32"
+        },
+        {
+          "path": "scripts/mfm/magnolia_public_conditional_source_export_20261007.sbatch",
+          "purpose": "full4,862-source same-binding continuation, successful parent/external progress custody, verified bank resume and scheduler blocks; no reduced model scope",
+          "blob_sha": "07491e0c0d38dd8c9d0bda127c410c41fd8ca1eb"
+        },
+        {
+          "path": "scripts/mfm/magnolia_public_conditional_source_export_parent577007_20261007.sbatch",
+          "purpose": "immediate577007 child continuing the same complete source bank with exact parent terminal/progress custody",
+          "blob_sha": "eafe6e7b4d11e1eff4314fdeeb34d6d6be7ebe55"
+        },
+        {
+          "path": "docs/receipts/MFM_SOURCE_EXPORT_BLOCK_577006_PUBLIC.json",
+          "purpose": "actual91-check closure,144-source stopped block, process-tree resource evidence and verified child custody; not complete bank or learned capability",
+          "blob_sha": "9018fae86580be135e2597e1637939a5bb4e3b56"
+        },
+        {
+          "path": "docs/MFM_PUBLIC_FOUNDATION_PRODUCER_CONTRACT_2026-10-07.md",
+          "purpose": "fresh full-geometry conditional foundation producer, Gemma source-only boundary and subsequent full formation dependencies",
+          "blob_sha": "2995f42abc9a10a6a349976795b8c97698e01cd0"
+        },
+        {
+          "path": "docs/superpowers/plans/2026-10-07-mfm-public-foundation-training.md",
+          "purpose": "full-roster reader, parameter-free task binding, global group/reference objective and exact optimizer-boundary restart construction",
+          "blob_sha": "eb93891e6756f11138e019693179a0bdc2c0fb3d"
+        },
+        {
+          "path": "scripts/mfm/public_conditional_training.py",
+          "purpose": "complete externally pinned public bank and exact source/target ancestry joins, global semantic-group weights and prescribed deterministic epoch order",
+          "blob_sha": "ffe3717ece19e9d0c5a236a1e82e8a63f6987b1d"
+        },
+        {
+          "path": "tests/governance/test_mfm_public_conditional_training.py",
+          "purpose": "real source/tensor custody, changing verified-bank pin, exact sampler and unequal-reference/length objective gradients; fixtures only",
+          "blob_sha": "db43b3a29acf484688f44a568a063c1858117743"
+        },
+        {
+          "path": "src/cognitive_kernel/formation_conditional_task.py",
+          "purpose": "explicit parameter-free public task view preserving original fresh producer parameters, positions and checkpoint tensor names",
+          "blob_sha": "df56ac298282cc9d1f1ebb072470b720884643ac"
+        },
+        {
+          "path": "tests/governance/test_mfm_conditional_task.py",
+          "purpose": "exact producer logits/loss/gradients, actual reference/cache generation and direct unchanged checkpoint reload",
+          "blob_sha": "7b867a65f2b371994c12d5533b46aee8d2386f05"
+        },
+        {
+          "path": "docs/MFM_SOURCE_FEATURE_FIXTURE_DIAGNOSIS_2026-10-07.md",
+          "purpose": "ordered eight-step fixture diagnosis, primary file-lifecycle research, exact guard-reaching verification and foundation/storage continuation",
+          "blob_sha": "9956eadee58fe65bffa43017ce879f53076a6b8c"
+        },
+        {
+          "path": "docs/receipts/MFM_DRIVE_SCOPED_STORAGE_GATE_20261007_PUBLIC.json",
+          "purpose": "repeated exact-scope metadata inventory and prospective archive envelope; no provider quota claim and original upload-before-gate gap retained",
+          "blob_sha": "1c387e5bb987900574163a3076e5844e9a7f9ac1"
+        },
+        {
+          "path": "docs/receipts/MFM_V16_SEQUENCE_FAILURE_576984_PUBLIC.json",
+          "purpose": "externally pinned completed576984 method aggregate; all882 task rows and41 retained controls; diagnostic pass is not capability",
+          "blob_sha": "ca1cdce3b348c757e57404d2898bf9b6801e3a99"
+        },
+        {
+          "path": "docs/MFM_FULL_ROLE_SEQUENCE_SUCCESSOR_2026-10-07.md",
+          "purpose": "full semantic route and researched preparation boundaries, independent caller input and conditional teaching before learned producer successor",
+          "blob_sha": "88b43e9e9255e90334fa4ecbffa64cdc47c3f1a0"
+        },
+        {
+          "path": "docs/research/MFM_SEQUENCE_ROUTE_COMPARISON_2026-10-07.md",
+          "purpose": "primary research and transfer limits for fresh conditional decoder, lexical reuse and larger pretrained language alternatives",
+          "blob_sha": "987f06babb7cfb68c220aceffc0b166c0089fdc5"
+        },
+        {
+          "path": "docs/research/MFM_NEXT_ROUTE_DESIGN_REVIEW_2026-10-07.md",
+          "purpose": "independent full-role/data/compute design review before construction; no blind lexical bridge or pointer-only qualification",
+          "blob_sha": "baff55f56420ec93c79ed4e991914f4f46be7471"
+        },
+        {
+          "path": "docs/research/MFM_CONDITIONAL_TEACHING_MATERIALS_2026-10-07.md",
+          "purpose": "original-source grants, actual human pair custody and scope limits; conflicting source rights remain held",
+          "blob_sha": "3dc238657de40dea8d921bf3e5278de3cd0be8f5"
+        },
+        {
+          "path": "docs/superpowers/plans/2026-10-07-mfm-sequence-material-input.md",
+          "purpose": "ordered implementation and verification plan for material, caller boundary, actual processor census and source feature preparation",
+          "blob_sha": "1bde36abc71f98d8dca432ecf6ebb3c045c66fc0"
+        },
+        {
+          "path": "configs/mfm/e2e_conditional_material_v1.json",
+          "purpose": "exact original E2E training revision, CSV/grant/legal hashes, semantic grouped splits and conditional-only use",
+          "blob_sha": "7f3e14a46ac58cb645b59f646e6277791c4e4360"
+        },
+        {
+          "path": "scripts/mfm/prepare_public_conditional_material.py",
+          "purpose": "pinned original human source-to-text worker with notices, ancestry, exact pair dedupe and alternative-reference split custody",
+          "blob_sha": "52fc558e10a069f33d05265c8dbd5fe62660dffa"
+        },
+        {
+          "path": "scripts/mfm/formation_caller_input.py",
+          "purpose": "teacher-independent byte-complete caller input and explicit scoped registry, path eligibility and source-subject/registered-target distinction",
+          "blob_sha": "838c1276d56470ccc984bcec977671d934545e89"
+        },
+        {
+          "path": "scripts/mfm/preflight_public_conditional_material.py",
+          "purpose": "complete actual Gemma processor census, exact target roundtrip, role/notice parent joins and separate target-free source roster",
+          "blob_sha": "459ef42edb35530392f36ff24cdcc06bff8225ff"
+        },
+        {
+          "path": "scripts/mfm/export_public_conditional_features.py",
+          "purpose": "externally pinned target-free census and same frozen clone source-state export; complete tensor custody and bounded interruption recovery",
+          "blob_sha": "1c6f0af7cdc865d0d5ba08c4f715d509b8c4e1a1"
+        },
+        {
+          "path": "scripts/mfm/magnolia_public_conditional_census_20261007.sbatch",
+          "purpose": "protected owner-account60-test CPU census of complete public teaching material, no pretrained model forward or optimizer",
+          "blob_sha": "ab48ef77402fe909f560eddbfc71711472909af5"
+        },
+        {
+          "path": "scripts/mfm/magnolia_public_conditional_features_20261007.sbatch",
+          "purpose": "bounded protected owner-account source-only frozen feature preparation after externally published actual census pin",
+          "blob_sha": "43cdd04b3e66fb6393865bbeb69d9477e7fc85ec"
+        },
+        {
+          "path": "tests/governance/test_mfm_public_conditional_material.py",
+          "purpose": "source byte/notice/role custody, semantic alternatives and grouped split controls",
+          "blob_sha": "33f1fda95861fdb162b90977c283dd8e7691fa86"
+        },
+        {
+          "path": "tests/governance/test_mfm_caller_input.py",
+          "purpose": "independent opened-source/scoped-registry path eligibility, source subject roles, digest tamper and no teacher-input tests",
+          "blob_sha": "1f75484f7084c5773c6a551b9984ea3fcdb4802e"
+        },
+        {
+          "path": "tests/governance/test_mfm_public_conditional_preflight.py",
+          "purpose": "actual worker join, target losslessness, early EOS, exact source reuse, scope rejection and original-notice parent pin tests",
+          "blob_sha": "28dfe7bd34ac468e88488ac69c952d4674270341"
+        },
+        {
+          "path": "tests/governance/test_mfm_public_conditional_features.py",
+          "purpose": "real tiny frozen safetensor source forwards, complete census roster and actual interrupted child-process resume custody tests",
+          "blob_sha": "2c76031cd68e5d56f0a83b4a07b359a202f422a0"
         },
         {
           "path": "scripts/mfm/formation_reference_catalog.py",
@@ -583,7 +743,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "7ca6dee9424788ba75c4cabb979c9c54dd815829",
+      "commit": "4201e96904508a28cb6a06e2faf6c5fb416735aa",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -593,7 +753,7 @@
         {
           "path": "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
           "purpose": "FBM recovered teacher CPU evidence and frozen-feature build continuation",
-          "blob_sha": "8af7b94e4fa7a739bf04e5964ab1f583c86ed547"
+          "blob_sha": "1268b967c2dcf9c2cc3e086b4815393a20dd5076"
         },
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261002_MFM_RECOVERY_AND_FROZEN_FEATURE_ROUTE.jsonl",
@@ -663,7 +823,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "39283a0282afd398c7efa6b00a39c40ea39f49c4"
+          "blob_sha": "500e0e9e1f89b35e1a39cdeccf1188d4f797181d"
         }
       ]
     }
