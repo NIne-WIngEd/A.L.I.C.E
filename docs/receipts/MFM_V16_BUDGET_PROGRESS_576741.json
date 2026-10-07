@@ -1,0 +1,1329 @@
+{
+  "schema": "mfm-v16-budget-progress-public-aggregate-v1",
+  "producer_job": 576741,
+  "component_sha256": "009d65a404a207bff82fb5cec88fa0d5370533ce49ade2d1a152cb77e0b1258c",
+  "progress": [
+    {
+      "equal_case_mean_loss": 3.0254732133061797,
+      "global_completed_epochs": 2,
+      "global_optimizer_steps": 54,
+      "qualified_for_product": false,
+      "record_sha256": "cd0fad786672c4b257ecf512281d82f2c8ddbd6d6eb170cbf70ed0612772667f",
+      "run_sha256": "5f9a32ccfe311bcbfde833dacf7967a00939ab9ff9a63aae65c37fbfab1e4b16",
+      "schema": "mfm-v16-decision-budget-train-progress-v1",
+      "stopping_objective": "equal-case mean of full per-case token-mean CE; development excluded",
+      "target_tokens": 175357,
+      "token_weighted_mean_loss": 3.181965940658327,
+      "train_cases": 432,
+      "train_field_measurements": [
+        {
+          "case_id": "v16-seed-06",
+          "first_position": {
+            "entropy": 2.641775369644165,
+            "previous_input_probability": 4.304468347982038e-06,
+            "target_probability": 0.8220395445823669
+          },
+          "groups": {
+            "eos": {
+              "accuracy": 0.0,
+              "mean_loss": 4.999575138092041,
+              "tokens": 1
+            },
+            "key": {
+              "accuracy": 0.49572649572649574,
+              "mean_loss": 3.0681086513731213,
+              "tokens": 117
+            },
+            "reference_identity": {
+              "accuracy": 0.35714285714285715,
+              "mean_loss": 4.348885919100472,
+              "tokens": 56
+            },
+            "structure": {
+              "accuracy": 0.0,
+              "mean_loss": 5.9280617237091064,
+              "tokens": 2
+            },
+            "value": {
+              "accuracy": 0.52,
+              "mean_loss": 3.223695163652301,
+              "tokens": 100
+            },
+            "value_text": {
+              "accuracy": 0.043478260869565216,
+              "mean_loss": 8.379780609970508,
+              "tokens": 23
+            }
+          },
+          "groups_by_positive_train_corpus_frequency": {
+            "eos": {
+              "10+": {
+                "accuracy": 0.0,
+                "mean_loss": 4.999575138092041,
+                "tokens": 1
+              }
+            },
+            "key": {
+              "10+": {
+                "accuracy": 0.49572649572649574,
+                "mean_loss": 3.0681086513731213,
+                "tokens": 117
+              }
+            },
+            "reference_identity": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 11.336466153462728,
+                "tokens": 6
+              },
+              "10+": {
+                "accuracy": 0.4,
+                "mean_loss": 3.510376290977001,
+                "tokens": 50
+              }
+            },
+            "structure": {
+              "10+": {
+                "accuracy": 0.0,
+                "mean_loss": 5.9280617237091064,
+                "tokens": 2
+              }
+            },
+            "value": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 11.35228188832601,
+                "tokens": 3
+              },
+              "10+": {
+                "accuracy": 0.5360824742268041,
+                "mean_loss": 2.9722955742294026,
+                "tokens": 97
+              }
+            },
+            "value_text": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.698363304138184,
+                "tokens": 10
+              },
+              "10+": {
+                "accuracy": 0.07692307692307693,
+                "mean_loss": 6.596255460610757,
+                "tokens": 13
+              }
+            }
+          },
+          "mean_loss": 3.7942023165897782,
+          "next_token_accuracy": 0.43812709030100333,
+          "previous_input_copy_rate": 0.12040133779264214,
+          "split": "train",
+          "teacher_prefix_eos_probability": 0.006740810349583626,
+          "tokens": 299
+        },
+        {
+          "case_id": "v16-seed-11",
+          "first_position": {
+            "entropy": 2.8031110763549805,
+            "previous_input_probability": 4.307231847633375e-06,
+            "target_probability": 0.8103646636009216
+          },
+          "groups": {
+            "eos": {
+              "accuracy": 0.0,
+              "mean_loss": 4.9642181396484375,
+              "tokens": 1
+            },
+            "key": {
+              "accuracy": 0.4590909090909091,
+              "mean_loss": 3.2664804317057134,
+              "tokens": 220
+            },
+            "reference_identity": {
+              "accuracy": 0.2926829268292683,
+              "mean_loss": 4.335723545515864,
+              "tokens": 82
+            },
+            "structure": {
+              "accuracy": 0.0,
+              "mean_loss": 5.727417755126953,
+              "tokens": 5
+            },
+            "value": {
+              "accuracy": 0.47126436781609193,
+              "mean_loss": 3.553405565616471,
+              "tokens": 174
+            },
+            "value_text": {
+              "accuracy": 0.09523809523809523,
+              "mean_loss": 8.656491669870558,
+              "tokens": 21
+            }
+          },
+          "groups_by_positive_train_corpus_frequency": {
+            "eos": {
+              "10+": {
+                "accuracy": 0.0,
+                "mean_loss": 4.9642181396484375,
+                "tokens": 1
+              }
+            },
+            "key": {
+              "10+": {
+                "accuracy": 0.4590909090909091,
+                "mean_loss": 3.2664804317057134,
+                "tokens": 220
+              }
+            },
+            "reference_identity": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.94700558980306,
+                "tokens": 6
+              },
+              "10+": {
+                "accuracy": 0.3157894736842105,
+                "mean_loss": 3.8137802262300333,
+                "tokens": 76
+              }
+            },
+            "structure": {
+              "10+": {
+                "accuracy": 0.0,
+                "mean_loss": 5.727417755126953,
+                "tokens": 5
+              }
+            },
+            "value": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.99710377779874,
+                "tokens": 11
+              },
+              "10+": {
+                "accuracy": 0.5030674846625767,
+                "mean_loss": 3.051070103444662,
+                "tokens": 163
+              }
+            },
+            "value_text": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 11.374029072848233,
+                "tokens": 11
+              },
+              "10+": {
+                "accuracy": 0.2,
+                "mean_loss": 5.667200526595115,
+                "tokens": 10
+              }
+            }
+          },
+          "mean_loss": 3.792912974368566,
+          "next_token_accuracy": 0.415506958250497,
+          "previous_input_copy_rate": 0.1272365805168986,
+          "split": "train",
+          "teacher_prefix_eos_probability": 0.0069834087044000626,
+          "tokens": 503
+        },
+        {
+          "case_id": "v16-seed-21",
+          "first_position": {
+            "entropy": 2.7480053901672363,
+            "previous_input_probability": 3.99849659515894e-06,
+            "target_probability": 0.8144359588623047
+          },
+          "groups": {
+            "eos": {
+              "accuracy": 0.0,
+              "mean_loss": 5.174563407897949,
+              "tokens": 1
+            },
+            "key": {
+              "accuracy": 0.4463276836158192,
+              "mean_loss": 3.426526143775092,
+              "tokens": 531
+            },
+            "reference_identity": {
+              "accuracy": 0.2727272727272727,
+              "mean_loss": 4.192933161722548,
+              "tokens": 319
+            },
+            "structure": {
+              "accuracy": 0.0,
+              "mean_loss": 7.002518858228411,
+              "tokens": 7
+            },
+            "value": {
+              "accuracy": 0.45897435897435895,
+              "mean_loss": 3.5021901385381056,
+              "tokens": 390
+            },
+            "value_text": {
+              "accuracy": 0.0821917808219178,
+              "mean_loss": 9.758120523740168,
+              "tokens": 73
+            }
+          },
+          "groups_by_positive_train_corpus_frequency": {
+            "eos": {
+              "10+": {
+                "accuracy": 0.0,
+                "mean_loss": 5.174563407897949,
+                "tokens": 1
+              }
+            },
+            "key": {
+              "10+": {
+                "accuracy": 0.4463276836158192,
+                "mean_loss": 3.426526143775092,
+                "tokens": 531
+              }
+            },
+            "reference_identity": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.434832436697823,
+                "tokens": 14
+              },
+              "10+": {
+                "accuracy": 0.28524590163934427,
+                "mean_loss": 3.9064197523794215,
+                "tokens": 305
+              }
+            },
+            "structure": {
+              "10+": {
+                "accuracy": 0.0,
+                "mean_loss": 7.002518858228411,
+                "tokens": 7
+              }
+            },
+            "value": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 11.382995865561746,
+                "tokens": 11
+              },
+              "10+": {
+                "accuracy": 0.47229551451187335,
+                "mean_loss": 3.2734596293105063,
+                "tokens": 379
+              }
+            },
+            "value_text": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 12.19165494225242,
+                "tokens": 44
+              },
+              "10+": {
+                "accuracy": 0.20689655172413793,
+                "mean_loss": 6.065861405997441,
+                "tokens": 29
+              }
+            }
+          },
+          "mean_loss": 4.004103110228961,
+          "next_token_accuracy": 0.3853141559424678,
+          "previous_input_copy_rate": 0.15215745647236942,
+          "split": "train",
+          "teacher_prefix_eos_probability": 0.005658687092363834,
+          "tokens": 1321
+        }
+      ]
+    },
+    {
+      "equal_case_mean_loss": 1.230613479045806,
+      "global_completed_epochs": 4,
+      "global_optimizer_steps": 108,
+      "qualified_for_product": false,
+      "record_sha256": "d784c6f7ae16312b6699b2649c1348ecce79dee1f1f0441d4b5faae00255cb54",
+      "run_sha256": "5f9a32ccfe311bcbfde833dacf7967a00939ab9ff9a63aae65c37fbfab1e4b16",
+      "schema": "mfm-v16-decision-budget-train-progress-v1",
+      "stopping_objective": "equal-case mean of full per-case token-mean CE; development excluded",
+      "target_tokens": 175357,
+      "token_weighted_mean_loss": 1.4439928103587916,
+      "train_cases": 432,
+      "train_field_measurements": [
+        {
+          "case_id": "v16-seed-06",
+          "first_position": {
+            "entropy": 0.44239893555641174,
+            "previous_input_probability": 1.402909788339457e-06,
+            "target_probability": 0.9733580350875854
+          },
+          "groups": {
+            "eos": {
+              "accuracy": 1.0,
+              "mean_loss": 0.10902364552021027,
+              "tokens": 1
+            },
+            "key": {
+              "accuracy": 0.7521367521367521,
+              "mean_loss": 1.0006480754520266,
+              "tokens": 117
+            },
+            "reference_identity": {
+              "accuracy": 0.5000000000000001,
+              "mean_loss": 3.1067423611862717,
+              "tokens": 56
+            },
+            "structure": {
+              "accuracy": 0.0,
+              "mean_loss": 3.683675765991211,
+              "tokens": 2
+            },
+            "value": {
+              "accuracy": 0.6,
+              "mean_loss": 1.944368142914027,
+              "tokens": 100
+            },
+            "value_text": {
+              "accuracy": 0.08695652173913043,
+              "mean_loss": 7.663290963629666,
+              "tokens": 23
+            }
+          },
+          "groups_by_positive_train_corpus_frequency": {
+            "eos": {
+              "10+": {
+                "accuracy": 1.0,
+                "mean_loss": 0.10902364552021027,
+                "tokens": 1
+              }
+            },
+            "key": {
+              "10+": {
+                "accuracy": 0.7521367521367521,
+                "mean_loss": 1.0006480754520266,
+                "tokens": 117
+              }
+            },
+            "reference_identity": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.81820265452067,
+                "tokens": 6
+              },
+              "10+": {
+                "accuracy": 0.56,
+                "mean_loss": 2.181367125986144,
+                "tokens": 50
+              }
+            },
+            "structure": {
+              "10+": {
+                "accuracy": 0.0,
+                "mean_loss": 3.683675765991211,
+                "tokens": 2
+              }
+            },
+            "value": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 11.09736696879069,
+                "tokens": 3
+              },
+              "10+": {
+                "accuracy": 0.6185567010309279,
+                "mean_loss": 1.6612857050003158,
+                "tokens": 97
+              }
+            },
+            "value_text": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.786558246612548,
+                "tokens": 10
+              },
+              "10+": {
+                "accuracy": 0.15384615384615385,
+                "mean_loss": 5.260777669027448,
+                "tokens": 13
+              }
+            }
+          },
+          "mean_loss": 2.2382016009588828,
+          "next_token_accuracy": 0.5986622073578596,
+          "previous_input_copy_rate": 0.05351170568561873,
+          "split": "train",
+          "teacher_prefix_eos_probability": 0.8967092037200928,
+          "tokens": 299
+        },
+        {
+          "case_id": "v16-seed-11",
+          "first_position": {
+            "entropy": 0.4431411623954773,
+            "previous_input_probability": 1.448283796889882e-06,
+            "target_probability": 0.9733781814575195
+          },
+          "groups": {
+            "eos": {
+              "accuracy": 1.0,
+              "mean_loss": 0.26086288690567017,
+              "tokens": 1
+            },
+            "key": {
+              "accuracy": 0.6318181818181818,
+              "mean_loss": 1.4483306302477352,
+              "tokens": 220
+            },
+            "reference_identity": {
+              "accuracy": 0.3902439024390244,
+              "mean_loss": 3.16268095083353,
+              "tokens": 82
+            },
+            "structure": {
+              "accuracy": 0.0,
+              "mean_loss": 3.973850965499878,
+              "tokens": 5
+            },
+            "value": {
+              "accuracy": 0.5747126436781609,
+              "mean_loss": 2.300208782121518,
+              "tokens": 174
+            },
+            "value_text": {
+              "accuracy": 0.09523809523809523,
+              "mean_loss": 7.456918645206661,
+              "tokens": 21
+            }
+          },
+          "groups_by_positive_train_corpus_frequency": {
+            "eos": {
+              "10+": {
+                "accuracy": 1.0,
+                "mean_loss": 0.26086288690567017,
+                "tokens": 1
+              }
+            },
+            "key": {
+              "10+": {
+                "accuracy": 0.6318181818181818,
+                "mean_loss": 1.4483306302477352,
+                "tokens": 220
+              }
+            },
+            "reference_identity": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.62934939066569,
+                "tokens": 6
+              },
+              "10+": {
+                "accuracy": 0.42105263157894735,
+                "mean_loss": 2.573207126636254,
+                "tokens": 76
+              }
+            },
+            "structure": {
+              "10+": {
+                "accuracy": 0.0,
+                "mean_loss": 3.973850965499878,
+                "tokens": 5
+              }
+            },
+            "value": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 11.010768110101873,
+                "tokens": 11
+              },
+              "10+": {
+                "accuracy": 0.6134969325153374,
+                "mean_loss": 1.712379625018549,
+                "tokens": 163
+              }
+            },
+            "value_text": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 11.106060895052822,
+                "tokens": 11
+              },
+              "10+": {
+                "accuracy": 0.2,
+                "mean_loss": 3.4428621703758835,
+                "tokens": 10
+              }
+            }
+          },
+          "mean_loss": 2.2960920754984895,
+          "next_token_accuracy": 0.5447316103379721,
+          "previous_input_copy_rate": 0.03777335984095427,
+          "split": "train",
+          "teacher_prefix_eos_probability": 0.7703865170478821,
+          "tokens": 503
+        },
+        {
+          "case_id": "v16-seed-21",
+          "first_position": {
+            "entropy": 0.4241277575492859,
+            "previous_input_probability": 1.2167216709713102e-06,
+            "target_probability": 0.9746992588043213
+          },
+          "groups": {
+            "eos": {
+              "accuracy": 1.0,
+              "mean_loss": 0.24953970313072205,
+              "tokens": 1
+            },
+            "key": {
+              "accuracy": 0.6177024482109228,
+              "mean_loss": 1.6535197022798946,
+              "tokens": 531
+            },
+            "reference_identity": {
+              "accuracy": 0.4200626959247649,
+              "mean_loss": 3.121675339488015,
+              "tokens": 319
+            },
+            "structure": {
+              "accuracy": 0.14285714285714285,
+              "mean_loss": 3.787585054125105,
+              "tokens": 7
+            },
+            "value": {
+              "accuracy": 0.558974358974359,
+              "mean_loss": 2.249320909158828,
+              "tokens": 390
+            },
+            "value_text": {
+              "accuracy": 0.136986301369863,
+              "mean_loss": 8.974263159047863,
+              "tokens": 73
+            }
+          },
+          "groups_by_positive_train_corpus_frequency": {
+            "eos": {
+              "10+": {
+                "accuracy": 1.0,
+                "mean_loss": 0.24953970313072205,
+                "tokens": 1
+              }
+            },
+            "key": {
+              "10+": {
+                "accuracy": 0.6177024482109228,
+                "mean_loss": 1.6535197022798946,
+                "tokens": 531
+              }
+            },
+            "reference_identity": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 11.082205431801933,
+                "tokens": 14
+              },
+              "10+": {
+                "accuracy": 0.43934426229508194,
+                "mean_loss": 2.7562739582014744,
+                "tokens": 305
+              }
+            },
+            "structure": {
+              "10+": {
+                "accuracy": 0.14285714285714285,
+                "mean_loss": 3.787585054125105,
+                "tokens": 7
+              }
+            },
+            "value": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 11.673670161854137,
+                "tokens": 11
+              },
+              "10+": {
+                "accuracy": 0.575197889182058,
+                "mean_loss": 1.9757909836188587,
+                "tokens": 379
+              }
+            },
+            "value_text": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 12.195122718811035,
+                "tokens": 44
+              },
+              "10+": {
+                "accuracy": 0.3448275862068966,
+                "mean_loss": 4.087441758027878,
+                "tokens": 29
+              }
+            }
+          },
+          "mean_loss": 2.5987527596303894,
+          "next_token_accuracy": 0.5238455715367146,
+          "previous_input_copy_rate": 0.04617713853141559,
+          "split": "train",
+          "teacher_prefix_eos_probability": 0.7791593670845032,
+          "tokens": 1321
+        }
+      ]
+    },
+    {
+      "equal_case_mean_loss": 0.6164190278699001,
+      "global_completed_epochs": 6,
+      "global_optimizer_steps": 162,
+      "qualified_for_product": false,
+      "record_sha256": "e59a7e69c397139a57476c788f69b68f92a32ea6a7b9f7693fb724dfa70562c3",
+      "run_sha256": "5f9a32ccfe311bcbfde833dacf7967a00939ab9ff9a63aae65c37fbfab1e4b16",
+      "schema": "mfm-v16-decision-budget-train-progress-v1",
+      "stopping_objective": "equal-case mean of full per-case token-mean CE; development excluded",
+      "target_tokens": 175357,
+      "token_weighted_mean_loss": 0.8014636984091589,
+      "train_cases": 432,
+      "train_field_measurements": [
+        {
+          "case_id": "v16-seed-06",
+          "first_position": {
+            "entropy": 0.329444020986557,
+            "previous_input_probability": 1.1300294318061788e-06,
+            "target_probability": 0.9806997179985046
+          },
+          "groups": {
+            "eos": {
+              "accuracy": 1.0,
+              "mean_loss": 0.0733233392238617,
+              "tokens": 1
+            },
+            "key": {
+              "accuracy": 0.8376068376068376,
+              "mean_loss": 0.5896380883124139,
+              "tokens": 117
+            },
+            "reference_identity": {
+              "accuracy": 0.6428571428571429,
+              "mean_loss": 2.5045512855368934,
+              "tokens": 56
+            },
+            "structure": {
+              "accuracy": 0.0,
+              "mean_loss": 3.735015392303467,
+              "tokens": 2
+            },
+            "value": {
+              "accuracy": 0.65,
+              "mean_loss": 1.63750771346502,
+              "tokens": 100
+            },
+            "value_text": {
+              "accuracy": 0.08695652173913043,
+              "mean_loss": 7.118096842288809,
+              "tokens": 23
+            }
+          },
+          "groups_by_positive_train_corpus_frequency": {
+            "eos": {
+              "10+": {
+                "accuracy": 1.0,
+                "mean_loss": 0.0733233392238617,
+                "tokens": 1
+              }
+            },
+            "key": {
+              "10+": {
+                "accuracy": 0.8376068376068376,
+                "mean_loss": 0.5896380883124139,
+                "tokens": 117
+              }
+            },
+            "reference_identity": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.766672452290853,
+                "tokens": 6
+              },
+              "10+": {
+                "accuracy": 0.72,
+                "mean_loss": 1.5130967455264182,
+                "tokens": 50
+              }
+            },
+            "structure": {
+              "10+": {
+                "accuracy": 0.0,
+                "mean_loss": 3.735015392303467,
+                "tokens": 2
+              }
+            },
+            "value": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.454104741414389,
+                "tokens": 3
+              },
+              "10+": {
+                "accuracy": 0.6701030927835051,
+                "mean_loss": 1.364829454868648,
+                "tokens": 97
+              }
+            },
+            "value_text": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.229591464996338,
+                "tokens": 10
+              },
+              "10+": {
+                "accuracy": 0.15384615384615385,
+                "mean_loss": 4.7246394402060945,
+                "tokens": 13
+              }
+            }
+          },
+          "mean_loss": 1.8202437497177053,
+          "next_token_accuracy": 0.6755852842809364,
+          "previous_input_copy_rate": 0.05016722408026756,
+          "split": "train",
+          "teacher_prefix_eos_probability": 0.9293003082275391,
+          "tokens": 299
+        },
+        {
+          "case_id": "v16-seed-11",
+          "first_position": {
+            "entropy": 0.33774054050445557,
+            "previous_input_probability": 1.1821438192782807e-06,
+            "target_probability": 0.9802064895629883
+          },
+          "groups": {
+            "eos": {
+              "accuracy": 1.0,
+              "mean_loss": 0.13994300365447998,
+              "tokens": 1
+            },
+            "key": {
+              "accuracy": 0.7136363636363636,
+              "mean_loss": 1.170895754776641,
+              "tokens": 220
+            },
+            "reference_identity": {
+              "accuracy": 0.5121951219512196,
+              "mean_loss": 2.3120993705403925,
+              "tokens": 82
+            },
+            "structure": {
+              "accuracy": 0.0,
+              "mean_loss": 4.3145397186279295,
+              "tokens": 5
+            },
+            "value": {
+              "accuracy": 0.6034482758620688,
+              "mean_loss": 2.094096019185662,
+              "tokens": 174
+            },
+            "value_text": {
+              "accuracy": 0.14285714285714285,
+              "mean_loss": 6.81183971495678,
+              "tokens": 21
+            }
+          },
+          "groups_by_positive_train_corpus_frequency": {
+            "eos": {
+              "10+": {
+                "accuracy": 1.0,
+                "mean_loss": 0.13994300365447998,
+                "tokens": 1
+              }
+            },
+            "key": {
+              "10+": {
+                "accuracy": 0.7136363636363636,
+                "mean_loss": 1.170895754776641,
+                "tokens": 220
+              }
+            },
+            "reference_identity": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.093194802602133,
+                "tokens": 6
+              },
+              "10+": {
+                "accuracy": 0.5526315789473685,
+                "mean_loss": 1.6978023627460443,
+                "tokens": 76
+              }
+            },
+            "structure": {
+              "10+": {
+                "accuracy": 0.0,
+                "mean_loss": 4.3145397186279295,
+                "tokens": 5
+              }
+            },
+            "value": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.658326235684482,
+                "tokens": 11
+              },
+              "10+": {
+                "accuracy": 0.6441717791411042,
+                "mean_loss": 1.516141832796171,
+                "tokens": 163
+              }
+            },
+            "value_text": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.514984217557041,
+                "tokens": 11
+              },
+              "10+": {
+                "accuracy": 0.3,
+                "mean_loss": 2.7383807620964946,
+                "tokens": 10
+              }
+            }
+          },
+          "mean_loss": 1.9410003924142443,
+          "next_token_accuracy": 0.6123260437375746,
+          "previous_input_copy_rate": 0.03180914512922465,
+          "split": "train",
+          "teacher_prefix_eos_probability": 0.8694077730178833,
+          "tokens": 503
+        },
+        {
+          "case_id": "v16-seed-21",
+          "first_position": {
+            "entropy": 0.34785258769989014,
+            "previous_input_probability": 1.071616111403273e-06,
+            "target_probability": 0.9795804619789124
+          },
+          "groups": {
+            "eos": {
+              "accuracy": 1.0,
+              "mean_loss": 0.07009495049715042,
+              "tokens": 1
+            },
+            "key": {
+              "accuracy": 0.6741996233521658,
+              "mean_loss": 1.3580763790100505,
+              "tokens": 531
+            },
+            "reference_identity": {
+              "accuracy": 0.5266457680250783,
+              "mean_loss": 2.507700283466444,
+              "tokens": 319
+            },
+            "structure": {
+              "accuracy": 0.2857142857142857,
+              "mean_loss": 3.516427550997053,
+              "tokens": 7
+            },
+            "value": {
+              "accuracy": 0.6230769230769232,
+              "mean_loss": 1.8413232293654567,
+              "tokens": 390
+            },
+            "value_text": {
+              "accuracy": 0.1095890410958904,
+              "mean_loss": 8.399108832893408,
+              "tokens": 73
+            }
+          },
+          "groups_by_positive_train_corpus_frequency": {
+            "eos": {
+              "10+": {
+                "accuracy": 1.0,
+                "mean_loss": 0.07009495049715042,
+                "tokens": 1
+              }
+            },
+            "key": {
+              "10+": {
+                "accuracy": 0.6741996233521658,
+                "mean_loss": 1.3580763790100505,
+                "tokens": 531
+              }
+            },
+            "reference_identity": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 11.094218526567731,
+                "tokens": 14
+              },
+              "10+": {
+                "accuracy": 0.5508196721311476,
+                "mean_loss": 2.11356501984868,
+                "tokens": 305
+              }
+            },
+            "structure": {
+              "10+": {
+                "accuracy": 0.2857142857142857,
+                "mean_loss": 3.516427550997053,
+                "tokens": 7
+              }
+            },
+            "value": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 11.66378151286732,
+                "tokens": 11
+              },
+              "10+": {
+                "accuracy": 0.6411609498680739,
+                "mean_loss": 1.55623868815564,
+                "tokens": 379
+              }
+            },
+            "value_text": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 11.775100144472988,
+                "tokens": 44
+              },
+              "10+": {
+                "accuracy": 0.27586206896551724,
+                "mean_loss": 3.276915118772665,
+                "tokens": 29
+              }
+            }
+          },
+          "mean_loss": 2.177919030841299,
+          "next_token_accuracy": 0.5904617713853142,
+          "previous_input_copy_rate": 0.03860711582134747,
+          "split": "train",
+          "teacher_prefix_eos_probability": 0.9323052763938904,
+          "tokens": 1321
+        }
+      ]
+    },
+    {
+      "equal_case_mean_loss": 0.3784430054257865,
+      "global_completed_epochs": 8,
+      "global_optimizer_steps": 216,
+      "qualified_for_product": false,
+      "record_sha256": "7c13d19472151dcab21feeef278a72d1bfa0eebf42150fb326ed9489a2f31362",
+      "run_sha256": "5f9a32ccfe311bcbfde833dacf7967a00939ab9ff9a63aae65c37fbfab1e4b16",
+      "schema": "mfm-v16-decision-budget-train-progress-v1",
+      "stopping_objective": "equal-case mean of full per-case token-mean CE; development excluded",
+      "target_tokens": 175357,
+      "token_weighted_mean_loss": 0.524075508648458,
+      "train_cases": 432,
+      "train_field_measurements": [
+        {
+          "case_id": "v16-seed-06",
+          "first_position": {
+            "entropy": 0.2714935541152954,
+            "previous_input_probability": 1.156528355750197e-06,
+            "target_probability": 0.9843509197235107
+          },
+          "groups": {
+            "eos": {
+              "accuracy": 1.0,
+              "mean_loss": 0.037869833409786224,
+              "tokens": 1
+            },
+            "key": {
+              "accuracy": 0.8461538461538461,
+              "mean_loss": 0.5087418123625983,
+              "tokens": 117
+            },
+            "reference_identity": {
+              "accuracy": 0.6428571428571429,
+              "mean_loss": 2.268282743391215,
+              "tokens": 56
+            },
+            "structure": {
+              "accuracy": 0.0,
+              "mean_loss": 4.523984432220459,
+              "tokens": 2
+            },
+            "value": {
+              "accuracy": 0.69,
+              "mean_loss": 1.5085599915590138,
+              "tokens": 100
+            },
+            "value_text": {
+              "accuracy": 0.13043478260869565,
+              "mean_loss": 6.780454590531957,
+              "tokens": 23
+            }
+          },
+          "groups_by_positive_train_corpus_frequency": {
+            "eos": {
+              "10+": {
+                "accuracy": 1.0,
+                "mean_loss": 0.037869833409786224,
+                "tokens": 1
+              }
+            },
+            "key": {
+              "10+": {
+                "accuracy": 0.8461538461538461,
+                "mean_loss": 0.5087418123625983,
+                "tokens": 117
+              }
+            },
+            "reference_identity": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.819646199544271,
+                "tokens": 6
+              },
+              "10+": {
+                "accuracy": 0.72,
+                "mean_loss": 1.2421191286528483,
+                "tokens": 50
+              }
+            },
+            "structure": {
+              "10+": {
+                "accuracy": 0.0,
+                "mean_loss": 4.523984432220459,
+                "tokens": 2
+              }
+            },
+            "value": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.419181823730469,
+                "tokens": 3
+              },
+              "10+": {
+                "accuracy": 0.711340206185567,
+                "mean_loss": 1.2329737493269068,
+                "tokens": 97
+              }
+            },
+            "value_text": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.060954284667968,
+                "tokens": 10
+              },
+              "10+": {
+                "accuracy": 0.23076923076923078,
+                "mean_loss": 4.25699328735041,
+                "tokens": 13
+              }
+            }
+          },
+          "mean_loss": 1.680397722783676,
+          "next_token_accuracy": 0.6956521739130435,
+          "previous_input_copy_rate": 0.043478260869565216,
+          "split": "train",
+          "teacher_prefix_eos_probability": 0.9628382325172424,
+          "tokens": 299
+        },
+        {
+          "case_id": "v16-seed-11",
+          "first_position": {
+            "entropy": 0.2778347134590149,
+            "previous_input_probability": 1.2252359056219575e-06,
+            "target_probability": 0.9839795827865601
+          },
+          "groups": {
+            "eos": {
+              "accuracy": 1.0,
+              "mean_loss": 0.04626264050602913,
+              "tokens": 1
+            },
+            "key": {
+              "accuracy": 0.7090909090909091,
+              "mean_loss": 1.0972287369341673,
+              "tokens": 220
+            },
+            "reference_identity": {
+              "accuracy": 0.646341463414634,
+              "mean_loss": 1.9065656824826784,
+              "tokens": 82
+            },
+            "structure": {
+              "accuracy": 0.0,
+              "mean_loss": 5.080373549461365,
+              "tokens": 5
+            },
+            "value": {
+              "accuracy": 0.6149425287356322,
+              "mean_loss": 1.9615966550184243,
+              "tokens": 174
+            },
+            "value_text": {
+              "accuracy": 0.19047619047619047,
+              "mean_loss": 6.55164906256167,
+              "tokens": 21
+            }
+          },
+          "groups_by_positive_train_corpus_frequency": {
+            "eos": {
+              "10+": {
+                "accuracy": 1.0,
+                "mean_loss": 0.04626264050602913,
+                "tokens": 1
+              }
+            },
+            "key": {
+              "10+": {
+                "accuracy": 0.7090909090909091,
+                "mean_loss": 1.0972287369341673,
+                "tokens": 220
+              }
+            },
+            "reference_identity": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 9.839780489603678,
+                "tokens": 6
+              },
+              "10+": {
+                "accuracy": 0.6973684210526315,
+                "mean_loss": 1.2802592503415469,
+                "tokens": 76
+              }
+            },
+            "structure": {
+              "10+": {
+                "accuracy": 0.0,
+                "mean_loss": 5.080373549461365,
+                "tokens": 5
+              }
+            },
+            "value": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.475556720386852,
+                "tokens": 11
+              },
+              "10+": {
+                "accuracy": 0.656441717791411,
+                "mean_loss": 1.3870349328156468,
+                "tokens": 163
+              }
+            },
+            "value_text": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.160550117492676,
+                "tokens": 11
+              },
+              "10+": {
+                "accuracy": 0.4,
+                "mean_loss": 2.5818579021375627,
+                "tokens": 10
+              }
+            }
+          },
+          "mean_loss": 1.7933981844212927,
+          "next_token_accuracy": 0.6381709741550696,
+          "previous_input_copy_rate": 0.0536779324055666,
+          "split": "train",
+          "teacher_prefix_eos_probability": 0.9547911882400513,
+          "tokens": 503
+        },
+        {
+          "case_id": "v16-seed-21",
+          "first_position": {
+            "entropy": 0.27695465087890625,
+            "previous_input_probability": 1.049149773280078e-06,
+            "target_probability": 0.9840890169143677
+          },
+          "groups": {
+            "eos": {
+              "accuracy": 1.0,
+              "mean_loss": 0.041704706847667694,
+              "tokens": 1
+            },
+            "key": {
+              "accuracy": 0.696798493408663,
+              "mean_loss": 1.2567831004668104,
+              "tokens": 531
+            },
+            "reference_identity": {
+              "accuracy": 0.5736677115987461,
+              "mean_loss": 2.0824627133121356,
+              "tokens": 319
+            },
+            "structure": {
+              "accuracy": 0.14285714285714285,
+              "mean_loss": 3.9348385334014893,
+              "tokens": 7
+            },
+            "value": {
+              "accuracy": 0.6692307692307692,
+              "mean_loss": 1.6775243358388066,
+              "tokens": 390
+            },
+            "value_text": {
+              "accuracy": 0.20547945205479454,
+              "mean_loss": 7.928791894437107,
+              "tokens": 73
+            }
+          },
+          "groups_by_positive_train_corpus_frequency": {
+            "eos": {
+              "10+": {
+                "accuracy": 1.0,
+                "mean_loss": 0.041704706847667694,
+                "tokens": 1
+              }
+            },
+            "key": {
+              "10+": {
+                "accuracy": 0.696798493408663,
+                "mean_loss": 1.2567831004668104,
+                "tokens": 531
+              }
+            },
+            "reference_identity": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 10.782143933432442,
+                "tokens": 14
+              },
+              "10+": {
+                "accuracy": 0.6,
+                "mean_loss": 1.6831330835361218,
+                "tokens": 305
+              }
+            },
+            "structure": {
+              "10+": {
+                "accuracy": 0.14285714285714285,
+                "mean_loss": 3.9348385334014893,
+                "tokens": 7
+              }
+            },
+            "value": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 11.614432594992898,
+                "tokens": 11
+              },
+              "10+": {
+                "accuracy": 0.6886543535620053,
+                "mean_loss": 1.3891180275256272,
+                "tokens": 379
+              }
+            },
+            "value_text": {
+              "1-9": {
+                "accuracy": 0.0,
+                "mean_loss": 11.429638342423873,
+                "tokens": 44
+              },
+              "10+": {
+                "accuracy": 0.5172413793103449,
+                "mean_loss": 2.6171628009399464,
+                "tokens": 29
+              }
+            }
+          },
+          "mean_loss": 1.9623613214278193,
+          "next_token_accuracy": 0.6290688872066617,
+          "previous_input_copy_rate": 0.03785011355034065,
+          "split": "train",
+          "teacher_prefix_eos_probability": 0.9591529369354248,
+          "tokens": 1321
+        }
+      ]
+    }
+  ],
+  "qualified_for_product": false,
+  "record_sha256": "2b60169d88e3a4e009f4e61722ba5e16c93ff36a352079e2c624f72f169731c2"
+}

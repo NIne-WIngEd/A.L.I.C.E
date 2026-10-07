@@ -1,6 +1,6 @@
 {
   "schema": "mfm-root-cause-investigation-state-v1",
-  "recorded_at_utc": "2026-10-05T03:27:57.824279+00:00",
+  "recorded_at_utc": "2026-10-07T04:08:24.608924+00:00",
   "source_export": {
     "jobs": {
       "576630": "TIMEOUT",
@@ -217,7 +217,7 @@
       "initial_grouped_metrics_caveat": "Initial receipt retains quoted-values-only grouping; completed corrected receipt includes every JSON scalar."
     }
   },
-  "frontier_watch_reviewed_commit": "3bea3318904ec2881d3f981d46a5b8d5bca91ba7",
+  "frontier_watch_reviewed_commit": "3aedd37d7612427905b46db06c91ef1622ee29c1",
   "independent_gold": false,
   "final_opened": false,
   "memory_activation": false,
@@ -413,9 +413,10 @@
     "next_design_limit": "Copying alone cannot solve common-field underlearning; another fixed two-epoch recipe cannot be called a full-capability training plan. Establish basic full-corpus sequence learning with an explicit bounded continuation before inferring the need or success of a new lexical architecture."
   },
   "current_hypotheses": [
-    "54 updates leave even ordinary structure/action/EOS sequence behavior insufficiently learned",
-    "frozen source states plus independently random lexical head provide no inherited source-to-output token identity channel",
-    "gold-prefix learning may not sustain coherent decisions after an incorrect generated prefix"
+    "Observed objective improvement withEOS acquisition; not convergence or semantic competence.",
+    "416longitudinal/16base case composition may mask deficient diverse-role learning; separate complete-family metrics/generation pending.",
+    "Rare/no-positive target identities/text and semantic scope names need distinct measurements; copied source identity is not yet established as sole cause.",
+    "32prefix parity passes; later retained parse/EOS cache checks pending before causal attribution."
   ],
   "research_before_next_model": {
     "adoption_state": "NO_NEW_ARCHITECTURE_OR_LEARNING_TECHNIQUE_SELECTED",
@@ -448,7 +449,7 @@
   },
   "bounded_learning_continuation": {
     "job": 576741,
-    "state_at_snapshot": "RUNNING",
+    "state_at_snapshot": "COMPLETED_WITH_INVALID_GENERATION",
     "owner_account": "mxrayan",
     "code_commit": "a4fd0c5fcf34755299fe33907793e7262e137d9d",
     "job_script_sha256": "bf383faefa54a1acafc2938df034d7ca0ce144c380d59b4666189906565e61b5",
@@ -484,7 +485,7 @@
     "controls": "byte-reuse pinned original9parent outputs; same-settings fresh9child and9original-untrained-seed outputs",
     "local_targeted_tests_passed": 21,
     "independent_review_launch_blockers": 0,
-    "new_fitted_behavior_pending": true,
+    "new_fitted_behavior_pending": false,
     "unseen_identity_gap_resolved": false,
     "automatic_second_budget_extension_authorized_by_recipe": false,
     "qualified_for_product": false,
@@ -494,7 +495,121 @@
     "actual_runtime_tests_passed": 21,
     "initial_scheduler_elapsed": "00:02:25",
     "actual_runtime_test_seconds": 10.892,
-    "actual_full_corpus_learning_progress_observed": false,
-    "log_interpretation": "Initial Slurm stdout contains tiny unit-test fixture progress; real432-case progress is exclusively in receipts/rayan-mfm-budget-fit-576741.stdout and the actual run progress files."
-  }
+    "actual_full_corpus_learning_progress_observed": true,
+    "log_interpretation": "Initial Slurm stdout contains tiny unit-test fixture progress; real432-case progress is exclusively in receipts/rayan-mfm-budget-fit-576741.stdout and the actual run progress files.",
+    "scheduler_state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "04:24:27",
+    "fit_seconds": 13652.242794953287,
+    "component_sha256": "009d65a404a207bff82fb5cec88fa0d5370533ce49ade2d1a152cb77e0b1258c",
+    "run_sha256": "5f9a32ccfe311bcbfde833dacf7967a00939ab9ff9a63aae65c37fbfab1e4b16",
+    "additional_optimizer_steps": 162,
+    "all_maximum_train_epochs_completed": true,
+    "construction_schedule_completed": true,
+    "development_has_no_gradients": true,
+    "diagnostic_development_teacher_forced_loss": 3.6017456022513596,
+    "full_train_progress_sha256": [
+      "cd0fad786672c4b257ecf512281d82f2c8ddbd6d6eb170cbf70ed0612772667f",
+      "d784c6f7ae16312b6699b2649c1348ecce79dee1f1f0441d4b5faae00255cb54",
+      "e59a7e69c397139a57476c788f69b68f92a32ea6a7b9f7693fb724dfa70562c3",
+      "7c13d19472151dcab21feeef278a72d1bfa0eebf42150fb326ed9489a2f31362"
+    ],
+    "generated_ability_established": false,
+    "global_completed_epochs": 8,
+    "global_optimizer_steps": 216,
+    "independent_qualification": false,
+    "seeded_development_teacher_forced_loss": 12.574968655240754,
+    "terminal_reason": "additional_epoch_cap",
+    "trained_weights_sha256": "f5b61a306f7c88ec71e7d6d727ad7d61e70d26fbdd9edf2d1fd5389398a6a18c",
+    "generated_diagnostic_sha256": "ee46288c88d7896efa6771230e2cd76cbcaef83075d7b3a22bde57534bfa7a88",
+    "generated_summary": {
+      "parent-fit": {
+        "cases": 9,
+        "exact_teacher_agreements": 0,
+        "grounded_outputs": 0,
+        "invalid_outputs": 9,
+        "proposals_in_grounded_outputs": 0
+      },
+      "seeded-untrained": {
+        "cases": 9,
+        "exact_teacher_agreements": 0,
+        "grounded_outputs": 0,
+        "invalid_outputs": 9,
+        "proposals_in_grounded_outputs": 0
+      },
+      "trained": {
+        "cases": 9,
+        "exact_teacher_agreements": 0,
+        "grounded_outputs": 0,
+        "invalid_outputs": 9,
+        "proposals_in_grounded_outputs": 0
+      }
+    },
+    "all9child_eos_observed": true,
+    "child_generated_token_range": [
+      123,
+      371
+    ],
+    "all9child_first_failed_stage": "JSON_PARSE_BEFORE_COMPILATION_OR_GROUNDING",
+    "all9parent_and_seed_no_eos": true,
+    "raw_controls_and_original_seals_verified": true,
+    "full_train_progress": [
+      {
+        "global_completed_epochs": 2,
+        "global_optimizer_steps": 54,
+        "equal_case_mean_loss": 3.0254732133061797,
+        "token_weighted_mean_loss": 3.181965940658327,
+        "record_sha256": "cd0fad786672c4b257ecf512281d82f2c8ddbd6d6eb170cbf70ed0612772667f"
+      },
+      {
+        "global_completed_epochs": 4,
+        "global_optimizer_steps": 108,
+        "equal_case_mean_loss": 1.230613479045806,
+        "token_weighted_mean_loss": 1.4439928103587916,
+        "record_sha256": "d784c6f7ae16312b6699b2649c1348ecce79dee1f1f0441d4b5faae00255cb54"
+      },
+      {
+        "global_completed_epochs": 6,
+        "global_optimizer_steps": 162,
+        "equal_case_mean_loss": 0.6164190278699001,
+        "token_weighted_mean_loss": 0.8014636984091589,
+        "record_sha256": "e59a7e69c397139a57476c788f69b68f92a32ea6a7b9f7693fb724dfa70562c3"
+      },
+      {
+        "global_completed_epochs": 8,
+        "global_optimizer_steps": 216,
+        "equal_case_mean_loss": 0.3784430054257865,
+        "token_weighted_mean_loss": 0.524075508648458,
+        "record_sha256": "7c13d19472151dcab21feeef278a72d1bfa0eebf42150fb326ed9489a2f31362"
+      }
+    ],
+    "remaining_gap": "Rare labels remain0top1 on measured diverse training cases; malformed unseen development references/scopes precede failed complete JSON. Aggregate CE does not establish all-role learning.",
+    "no_automatic_budget_extension": true
+  },
+  "budget_failure_diagnostic": {
+    "state_at_snapshot": "IMPLEMENTED_REVIEW_PENDING",
+    "owner_account": "mxrayan",
+    "purpose": "Distinguish dominant-template fit, diverse-role underlearning, precise source/scope/reference gaps and later cache errors before selecting a coherent correction",
+    "teacher_prefix_cases": 441,
+    "train_family_cases": {
+      "base": 16,
+      "longitudinal": 416
+    },
+    "development_cases": 9,
+    "target_free_train_generated_cases": 29,
+    "fixed_longitudinal_scenario": "long-atlas-east-* (13 operations)",
+    "retained_development_outputs_reused": 9,
+    "weights_changed": false,
+    "optimizer_executed": false,
+    "original_negative_controls_preserved": true,
+    "later_parity": "retained positions32/64/128/256/final/EOS and around JSON parse error",
+    "scope_names_separate_from_existing_references": true,
+    "exact_teacher_divergence_not_semantic_failure": true,
+    "selected_architecture_or_further_training": false,
+    "qualified_for_product": false,
+    "independent_gold": false,
+    "final_payloads_opened": false,
+    "paid_compute_used": false
+  },
+  "status": "BOUNDED_FIT_COMPLETE_INVALID_GENERATION_FULL_ROSTER_DIAGNOSIS_PREPARED"
 }

@@ -391,3 +391,24 @@ Initial Slurm stdout includes tiny test-fixture progress; those one-case rows
 are not432-case MFM training. Real progress is in the separate protected
 `receipts/rayan-mfm-budget-fit-576741.stdout` and run progress receipts.
 No actual full-corpus child update or behavioral result is asserted yet.
+
+### Completed bounded baseline576741 and next diagnostic (2026-10-06)
+
+576741 completed0:0 in4h24m27s,216globalupdates/eightepochs, sixadditionalepochs
+at the finitecap. Equal-case trainCE3.02547->1.23061->0.61642->0.37844;
+final token-weightedCE0.52408 and diagnosticdevelopmentCE3.60175. Original
+seals and parent/child/seed raw hashes verify. All9child outputs nowEOStrue in
+123–371tokens; all9remain malformedJSON before decision compilation/grounding.
+This invalid verdict is independent of exact teacher agreement. Original
+parent/seed failures remain. No second training extension is scheduled.
+
+Remaining diverse training rare-token strata are0top1;416longitudinal cases
+versus16base can mask full-role deficits. Independent review also identified
+coarse reference grouping that mixes source identities and semantic scope names.
+The new read-only plan measures all441cases by cohort and precise field, uses
+all16base plus one complete13-operation longitudinal training scenario for raw
+generation, and checks later cache/reference parity around original parse faults
+andEOS. See [diagnostic plan](MFM_BUDGET_FAILURE_DISCRIMINATOR_2026-10-06.md).
+No copying, grammar, byte, EOS-only or pretrained architecture is selected.
+Native modalities, full governed consumer/outcome loop and independent Alice/
+Fable qualification remain required; this candidate is still unqualified.
