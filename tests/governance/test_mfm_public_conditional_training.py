@@ -4,6 +4,7 @@ import importlib
 import importlib.util
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 import torch
 
@@ -188,6 +189,68 @@ class PublicConditionalTrainingTests(unittest.TestCase):
         pair = next(p for p in prepared.pairs if p['case_id'] in source['case_ids'])
         with self.assertRaisesRegex(ValueError, 'tensor.*digest'):
             self.module().payload(prepared, pair, device='cpu')
+
+    def test_bank_replacement_between_reads_retains_external_pin(self):
+        original = self.load().bank
+        path = self.bank_dir / 'bank.json'
+        original_bytes = path.read_bytes()
+        body = {k: v for k, v in original.items() if k != 'record_sha256'}
+        body['replacement_marker'] = 'complete independently valid replacement'
+        replacement = features._write_record(path, body, replace=True)
+        # Both real records independently satisfy every unchanged bank guard.
+        self.bank_pin = replacement['record_sha256']
+        self.assertEqual(self.load().bank, replacement)
+        self.assertNotEqual(original['record_sha256'], replacement['record_sha256'])
+        self.bank_pin = original['record_sha256']
+        path.write_bytes(original_bytes)
+        verify = features.verify_bank
+        verified = []
+
+        def replace_before_verification(*args, **kwargs):
+            features._write_record(path, body, replace=True)
+            record = verify(*args, **kwargs)
+            verified.append(record)
+            return record
+
+        with patch.object(features, 'verify_bank', replace_before_verification):
+            with self.assertRaisesRegex(ValueError, 'external.*bank'):
+                self.load()
+        self.assertEqual(verified, [replacement])
+
+    def test_same_pinned_bank_replacement_between_reads_is_valid(self):
+        original = self.load().bank
+        path = self.bank_dir / 'bank.json'
+        body = {k: v for k, v in original.items() if k != 'record_sha256'}
+        verify = features.verify_bank
+
+        def replace_identical_before_verification(*args, **kwargs):
+            features._write_record(path, body, replace=True)
+            return verify(*args, **kwargs)
+
+        with patch.object(features, 'verify_bank', replace_identical_before_verification):
+            prepared = self.load()
+        self.assertEqual(prepared.bank, original)
+        self.assertEqual(prepared.bank['record_sha256'], self.bank_pin)
+
+    def test_epoch_order_uses_seed_plus_epoch_on_encoded_file_order(self):
+        module = self.module()
+        prepared = self.load()
+        self.assertEqual([p['case_id'] for p in prepared.train], ['a', 'b', 'c'])
+        for epoch, expected in [(0, ['c', 'b', 'a']), (2, ['b', 'c', 'a'])]:
+            with self.subTest(epoch=epoch):
+                self.assertEqual([p['case_id'] for p in module.epoch_order(prepared, seed=123, epoch=epoch)],
+                                 expected)
+        # A second valid full census changes only its immutable encoded order.
+        self.pairs = [self.pairs[i] for i in (1, 2, 0, 3)]
+        self.directory = self.fixture.census_dir = self.fixture.root / 'reordered-census'
+        self.directory.mkdir()
+        self.bank_dir = self.fixture.output = self.fixture.root / 'reordered-bank'
+        self.write_census()
+        self.export_bank()
+        reordered = self.load()
+        self.assertEqual([p['case_id'] for p in reordered.train], ['b', 'c', 'a'])
+        self.assertEqual([p['case_id'] for p in module.epoch_order(reordered, seed=123, epoch=0)],
+                         ['a', 'c', 'b'])
 
     def test_group_reference_objective_and_importance_gradients(self):
         module = self.module()

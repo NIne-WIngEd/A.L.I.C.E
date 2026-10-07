@@ -168,6 +168,8 @@ def load_public_training(census_dir: Path, census_sha256: str, feature_bank: Pat
     if pinned_bank['record_sha256'] != feature_bank_sha256:
         raise ValueError('external public bank digest differs')
     bank = features.verify_bank(feature_bank, census, sources, export)
+    if bank != pinned_bank or bank['record_sha256'] != feature_bank_sha256:
+        raise ValueError('external public bank digest differs after complete verification')
     train = tuple(p for p in pairs if p['split'] == 'train')
     development = tuple(p for p in pairs if p['split'] == 'development')
     if not train or not development:
@@ -200,6 +202,5 @@ def epoch_order(prepared, *, seed: int, epoch: int) -> tuple[Pair, ...]:
     if type(seed) is not int or type(epoch) is not int or epoch < 0:
         raise ValueError('public epoch seed must be integer and epoch nonnegative')
     order = list(prepared.train)
-    random.Random(canonical_sha256({'seed': seed, 'epoch': epoch,
-                                   'sampler': 'public-uniform-complete-permutation-v1'})).shuffle(order)
+    random.Random(seed + epoch).shuffle(order)
     return tuple(order)
