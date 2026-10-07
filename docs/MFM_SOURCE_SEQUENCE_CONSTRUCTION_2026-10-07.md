@@ -159,3 +159,8 @@ The reviewed batch executes newstress/restart first, then fourfull432caseepochs
 withresetAdam and balanced29strata/two-task teaching, then raw38formation cases
 permatchedcontrol plus lexicalstress. Incompletefit skipsgeneration andpreserves
 checkpoints. Originalparent, controls and576915failures remainimmutable.
+
+Actual576945 runtime observation: RUNNING00:02:41; privateCPU12/Torch2.7.1
+and owner namespace verified. All69targeted actual-runtime tests pass18.057s.
+The new fullgeometry lexical stress/restart, fitted weights and generated results
+remain pending. This is runtime contract evidence, not capacity or learning.
