@@ -1,6 +1,6 @@
 {
   "schema": "mfm-root-cause-investigation-state-v1",
-  "recorded_at_utc": "2026-10-07T18:01:43.763391+00:00",
+  "recorded_at_utc": "2026-10-07T18:21:18.767609+00:00",
   "source_export": {
     "jobs": {
       "576630": "TIMEOUT",
@@ -1452,7 +1452,7 @@
     "reference": "docs/MFM_SEQUENCE_FAILURE_DISCRIMINATOR_2026-10-07.md"
   },
   "full_role_sequence_successor": {
-    "state_at_snapshot": "REVIEWED_FIXTURE_LIFECYCLE_CORRECTION_READY_FOR_ACTUAL_TEST_GATED_SOURCE_PILOT",
+    "state_at_snapshot": "FULL_SOURCE_BANK_EXPORT_IN_PROGRESS_WITH_VERIFIED_CONTINUATION",
     "goal": "Full semantic MFM for Alice and Fable V1; source meaning, prior state, time, uncertainty, native modalities and governed accepted-memory outcomes remain required.",
     "retained_failure_analysis_sha256": "350ac0ad3fa8f340db5596473f89cec026ff3c25827e2323bc6b50b0ef9de1d0",
     "research_documents": [
@@ -1904,7 +1904,33 @@
         "real_gemma_export_pending": true,
         "qualified_for_product": false
       },
-      "corrected_pilot_recipe": {
+      "current_source_export_submission": {
+        "job": 577006,
+        "owner_account": "mxrayan",
+        "code_commit": "db1929fa71f528dae707267f14391c5f1d49ddcc",
+        "recipe_sha256": "8b8da9e96e6d84902ec4e7b1bee957754398f4d38ffebb8acfb8cdcb43a015de",
+        "controller_sha256": "caeff2309eb1fb6fc237f2222fa6e88f04bc612552e9d4980121f850f112d752",
+        "bundle_sha256": "482ca5597c54b6a59160b9f05b522c03c21aef848a4fa5af4bfd3837ea1cbe86",
+        "runtime_checks_pending": false,
+        "source_measurement_pending": true,
+        "previous_feature_output_absent_verified": true,
+        "original_failures_retained": [
+          576999,
+          577002
+        ],
+        "unchanged_diagnostic_control": 577003,
+        "frozen_backbone_only": true,
+        "language_answer_head_used": false,
+        "targets_visible_to_backbone": false,
+        "optimizer_created": false,
+        "full_fit_budget_selected": false,
+        "qualified_for_product": false,
+        "actual_runtime_tests_passed": 91,
+        "actual_runtime_test_seconds": 48.012,
+        "source_export_started": true,
+        "source_bank_complete": false
+      },
+      "initial_source_export_block_recipe": {
         "path": "scripts/mfm/magnolia_public_conditional_features_v2_20261007.sbatch",
         "sha256": "8b8da9e96e6d84902ec4e7b1bee957754398f4d38ffebb8acfb8cdcb43a015de",
         "outer_and_both_decoded_shell_layers_syntax_verified": true,
@@ -1912,10 +1938,26 @@
         "actual_corrected_91_test_gate_before_model_load": true,
         "soft_stop_seconds": 1800,
         "scheduler_cap_hours": 2,
-        "full_fit_budget_selected": false
+        "full_fit_budget_selected": false,
+        "role": "The first scheduled block of the same complete source-bank export, not a reduced model or an independently sufficient development stage."
+      },
+      "full_source_export_continuation": {
+        "recipe": "scripts/mfm/magnolia_public_conditional_source_export_20261007.sbatch",
+        "recipe_sha256": "5fbbac46b329806b158a56aa09cbceeb3ab07bf26555251fd567b384d45469e5",
+        "parent_job": 577006,
+        "dependency": "afterok:577006",
+        "worker_scheduling_block_seconds": 28800,
+        "scheduler_limit_hours": 12,
+        "entire_source_roster": 4862,
+        "same_export_pin": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+        "verify_parent_terminal_and_progress_pin_before_resume": true,
+        "verify_complete_committed_prefix_before_model_load": true,
+        "completed_checks_reused": "91 corrected actual-runtime checks48.012s; unchanged exporter/helper/base/census/runtime assumptions.",
+        "complete_bank_required_before_training": true,
+        "submitted": false
       }
     },
-    "next_action": "Submit the reviewed immutable corrected source-feature pilot under mxrayan. Actual91 runtime checks must pass before Gemma source export starts. Measure throughput, complete lengths, RSS and storage before allocating full export or producer training; archive stable verified output via connected Drive under the scoped budget. No Gemma answer head or product qualification.",
+    "next_action": "Submit the verified full-source continuation after successful577006; complete the entire4,862-source bank under unchanged bindings. Scheduling blocks are not model scope. Continue researched fresh MFM foundation training and full formation, typed identities/literals, native modalities and governed feedback. Archive stable verified public artifacts in Drive, preserve private custody and published MFM/FBM/Graphify context.",
     "full_role_gaps": [
       "expanded independently reviewed formation teaching",
       "learned typed selection and source-span copy integrated into semantic producer",
@@ -2169,6 +2211,16 @@
       "pretrained_language_bridge_adopted": false,
       "foundation_before_owner_personalization": true,
       "current_trained_producer_changed": false
+    },
+    "owner_full_build_constraint": {
+      "reaffirmed_20261007": true,
+      "prohibited_label": "pilot",
+      "reduced_model_or_capability_delivery_allowed": false,
+      "scope": "Full-capability MFM for Alice/Fable V1; foundation before personalization. Finite allocations and test diagnostics serve this construction and do not become a smaller development mode.",
+      "root_error": "The agent used the prohibited label and introduced a separate30minute measurement stopping point. The source roster, model width, processor lengths and frozen weights were complete, but the framing and next-step boundary were wrong.",
+      "correction": "Finish the same entire4,862-source bank via verified scheduling continuations, then build and train the fresh foundation and full formation path. Reuse valid91 runtime checks; preserve historical immutable recipes and original failures.",
+      "no_active_job_mutation_or_cancellation": true,
+      "historical_receipts_preserved": true
     }
   }
 }

@@ -1,6 +1,6 @@
 # Source-feature fixture diagnosis and continuation
 
-The first public source-feature pilot, Magnolia **576999**, failed one of 86
+The first public source-feature export job, Magnolia **576999**, failed one of 86
 runtime checks before loading Gemma. It produced no source export or learning
 result. The original logs and [failure projection](receipts/MFM_CONDITIONAL_FEATURE_PILOT_576999_FAILURE_PUBLIC.json)
 remain preserved. The unchanged production exporter is not implicated by that
@@ -52,9 +52,9 @@ test verdict.
    complete controls and scope are recorded in the
    [diagnosis projection](receipts/MFM_CONDITIONAL_FEATURE_FIXTURE_DIAGNOSIS_577003_PUBLIC.json).
    The corrected file now passes 31 author checks, 31 independent checks and
-   the root's 91 affected local checks. The corrected protected-runtime gate
-   still must pass before real Gemma source export. Test success remains a
-   prerequisite, not a full MFM result.
+   the root's 91 affected local checks. Magnolia577006 then passed all91 actual
+   runtime checks in48.012s before real Gemma source export began. Test success
+   remains a prerequisite, not a full MFM result.
 
 The first diagnostic wrapper, **577002**, also remains preserved: it stopped
 before the container because a checksum delimiter broke nested shell quoting.
@@ -80,9 +80,16 @@ Drive route works and has passed full archive restoration. Use it through the PC
 when needed; avoid new base downloads and preserve live compute dependencies.
 Retain public conditional archives separately from private teacher/owner custody.
 
-Gemma remains the frozen base source encoder. The next export measures source
-feature throughput, complete lengths, peak memory and storage before setting a
-full export or training budget. MFM must still build its own semantic producer,
+Gemma remains the frozen base source encoder. Complete the entire4,862-source
+bank through verified same-binding scheduling continuations, measuring throughput,
+complete lengths, peak memory and storage during that work. The owner's October7
+correction forbids the reduced development framing previously used for the first
+30minute scheduling block. Do not rename a small-model experiment as construction:
+preserve full roster, dimensions and contracts, and continue until the actual bank
+is complete. Historical immutable filenames and failed receipts remain intact.
+The continuation uses an eight-hour worker allocation within a twelve-hour
+scheduler limit, successful-parent dependency and the parent's external progress
+pin. These are execution details, not capability limits. MFM must still build its own semantic producer,
 learned references and source spans, full-role formation, native modalities and
 governed memory-to-consumer feedback. Foundation precedes personalization;
 restaurant conditional teaching, fixture passes and exports do not qualify

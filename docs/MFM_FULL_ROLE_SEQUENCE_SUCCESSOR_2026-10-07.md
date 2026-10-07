@@ -19,6 +19,11 @@ contract on top. No Gemma answer head or pretrained language bridge is adopted.
 The public conditional stage is a foundation prerequisite; it does not substitute
 for full formation learning or owner-independent Alice/Fable qualification.
 
+The owner also reaffirmed that the reduced development label previously applied
+to the first export block is forbidden. Complete the whole source bank and the
+full MFM construction. Scheduler blocks and failure diagnostics must preserve
+that scope and continue the same artifacts; they are not smaller product targets.
+
 The measured failure is incomplete source-conditioned authored sequence learning:
 rare and unseen references, semantic text and composition remain wrong under
 correct prefixes. Cache/EOS-only repair, unchanged extra epochs, arbitrary syntax

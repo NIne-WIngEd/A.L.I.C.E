@@ -94,8 +94,8 @@ admission or learned capability.
   Resume only from fully verified committed shards with unchanged ancestry.
   Quarantine interrupted or uncommitted artifacts; never consume them or silently
   skip an unfinished source. Preserve the interrupted-run evidence.
-- [ ] Measure longest-source and representative CPU exports before choosing the
-  full export budget. Record wall time, throughput, peak memory and disk use;
+- [ ] Complete the entire4,862-source bank with verified scheduling continuations.
+  Record longest-source performance, wall time, throughput, peak memory and disk use;
   project the complete census roster's cost from actual processed-entry lengths.
   Verify committed tensors again on reload and declare the completed roster and
   external export-receipt pin. This measured feature and training budget must
@@ -113,9 +113,14 @@ admission or learned capability.
 
 Actual census submitted as Magnolia **576995**, immutable code `480f8bff7334d8691f84d5896de09de0deaeb815`, under `mxrayan`. The completed0:0 census and external pin `0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d` are verified. All40,868 original pairs and4,862 exact processed source inputs reconcile. The prepared material transferred with exact original hashes.
 
-The first actual frozen-feature job is a **30-minute pilot** with a two-hour scheduler safety limit. It reuses the complete pinned source roster and preserves its verified ordered prefix for later same-code resume. Throughput, setup, peak memory and disk are measured before selecting the longer continuation. The longest source has71 tokens; if absent from the pilot prefix, measure it before fixing the full export/training budget.
+The target is the complete4,862-source frozen-feature bank. The first job uses a
+30minute scheduling stop and preserves its verified ordered prefix. Same-binding
+continuation uses eight-hour worker allocations inside twelve-hour scheduler
+limits. Full roster, widths, vocabulary and processor lengths remain intact.
+Measure throughput, setup, peak memory, disk and the longest71-token input during
+this construction before choosing producer-training allocation.
 
-Pilot576999 failed before Gemma because the adversarial test retained a mapped
+Job576999 failed before Gemma because the adversarial test retained a mapped
 file during same-path replacement on NFS. The unchanged-runtime577003 controls
 confirm that exact cause. The [ordered diagnosis](../../MFM_SOURCE_FEATURE_FIXTURE_DIAGNOSIS_2026-10-07.md)
 preserves original failures, every custody predicate and valid controls. The
@@ -123,3 +128,14 @@ test-only correction expands ID/mask/geometry/dtype/nonfinite and valid-bank
 coverage;31 focused independent and91 affected root local tests pass. The v2
 recipe gates real source export on those91 checks in the actual protected runtime.
 Measured export and its budget remain outstanding.
+
+The reviewed immutable source export was submitted as Magnolia **577006**, code
+`db1929fa71f528dae707267f14391c5f1d49ddcc`, recipe SHA256
+`8b8da9e96e6d84902ec4e7b1bee957754398f4d38ffebb8acfb8cdcb43a015de`.
+Original output absence and separate receipt were verified. All91 actual runtime
+checks passed48.012s and real source export is running. Complete same-binding
+continuation is defined in
+`scripts/mfm/magnolia_public_conditional_source_export_20261007.sbatch`.
+The owner's October7 correction forbids treating the initial short block as a
+reduced development mode. Preserve historical immutable receipts and filenames;
+continue the full bank and actual fresh MFM foundation/formation build.
