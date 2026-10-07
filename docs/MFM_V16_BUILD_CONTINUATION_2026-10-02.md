@@ -711,3 +711,15 @@ balanced29strata/full432roster, exactparentmigration, resetAdam/newseedcontrol,
 newlexicalcapacity/restart proof and four-epoch cap with separate task outcomes.
 Referencecatalog work preserves typed caller authority but is not learned pointer
 evidence. Full Alice/Fable role and independent connected outcomes remain required.
+
+### Protected sequence construction submitted576945
+
+Execution c84f943d6625e26ffefc34b80c5bf323c70044e5; batch
+bcf881c2cac9e7d88706ba00f1b43cc2a2d4029ee2f5e64a90338dfaa84efb68.
+69targeted localtests and independentreview pass. RUNNINGnode068 at the first
+snapshot, under mxrayan UID1905/GID100 in an only-loopback namespace. CPU12,
+64GiB,24h allocation. Actual newlexicalcapacity/restart andlearning remainpending.
+The reviewed batch executes newstress/restart first, then fourfull432caseepochs
+withresetAdam and balanced29strata/two-task teaching, then raw38formation cases
+permatchedcontrol plus lexicalstress. Incompletefit skipsgeneration andpreserves
+checkpoints. Originalparent, controls and576915failures remainimmutable.

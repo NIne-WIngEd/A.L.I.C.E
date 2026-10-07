@@ -147,3 +147,15 @@ generator diversity, non-null uncertainty and changing time intervals, native
 image/audio/video/sensor representations, and accepted-memory→judgment→mission/
 outcome feedback for Alice/Fable. Preserve their separate personal histories.
 Independent semantic and connected consumer evidence is required for qualification.
+
+### Protected sequence construction submitted576945
+
+Execution c84f943d6625e26ffefc34b80c5bf323c70044e5; batch
+bcf881c2cac9e7d88706ba00f1b43cc2a2d4029ee2f5e64a90338dfaa84efb68.
+69targeted localtests and independentreview pass. RUNNINGnode068 at the first
+snapshot, under mxrayan UID1905/GID100 in an only-loopback namespace. CPU12,
+64GiB,24h allocation. Actual newlexicalcapacity/restart andlearning remainpending.
+The reviewed batch executes newstress/restart first, then fourfull432caseepochs
+withresetAdam and balanced29strata/two-task teaching, then raw38formation cases
+permatchedcontrol plus lexicalstress. Incompletefit skipsgeneration andpreserves
+checkpoints. Originalparent, controls and576915failures remainimmutable.

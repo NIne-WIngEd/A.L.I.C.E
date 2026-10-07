@@ -1,6 +1,6 @@
 {
   "schema": "mfm-root-cause-investigation-state-v1",
-  "recorded_at_utc": "2026-10-07T05:33:06.133961+00:00",
+  "recorded_at_utc": "2026-10-07T05:42:08.032736+00:00",
   "source_export": {
     "jobs": {
       "576630": "TIMEOUT",
@@ -749,9 +749,9 @@
       "record_sha256": "fbbbd51e78a2748f6a3d66ac94c3ae0b3a04855ee81a07bafab7d32d063a0c2e"
     }
   },
-  "status": "WHOLE_ROSTER_DIAGNOSIS_COMPLETE_SOURCE_SEQUENCE_CONSTRUCTION_IMPLEMENTED",
+  "status": "SOURCE_SEQUENCE_CONSTRUCTION_576945_RUNNING",
   "source_sequence_construction": {
-    "state_at_snapshot": "IMPLEMENTED_REVIEWED_BEFORE_SUBMISSION",
+    "state_at_snapshot": "RUNNING_OWNER_NAMESPACE_VERIFIED",
     "objective": "mfm-full-role-plus-source-sequence-29-strata-v1",
     "parent_component_sha256": "009d65a404a207bff82fb5cec88fa0d5370533ce49ade2d1a152cb77e0b1258c",
     "parent_weights_sha256": "f5b61a306f7c88ec71e7d6d727ad7d61e70d26fbdd9edf2d1fd5389398a6a18c",
@@ -774,6 +774,35 @@
     "reference_catalog_status": "implemented typed caller contract, checksum outside learnable target; not integrated or learned pointer",
     "formation_and_source_measured_separately": true,
     "qualified_for_product": false,
-    "paid_compute_used": false
+    "paid_compute_used": false,
+    "job": 576945,
+    "owner_account": "mxrayan",
+    "code_commit": "c84f943d6625e26ffefc34b80c5bf323c70044e5",
+    "job_script_sha256": "bcf881c2cac9e7d88706ba00f1b43cc2a2d4029ee2f5e64a90338dfaa84efb68",
+    "allocation_hours": 24,
+    "cpu_threads": 12,
+    "memory_gb": 64,
+    "local_targeted_tests_passed": 69,
+    "independent_review_launch_blockers": 0,
+    "actual_runtime_tests_passed": null,
+    "actual_capacity_restart_result_pending": true,
+    "node_at_initial_snapshot": "node068",
+    "namespace_uid": 1905,
+    "namespace_gid": 100,
+    "namespace_interfaces": [
+      "lo"
+    ],
+    "parent_fitted_weights_unchanged": true,
+    "run_dirs": {
+      "probe": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-sequence-probe-576945",
+      "fit": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-sequence-fit-576945",
+      "generated": "/homes/01/mxrayan/rayan-compute/rayan-mfm/runs/rayan-mfm-sequence-generated-576945"
+    },
+    "receipt_stdout": {
+      "probe": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-sequence-probe-576945.stdout",
+      "fit": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-sequence-fit-576945.stdout",
+      "generated": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-sequence-generated-576945.stdout"
+    },
+    "runtime_state_evidence": "sacct RUNNING at00:00:20 onnode068; namespace UID1905 GID100 with onlylo; immutablecode and batch verification completed before sbatch; capacity/learning results not yet observed."
   }
 }
