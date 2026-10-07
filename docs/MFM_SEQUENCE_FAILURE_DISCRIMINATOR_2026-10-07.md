@@ -117,3 +117,39 @@ No optimizer or further training is submitted.
 
 Actual576984 runtime:89 tests pass22.447s; RUNNING00:02:17 at that snapshot.
 The full441x2/objective/source-sensitivity result remains pending.
+
+Latest frontier-watch756bf294f6a93e9ea7dcc12dba932a556d6080e0 was fetched
+and compared with3aedd37. Its October7 intake adds retrieval admissibility,
+execution-evidence sufficiency and future personal scaling guidance; no code,
+data or admission change. It explicitly leaves MFM source-sequence construction
+unchanged. Missing governance remains unresolved. These future integration
+contracts do not supply fresh-decoder language competence or change576984.
+
+## Broader data availability audit before the next construction
+
+The legacy49,819 cases comprise43,819 deterministic MultiSource and6,000
+owner-authorized teacher-template examples. Their exact manifest/JSONLs were
+not found by pinned filename in Documents/Codex, Downloads, MFM_Stage or
+OneDrive; remote custody loss is not asserted. Historical mixture pin:
+`60fa44a5be62c8d2f0daf508e543dc1a41c34562dc0c4d399e26c9cabb772e21`.
+MultiSource JSONL2595e5209c0cf9cc8077e330b9e288c08cf5752f6db46acde6a455ff781519a1;
+longitudinal JSONL2c92302390ebcf46ea222df8cf1c79b75710fdfb7a47a684c4897b9e0f6ae830.
+These are legacy v1/v1.5 targets. The existing v1.6 admission audit reports zero
+labelled sensitivity/confidence/contradiction and zero episode, relationship,
+mission, correction or source-person proposal kinds. Missing fields cannot be
+converted into negative supervision. Recovery would still require current
+role-specific derivation/admission, context inventories and processor/source-bank
+lineage. Corpus size alone would not close the full-role coverage gaps.
+
+| Other material | Actual availability/admission boundary |
+|---|---|
+| Current441-case corpus | Exact owner-teacher bundle present;432train/9diagnostic; unqualified, narrow authored coverage. |
+| N0 prose/code | Historical21-source tokenizer corpus27,798rows/99,999,292characters; payload custody not verified; no MFM admission inheritance. |
+| Local N0 teacher bank | Seven JSONLs/origin manifests,383rows/275train/108dev; prompt/ranking/rationale tasks, no full v1.6 formation/context contract. |
+| Broader public menu |34/34candidate_not_admitted, including21reference-only pinned CommonPile revisions; no staged/global-admission receipt or matching payload found. |
+| AMI / ICSI / Synthea | Historical acquisition/candidate records only: two unadmitted AMI teachers;458unadmitted ICSI windows;555source-only synthetic Synthea bundles with record-level rights unresolved. Pinned archives not found in searched local custody. |
+
+These findings are preparation evidence, not new admitted data or a selected
+training recipe. No larger ready-to-use full-role corpus was established. A
+broader conditional foundation remains a possible researched construction;
+rights, exact source/target derivation and capability coverage must precede it.

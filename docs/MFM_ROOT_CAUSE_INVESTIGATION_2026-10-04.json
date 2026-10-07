@@ -1,6 +1,6 @@
 {
   "schema": "mfm-root-cause-investigation-state-v1",
-  "recorded_at_utc": "2026-10-07T15:20:35.260174+00:00",
+  "recorded_at_utc": "2026-10-07T15:26:19.093406+00:00",
   "source_export": {
     "jobs": {
       "576630": "TIMEOUT",
@@ -1047,5 +1047,26 @@
     "receipt_stdout": "/homes/01/mxrayan/rayan-compute/rayan-mfm/receipts/rayan-mfm-sequence-failure-576984.stdout",
     "runtime_state_evidence": "576984RUNNING00:02:17 node043; onlyloopback UID1905GID100/privateCPU12Torch2.7.1. All89actual tests pass22.447s. Originalcustody verification/fullmeasurements remainpending; no completedanalysis asserted.",
     "actual_runtime_test_seconds": 22.447
+  },
+  "next_route_data_and_frontier_audit": {
+    "frontier_commit": "756bf294f6a93e9ea7dcc12dba932a556d6080e0",
+    "frontier_delta": "oneOctober7researchnote; no code/data/admission change; preservescurrentMFMcriticalpath",
+    "legacy_mixture_cases": 49819,
+    "legacy_mixture_sha256": "60fa44a5be62c8d2f0daf508e543dc1a41c34562dc0c4d399e26c9cabb772e21",
+    "legacy_payloads_found_in_searched_local_custody": false,
+    "remote_loss_asserted": false,
+    "searched_roots": [
+      "Documents/Codex",
+      "Downloads",
+      "MFM_Stage",
+      "OneDrive"
+    ],
+    "legacy_role_gap": "v1/v1.5targets; zero labelled sensitivity/confidence/contradiction andepisode/relationship/mission/correction/sourceperson; missingfieldsnotnegatives",
+    "public_candidates": 34,
+    "public_candidates_admitted": 0,
+    "larger_ready_full_role_corpus_established": false,
+    "current_new_architecture_adopted": false,
+    "new_training_recipe_selected": false,
+    "reference": "docs/MFM_SEQUENCE_FAILURE_DISCRIMINATOR_2026-10-07.md"
   }
 }
