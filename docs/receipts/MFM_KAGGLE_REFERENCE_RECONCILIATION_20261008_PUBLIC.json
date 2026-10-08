@@ -1,0 +1,154 @@
+{
+  "applied_operation_receipt_fields": [
+    "launch_policy.file_sha256",
+    "launch_policy.record_sha256",
+    "launch_policy.timeout_policy",
+    "launch_policy.custom_timeout_field_sent",
+    "launch_policy.provider_session_duration_verified",
+    "push_reference_binding",
+    "kernel_lineage",
+    "kernel_reference_binding",
+    "kernel_after_output_reference_binding"
+  ],
+  "boundaries": {
+    "fit_budget_selected": false,
+    "gpu_launched_by_correction": false,
+    "hosted_calls_by_v3_correction": 0,
+    "learning_or_qualification_established": false,
+    "original_preparation_or_source_capsule_modified": false,
+    "producer_measurements_observed": false,
+    "raw_private_payloads_credentials_local_paths_or_drive_ids_included": false,
+    "runtime_or_trainer_modified": false
+  },
+  "controller_sha256": "d46045c208bd2b57b1329c97235d0494d2a5da9da5c11724839a21b24846796c",
+  "date": "2026-10-08",
+  "effective_policy": {
+    "custom_timeout_field_sent": false,
+    "custom_timeout_seconds": null,
+    "guaranteed_allocation_duration_seconds": null,
+    "provider_session_duration_verified": false,
+    "timeout_policy": "provider-default"
+  },
+  "historical_timeout_public_method": {
+    "file_sha256": "d7933a49f589b0c3ed402da5df49244821ee08b1d1f0b10d82987aa60b9c06ad",
+    "path": "docs/receipts/MFM_KAGGLE_TIMEOUT_POLICY_20261008_PUBLIC.json",
+    "record_sha256": "eee38af4eeb25bb4fe225c81544fb0a58c88a9eb5cb0f9174b4056dfd0be63e8"
+  },
+  "method_revision": 3,
+  "operational_policy_evidence": {
+    "artifact_label": "kaggle-full-construction-provider-default-policy-v3-20261008.json",
+    "file_sha256": "7d2317ffd2c3cdb018eefdc97178ae3b093087ec51b0fedf12068ab6eda1ae87",
+    "record_sha256": "c4c55be40b46ae6592547d1291edc670d68be334e3b828cb4983846a31c14a3b",
+    "schema": "mfm-kaggle-construction-launch-policy-v1"
+  },
+  "ordered_diagnosis": [
+    {
+      "claim": "Validate evidence/test before diagnosis",
+      "evidence": "Actual failed create had status Ok, blank error, no invalid tags, exact /datasets/owned-id and matching clean URL. One authorized typed readback showed ready/private/version1 and exact uploaded total. A paired actual SDK push/get ref control 33cee6 reproduced the same prelaunch shape failure on controller6ae with zero hosted calls; canonical control passed. Red suite acf0e0 reached the actual installed push method through a substituted save boundary. These are valid shape verdicts; no GPU producer failure was observed.",
+      "step": 1
+    },
+    {
+      "claim": "Connect proof to full construction goal",
+      "evidence": "Complete-roster construction needs exact owned private dataset/kernel custody and one immutable launch, without false failed-mutation verdicts or duplicate creates/pushes. This correction establishes resource contract handling, not GPU capacity, runtime duration, replay measurements, learning, or product qualification.",
+      "step": 2
+    },
+    {
+      "claim": "Trace responsible architecture",
+      "evidence": "SDK response -> safe response projection -> create/push raw equality -> kernel lineage -> live readback -> output post-readback -> public recorder projection. Requests continue using preparation owner/slug. Producer/trainer/capsule are outside the responsible cause.",
+      "step": 3
+    },
+    {
+      "claim": "Locate first departure",
+      "evidence": "Original create validation equated an unconstrained SDK response string with canonical input; actual /datasets/ route caused preserved f70 false verdict. Same equality remained in push/get/recorder and was reproduced before launch. A thin numeric-only fixture did not cover full production lineage; independent review removed its accommodation and supplied valid full SDK-shaped lineages.",
+      "step": 4
+    },
+    {
+      "claim": "Understand guarantees and affected connections",
+      "evidence": "Safe projections preserve raw responses; exact references, URL authority, positive numeric ID/version, private/internet-off/source/attachment checks decide custody. Read-only reconciliation adopts only the diagnosed complete create response plus externally pinned actual metadata. Generic failed priors stay blocked; pending snapshots cannot launch.",
+      "step": 5
+    },
+    {
+      "claim": "Coherent correction plan",
+      "evidence": "Accept only exact canonical owner/slug or exact resource route for the same prepared identity. Preserve raw ref and record derived raw/canonical/form bindings. Require a full validated original push response in lineage, verify derived fields and raw response consistency, carry bindings across readback/status/output and update recorder projection. Issue new immutable v3 policy; preserve original failure, ready reconciliation, v2/v1 policies and package bytes.",
+      "step": 6
+    },
+    {
+      "claim": "Consult primary implementation and adopted methods",
+      "evidence": "Installed Kaggle2.2.4 generated create/save/get schemas define ref as plain strings; setters retain raw spelling. Official upstream backend tests use metadata id after push. Installed API identifies notebook URL route /code/owner/slug and parses canonical input for read calls. Adopted verified-input/operational-custody FBM methods support diagnosis at this responsible outer controller path; no new model architecture or objective.",
+      "step": 7
+    },
+    {
+      "claim": "Verify cause and affected connections",
+      "evidence": "Seven focused typed SDK controls, seven reconciliation controls, eight actual-request/policy controls, 85 custody/status/path controls and16 failed-terminal output controls passed on the final controller; all hosted boundaries substituted. Thin old lineages replaced by full valid responses while their assertions remain. Exact v3 policy and ready reconciliation load locally without authentication/API. Preserve proof limits and resume root-owned one-time launch after independent review.",
+      "step": 8
+    }
+  ],
+  "original_preparation_file_sha256": "3a6f38af1dc6b17877031c917084015abccc2e3b9406528f4c6d79ad8dbd18d4",
+  "prepared_main_sha256": "96d9c4ac44dafc2e2de35ead150c9d17359b5351fc6898fea2d45a7fed8854b5",
+  "preserved_evidence": {
+    "accepted_read_only_reconciliation": {
+      "file_sha256": "c74adae5e373b0ce62ac76f7619b21cda2b43904712017dab37716291592802c",
+      "record_sha256": "66a36499afa8057ae1f1bfef44a68f6a4fb82fe4ec58d0b461c9300aebe3f43d"
+    },
+    "actual_ready_private_initial_version_readback": {
+      "file_sha256": "ab95d08925e5ef49f89a8e935142af3b2701e2c619740a69b6ed9aa0019fd1aa",
+      "record_sha256": "3f4ddc2daadbd7e5977c9f81e5d834b1350c9540b8ca1dd9799da17ed83421f8"
+    },
+    "original_failed_create": {
+      "file_sha256": "f70fb685f830c5882427d0e227f8fcd8970d6baba14df2f09243752bffe39532",
+      "record_sha256": "2faa288d0f6c07467d45cea32e92b19e86078c183cd18239ec7e6342bbf3a9b8"
+    },
+    "superseded_v2_policy": {
+      "file_sha256": "1c924f730aff20deee9cd015775acf7aa57015d4ae02a664a8653aa8749bc30e",
+      "record_sha256": "5e19bd7235d0a51e3165203f40c051cc9a92b96881ad5a86986d65b454a68561"
+    }
+  },
+  "primary_sources": [
+    {
+      "claim": "Push ref is checked for presence; later status uses metadata identity.",
+      "url": "https://github.com/Kaggle/kaggle-cli/blob/main/tests/backend/backend_tests.py"
+    },
+    {
+      "claim": "Kernel operations take owned slug inputs and push runs the code.",
+      "url": "https://github.com/Kaggle/kaggle-cli/blob/main/docs/kernels.md"
+    }
+  ],
+  "record_sha256": "c9dfbb0505dea2f9093f84c9a1a4243f949c3aeb72251e02e71608e56936a585",
+  "resource_reference_contract": {
+    "automatic_retry": false,
+    "canonical_binding_explicit": true,
+    "dataset_forms": [
+      "owner/slug",
+      "/datasets/owner/slug"
+    ],
+    "full_original_push_response_required_for_lineage": true,
+    "kernel_forms": [
+      "owner/slug",
+      "/code/owner/slug"
+    ],
+    "literal_exact_owned_identity_required": true,
+    "raw_response_preserved": true,
+    "single_push_only": true,
+    "strict_https_authority_no_userinfo_port_query_or_fragment": true
+  },
+  "schema": "mfm-kaggle-timeout-policy-public-method-v1",
+  "source_capsule_revision": "b52b098a6eb8b0453a5d4fb5bd30cce43a03f032",
+  "unchanged_runtime_sha256": "9833c6c7db3847e384fe7488ca84484f03af5b4a35aa65b622427ea70edddab8",
+  "unchanged_trainer_sha256": "63e7f72b11bf8feb6936a05a082d3bd5f5f4fb049ac77cebfc712611052155ba",
+  "verification": {
+    "all_hosted_boundaries_substituted": true,
+    "create_reconciliation_tests_passed": 7,
+    "failed_terminal_output_controls_passed": 16,
+    "focused_typed_resource_tests_passed": 7,
+    "installed_request_and_policy_tests_passed": 8,
+    "partial_custody_status_path_controls_passed": 85,
+    "source_test_pins": {
+      "test_kaggle_create_reconciliation_20261008.py": "0626bc46f566a18d0874c74175435802ece0bbb9d8f84717bbfaf59347c26136",
+      "test_kaggle_launch_policy_20261008.py": "fdcb225f8bc0aa3c922061cda7b7cb9bfa313f06ef989f10cb41ad3032c9155e",
+      "test_kaggle_partial_custody_v3_20261008.py": "139b4724568afc074dd00c88a78e1fa968a41aa7da9c36aae4c460d0f715bec1",
+      "test_kaggle_resource_reference_bindings_20261008.py": "99f984597ea6042c9a1562d6883c585b99f497acaa5b2110c2f51fc4df51bca4",
+      "test_kaggle_terminal_output_v3_20261008.py": "a0c863d6acbe75829936d1f156f209313f887e7b2d317e2cc9c68ae94524d363"
+    },
+    "total_controls_passed": 123
+  }
+}
