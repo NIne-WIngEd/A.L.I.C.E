@@ -1036,3 +1036,47 @@ N0 approval, full personality qualification or owner/spoken acceptance is claime
 See [diagnosis](../../evaluation/eipm/gemma_n0/receipts/magnolia_576704_interruption_diagnosis_20261006.json),
 [guarded inventory](../../evaluation/eipm/gemma_n0/receipts/magnolia_576892_connected_interruption_inventory.json)
 and [submission](../../evaluation/eipm/gemma_n0/receipts/magnolia_576893_closed_feature_continuation_submission.json).
+
+## Timeout recalibration — 8 October 2026
+
+Continuation **576893 timed out after 24:00:18** on node017. This was a single
+attempt with requeue disabled. Original accounting and both console files are
+preserved. All 40 N1 cases were materialized and the training phase was entered.
+Owner-guarded read-only inventory **577087 completed in 10 seconds** and found
+40 reviewed batch bindings, an empty epoch checkpoint directory, no final
+checkpoint or responses, and no N2 directory. Unsaved optimizer progress remains
+unknown; no successful learning or failed personality judgment is inferred.
+
+The artifact chronology places preparatory materialization at approximately
+**27 minutes**, followed by more than 23 hours in the training phase without a
+completed epoch. This refutes preparation as the dominant elapsed cost and
+requires diagnosis of the actual admitted training path. The prior source closure
+remains reusable. Full tokens/layers, evidence authority, source ancestry,
+curriculum, governing objectives and selected architecture remain intact.
+
+Mandatory diagonosis steps 1–3 are recorded, with step 4 awaiting a bounded
+discriminator. The unchanged path repeats full frame checks and fingerprints
+around dense native readout, backward and AdamW. These are possible costs,
+not measured root causes. Version-pinned udocker 1.3.17 documentation warns
+that P2 can heavily penalize threaded or I/O intensive workloads; PyTorch 2.7.1
+documents early thread configuration. A runtime hypothesis does not justify
+changing the personality architecture or relaxing the checks.
+
+**Diagnostic 577088**, running as `mxrayan`, compares the same original first N1
+case, initial model, recipe and six-pin authorization in fresh guarded P2
+processes with one and 16 intraop threads. It measures complete closed replay,
+reviewed materialization, deep admission, a real optimizer step and an actual
+checkpoint save. Its 90-minute allocation is a bounded cost diagnostic, not a
+full training retry or a capability evaluation. No correction or longer run is
+selected before these measurements distinguish the responsible operation.
+
+The paired trace now has 16 rows with its original 15-row prefix unchanged.
+Immutable v6 parents v5 and records the failure, recalibration and pending
+measurement. Eligibility and learned FBM weights remain false. Current public
+430fdec's five CI checks succeeded; no product code was repaired in this step.
+N0 and the full personality remain unqualified. FloRA remains outside this work.
+
+See [recalibration](../../evaluation/eipm/gemma_n0/receipts/magnolia_576893_timeout_recalibration_20261008.json),
+[guarded inventory](../../evaluation/eipm/gemma_n0/receipts/magnolia_577087_connected_timeout_inventory.json),
+[diagnostic submission](../../evaluation/eipm/gemma_n0/receipts/magnolia_577088_matched_step_profile_submission.json)
+and [v6 FBM method seed](../../training/fbm/base_assembly/personality_primary_teaching_20261008_v6.seed.json).

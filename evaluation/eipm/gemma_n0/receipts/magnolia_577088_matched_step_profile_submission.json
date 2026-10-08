@@ -1,0 +1,25 @@
+{
+  "actual_postconditions_verified": false,
+  "cpus": 16,
+  "diagnostic_worker_sha256": "655b2cd0a133ff80ef0d03c20d2e2facc7252e3e5621b034d40f3d22622b3e6e",
+  "full_training_retry": false,
+  "job_id": 577088,
+  "memory_gib": 120,
+  "original_failed_job": 576893,
+  "owner": "mxrayan",
+  "private_payload_exported": false,
+  "qualification": "UNQUALIFIED",
+  "same_model_initialization": true,
+  "same_original_first_n1_case": true,
+  "same_p2_guard": true,
+  "same_recipe_and_authorization": true,
+  "schema": "alice-personality-matched-step-profile-submission-v1",
+  "scientific_revision": "333fcd0c8239fc81a6459b13d53bbe592b33fda6",
+  "threads_compared": [
+    1,
+    16
+  ],
+  "time_limit_seconds": 5400,
+  "timestamp_utc": "2026-10-08T17:41:06.856389Z",
+  "wrapper_sha256": "425115c93dcf45d2bd28b03b3079abfdfa3694a7115538fe7c7c457fb38b51ec"
+}
