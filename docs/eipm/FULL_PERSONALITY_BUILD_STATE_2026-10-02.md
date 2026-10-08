@@ -1091,3 +1091,61 @@ from the control alone. This establishes one actual diagnostic step, not full
 curriculum fit or a constructed personality. Its sanitized
 [control receipt](../../evaluation/eipm/gemma_n0/receipts/magnolia_577088_threads01_matched_step_control.json)
 and immutable v7 successor retain that limited evidence.
+
+
+8 October: measured thread configuration correction, full construction pending
+----------------------------------------------------------------------------
+
+The completed matched comparison 577088 timed out after 90m9s on node033. Both
+fresh processes used the actual original first N1 case, matched reviewed batch
+and initial model fingerprints, complete sources, original recipe/seed and
+six-pin authority in the same owner-isolated P2 runtime. One intraop thread
+completed a real admitted optimizer step in 86.951 seconds and saved a checkpoint.
+The 16-thread process completed replay in 25.078s, materialization in 31.341s and deep
+admission in 234.096s, then remained inside the actual admitted step until timeout.
+Its entered boundary was already observed at job elapsed 15m32s: the scheduler
+snapshot-to-timeout interval is 74m37s, a censored observation rather than an
+exact step duration. No internal C++ operator or deadlock is claimed.
+
+The required diagnosis validates this runtime claim, traces the unchanged
+source/materializer/admission/forward/objective/backward/AdamW/saver architecture,
+and locates the divergence inside the admitted step. CPU parallel configuration
+exists to control execution before eager/autograd work; it has no personality or
+source authority. Exact [udocker 1.3.17 section 9](https://raw.githubusercontent.com/indigo-dc/udocker/1.3.17/docs/user_manual.md)
+warns of P2 penalties for heavily threaded work; exact
+[PyTorch 2.7.1 thread implementation](https://raw.githubusercontent.com/pytorch/pytorch/v2.7.1/aten/src/ATen/ParallelOpenMP.cpp)
+configures OpenMP/MKL. These mechanisms fit the actual matched result. Project
+frontier execution guardrails favor this concrete correction over backend or
+architecture tournaments. All eight steps and their limits are in the
+[comparison diagnosis](../../evaluation/eipm/gemma_n0/receipts/magnolia_577088_threading_diagnosis_20261008.json).
+
+Read-only guarded recovery 577094 completed and rehashed the actual one-step
+checkpoint payload: 59,909,594 bytes, SHA 62bb08396a37ef45f0f64a4b5e28035e19dc5a86d4e639b5c1f6849aaa50a135.
+Manifest d1f30bed999746fd6c04c1e317e54274403cd7f22224dcd171670e1c48bf1cff
+records N1 step 1 / epoch 0 / cursor 1. The 16-thread root has no checkpoint. Unpublished
+optimizer progress remains unknown; no invented resume is used. The retained
+diagnostic checkpoint remains a control, not the full candidate's initialization.
+See the [actual guarded inventory](../../evaluation/eipm/gemma_n0/receipts/magnolia_577094_profile_checkpoint_inventory.json).
+
+The coherent correction changes the owner plan's cpu_threads from 16 to 1, with a new
+authorization instance and parent pin. Every original scientific source, case,
+model, target, recipe, seed, feature-closure pin and authority remains unchanged.
+The unchanged 333fcd0 scientific helper is launched with an explicit one-CPU Slurm
+override matching its existing allocation check. Memory 120GiB, limit 24h,
+no-requeue, appended logs and immutable outputs remain. Requesting one CPU also
+changes scheduling/affinity relative to the diagnostic's 16 reserved CPUs; actual
+full-run allocation and throughput still require observation.
+
+Actual job 577095 is submitted as mxrayan for the unchanged complete curriculum:
+40 N1 cases × 5 epochs and 40 N2 cases × 8 epochs, 520 planned optimizer steps, then the real
+60-document connected response consumer. Full curriculum fit/convergence,
+complete optimizer checkpoints and connected responses are pending. Substantive
+N3 targets require root/owner review of those actual outcomes and will be taught
+separately. N0 approval and full behavior/base-influence qualification remain
+open. The [runtime-only plan verification](../../evaluation/eipm/gemma_n0/receipts/personality_single_thread_plan_verification_20261008.json) and
+[actual bound submission](../../evaluation/eipm/gemma_n0/receipts/magnolia_577095_single_thread_connected_construction_submission.json) preserve that scope.
+
+FBM adds two paired procedure rows and immutable v8, parenting exact v7 without
+rewriting original failures. This is a measured construction method, not trained
+FBM weights, an eligible builder dataset, cross-user transfer or approved ALICE
+personality. Private evidence/weights remain outside public Git.

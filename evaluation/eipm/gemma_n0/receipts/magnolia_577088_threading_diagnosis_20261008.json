@@ -1,0 +1,80 @@
+{
+  "allocated_cpus_during_comparison": 16,
+  "checkpoint_inventory_receipt_sha256": "4d70d20be4e3ce477e8c63e4e9e5fc159514e2c9927f3b70dd051252c4075107",
+  "control_receipt_sha256": "9157759c6abf5b03061d1f637bcd2a76f5f3e5aee8a488da977da5676719db6a",
+  "diagnosis": "The 16-thread configuration in the actual P2 runtime causes severe admitted-step slowdown relative to the single-thread control. The comparison supports a runtime configuration correction, without a model-capacity or personality-objective verdict.",
+  "eight_step_diagnosis": [
+    "1: Validate complete attempt accounting, actual entered boundaries and guarded saved artifacts; timeout is not a failed personality capability test.",
+    "2: This measures whether the actual governed learning route can progress; a one-step control cannot qualify full ALICE personality.",
+    "3: Trace full source-closed replay/materialization, deep admission, IdentityTrainer.step, native forward/masked objective/backward/AdamW and checkpoint saver.",
+    "4: Both arms reach the same admitted step; one completes86.951s while16 remains inside it until90-minute job termination. Pre-step setup is not the divergent operation.",
+    "5: Thread configuration governs CPU parallel execution before eager/autograd work. It grants no new source, target, identity or acceptance authority.",
+    "6: Change only intraop allocation/configuration to1 in a new immutable owner plan. Retain the complete curriculum, scientific code, recipe, full source geometry, original failures and budget.",
+    "7: Exact udocker1.3.17 P2 threaded-work penalty and PyTorch2.7.1 OpenMP/MKL thread-control implementation support this measured correction. Project frontier guardrails require verified concrete postconditions, not backend tournaments.",
+    "8: Actual matched positive control and original16-thread condition verified; guarded checkpoint payload rehash passed. Full successor is the pending integration verification. No full-curriculum fit, convergence or personality approval claimed."
+  ],
+  "elapsed": "01:30:09",
+  "entered_operation_observed_at_job_elapsed": "00:15:32",
+  "full_construction_complete": false,
+  "interop_threads": 1,
+  "intraop_threads": [
+    1,
+    16
+  ],
+  "job_id": 577088,
+  "matched_inputs": [
+    "actual_original_first_N1_case_and_reviewed_batch_fingerprint",
+    "initial_model_fingerprint",
+    "complete_source_tokens_layers_and_closure",
+    "recipe_seed_objective_and_six_pin_authorization",
+    "node_allocation_existing_P2_runtime",
+    "identical_cProfile_instrumentation_and_fresh_processes"
+  ],
+  "measurement_caveat": "Censored boundary observation with second-resolution scheduler accounting; no exact step-start timestamp or failing C++ operator was captured. The step remained unfinished for at least about74 minutes.",
+  "n0_approved": false,
+  "node": "node033",
+  "one_thread_actual_optimizer_steps": 1,
+  "one_thread_checkpoint_manifest_sha256": "d1f30bed999746fd6c04c1e317e54274403cd7f22224dcd171670e1c48bf1cff",
+  "one_thread_checkpoint_payload_sha256": "62bb08396a37ef45f0f64a4b5e28035e19dc5a86d4e639b5c1f6849aaa50a135",
+  "one_thread_step_seconds": 86.9510112721473,
+  "owner": "mxrayan",
+  "preserved_evidence_sha256": {
+    "rayan-connected-577088-final-accounting-20261008.txt": "1aee2e254e2ce6ef45f9c16db6995318c7728d7195e660074b2de83202640bf2",
+    "rayan-connected-timeout-final-progress-20261008.txt": "422d777387253d111a039db617aebd7ec6eb89b7fdaa8518e81a009bed1283d3",
+    "rayan-connected-timeout-profile-577088.original.err": "4ffde52ffd1acfdaf64c804d91ee6b649c75a91cd35bf3a8c2d91f76f415246f",
+    "rayan-connected-timeout-profile-577088.original.out": "9b23f8bd050994475a05042034a6199e349d8564f160b5351060d2279b1225de"
+  },
+  "private_payload_exported": false,
+  "research_refs": [
+    "https://raw.githubusercontent.com/indigo-dc/udocker/1.3.17/docs/user_manual.md",
+    "https://raw.githubusercontent.com/pytorch/pytorch/v2.7.1/torch/_torch_docs.py",
+    "https://raw.githubusercontent.com/pytorch/pytorch/v2.7.1/aten/src/ATen/ParallelOpenMP.cpp",
+    "research/frontier-watch@bd04f9c6147ab27178508f3bd45e50cffaeca19f"
+  ],
+  "scheduler_snapshot_to_timeout_interval_seconds": 4477,
+  "schema": "alice-personality-matched-threading-diagnosis-v1",
+  "scientific_revision": "333fcd0c8239fc81a6459b13d53bbe592b33fda6",
+  "selected_correction": {
+    "allocated_cpu_request": 1,
+    "allocation_difference": "The full successor requests one CPU rather than reserving16; this is a scheduling/affinity change. Its actual allocation, full-curriculum throughput and learning remain to be verified.",
+    "case_model_recipe_seed_unchanged": true,
+    "cpu_threads": 1,
+    "existing_runtime_and_scientific_code_unchanged": true,
+    "interop_threads": 1,
+    "memory_gib": 120,
+    "source_integrity_and_authority_checks_unchanged": true,
+    "time_hours": 24
+  },
+  "sixteen_thread_completed_pre_step_timings": {
+    "actual_deep_admission": 234.09589946828783,
+    "closed_full_feature_replay": 25.077954752370715,
+    "reviewed_case_materialization": 31.340730372816324
+  },
+  "sixteen_thread_completed_step_receipt": false,
+  "sixteen_thread_entered_operation": "actual_admitted_optimizer_step",
+  "sixteen_thread_published_checkpoint": false,
+  "sixteen_thread_unpublished_optimizer_progress": "UNKNOWN",
+  "specific_cpp_operator_or_deadlock_confirmed": false,
+  "state": "TIMEOUT",
+  "timestamp_utc": "2026-10-08T22:08:58.100326Z"
+}
