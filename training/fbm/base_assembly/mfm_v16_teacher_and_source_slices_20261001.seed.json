@@ -838,7 +838,7 @@
     "latest_analysis_code_commit": "64be770d8f8f4770d76c6d65f04abab582c1a2b2",
     "root_cause_investigation_20261004": {
       "schema": "mfm-root-cause-investigation-state-v1",
-      "recorded_at_utc": "2026-10-07T20:39:45.073362+00:00",
+      "recorded_at_utc": "2026-10-08T18:07:40.041621+00:00",
       "source_export": {
         "jobs": {
           "576630": "TIMEOUT",
@@ -2848,7 +2848,7 @@
           },
           "continuation_scheduling_rule": "At most one successor ahead of the active block. Each binds its immediate successful parent dedicated terminal/progress. Preserve no-advance/failure/unknown-submission evidence and diagnose before repeat; stop at verified complete4,862-source bank. Do not reuse prior-parent recipes or prequeue a long fixed chain."
         },
-        "next_action": "Recover the complete source bank and independent terminal pin; verify and archive/restore it in Drive; execute full-geometry construction on the selected actual free runtime, choose fit allocation from its measurements, train every prescribed full-roster epoch, then continue the separately versioned full semantic formation stage.",
+        "next_action": "Recover577090 complete terminal and actual archive; if failed follow ordered diagnosis. Verify full tensor/ZIP custody, retrieve and hash exact archive, reconcile actual prewrite storage and verify authenticated Drive restore. Then package fresh private Kaggle inputs and execute unchanged full producer resource/replay construction; choose complete fit allocation from measured results and continue full semantic formation.",
         "full_role_gaps": [
           "expanded independently reviewed formation teaching",
           "learned typed selection and source-span copy integrated into semantic producer",
@@ -3116,7 +3116,7 @@
         "foundation_training_implementation": {
           "contract": "docs/MFM_PUBLIC_FOUNDATION_PRODUCER_CONTRACT_2026-10-07.md",
           "plan": "docs/superpowers/plans/2026-10-07-mfm-public-foundation-training.md",
-          "state": "FULL_ROSTER_IMPLEMENTATION_REVIEWED_ACTUAL_CONSTRUCTION_PENDING_COMPLETE_BANK",
+          "state": "REVIEWED_FULL_ROSTER_BANK_ARCHIVE_RUNNING_ACTUAL_CONSTRUCTION_PENDING",
           "producer": "Fresh full-geometry FormationDecisionSpecialist; frozen Gemma source encoder only.",
           "objective": "Sequence mean including EOS, then reference mean, then equal semantic-MR mean.",
           "complete_training_pairs": 36597,
@@ -3185,7 +3185,11 @@
               "seconds": 84.28
             }
           ],
-          "implementation_receipt": "docs/receipts/MFM_PUBLIC_FOUNDATION_IMPLEMENTATION_20261007_PUBLIC.json"
+          "implementation_receipt": "docs/receipts/MFM_PUBLIC_FOUNDATION_IMPLEMENTATION_20261007_PUBLIC.json",
+          "complete_bank_metadata_available": true,
+          "complete_bank_tensor_custody_verified": false,
+          "bank_archive_job": 577090,
+          "kaggle_preparation_commit": "ba2c74754af9fca9ddd2a512e88bcd27590012fa"
         },
         "free_training_compute": {
           "kaggle_existing_cli": "Kaggle CLI2.2.4 outside PATH, existing anaconda runtime",
@@ -3302,6 +3306,229 @@
           "account": "mxrayan",
           "cpus": 12,
           "live_counts_are_terminal": false
+        },
+        "source_completion_20261008": {
+          "external_export_pin": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+          "external_census_pin": "0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d",
+          "bank_record_sha256": "6b70f4ed4bcde0f702de6057d9f2aece86228ea96711483469fa943fab42af4a",
+          "progress_record_sha256": "c61b7157732b8a4d56f2417773cc88dcfa50bc3b9ce8b0f9d1ae4c67fff2c22e",
+          "source_chain_sha256": "4a52b7cd2ce4a164fc332fc15baf866f6e2b1199435fc2e5fd4e8c71e2969219",
+          "source_inputs_sha256": "721567a70c7f9c287c6a29569fbd8defd03dde7e94e099ec86b7c2fb5843f172",
+          "source_worker_lf_sha256": "62c4af1bf2f452f912a727f0277a2baf5e0e9f8ff8b28a080a39bbdf1326cb29",
+          "prepared_clone_receipt_sha256": "54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7",
+          "prepared_base_weight_sha256": "fe054ae05ff7f44318fd8ae90d58992531455c7ed31356704088f0f2d8c8009a",
+          "runtime": {
+            "torch": "2.7.1+cu118",
+            "transformers": "5.17.0",
+            "source_device": "cpu",
+            "dtype": "bfloat16",
+            "threads": 12
+          },
+          "counts": {
+            "sources": 4862,
+            "bank_source_keys_unique": 4862,
+            "cases": 40868,
+            "case_split_counts": {
+              "train": 36597,
+              "development": 4271
+            },
+            "unique_source_tokens": 240739,
+            "largest_source_tokens": 71,
+            "states_bf16_expected_bytes": 1848875520
+          },
+          "terminals": {
+            "577007": {
+              "complete": false,
+              "completed": 2587,
+              "public_conditional_feature_export_sha256": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+              "public_conditional_feature_progress_sha256": "f97308970fa183354918ff0b5e2b21ce2cb0569202e8c1350e9dd5a943a90b71",
+              "qualified_for_product": false,
+              "seconds": 28802.466044489294,
+              "total": 4862
+            },
+            "577008": {
+              "complete": true,
+              "completed": 4862,
+              "public_conditional_feature_bank_sha256": "6b70f4ed4bcde0f702de6057d9f2aece86228ea96711483469fa943fab42af4a",
+              "public_conditional_feature_export_sha256": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+              "public_conditional_feature_progress_sha256": "c61b7157732b8a4d56f2417773cc88dcfa50bc3b9ce8b0f9d1ae4c67fff2c22e",
+              "qualified_for_product": false,
+              "seconds": 27347.11032736674,
+              "total": 4862
+            }
+          },
+          "progress_snapshots": {
+            "577007": {
+              "snapshots_verified": 2444,
+              "first_completed": 145,
+              "last_completed": 2587,
+              "all_pins_recomputed_from_final_bank_receipt_chain": true
+            },
+            "577008": {
+              "snapshots_verified": 2276,
+              "first_completed": 2588,
+              "last_completed": 4862,
+              "all_pins_recomputed_from_final_bank_receipt_chain": true
+            }
+          },
+          "parent_chain": {
+            "577006_to_577007_verified_from_preserved_local_evidence": true,
+            "577007_to_577008_verified": true,
+            "parent_577007_stdout_sha256": "8edee4144e8f4658a220491c8d91277854e5a15952036c0eea4e0037ff88e857",
+            "parent_577007_receipt_file_sha256": "3d1e3b16a48d5f081f0ce5c7b8edb79304b5f5c6308f6e49e6e5c9fcde9752d5",
+            "parent_577006_receipt_file_sha256": "2e11dad36c0d0b75b066d3b42186a3d86177f155b1831b02395de7fbf8df2d2c",
+            "parent_577006_completed": 144,
+            "parent_577007_completed": 2587,
+            "child_577008_completed": 4862
+          },
+          "checks": {
+            "self_seals": true,
+            "external_census_and_nested_census_equal": true,
+            "producer_binding_exact": true,
+            "source_roster_file_and_canonical_digest": true,
+            "source_case_and_split_membership": true,
+            "bank_ordered_source_roster": true,
+            "complete_bank_progress_hash_chain": true,
+            "every_logged_progress_snapshot": true,
+            "one_dedicated_terminal_per_job": true,
+            "parent_raw_stdout_and_receipt_hashes": true,
+            "namespace_runtime_markers": true,
+            "gnu_time_zero_exit_status": true
+          },
+          "schema": "mfm-complete-public-source-metadata-public-v1",
+          "classification": "PUBLIC_METHOD_ONLY",
+          "recorded_at_utc": "2026-10-08T17:44:23.126528+00:00",
+          "private_metadata_audit_sha256": "ec3c52f983ee4f72dc0f6b1ba47b282457c81b951e9702b19e12d6287d9b4091",
+          "source_export_complete_metadata": true,
+          "scheduler": {
+            "577007": {
+              "state": "COMPLETED",
+              "exit_code": "0:0",
+              "elapsed": "08:00:19"
+            },
+            "577008": {
+              "state": "COMPLETED",
+              "exit_code": "0:0",
+              "elapsed": "07:44:08"
+            },
+            "account": "mxrayan",
+            "cpus": 12
+          },
+          "full_tensor_custody_verified": false,
+          "bank_archive_created": false,
+          "bank_drive_restore_verified": false,
+          "foundation_construction_executed": false,
+          "training_started": false,
+          "qualified_for_product": false,
+          "next_action": "Verify complete bank tensor custody on allocated CPU, archive with exact corpus/census/legal lineage, restore via Drive, then measure the unchanged full producer on actual Kaggle allocation and choose full-roster fit recipe from measurements."
+        },
+        "complete_bank_construction_20261008": {
+          "schema": "mfm-full-bank-construction-submission-public-v1",
+          "classification": "PUBLIC_METHOD_ONLY",
+          "recorded_at_utc": "2026-10-08T18:07:40.041621+00:00",
+          "goal": "Complete fresh MFM foundation and full semantic formation for Alice/Fable V1; foundation before personalization",
+          "archive_implementation_commit": "ece1a43c8b9cfe6f94b7a78960a45cfe77eb2c49",
+          "archive_worker_sha256": "b86681d7d12af3cb0bd79bc21bedfdde7a93e9e3cbf10f507193751a128d6da6",
+          "archive_execution_commit": "ffd53bc61aa0cc19400765d991b21915989f65eb",
+          "archive_recipe_sha256": "bbe55cf6d8e4f1df51b988b7eb05f2c8c9a1156e079531350fe05711a70cdff1",
+          "archive_bundle_sha256": "06c8dcc405a99f012c0aa9afd43367fcf40bda64e7cb6ab1fde374c33a93184c",
+          "archive_job": {
+            "job_id": 577090,
+            "account": "mxrayan",
+            "observed_state": "RUNNING",
+            "elapsed_at_observation": "00:00:56",
+            "cpus": 4,
+            "requested_memory": "16G",
+            "loopback_only_namespace_and_actual_cpu_runtime_verified": true,
+            "complete_tensor_validation_finished": false,
+            "archive_finished": false
+          },
+          "source_bank_sha256": "6b70f4ed4bcde0f702de6057d9f2aece86228ea96711483469fa943fab42af4a",
+          "census_sha256": "0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d",
+          "metadata_completion_receipt": "docs/receipts/MFM_COMPLETE_PUBLIC_SOURCE_METADATA_20261008_PUBLIC.json",
+          "verification": {
+            "root_archive_tests_passed": 10,
+            "root_archive_symlink_privilege_skip": 1,
+            "root_archive_seconds": 16.839,
+            "real_native_junction_control_passed": true,
+            "agent_connected_tests_passed": 57,
+            "agent_connected_subtests_passed": 43,
+            "root_nested_bash_layers_parsed": 3,
+            "independent_review_critical_or_important_findings": [],
+            "proof_scope": "Real tiny tensor/reader/archive/code transport controls; actual complete bank is the pending allocated worker result"
+          },
+          "source_transfer_failure": {
+            "original_controller_retained": true,
+            "job_submission_reached": false,
+            "actual_git_version": "1.8.3.1",
+            "actual_parent_shallow_boundary_lines": 1,
+            "cause": "Version-matched upload-pack rejects any shallow repository before clone-local or configuration handling",
+            "responsible_piece": "Versioned source-transfer controller, not bank or learned architecture",
+            "correction": "Independent owned copy of unchanged pinned shallow parent; verify exact incremental local bundle prerequisites and fetch; assert exact commit, clean tree, archive worker bytes and recipe before one new job submission",
+            "actual_correction_verification": "Actual Git1.8.3.1 reached pinned detached commit, clean tree, exact worker/recipe guards and submitted577090 after original clone control failed",
+            "primary_sources": [
+              "https://github.com/git/git/blob/v1.8.3.1/upload-pack.c",
+              "https://github.com/git/git/blob/v1.8.3.1/builtin/clone.c",
+              "https://github.com/git/git/blob/v1.8.3.1/Documentation/git-clone.txt",
+              "https://github.com/git/git/blob/v1.8.3.1/transport.c"
+            ],
+            "ordered_diagnosis_private_report_sha256": "c804430c3855b0d1aecd7559893b2a4ff3b2ee63db57d4dd4f5585c058bd962e",
+            "original_failure_private_receipt_sha256": "2405a7069a87c86b0ddab4b26554acd887185da3bf4a0397c6f42a6dd7128b60"
+          },
+          "kaggle_preparation": {
+            "commit": "ba2c74754af9fca9ddd2a512e88bcd27590012fa",
+            "state": "REVIEWED_COMPLETE_BANK_DURABLE_RESTORE_PENDING",
+            "root_tests_passed": 17,
+            "root_seconds": 13.757,
+            "reviewer_tests_passed": 17,
+            "reviewer_seconds": 8.954,
+            "independent_review_critical_or_important_findings": [],
+            "minor_docstring_corrected_and_compiled": true,
+            "dependency_receipt": "docs/receipts/MFM_KAGGLE_OFFLINE_DEPENDENCY_20261008_PUBLIC.json",
+            "metadata_receipt": "docs/receipts/MFM_TOKENIZER_METADATA_DRIVE_20261007_PUBLIC.json",
+            "config_sha256": "022f027b588563d839c7bbcf5526b78970e719e00281dee50b86770b5f414193",
+            "recipe": {
+              "measure_only": true,
+              "batch_size": 16,
+              "seed": 20261008,
+              "epochs": 1,
+              "learning_rate": 0.0001,
+              "weight_decay": 0,
+              "beta1": 0.9,
+              "beta2": 0.999,
+              "adam_eps": 1e-08,
+              "save_every_steps": 1,
+              "logit_chunk_tokens": 16,
+              "generation_tokens": 128,
+              "fit_budget_selected": false
+            },
+            "private_dataset_created": false,
+            "gpu_job_submitted": false,
+            "actual_processor_compatibility_verified": false,
+            "actual_cuda_resource_and_replay_verified": false
+          },
+          "drive_prewrite_gate": {
+            "observed_at_utc": "2026-10-08 17:42:48 UTC",
+            "private_inventory_sha256": "3c0b8cf75bf35938d001e3da9374510348f1212c75d50db2c58a63f892cc01a3",
+            "folders": 27,
+            "files": 31,
+            "scoped_logical_bytes": 84701035,
+            "unchanged_repeated_folder_listings": 27,
+            "parent_metadata_links_checked": 56,
+            "full_bank_archive_allowance_bytes": 3000000000,
+            "actual_archive_size_reconciliation_pending": true,
+            "provider_total_usage_and_quota_unknown": true,
+            "trash_revision_usage_unknown": true,
+            "ownership_field_not_returned": true,
+            "bank_archive_uploaded": false,
+            "bank_full_authenticated_restore_verified": false
+          },
+          "model_base_weights_loaded": false,
+          "public_foundation_training_started": false,
+          "full_semantic_formation_built": false,
+          "paid_compute_authorized_or_used": false,
+          "qualified_for_product": false,
+          "next_action": "Recover577090 complete terminal and actual archive; if failed follow ordered diagnosis. Verify full tensor/ZIP custody, retrieve and hash exact archive, reconcile actual prewrite storage and verify authenticated Drive restore. Then package fresh private Kaggle inputs and execute unchanged full producer resource/replay construction; choose complete fit allocation from measured results and continue full semantic formation."
         }
       }
     },
@@ -5008,7 +5235,7 @@
         },
         "continuation_scheduling_rule": "At most one successor ahead of the active block. Each binds its immediate successful parent dedicated terminal/progress. Preserve no-advance/failure/unknown-submission evidence and diagnose before repeat; stop at verified complete4,862-source bank. Do not reuse prior-parent recipes or prequeue a long fixed chain."
       },
-      "next_action": "Recover the complete source bank and independent terminal pin; verify and archive/restore it in Drive; execute full-geometry construction on the selected actual free runtime, choose fit allocation from its measurements, train every prescribed full-roster epoch, then continue the separately versioned full semantic formation stage.",
+      "next_action": "Recover577090 complete terminal and actual archive; if failed follow ordered diagnosis. Verify full tensor/ZIP custody, retrieve and hash exact archive, reconcile actual prewrite storage and verify authenticated Drive restore. Then package fresh private Kaggle inputs and execute unchanged full producer resource/replay construction; choose complete fit allocation from measured results and continue full semantic formation.",
       "full_role_gaps": [
         "expanded independently reviewed formation teaching",
         "learned typed selection and source-span copy integrated into semantic producer",
@@ -5276,7 +5503,7 @@
       "foundation_training_implementation": {
         "contract": "docs/MFM_PUBLIC_FOUNDATION_PRODUCER_CONTRACT_2026-10-07.md",
         "plan": "docs/superpowers/plans/2026-10-07-mfm-public-foundation-training.md",
-        "state": "FULL_ROSTER_IMPLEMENTATION_REVIEWED_ACTUAL_CONSTRUCTION_PENDING_COMPLETE_BANK",
+        "state": "REVIEWED_FULL_ROSTER_BANK_ARCHIVE_RUNNING_ACTUAL_CONSTRUCTION_PENDING",
         "producer": "Fresh full-geometry FormationDecisionSpecialist; frozen Gemma source encoder only.",
         "objective": "Sequence mean including EOS, then reference mean, then equal semantic-MR mean.",
         "complete_training_pairs": 36597,
@@ -5345,7 +5572,11 @@
             "seconds": 84.28
           }
         ],
-        "implementation_receipt": "docs/receipts/MFM_PUBLIC_FOUNDATION_IMPLEMENTATION_20261007_PUBLIC.json"
+        "implementation_receipt": "docs/receipts/MFM_PUBLIC_FOUNDATION_IMPLEMENTATION_20261007_PUBLIC.json",
+        "complete_bank_metadata_available": true,
+        "complete_bank_tensor_custody_verified": false,
+        "bank_archive_job": 577090,
+        "kaggle_preparation_commit": "ba2c74754af9fca9ddd2a512e88bcd27590012fa"
       },
       "free_training_compute": {
         "kaggle_existing_cli": "Kaggle CLI2.2.4 outside PATH, existing anaconda runtime",
@@ -5462,6 +5693,229 @@
         "account": "mxrayan",
         "cpus": 12,
         "live_counts_are_terminal": false
+      },
+      "source_completion_20261008": {
+        "external_export_pin": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+        "external_census_pin": "0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d",
+        "bank_record_sha256": "6b70f4ed4bcde0f702de6057d9f2aece86228ea96711483469fa943fab42af4a",
+        "progress_record_sha256": "c61b7157732b8a4d56f2417773cc88dcfa50bc3b9ce8b0f9d1ae4c67fff2c22e",
+        "source_chain_sha256": "4a52b7cd2ce4a164fc332fc15baf866f6e2b1199435fc2e5fd4e8c71e2969219",
+        "source_inputs_sha256": "721567a70c7f9c287c6a29569fbd8defd03dde7e94e099ec86b7c2fb5843f172",
+        "source_worker_lf_sha256": "62c4af1bf2f452f912a727f0277a2baf5e0e9f8ff8b28a080a39bbdf1326cb29",
+        "prepared_clone_receipt_sha256": "54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7",
+        "prepared_base_weight_sha256": "fe054ae05ff7f44318fd8ae90d58992531455c7ed31356704088f0f2d8c8009a",
+        "runtime": {
+          "torch": "2.7.1+cu118",
+          "transformers": "5.17.0",
+          "source_device": "cpu",
+          "dtype": "bfloat16",
+          "threads": 12
+        },
+        "counts": {
+          "sources": 4862,
+          "bank_source_keys_unique": 4862,
+          "cases": 40868,
+          "case_split_counts": {
+            "train": 36597,
+            "development": 4271
+          },
+          "unique_source_tokens": 240739,
+          "largest_source_tokens": 71,
+          "states_bf16_expected_bytes": 1848875520
+        },
+        "terminals": {
+          "577007": {
+            "complete": false,
+            "completed": 2587,
+            "public_conditional_feature_export_sha256": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+            "public_conditional_feature_progress_sha256": "f97308970fa183354918ff0b5e2b21ce2cb0569202e8c1350e9dd5a943a90b71",
+            "qualified_for_product": false,
+            "seconds": 28802.466044489294,
+            "total": 4862
+          },
+          "577008": {
+            "complete": true,
+            "completed": 4862,
+            "public_conditional_feature_bank_sha256": "6b70f4ed4bcde0f702de6057d9f2aece86228ea96711483469fa943fab42af4a",
+            "public_conditional_feature_export_sha256": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+            "public_conditional_feature_progress_sha256": "c61b7157732b8a4d56f2417773cc88dcfa50bc3b9ce8b0f9d1ae4c67fff2c22e",
+            "qualified_for_product": false,
+            "seconds": 27347.11032736674,
+            "total": 4862
+          }
+        },
+        "progress_snapshots": {
+          "577007": {
+            "snapshots_verified": 2444,
+            "first_completed": 145,
+            "last_completed": 2587,
+            "all_pins_recomputed_from_final_bank_receipt_chain": true
+          },
+          "577008": {
+            "snapshots_verified": 2276,
+            "first_completed": 2588,
+            "last_completed": 4862,
+            "all_pins_recomputed_from_final_bank_receipt_chain": true
+          }
+        },
+        "parent_chain": {
+          "577006_to_577007_verified_from_preserved_local_evidence": true,
+          "577007_to_577008_verified": true,
+          "parent_577007_stdout_sha256": "8edee4144e8f4658a220491c8d91277854e5a15952036c0eea4e0037ff88e857",
+          "parent_577007_receipt_file_sha256": "3d1e3b16a48d5f081f0ce5c7b8edb79304b5f5c6308f6e49e6e5c9fcde9752d5",
+          "parent_577006_receipt_file_sha256": "2e11dad36c0d0b75b066d3b42186a3d86177f155b1831b02395de7fbf8df2d2c",
+          "parent_577006_completed": 144,
+          "parent_577007_completed": 2587,
+          "child_577008_completed": 4862
+        },
+        "checks": {
+          "self_seals": true,
+          "external_census_and_nested_census_equal": true,
+          "producer_binding_exact": true,
+          "source_roster_file_and_canonical_digest": true,
+          "source_case_and_split_membership": true,
+          "bank_ordered_source_roster": true,
+          "complete_bank_progress_hash_chain": true,
+          "every_logged_progress_snapshot": true,
+          "one_dedicated_terminal_per_job": true,
+          "parent_raw_stdout_and_receipt_hashes": true,
+          "namespace_runtime_markers": true,
+          "gnu_time_zero_exit_status": true
+        },
+        "schema": "mfm-complete-public-source-metadata-public-v1",
+        "classification": "PUBLIC_METHOD_ONLY",
+        "recorded_at_utc": "2026-10-08T17:44:23.126528+00:00",
+        "private_metadata_audit_sha256": "ec3c52f983ee4f72dc0f6b1ba47b282457c81b951e9702b19e12d6287d9b4091",
+        "source_export_complete_metadata": true,
+        "scheduler": {
+          "577007": {
+            "state": "COMPLETED",
+            "exit_code": "0:0",
+            "elapsed": "08:00:19"
+          },
+          "577008": {
+            "state": "COMPLETED",
+            "exit_code": "0:0",
+            "elapsed": "07:44:08"
+          },
+          "account": "mxrayan",
+          "cpus": 12
+        },
+        "full_tensor_custody_verified": false,
+        "bank_archive_created": false,
+        "bank_drive_restore_verified": false,
+        "foundation_construction_executed": false,
+        "training_started": false,
+        "qualified_for_product": false,
+        "next_action": "Verify complete bank tensor custody on allocated CPU, archive with exact corpus/census/legal lineage, restore via Drive, then measure the unchanged full producer on actual Kaggle allocation and choose full-roster fit recipe from measurements."
+      },
+      "complete_bank_construction_20261008": {
+        "schema": "mfm-full-bank-construction-submission-public-v1",
+        "classification": "PUBLIC_METHOD_ONLY",
+        "recorded_at_utc": "2026-10-08T18:07:40.041621+00:00",
+        "goal": "Complete fresh MFM foundation and full semantic formation for Alice/Fable V1; foundation before personalization",
+        "archive_implementation_commit": "ece1a43c8b9cfe6f94b7a78960a45cfe77eb2c49",
+        "archive_worker_sha256": "b86681d7d12af3cb0bd79bc21bedfdde7a93e9e3cbf10f507193751a128d6da6",
+        "archive_execution_commit": "ffd53bc61aa0cc19400765d991b21915989f65eb",
+        "archive_recipe_sha256": "bbe55cf6d8e4f1df51b988b7eb05f2c8c9a1156e079531350fe05711a70cdff1",
+        "archive_bundle_sha256": "06c8dcc405a99f012c0aa9afd43367fcf40bda64e7cb6ab1fde374c33a93184c",
+        "archive_job": {
+          "job_id": 577090,
+          "account": "mxrayan",
+          "observed_state": "RUNNING",
+          "elapsed_at_observation": "00:00:56",
+          "cpus": 4,
+          "requested_memory": "16G",
+          "loopback_only_namespace_and_actual_cpu_runtime_verified": true,
+          "complete_tensor_validation_finished": false,
+          "archive_finished": false
+        },
+        "source_bank_sha256": "6b70f4ed4bcde0f702de6057d9f2aece86228ea96711483469fa943fab42af4a",
+        "census_sha256": "0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d",
+        "metadata_completion_receipt": "docs/receipts/MFM_COMPLETE_PUBLIC_SOURCE_METADATA_20261008_PUBLIC.json",
+        "verification": {
+          "root_archive_tests_passed": 10,
+          "root_archive_symlink_privilege_skip": 1,
+          "root_archive_seconds": 16.839,
+          "real_native_junction_control_passed": true,
+          "agent_connected_tests_passed": 57,
+          "agent_connected_subtests_passed": 43,
+          "root_nested_bash_layers_parsed": 3,
+          "independent_review_critical_or_important_findings": [],
+          "proof_scope": "Real tiny tensor/reader/archive/code transport controls; actual complete bank is the pending allocated worker result"
+        },
+        "source_transfer_failure": {
+          "original_controller_retained": true,
+          "job_submission_reached": false,
+          "actual_git_version": "1.8.3.1",
+          "actual_parent_shallow_boundary_lines": 1,
+          "cause": "Version-matched upload-pack rejects any shallow repository before clone-local or configuration handling",
+          "responsible_piece": "Versioned source-transfer controller, not bank or learned architecture",
+          "correction": "Independent owned copy of unchanged pinned shallow parent; verify exact incremental local bundle prerequisites and fetch; assert exact commit, clean tree, archive worker bytes and recipe before one new job submission",
+          "actual_correction_verification": "Actual Git1.8.3.1 reached pinned detached commit, clean tree, exact worker/recipe guards and submitted577090 after original clone control failed",
+          "primary_sources": [
+            "https://github.com/git/git/blob/v1.8.3.1/upload-pack.c",
+            "https://github.com/git/git/blob/v1.8.3.1/builtin/clone.c",
+            "https://github.com/git/git/blob/v1.8.3.1/Documentation/git-clone.txt",
+            "https://github.com/git/git/blob/v1.8.3.1/transport.c"
+          ],
+          "ordered_diagnosis_private_report_sha256": "c804430c3855b0d1aecd7559893b2a4ff3b2ee63db57d4dd4f5585c058bd962e",
+          "original_failure_private_receipt_sha256": "2405a7069a87c86b0ddab4b26554acd887185da3bf4a0397c6f42a6dd7128b60"
+        },
+        "kaggle_preparation": {
+          "commit": "ba2c74754af9fca9ddd2a512e88bcd27590012fa",
+          "state": "REVIEWED_COMPLETE_BANK_DURABLE_RESTORE_PENDING",
+          "root_tests_passed": 17,
+          "root_seconds": 13.757,
+          "reviewer_tests_passed": 17,
+          "reviewer_seconds": 8.954,
+          "independent_review_critical_or_important_findings": [],
+          "minor_docstring_corrected_and_compiled": true,
+          "dependency_receipt": "docs/receipts/MFM_KAGGLE_OFFLINE_DEPENDENCY_20261008_PUBLIC.json",
+          "metadata_receipt": "docs/receipts/MFM_TOKENIZER_METADATA_DRIVE_20261007_PUBLIC.json",
+          "config_sha256": "022f027b588563d839c7bbcf5526b78970e719e00281dee50b86770b5f414193",
+          "recipe": {
+            "measure_only": true,
+            "batch_size": 16,
+            "seed": 20261008,
+            "epochs": 1,
+            "learning_rate": 0.0001,
+            "weight_decay": 0,
+            "beta1": 0.9,
+            "beta2": 0.999,
+            "adam_eps": 1e-08,
+            "save_every_steps": 1,
+            "logit_chunk_tokens": 16,
+            "generation_tokens": 128,
+            "fit_budget_selected": false
+          },
+          "private_dataset_created": false,
+          "gpu_job_submitted": false,
+          "actual_processor_compatibility_verified": false,
+          "actual_cuda_resource_and_replay_verified": false
+        },
+        "drive_prewrite_gate": {
+          "observed_at_utc": "2026-10-08 17:42:48 UTC",
+          "private_inventory_sha256": "3c0b8cf75bf35938d001e3da9374510348f1212c75d50db2c58a63f892cc01a3",
+          "folders": 27,
+          "files": 31,
+          "scoped_logical_bytes": 84701035,
+          "unchanged_repeated_folder_listings": 27,
+          "parent_metadata_links_checked": 56,
+          "full_bank_archive_allowance_bytes": 3000000000,
+          "actual_archive_size_reconciliation_pending": true,
+          "provider_total_usage_and_quota_unknown": true,
+          "trash_revision_usage_unknown": true,
+          "ownership_field_not_returned": true,
+          "bank_archive_uploaded": false,
+          "bank_full_authenticated_restore_verified": false
+        },
+        "model_base_weights_loaded": false,
+        "public_foundation_training_started": false,
+        "full_semantic_formation_built": false,
+        "paid_compute_authorized_or_used": false,
+        "qualified_for_product": false,
+        "next_action": "Recover577090 complete terminal and actual archive; if failed follow ordered diagnosis. Verify full tensor/ZIP custody, retrieve and hash exact archive, reconcile actual prewrite storage and verify authenticated Drive restore. Then package fresh private Kaggle inputs and execute unchanged full producer resource/replay construction; choose complete fit allocation from measured results and continue full semantic formation."
       }
     }
   }
