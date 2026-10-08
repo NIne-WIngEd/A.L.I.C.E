@@ -24,13 +24,21 @@ def git_bytes(repo, *args):
 
 
 def source_archive(repo, revision, destination):
+    """Export complete tracked public src, MFM code and their legal context.
+
+    Regular package initializers, sibling modules and package resources must
+    retain their exact commit bytes. Merely archiving an unused module does not
+    import it; the unchanged trainer decides which code executes.
+    """
     if re.fullmatch('[0-9a-f]{40}', revision) is None or git_bytes(repo, 'rev-parse', revision + '^{commit}').decode().strip() != revision:
         raise ValueError('an exact source commit is required')
     tree = git_bytes(repo, 'ls-tree', '-r', '--name-only', revision).decode().splitlines()
     context = {'README.md', 'SECURITY.md', '.gitattributes'}
-    names = sorted(name for name in tree if (name.endswith('.py') and name.startswith(('src/cognitive_kernel/', 'scripts/mfm/'))) or
-                   name in context or (re.fullmatch(r'(LICENSE|NOTICE|COPYING)(\..*)?', name.rsplit('/', 1)[-1], re.IGNORECASE) and
-                                       ('/' not in name or name.startswith(('src/cognitive_kernel/', 'scripts/mfm/')))))
+    names = sorted(name for name in tree if name.startswith('src/') or
+                   (name.endswith('.py') and name.startswith('scripts/mfm/')) or
+                   name == 'scripts/__init__.py' or name in context or
+                   (re.fullmatch(r'(LICENSE|NOTICE|COPYING)(\..*)?', name.rsplit('/', 1)[-1], re.IGNORECASE) and
+                    ('/' not in name or name.startswith('scripts/'))))
     if 'scripts/mfm/train_public_conditional_foundation.py' not in names:
         raise ValueError('source revision lacks full public trainer')
     files = []

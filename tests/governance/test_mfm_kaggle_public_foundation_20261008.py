@@ -10,7 +10,66 @@ import tarfile
 import io
 import hashlib
 import subprocess
+import shutil
+import sys
 from types import SimpleNamespace
+
+
+def isolated_trainer_help(code, *, fallback=None):
+    """Run real exported code; owned modules may only resolve inside the capsule.
+
+    External installed libraries remain real. No trainer/model module is stubbed,
+    and --help exits before data reads, model construction or training.
+    """
+    program = r'''
+import hashlib, importlib.abc, importlib.machinery, importlib.resources
+import json, pathlib, runpy, sys
+code = pathlib.Path(sys.argv[1]).resolve()
+roots = {'scripts', 'alice_memory', 'alice_vault', 'alice_conversation',
+         'alice_information', 'alice_evolution', 'alice_capability_profiles',
+         'cognitive_kernel', 'product_family'} | {
+    p.name if p.is_dir() else p.stem for p in (code / 'src').iterdir()}
+assert not roots.intersection(sys.modules), 'owned project module was preloaded'
+sys.path[:0] = [str(code / 'src'), str(code)]
+if len(sys.argv) > 2:
+    sys.path.append(sys.argv[2])
+class CapsuleOnly(importlib.abc.MetaPathFinder):
+    def find_spec(self, fullname, path=None, target=None):
+        if fullname.split('.')[0] not in roots:
+            return None
+        search = [str(code / 'src'), str(code)] if path is None else list(path)
+        assert all(pathlib.Path(p).resolve().is_relative_to(code) for p in search)
+        spec = importlib.machinery.PathFinder.find_spec(fullname, search)
+        if spec is None:
+            raise ModuleNotFoundError('No module named ' + repr(fullname), name=fullname)
+        if spec.origin not in (None, 'namespace'):
+            assert pathlib.Path(spec.origin).resolve().is_relative_to(code)
+        return spec
+sys.meta_path.insert(0, CapsuleOnly())
+sys.argv = ['scripts.mfm.train_public_conditional_foundation', '--help']
+try:
+    runpy.run_module('scripts.mfm.train_public_conditional_foundation', run_name='__main__', alter_sys=True)
+except SystemExit as error:
+    if error.code != 0:
+        raise
+origins = {}
+for name, module in sorted(sys.modules.items()):
+    if name.split('.')[0] in roots:
+        origin = getattr(module, '__file__', None)
+        if origin is not None:
+            origin = pathlib.Path(origin).resolve()
+            assert origin.is_relative_to(code), (name, str(origin))
+            origins[name] = origin.relative_to(code).as_posix()
+resource = importlib.resources.files('cognitive_kernel').joinpath('canonical.py').read_bytes()
+print('CAPSULE_IMPORT_PROOF=' + json.dumps({'origins': origins,
+    'canonical_resource_sha256': hashlib.sha256(resource).hexdigest(),
+    'unused_vault_imported': 'alice_vault' in sys.modules,
+    'unused_conversation_imported': 'alice_conversation' in sys.modules}, sort_keys=True))
+'''
+    argv = [sys.executable, '-I', '-B', '-c', program, str(code)]
+    if fallback is not None:
+        argv.append(str(fallback))
+    return subprocess.run(argv, cwd=code, capture_output=True, text=True)
 
 
 class KaggleConstructionTransportTests(unittest.TestCase):
@@ -324,6 +383,48 @@ class KaggleConstructionTransportTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             m.prepare(args)
 
+    def test_source_bundle_preserves_sibling_packages_parent_initializers_resources_and_notices(self):
+        # The prior cognitive_kernel-only selection loses a required sibling.
+        # Exact Git bytes, regular parents and resource lookup are independent
+        # fixture expectations; working/untracked data must not enter the ZIP.
+        m = importlib.import_module('scripts.mfm.kaggle_public_foundation_20261008')
+        args = self.package_inputs()
+        entries = {
+            'scripts/__init__.py': b'PARENT_INITIALIZED = True\n',
+            'src/alice_memory/__init__.py': b'PACKAGE_INITIALIZED = True\n',
+            'src/alice_memory/schema.py': b'VALUE = "committed sibling"\n',
+            'src/alice_memory/resources/schema.json': b'{"resource":"committed"}\n',
+            'src/alice_memory/NOTICE': b'Fixture sibling package notice.\n',
+            'src/alice_capability_profiles.py': b'VALUE = "committed root module"\n',
+        }
+        for name, contents in entries.items():
+            path = args.source_root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(contents)
+        m.git_bytes(args.source_root, 'add', '--', *entries)
+        m.git_bytes(args.source_root, '-c', 'user.name=Transport Fixture', '-c', 'user.email=fixture@example.invalid',
+                    'commit', '-qm', 'complete public package fixture')
+        revision = m.git_bytes(args.source_root, 'rev-parse', 'HEAD').decode().strip()
+        (args.source_root / 'src/alice_memory/schema.py').write_bytes(b'wrong working sibling\n')
+        (args.source_root / 'src/alice_memory/private-untracked.json').write_bytes(b'not eligible')
+        archive_path = self.root / 'complete-source.zip'
+        m.source_archive(args.source_root, revision, archive_path)
+        code = self.root / 'fixture-code'
+        with zipfile.ZipFile(archive_path) as archive:
+            for name, contents in entries.items():
+                self.assertIn(name, archive.namelist(), name + ' missing from source capsule')
+                self.assertEqual(archive.read(name), contents)
+            self.assertNotIn('src/alice_memory/private-untracked.json', archive.namelist())
+            archive.extractall(code)
+        result = subprocess.run([sys.executable, '-I', '-B', '-c',
+            'import sys,pathlib; sys.path[:0]=[sys.argv[1]+"/src",sys.argv[1]]; '
+            'import scripts,alice_memory.schema; from importlib.resources import files; '
+            'assert scripts.PARENT_INITIALIZED and alice_memory.PACKAGE_INITIALIZED; '
+            'assert alice_memory.schema.VALUE=="committed sibling"; '
+            'assert files("alice_memory").joinpath("resources/schema.json").read_bytes()==b\'{"resource":"committed"}\\n\'',
+            str(code)], cwd=code, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def test_package_rejects_invalid_execution_timeout_before_writing(self):
         m = importlib.import_module('scripts.mfm.kaggle_public_foundation_20261008')
         args = self.package_inputs()
@@ -366,6 +467,58 @@ class KaggleConstructionTransportTests(unittest.TestCase):
         args.material_archive_sha256 = hashlib.sha256(args.material_archive.read_bytes()).hexdigest()
         with self.assertRaises(ValueError):
             m.prepare(args)
+
+
+class KaggleRealSourceBootstrapTests(unittest.TestCase):
+    """CPU bootstrap only: no processor/data/model or hosted operation executes."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.temp = tempfile.TemporaryDirectory()
+        cls.addClassCleanup(cls.temp.cleanup)
+        cls.root = Path(cls.temp.name)
+        cls.repo = Path(__file__).resolve().parents[2]
+        cls.packager = importlib.import_module('scripts.mfm.kaggle_public_foundation_20261008')
+        cls.revision = cls.packager.git_bytes(cls.repo, 'rev-parse', 'HEAD').decode().strip()
+        cls.archive = cls.root / 'actual-git-source.zip'
+        cls.files = cls.packager.source_archive(cls.repo, cls.revision, cls.archive)
+        cls.code = cls.root / 'actual-code'
+        with zipfile.ZipFile(cls.archive) as archive:
+            archive.extractall(cls.code)
+
+    def test_real_trainer_help_from_exact_export_without_checkout_fallback(self):
+        result = isolated_trainer_help(self.code)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('--measure-only', result.stdout)
+        proof = json.loads(result.stdout.split('CAPSULE_IMPORT_PROOF=')[1])
+        self.assertEqual(proof['origins']['alice_memory.store'], 'src/alice_memory/store.py')
+        self.assertEqual(proof['origins']['alice_memory.migrations'], 'src/alice_memory/migrations.py')
+        expected = self.packager.git_bytes(self.repo, 'show', self.revision + ':src/cognitive_kernel/canonical.py')
+        self.assertEqual(proof['canonical_resource_sha256'], hashlib.sha256(expected).hexdigest())
+        self.assertFalse(proof['unused_vault_imported'])
+        self.assertFalse(proof['unused_conversation_imported'])
+        tree = self.packager.git_bytes(self.repo, 'ls-tree', '-r', '--name-only', self.revision).decode().splitlines()
+        with zipfile.ZipFile(self.archive) as archive:
+            for name in tree:
+                if name.startswith('src/') or name in ('scripts/__init__.py', 'scripts/mfm/__init__.py'):
+                    self.assertIn(name, archive.namelist(), 'tracked source/resource/parent was omitted: ' + name)
+                    self.assertEqual(archive.read(name), self.packager.git_bytes(self.repo, 'show', self.revision + ':' + name))
+
+    def test_omitted_transitive_source_cannot_be_supplied_by_checkout(self):
+        positive = isolated_trainer_help(self.code)
+        self.assertEqual(positive.returncode, 0, positive.stdout + positive.stderr)
+        for name, missing in [('schema.py', 'alice_memory.schema'), ('store.py', 'alice_memory.store'),
+                              ('migrations.py', 'alice_memory.migrations')]:
+            with self.subTest(missing=missing):
+                code = self.root / ('missing-' + name)
+                shutil.copytree(self.code, code)
+                (code / 'src/alice_memory' / name).unlink()
+                # Deliberately offer the real checkout as an alternative path;
+                # isolation must still expose the capsule's missing dependency.
+                result = isolated_trainer_help(code, fallback=self.repo / 'src')
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn('ModuleNotFoundError: No module named ' + repr(missing), result.stderr)
+                self.assertNotIn('CAPSULE_IMPORT_PROOF=', result.stdout)
 
 
 if __name__ == '__main__':
