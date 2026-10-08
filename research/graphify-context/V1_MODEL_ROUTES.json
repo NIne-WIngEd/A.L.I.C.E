@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "ef9c45ec19b086e742517f270b551f48c078e5f4",
+      "commit": "b52b098a6eb8b0453a5d4fb5bd30cce43a03f032",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -57,7 +57,7 @@
         {
           "path": "docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
           "purpose": "completed teacher fit, failed generated formation, actual causal analysis and corrected measurement handoff",
-          "blob_sha": "4b4b37e2754f8f38da003e912ae82f21d5ff473c"
+          "blob_sha": "51fc9ac70bd0cd5e05aec0930f1044417c6d0000"
         },
         {
           "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576702.json",
@@ -398,6 +398,61 @@
           "path": "docs/receipts/MFM_PUBLIC_FOUNDATION_IMPLEMENTATION_20261007_PUBLIC.json",
           "purpose": "reviewed full-roster implementation, real component interruption/objective evidence and precise pending bank/resource/tokenizer/learning/full-role work",
           "blob_sha": "a690e48869ee919da93c700f069196d59f4846e2"
+        },
+        {
+          "path": "scripts/mfm/archive_public_foundation_inputs.py",
+          "purpose": "complete externally pinned bank tensor and legal/census custody, content-addressed archive and full readback; durable restore remains separate",
+          "blob_sha": "179b28b5b5d8a3fb60150c60470d40d80da93617"
+        },
+        {
+          "path": "scripts/mfm/magnolia_public_foundation_archive_20261008.sbatch",
+          "purpose": "original protected owner-account allocated CPU recipe for complete bank tensor verification and archive readback; execution is not established here",
+          "blob_sha": "c21865fa2597077640c1a301d9c6ab5345a12e2b"
+        },
+        {
+          "path": "scripts/mfm/magnolia_public_foundation_archive_v2_20261008.sbatch",
+          "purpose": "successor exact-commit protected owner-account CPU archive recipe using separately prepared v2 checkout; complete bank unchanged",
+          "blob_sha": "c5eac1d8cd36cb38f6ceab5f699611743fa4c526"
+        },
+        {
+          "path": "tests/governance/test_mfm_public_foundation_archive.py",
+          "purpose": "real reduced-bank byte/reader roundtrip, quarantine, custody tamper and retained failed scratch controls; no full production custody proof",
+          "blob_sha": "3628e2b0732e44d42ce550b02aa52a6b311c76bf"
+        },
+        {
+          "path": "scripts/mfm/kaggle_public_foundation_20261008.py",
+          "purpose": "private exact-commit public material/code/processor package preparation with durable-restore pins and explicit full-producer measure-only recipe; no upload",
+          "blob_sha": "d6877b4f4cd09a851d25f77e78c5cf2cb832d80e"
+        },
+        {
+          "path": "scripts/mfm/kaggle_public_foundation_20261008_runtime.py",
+          "purpose": "verified public archive transport and exact offline Transformers5.17.0-only overlay preserving Torch/CUDA/media; unchanged full producer measure-only invocation",
+          "blob_sha": "e0465945341120c2f241981bc1b14cd51f1508e6"
+        },
+        {
+          "path": "tests/governance/test_mfm_kaggle_public_foundation_20261008.py",
+          "purpose": "real archive/Git packaging and trainer-subprocess overlay, exact offline dependency and full-pinned measure-only controls; no actual processor/CUDA/learning proof",
+          "blob_sha": "bc95d5d0cab5fe3894afcf00027ce35316a7a55a"
+        },
+        {
+          "path": "docs/MFM_COMPLETE_BANK_CONSTRUCTION_2026-10-08.md",
+          "purpose": "full Alice/Fable foundation-before-personalization continuation from complete source-export metadata through tensor/archive/restore custody, actual producer measurement and later learning/full semantic formation",
+          "blob_sha": "776c15a40e726ca8ecdc096071337de010a0d7da"
+        },
+        {
+          "path": "docs/receipts/MFM_COMPLETE_PUBLIC_SOURCE_METADATA_20261008_PUBLIC.json",
+          "purpose": "verified complete4,862-source/40,868-pair export metadata and all4,720 progress snapshots; full tensor custody, archive, durable restore and learning remain pending",
+          "blob_sha": "14188422ff9574db885f5a35559759a9d29d9e5e"
+        },
+        {
+          "path": "docs/receipts/MFM_KAGGLE_OFFLINE_DEPENDENCY_20261008_PUBLIC.json",
+          "purpose": "hash-verified original Transformers5.17.0-only offline wheel preparation and local transport controls; preserves Torch/media, actual Kaggle processor/CUDA compatibility pending",
+          "blob_sha": "034f58aa88e4bd0690e958c7591f8cd2a9e7a40c"
+        },
+        {
+          "path": "docs/receipts/MFM_FULL_BANK_CONSTRUCTION_SUBMISSION_20261008_PUBLIC.json",
+          "purpose": "reviewed complete-bank archive job577090, ordered oldGit source-transfer diagnosis and corrected exact source guards; Kaggle/Drive/learning remain separate execution results",
+          "blob_sha": "65d322192e974685b3e25b04b5f566b600fe8e0b"
         },
         {
           "path": "docs/receipts/MFM_V16_SEQUENCE_FAILURE_576984_PUBLIC.json",
@@ -763,7 +818,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "7f649a9ce476ba40297fc4ffe7bfce3a8a95b5d4",
+      "commit": "959c3927b9df813b8062840fbbea7c0d4071927f",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -773,7 +828,7 @@
         {
           "path": "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
           "purpose": "FBM recovered teacher CPU evidence and frozen-feature build continuation",
-          "blob_sha": "66a27229dadc52a8eb8488dd025c297b342eabc6"
+          "blob_sha": "43da421990f3d6aabd8a50d4d5e6813575a66260"
         },
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261002_MFM_RECOVERY_AND_FROZEN_FEATURE_ROUTE.jsonl",
@@ -843,7 +898,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "a9ba79ee78cb3e495986c59489e98ef650647bf4"
+          "blob_sha": "2dc26315aca11c4d6bf487d4c1c4ca64224bfaf8"
         }
       ]
     }
