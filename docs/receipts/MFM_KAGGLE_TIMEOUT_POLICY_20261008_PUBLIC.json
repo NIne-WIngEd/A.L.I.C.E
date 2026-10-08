@@ -1,0 +1,137 @@
+{
+  "applied_operation_receipt_fields": [
+    "launch_policy.path",
+    "launch_policy.file_sha256",
+    "launch_policy.record_sha256",
+    "launch_policy.timeout_policy",
+    "launch_policy.custom_timeout_seconds",
+    "launch_policy.custom_timeout_field_sent",
+    "launch_policy.provider_session_duration_verified",
+    "launch_policy.original_prepared_command",
+    "launch_policy.effective_command",
+    "launch_policy.original_create_intent"
+  ],
+  "boundaries": {
+    "active_preparation_dataset_or_source_capsule_modified": false,
+    "authenticated_hosted_api_calls_by_correction": 0,
+    "fit_budget_selected": false,
+    "gpu_launched_by_correction": false,
+    "learning_or_qualification_established": false,
+    "production_preparation_created": false,
+    "raw_private_payloads_credentials_local_paths_or_drive_ids_included": false,
+    "runtime_or_trainer_modified": false
+  },
+  "changed_source_files": {
+    "scripts/mfm/kaggle_public_foundation_20261008.py": "23ee0a2e342ebe93d83f780b769ed3818edac347dab70f78f9d7972f83b86d04",
+    "tests/governance/test_mfm_kaggle_public_foundation_20261008.py": "fde118451f8a90c15fc2f7539222cb3009e736071d02b53bc9bb4ba32a2577dc"
+  },
+  "controller_sha256": "f0457bf8ef749cb54143d205285e85268277a3ec1151a9ad3ff0cade9062e2c0",
+  "date": "2026-10-08",
+  "effective_policy": {
+    "custom_timeout_field_sent": false,
+    "custom_timeout_seconds": null,
+    "guaranteed_allocation_duration_seconds": null,
+    "provider_session_duration_verified": false,
+    "timeout_policy": "provider-default"
+  },
+  "future_preparation_behavior": "DefaultNone omits custom timeout; explicit opt-in must be a positive integer and have reviewed policy support. Current operation policy accepts provider-default only.",
+  "operational_policy_evidence": {
+    "artifact_label": "kaggle-full-construction-provider-default-policy-20261008.json",
+    "file_sha256": "7a812f4c0e5273a4b5cf6389e9fc60733dfd70e4271e3400497b8f1e78d7560f",
+    "record_sha256": "f9d0fa623b512392702d233194cdffe70ecaffc1019fc9f195fc677e8a617ce1",
+    "schema": "mfm-kaggle-construction-launch-policy-v1"
+  },
+  "ordered_diagnosis": [
+    {
+      "claim": "Validate evidence first",
+      "evidence": "User rejected unsupported7200; valid real installed request control1bd5e8 serialized7200 at substituted save_kernel, then failed omission assertion. Valid packager omission controls8d9f81 failed on required timeout. Zero authenticated hosted calls; no producer execution.",
+      "step": 1
+    },
+    {
+      "claim": "Connect to full project goal",
+      "evidence": "Full complete-roster construction must not be killed by an unsupported earlier custom deadline. This proves operational request handling, not allocation duration, capacity or learning.",
+      "step": 2
+    },
+    {
+      "claim": "Trace responsible architecture",
+      "evidence": "Packager required positive timeout and always emitted-t; controller enforced and forwarded it; installed SDK conditionally serialized the supplied timeout. Runtime/trainer do not own this cause.",
+      "step": 3
+    },
+    {
+      "claim": "Locate first departure",
+      "evidence": "Mandatory custom-limit preparation and unconditional launch command introduced unsupported7200, then controller sent it. No observed GPU timeout occurred because no GPU was launched.",
+      "step": 4
+    },
+    {
+      "claim": "Understand responsibility",
+      "evidence": "Packager creates immutable package/command evidence; controller preserves exact preparation/create ancestry and safe structured operation custody. Active bytes cannot be overwritten to repair a launch-policy decision.",
+      "step": 5
+    },
+    {
+      "claim": "Coherent correction",
+      "evidence": "Optional defaultNone in future packager with strict positive opt-in; separate externally pinned provider-default policy for current immutable preparation; no timeout argument in actual SDK push; applied policy propagated through read stages.",
+      "step": 6
+    },
+    {
+      "claim": "Consult primary implementation and adopted methods",
+      "evidence": "Installed Kaggle2.2.4 kernels_push and optional ApiSaveKernelRequest serialization; installed CLI custom/global maximum wording; current primary notebook documentation normal12h maximum. Existing verified-data/network-failure FBM method supports responsible operational correction. No new model/objective.",
+      "step": 7
+    },
+    {
+      "claim": "Verify intended capability and affected connections",
+      "evidence": "20 packager tests,8 request/policy tests,85 prior partial-custody/status/path/binding controls,16 terminal-output controls passed; six files compile. Independent8-test rerun and five small original file/ancestry checks pass on exact final pins. Root independently reran20+8. Zero authenticated hosted calls.",
+      "step": 8
+    }
+  ],
+  "original_create_intent_file_sha256": "032f859dc23876184fad30f6a9f056b71ed28499dedfaa028f4cd4f930cb3c7c",
+  "original_create_intent_record_sha256": "706b4cf5637a5972001139abb6b124f322960db33363d923d4572e380ee09483",
+  "original_custom7200_preserved_as_historical_evidence": true,
+  "original_preparation_file_sha256": "3a6f38af1dc6b17877031c917084015abccc2e3b9406528f4c6d79ad8dbd18d4",
+  "original_preparation_record_sha256": "81f5bca9c3320ce19cbb38767ec39ed54ce56d279bc147e4b42c8f901c309f57",
+  "prepared_main_sha256": "96d9c4ac44dafc2e2de35ead150c9d17359b5351fc6898fea2d45a7fed8854b5",
+  "primary_sources": [
+    {
+      "claim": "Normal documentedCPU/GPU maximum12h, not verified returned allocation duration.",
+      "url": "https://www.kaggle.com/docs/notebooks"
+    },
+    {
+      "claim": "session_timeout_seconds assigned only if timeout supplied.",
+      "implementation": "installed Kaggle2.2.4 kaggle_api_extended.py kernels_push"
+    },
+    {
+      "claim": "Unset optional sessionTimeoutSeconds omitted; getter0 is not wire0.",
+      "implementation": "installed ApiSaveKernelRequest.to_dict"
+    },
+    {
+      "claim": "No returned timeout field is exposed.",
+      "implementation": "installed ApiKernelMetadata/GetKernel"
+    }
+  ],
+  "private_diagnosis_evidence": {
+    "artifact_label": "kaggle-provider-default-launch-diagnosis-20261008.json",
+    "file_sha256": "4e506477c4fe0ce51144863001859971d0862635e478f7e2f34638dfec01f092",
+    "record_sha256": "3a7cdcf57bd32e7cd80bc48a6faba907ab33e9d39452cc4c8b97efe7456bcde0"
+  },
+  "problem": "An unsupported custom7200-second limit was present in original launch preparation and forwarded by the controller; user rejected that cutoff before GPU launch.",
+  "purpose_contract": "Actual sealed transport purpose is construction-measurement-only; numeric recipe does not assert a measure_only boolean; bound runtime construction_argv appends--measure-only.",
+  "record_sha256": "eee38af4eeb25bb4fe225c81544fb0a58c88a9eb5cb0f9174b4056dfd0be63e8",
+  "request_control_test_sha256": "aaf5b4eb14a96bd30f37e89e36722f4ab219933345d360e8e3064931f6faa731",
+  "schema": "mfm-kaggle-timeout-policy-public-method-v1",
+  "status": "operational correction verified; original dataset creation external result pending",
+  "unchanged_runtime_sha256": "9833c6c7db3847e384fe7488ca84484f03af5b4a35aa65b622427ea70edddab8",
+  "unchanged_trainer_sha256": "63e7f72b11bf8feb6936a05a082d3bd5f5f4fb049ac77cebfc712611052155ba",
+  "verification": {
+    "actual_request_and_policy_tests_passed": 8,
+    "compiled_files": 6,
+    "hosted_save_kernel_boundary_substituted": true,
+    "independent_report_sha256": "55b4fbd68c8712b39e648c747a2658564f64d0b08f213251d8e017c66a727777",
+    "independent_request_policy_tests_passed": 8,
+    "model_or_gpu_executed_by_controls": false,
+    "packager_tests_passed": 20,
+    "prior_partial_custody_status_path_binding_controls_passed": 85,
+    "real_installed_push_method_and_sdk_request_exercised": true,
+    "root_packager_tests_passed": 20,
+    "root_request_policy_tests_passed": 8,
+    "terminal_output_controls_passed": 16
+  }
+}

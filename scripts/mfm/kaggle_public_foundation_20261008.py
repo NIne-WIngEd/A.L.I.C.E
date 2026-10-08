@@ -60,8 +60,8 @@ def copy_archive(source, destination, format_name, expected_pin):
 
 
 def prepare(args):
-    if type(args.timeout_seconds) is not int or args.timeout_seconds <= 0:
-        raise ValueError('explicit positive execution timeout required')
+    if args.timeout_seconds is not None and (type(args.timeout_seconds) is not int or args.timeout_seconds <= 0):
+        raise ValueError('custom execution timeout must be an explicit positive integer')
     if not re.fullmatch('mkrayanyan/[a-z0-9]+(?:-[a-z0-9]+)*', args.dataset_id) or \
             not re.fullmatch('mkrayanyan/[a-z0-9]+(?:-[a-z0-9]+)*', args.kernel_id):
         raise ValueError('explicit authenticated owner dataset/kernel identity required')
@@ -148,9 +148,13 @@ def prepare(args):
         'enable_gpu': True, 'enable_tpu': False, 'enable_internet': False, 'machine_shape': 'NvidiaTeslaT4',
         'docker_image_pinning_type': 'original', 'dataset_sources': [args.dataset_id],
         'competition_sources': [], 'kernel_sources': [], 'model_sources': []})
+    launch = ['kaggle', 'kernels', 'push', '-p', str(kernel)]
+    if args.timeout_seconds is not None:
+        launch += ['-t', str(args.timeout_seconds)]
+    launch += ['--accelerator', 'NvidiaTeslaT4']
     commands = {'create_private_dataset': ['kaggle', 'datasets', 'create', '-p', str(dataset), '-t', '-r', 'skip'],
                 'read_dataset_status': ['kaggle', 'datasets', 'status', args.dataset_id, '--format', 'json'],
-                'launch_full_construction': ['kaggle', 'kernels', 'push', '-p', str(kernel), '-t', str(args.timeout_seconds), '--accelerator', 'NvidiaTeslaT4'],
+                'launch_full_construction': launch,
                 'read_kernel_status': ['kaggle', 'kernels', 'status', args.kernel_id],
                 'retrieve_outputs': ['kaggle', 'kernels', 'output', args.kernel_id, '-p', str(destination / 'returned-output')]}
     receipt = runtime.seal({'schema': 'mfm-kaggle-full-construction-preparation-v1',
@@ -174,7 +178,8 @@ def arguments(argv=None):
                  'durable-receipt-sha256', 'dataset-id', 'kernel-id', 'census-subdir', 'bank-subdir', 'material-manifest-name'):
         parser.add_argument('--' + name, required=True)
     parser.add_argument('--material-format', choices=('zip', 'tar'), required=True)
-    parser.add_argument('--timeout-seconds', type=int, required=True)
+    parser.add_argument('--timeout-seconds', type=int,
+                        help='Optional custom run limit, justified by the reviewed launch policy; omission uses the provider default.')
     for name in runtime.INTEGER_FIELDS:
         parser.add_argument('--' + name.replace('_', '-'), type=int, required=True)
     for name in runtime.FLOAT_FIELDS:

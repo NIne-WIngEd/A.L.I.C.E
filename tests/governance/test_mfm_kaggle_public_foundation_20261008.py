@@ -319,6 +319,7 @@ class KaggleConstructionTransportTests(unittest.TestCase):
         self.assertEqual(kernel['model_sources'], [])
         self.assertNotIn('--public', receipt['commands']['create_private_dataset'])
         self.assertEqual(receipt['commands']['launch_full_construction'][-2:], ['--accelerator', 'NvidiaTeslaT4'])
+        self.assertEqual(receipt['commands']['launch_full_construction'][-4:-2], ['-t', '3600'])
         compile((package / 'kernel/main.py').read_bytes(), 'main.py', 'exec')
         with self.assertRaises(ValueError):
             m.prepare(args)
@@ -330,6 +331,32 @@ class KaggleConstructionTransportTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             m.prepare(args)
         self.assertFalse(args.output_dir.exists())
+
+    def test_package_defaults_to_provider_execution_limit(self):
+        m = importlib.import_module('scripts.mfm.kaggle_public_foundation_20261008')
+        args = self.package_inputs()
+        args.timeout_seconds = None
+        receipt = m.prepare(args)
+        self.assertEqual(receipt['commands']['launch_full_construction'],
+                         ['kaggle', 'kernels', 'push', '-p', str(args.output_dir / 'kernel'), '--accelerator', 'NvidiaTeslaT4'])
+        self.assertFalse(receipt['uploaded'])
+        self.assertFalse(receipt['submitted'])
+
+    def test_cli_custom_execution_timeout_is_optional(self):
+        m = importlib.import_module('scripts.mfm.kaggle_public_foundation_20261008')
+        args = self.package_inputs()
+        argv = [item for key, value in vars(args).items() if key != 'timeout_seconds'
+                for item in ('--' + key.replace('_', '-'), str(value))]
+        self.assertIsNone(m.arguments(argv).timeout_seconds)
+        self.assertEqual(m.arguments(argv + ['--timeout-seconds', '3600']).timeout_seconds, 3600)
+
+    def test_package_rejects_nonpositive_or_noninteger_opt_in_before_writing(self):
+        m = importlib.import_module('scripts.mfm.kaggle_public_foundation_20261008')
+        for value in (0, -1, True, 1.5, '3600'):
+            with self.subTest(value=value):
+                with self.assertRaises(ValueError):
+                    m.prepare(SimpleNamespace(timeout_seconds=value))
+        self.assertFalse((self.root / 'package').exists())
 
     def test_package_rejects_unlisted_material(self):
         m = importlib.import_module('scripts.mfm.kaggle_public_foundation_20261008')
