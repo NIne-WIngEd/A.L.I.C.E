@@ -1,0 +1,76 @@
+{
+  "schema": "mfm-full-construction-successor-public-v1",
+  "classification": "PUBLIC_METHOD_ONLY",
+  "trace_id": "fbm-mfm-20261008-corrected-full-construction-successor-89",
+  "public_receipt_path": "docs/receipts/MFM_FULL_CONSTRUCTION_SUCCESSOR_20261008_TRACE89_PUBLIC.json",
+  "recorded_at_utc": "2026-10-08T23:29:06Z",
+  "new_dataset_creation_accepted": true,
+  "private_dataset_ready": true,
+  "new_kernel_submitted": true,
+  "actual_server_kernel_contract_verified": true,
+  "actual_server_image_observed": false,
+  "current_job_failed": null,
+  "execution_success_verified": false,
+  "measurement_result_pending": true,
+  "training_started": false,
+  "source_capsule_revision": "30c6feb02bca1b8aa23b279a247dec26a552372c",
+  "full_source_roster": 4862,
+  "current_timeout_policy": "provider-default",
+  "custom_timeout_seconds": null,
+  "custom_timeout_field_sent": false,
+  "provider_session_duration_verified": false,
+  "paid_compute_used": false,
+  "status": "CORRECTED_FULL_CONSTRUCTION_SUBMITTED_MEASUREMENT_RESULT_PENDING",
+  "observed_nonterminal_status": "running",
+  "predecessor_runtime_failure_record_sha256": "e5613ed239b2b89e2681bd2594bd40fb5e4702e68060f117a03a739e65d3b1de",
+  "original_failed_execution_preserved": true,
+  "source_archive_and_drive_custody_remain_verified": true,
+  "producer_measurements_observed": false,
+  "fit_budget_selected": false,
+  "learned_public_foundation_exported": false,
+  "full_semantic_formation_built": false,
+  "qualified_for_product": false,
+  "authority_activated": false,
+  "training_eligible": false,
+  "evaluation_eligible": false,
+  "evidence_receipt_bindings": {
+    "predecessor": {
+      "file_sha256": "e1875e1c7d88bc5f26ad4def220af995ac53856c097aad4f11eb82beccd3933e",
+      "record_sha256": "e5613ed239b2b89e2681bd2594bd40fb5e4702e68060f117a03a739e65d3b1de"
+    },
+    "preparation": {
+      "file_sha256": "e32aea2cb25dc637cbb8051147751d161dad67ae0cfa879e088de85478a5b7d6",
+      "record_sha256": "3af767b795ecb0270f91bf7c2abec97a61474289770bcd490b380b9503531186"
+    },
+    "manifest": {
+      "file_sha256": "df8a891e27aa8b3f2e80326a918ee102d2c7ac8dfe1abd70469e766a8596e840",
+      "record_sha256": "c097617e2f1403963512bc383ccef07c6dfee26110f8e989310912a374aec9a7"
+    },
+    "policy": {
+      "file_sha256": "e8951db7622cd2a5800e418e920bc345c65306057c8636ff61a1bb4d126d6a60",
+      "record_sha256": "dc4739148c1d05b9b9d5c514556a913b680819cf9220bf7575d91363ef707f59"
+    },
+    "create": {
+      "file_sha256": "61fdc6d8652bb7de05be6c5400ddbb75fd4cb066290eaba477d62733a0089536",
+      "record_sha256": "418ef7f9fcb6e55b84ebe31b8e834daadedf17daa74da5a160d84bb3e9a1d463"
+    },
+    "dataset": {
+      "file_sha256": "64319e275943621f238867f8263243bfd9327e686a878bbcce139954d5b91b98",
+      "record_sha256": "19a70521fd723118b9cca5e09ca80356b13d4524bcff238b54fe629efbb1af92"
+    },
+    "push": {
+      "file_sha256": "80f2c81233707f1aa02643ad231fa64b6cc7dadd3ddd0f4c8f04590224e0fff2",
+      "record_sha256": "6cbe4acde03654fddc812fe7e4f45aaad48d2385a4564d19534bc495b9dab81c"
+    },
+    "readback": {
+      "file_sha256": "4473e0f43210ad216377e14da7d97f7bd631a1e2bda6a5629c4dc3b73288e7bf",
+      "record_sha256": "bcc05e4bf97d00005c059b3bf348d70713c37c43f73d43e42221e4893f69d704"
+    },
+    "status": {
+      "file_sha256": "0fbefcf8a13b21d0aca96b618857283f99cb47030f6de792ac91090c3094f91e",
+      "record_sha256": "24208edbd439d0ca3736bc7fe995ae9203d2cbc4c78beab39d16babbd44fa02c"
+    }
+  },
+  "next_action": "Recover the exact running corrected construction result and all actual outputs when execution becomes terminal. Verify authenticated full input/runtime custody and producer measurements before selecting the real fit budget. Preserve the original failed import execution and traces87-88; accepted replacement launch and RUNNING status establish no learning, fit, replay or product qualification.",
+  "record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec"
+}
