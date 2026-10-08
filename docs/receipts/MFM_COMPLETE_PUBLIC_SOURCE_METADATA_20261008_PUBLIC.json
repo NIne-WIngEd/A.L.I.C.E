@@ -1,0 +1,115 @@
+{
+  "external_export_pin": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+  "external_census_pin": "0885f9a52b8ea967127a5a6b7708331163b214d3dea81ed598d24c57de6df27d",
+  "bank_record_sha256": "6b70f4ed4bcde0f702de6057d9f2aece86228ea96711483469fa943fab42af4a",
+  "progress_record_sha256": "c61b7157732b8a4d56f2417773cc88dcfa50bc3b9ce8b0f9d1ae4c67fff2c22e",
+  "source_chain_sha256": "4a52b7cd2ce4a164fc332fc15baf866f6e2b1199435fc2e5fd4e8c71e2969219",
+  "source_inputs_sha256": "721567a70c7f9c287c6a29569fbd8defd03dde7e94e099ec86b7c2fb5843f172",
+  "source_worker_lf_sha256": "62c4af1bf2f452f912a727f0277a2baf5e0e9f8ff8b28a080a39bbdf1326cb29",
+  "prepared_clone_receipt_sha256": "54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7",
+  "prepared_base_weight_sha256": "fe054ae05ff7f44318fd8ae90d58992531455c7ed31356704088f0f2d8c8009a",
+  "runtime": {
+    "torch": "2.7.1+cu118",
+    "transformers": "5.17.0",
+    "source_device": "cpu",
+    "dtype": "bfloat16",
+    "threads": 12
+  },
+  "counts": {
+    "sources": 4862,
+    "bank_source_keys_unique": 4862,
+    "cases": 40868,
+    "case_split_counts": {
+      "train": 36597,
+      "development": 4271
+    },
+    "unique_source_tokens": 240739,
+    "largest_source_tokens": 71,
+    "states_bf16_expected_bytes": 1848875520
+  },
+  "terminals": {
+    "577007": {
+      "complete": false,
+      "completed": 2587,
+      "public_conditional_feature_export_sha256": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+      "public_conditional_feature_progress_sha256": "f97308970fa183354918ff0b5e2b21ce2cb0569202e8c1350e9dd5a943a90b71",
+      "qualified_for_product": false,
+      "seconds": 28802.466044489294,
+      "total": 4862
+    },
+    "577008": {
+      "complete": true,
+      "completed": 4862,
+      "public_conditional_feature_bank_sha256": "6b70f4ed4bcde0f702de6057d9f2aece86228ea96711483469fa943fab42af4a",
+      "public_conditional_feature_export_sha256": "ef32550b82f7d92cc516b34b4de7e8101927e104d9003792deb1c11662106717",
+      "public_conditional_feature_progress_sha256": "c61b7157732b8a4d56f2417773cc88dcfa50bc3b9ce8b0f9d1ae4c67fff2c22e",
+      "qualified_for_product": false,
+      "seconds": 27347.11032736674,
+      "total": 4862
+    }
+  },
+  "progress_snapshots": {
+    "577007": {
+      "snapshots_verified": 2444,
+      "first_completed": 145,
+      "last_completed": 2587,
+      "all_pins_recomputed_from_final_bank_receipt_chain": true
+    },
+    "577008": {
+      "snapshots_verified": 2276,
+      "first_completed": 2588,
+      "last_completed": 4862,
+      "all_pins_recomputed_from_final_bank_receipt_chain": true
+    }
+  },
+  "parent_chain": {
+    "577006_to_577007_verified_from_preserved_local_evidence": true,
+    "577007_to_577008_verified": true,
+    "parent_577007_stdout_sha256": "8edee4144e8f4658a220491c8d91277854e5a15952036c0eea4e0037ff88e857",
+    "parent_577007_receipt_file_sha256": "3d1e3b16a48d5f081f0ce5c7b8edb79304b5f5c6308f6e49e6e5c9fcde9752d5",
+    "parent_577006_receipt_file_sha256": "2e11dad36c0d0b75b066d3b42186a3d86177f155b1831b02395de7fbf8df2d2c",
+    "parent_577006_completed": 144,
+    "parent_577007_completed": 2587,
+    "child_577008_completed": 4862
+  },
+  "checks": {
+    "self_seals": true,
+    "external_census_and_nested_census_equal": true,
+    "producer_binding_exact": true,
+    "source_roster_file_and_canonical_digest": true,
+    "source_case_and_split_membership": true,
+    "bank_ordered_source_roster": true,
+    "complete_bank_progress_hash_chain": true,
+    "every_logged_progress_snapshot": true,
+    "one_dedicated_terminal_per_job": true,
+    "parent_raw_stdout_and_receipt_hashes": true,
+    "namespace_runtime_markers": true,
+    "gnu_time_zero_exit_status": true
+  },
+  "schema": "mfm-complete-public-source-metadata-public-v1",
+  "classification": "PUBLIC_METHOD_ONLY",
+  "recorded_at_utc": "2026-10-08T17:44:23.126528+00:00",
+  "private_metadata_audit_sha256": "ec3c52f983ee4f72dc0f6b1ba47b282457c81b951e9702b19e12d6287d9b4091",
+  "source_export_complete_metadata": true,
+  "scheduler": {
+    "577007": {
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "08:00:19"
+    },
+    "577008": {
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "07:44:08"
+    },
+    "account": "mxrayan",
+    "cpus": 12
+  },
+  "full_tensor_custody_verified": false,
+  "bank_archive_created": false,
+  "bank_drive_restore_verified": false,
+  "foundation_construction_executed": false,
+  "training_started": false,
+  "qualified_for_product": false,
+  "next_action": "Verify complete bank tensor custody on allocated CPU, archive with exact corpus/census/legal lineage, restore via Drive, then measure the unchanged full producer on actual Kaggle allocation and choose full-roster fit recipe from measurements."
+}

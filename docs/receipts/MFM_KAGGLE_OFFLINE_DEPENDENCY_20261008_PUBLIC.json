@@ -1,0 +1,35 @@
+{
+  "schema": "mfm-kaggle-offline-dependency-preparation-public-v1",
+  "classification": "PUBLIC_METHOD_ONLY",
+  "purpose": "Original processor runtime for full fresh MFM construction; frozen Gemma source representations remain unchanged",
+  "dependency_archive_bytes": 12296359,
+  "dependency_archive_sha256": "ef58fab90e038355dac90918d87e70c0f77b7788a6a789dfea6a3d7a87b26dbf",
+  "dependency_manifest_record_sha256": "0ba1e4ac187210c98f34b031c0a6dc679d51108c630c032e41bd697db42dbbcc",
+  "wheel": {
+    "name": "transformers",
+    "version": "5.17.0",
+    "filename": "transformers-5.17.0-py3-none-any.whl",
+    "bytes": 12295140,
+    "sha256": "78ec1ce21579b38dfb83950a0658cd119f87212a2fcfdff478096ce9d6c03801",
+    "publisher_metadata_url": "https://pypi.org/pypi/transformers/5.17.0/json",
+    "requires_python": ">=3.10.0",
+    "original_complete_wheel_and_apache2_notices_retained": true,
+    "nine_base_requirements_match_actual_metadata_and_publisher": true
+  },
+  "observed_stock_guidance": {
+    "primary_release": "https://github.com/Kaggle/docker-python/releases/tag/v171-GPU-22be155a37fc52bc8254ebfd0bb894643d00a1283e2446e212597ae12aec45f9",
+    "transformers": "5.16.1",
+    "torch": "2.11.0+cu128",
+    "actual_current_allocated_image_verified": false
+  },
+  "selected_installation_contract": "Validate actual interpreter and all original wheel base requirements; hash-check exact wheel and sealed archive; install Transformers alone with no-index/no-deps into a new owned directory; verify version/module path and preserve original Torch/CUDA/media stack; propagate overlay first into trainer subprocess.",
+  "local_archive_all_members_hashes_and_crc_verified": true,
+  "root_transport_tests": {"passed": 17, "seconds": 13.757, "proof_scope": "Real archive/Git capsule/subprocess environment and rejection controls; no actual processor/CUDA/learning"},
+  "original_legal_notice_test_failure_preserved": {"passed": 16, "failed": 1, "seconds": 2.494, "first_departure": "Python-only source selection omitted actual Git LICENSE; corrected by exact discovered notice transport without inventing grants"},
+  "actual_kaggle_installation_verified": false,
+  "actual_processor_compatibility_verified": false,
+  "actual_cuda_replay_verified": false,
+  "model_or_base_weights_loaded": false,
+  "training_started": false,
+  "qualified_for_product": false
+}
