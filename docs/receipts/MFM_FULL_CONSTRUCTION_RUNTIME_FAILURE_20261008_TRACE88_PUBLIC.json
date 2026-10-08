@@ -1,0 +1,264 @@
+{
+  "schema": "mfm-full-construction-runtime-failure-public-v1",
+  "classification": "PUBLIC_METHOD_ONLY",
+  "recorded_at_utc": "2026-10-08T23:13:48Z",
+  "trace_id": "fbm-mfm-20261008-full-construction-runtime-failure-88",
+  "public_receipt_path": "docs/receipts/MFM_FULL_CONSTRUCTION_RUNTIME_FAILURE_20261008_TRACE88_PUBLIC.json",
+  "goal": "Recover unchanged full producer construction and full public foundation before full semantic formation and Alice/Fable V1 qualification.",
+  "status": "ORIGINAL_FULL_CONSTRUCTION_IMPORT_FAILED_CORRECTED_PRIVATE_DATASET_UPLOAD_PENDING",
+  "previous_accepted_launch_completion_record_sha256": "ffab86ef4dffb9ea54cbc0bc742d97a5b2f4dd13093c70b5ef5dcd2d7b24ecfd",
+  "source_archive_and_drive_custody_remain_verified": true,
+  "original_accepted_launch_preserved": true,
+  "runtime_failure": {
+    "launch_accepted_historically": true,
+    "source_archive_and_drive_custody_remain_verified": true,
+    "observed_status": "ERROR",
+    "terminal": true,
+    "job_failed": true,
+    "execution_succeeded": false,
+    "failed_status_retrieval_accepted": true,
+    "failed_outputs_retrieved": true,
+    "failed_output_files": 10,
+    "failed_output_pages": 1,
+    "executed_source_capsule_revision": "b52b098a6eb8b0453a5d4fb5bd30cce43a03f032",
+    "original_main_sha256": "96d9c4ac44dafc2e2de35ead150c9d17359b5351fc6898fea2d45a7fed8854b5",
+    "controller_sha256": "d46045c208bd2b57b1329c97235d0494d2a5da9da5c11724839a21b24846796c",
+    "current_timeout_policy": "provider-default",
+    "custom_timeout_seconds": null,
+    "custom_timeout_field_sent": false,
+    "provider_session_duration_verified": false,
+    "actual_server_image_observed": true,
+    "original_launch_raw_reference_form": "kernel-path",
+    "automatic_retry_performed": false
+  },
+  "recovered_output_custody": {
+    "all_claimed_local_output_bytes_sha256_verified": true,
+    "returned_file_count": 10,
+    "returned_file_bytes": 512404,
+    "page_count": 1,
+    "session_logs_file_sha256": "08110a0acfc086e8df2cdbf36124c2ec52d186ecef8517b28666691c9272f714",
+    "retrieval_receipt_file_sha256": "8d07ea727398aca3bd6f4b610356ce8435795177e874d4302ce70daa5c8c125f",
+    "returned_outputs_drive_durable_custody_established": true
+  },
+  "diagnosis_recorded": true,
+  "failed_evidence_drive_custody": {
+    "archive_sha256": "15fde3a6f0d546ca9d24a30238d9e7aac8cba22c7a9ef60a0b49711189e66e6f",
+    "archive_bytes": 180303,
+    "manifest_file_sha256": "141b87362b505782f0f4806a2229931c79cd663e5e7c17ff614edb2afe79b8fe",
+    "source_files": 15,
+    "archive_entries": 16,
+    "native_upload_completed": true,
+    "authenticated_full_archive_restore_sha256_verified": true,
+    "all_original_entry_bytes_sha256_crc_verified": true,
+    "drive_durability_verified": true,
+    "trainer_weights_included": false,
+    "trained_checkpoint_custody_established": false,
+    "learning_qualified": false,
+    "qualified_for_product": false
+  },
+  "current_corrected_continuation": {
+    "state": "CORRECTED_COMPLETE_PRIVATE_INPUT_DATASET_UPLOAD_IN_PROGRESS_RESULT_PENDING",
+    "preparation_file_sha256": "e32aea2cb25dc637cbb8051147751d161dad67ae0cfa879e088de85478a5b7d6",
+    "preparation_record_sha256": "3af767b795ecb0270f91bf7c2abec97a61474289770bcd490b380b9503531186",
+    "transport_file_sha256": "df8a891e27aa8b3f2e80326a918ee102d2c7ac8dfe1abd70469e766a8596e840",
+    "transport_record_sha256": "c097617e2f1403963512bc383ccef07c6dfee26110f8e989310912a374aec9a7",
+    "source_revision": "30c6feb02bca1b8aa23b279a247dec26a552372c",
+    "runtime_launcher_sha256": "9833c6c7db3847e384fe7488ca84484f03af5b4a35aa65b622427ea70edddab8",
+    "full_source_roster": 4862,
+    "construction_measure_only": true,
+    "model_code_changed": false,
+    "actual_new_create_response_observed": false,
+    "actual_new_kernel_submission_observed": false,
+    "actual_original_kernel_remains_failed": true,
+    "completed_upload_required_to_record_pending": false,
+    "actual_preparation_proof": {
+      "proof_file_sha256": "b63fd52d55e56df5758ca6c1aeeb1dc0ca3c6baa8baf5ee849abf4a68b32f47f",
+      "proof_record_sha256": "c375e05095afd5adc92b7e43f0436b76a66d3757df413a827953678a0c754bc9",
+      "original_failed_source_revision": "b52b098a6eb8b0453a5d4fb5bd30cce43a03f032",
+      "corrected_source_revision": "30c6feb02bca1b8aa23b279a247dec26a552372c",
+      "corrected_source_file_count": 324,
+      "unchanged_original_python_file_count": 156,
+      "source_packager_sha256": "75b604cfd3a04ebb2b2d7771be1d8915bd3b74fbbe480778b6a6fa6eaea67713",
+      "runtime_launcher_sha256": "9833c6c7db3847e384fe7488ca84484f03af5b4a35aa65b622427ea70edddab8",
+      "model_code_changed": false,
+      "model_code_unchanged_proved_by_exact_original_python_roster": true,
+      "all_original_non_code_archives_unchanged": true,
+      "full_recipe_unchanged": true,
+      "preparation_executed_from_exact_git_modules": true,
+      "current_timeout_policy": "provider-default",
+      "custom_timeout_field_sent": false,
+      "fit_started": false,
+      "actual_model_execution_verified": false,
+      "hosted_mutation_performed_by_preparation": false
+    },
+    "actual_current_capsule_bootstrap": {
+      "file_sha256": "aa9ec86a4282720ac65944e427f04f96d28b84102566127d45cb29d8ab23859f",
+      "record_sha256": "80ab29f5ad2b9f298351f875914751985412d0c815b4c281487336fbccead286",
+      "actual_current_capsule_real_trainer_help_verified": true,
+      "all_source_file_bytes_sha256_verified": true,
+      "source_capsule_sha256": "3d3c4959b06ebbd0e99a7c7f6f87d36b9467375c6403673dab81cde7844ede96",
+      "source_file_count": 324,
+      "source_revision": "30c6feb02bca1b8aa23b279a247dec26a552372c",
+      "cpu_bootstrap_only": true,
+      "module_stubs_used": false,
+      "checkout_or_installed_project_fallback_allowed": false,
+      "gpu_capacity_or_producer_measurements_established": false,
+      "fit_started": false,
+      "new_job_launched": false
+    },
+    "dataset_intent_file_sha256": "8fede7948f96e7b6dbdc3fdc129da0c1c4cd23657b80296da4769fe382b45992",
+    "dataset_intent_record_sha256": "afccf310e5357e0b6fafcbeda80ea65c56b638f63da0560cd795e2b497f0eae5",
+    "root_reported_dataset_create_started": true,
+    "root_observation_provenance": "Root exact handoff observed the corrected create operation already started and still active after ten seconds at the recorded UTC. This establishes local request activity with provider response pending, not remote acceptance, completed upload or a GPU launch.",
+    "observed_at_utc": "2026-10-08T23:13:01Z"
+  },
+  "diagnosis": {
+    "failure_stage": "trainer-module-import-before-main",
+    "observed_error_type": "ModuleNotFoundError",
+    "observed_missing_project_package": "alice_memory",
+    "trainer_exit_code": 1,
+    "fit_started": false,
+    "producer_measurements_observed": false,
+    "runtime_overlay_succeeded": true,
+    "proposed_next_action": "Prepare a fresh immutable package from the reviewed complete public source commit, verify its freshly extracted real trainer bootstrap, retain the original failed lineage, and execute only the exact reviewed full construction continuation.",
+    "original_failed_source_capsule_import_closure_complete": false
+  },
+  "diagnosis_public_method_receipt": {
+    "path": "docs/receipts/MFM_KAGGLE_CONSTRUCTION_IMPORT_FAILURE_20261008_V2_PUBLIC.json",
+    "file_sha256": "96b5f0fc09405a2a962a7bdcd3d402c062d46ef7704bd7a97f50043a4e3e845f",
+    "record_sha256": "02c4584b386c41a5341ff53f27c99016b7a36653aba16c1589bd46ad155e14d6"
+  },
+  "researched_source_packaging_correction": {
+    "source_selection": "all-tracked-public-src-plus-mfm-python-parent-initializer-and-legal-context",
+    "packager_sha256": "75b604cfd3a04ebb2b2d7771be1d8915bd3b74fbbe480778b6a6fa6eaea67713",
+    "tests_sha256": "71e063d57fc22705f124e29dea01d690b0fdbde4c286059705d2703db5109484",
+    "trainer_sha256": "63e7f72b11bf8feb6936a05a082d3bd5f5f4fb049ac77cebfc712611052155ba",
+    "runtime_sha256": "9833c6c7db3847e384fe7488ca84484f03af5b4a35aa65b622427ea70edddab8",
+    "governance_tests_passed": 23,
+    "source_controls_capsule_sha256": "9a22b56766863b5499b6c9c4263c32f248f735480342180960c33778a633d4f4",
+    "source_controls_entry_count": 324,
+    "original_failed_capsule_negative_preserved": true,
+    "isolated_real_trainer_bootstrap_verified": true,
+    "control_source_revision": "4a57d4d5007b84ab9fb18dd42170cbfcc68e5934",
+    "control_is_historical_preparation_proof": true,
+    "local_cpu_bootstrap_only": true,
+    "module_stubs_used": false,
+    "checkout_or_installed_project_fallback_allowed": false,
+    "model_and_runtime_source_changed": false,
+    "gpu_capacity_established": false,
+    "producer_measurements_observed": false,
+    "new_hosted_launch_performed": false
+  },
+  "evidence_receipt_bindings": {
+    "launch_completion": {
+      "file_sha256": "92aae28fa5ccb91bbca74152639137a87787a6f808abe0f9c1b0df52a451cf9b",
+      "record_sha256": "ffab86ef4dffb9ea54cbc0bc742d97a5b2f4dd13093c70b5ef5dcd2d7b24ecfd",
+      "schema": "mfm-full-bank-archive-completion-public-v1"
+    },
+    "launch": {
+      "file_sha256": "6293c478f37bf0b7e30dd3f5de939e8ed0eff1247928fe26b5efd599e590834b",
+      "record_sha256": "4937a09afbe1b099b59a040d67a5a6442e5a3d2e1a08bef3852d16d0035373b8",
+      "schema": "mfm-kaggle-full-construction-operation-v1"
+    },
+    "server_readback": {
+      "file_sha256": "9994f67ebf605ac90d4d1dc5b21f7391ff83e18ef8a38b94d5c6f49dc3da06bf",
+      "record_sha256": "072fb44a8662b4c1a56d746d0e71930b1e73d590c32046533c42fb873d83b777",
+      "schema": "mfm-kaggle-full-construction-operation-v1"
+    },
+    "running_status": {
+      "file_sha256": "ebcc8fec6b267e472e5fa8137e1596ba4c1a98a11b39a4d8b96178242967d169",
+      "record_sha256": "5ae5ba4eb2163f38849ca9d0c54e9e74a14c8eee73ee67eaab9f5074bce4c99a",
+      "schema": "mfm-kaggle-full-construction-operation-v1"
+    },
+    "failed_status": {
+      "file_sha256": "b2ad471f1f40b9f89a75b416e5254f276683edd1a3ea5486dd197c7cf4eb5912",
+      "record_sha256": "2720107ec7809cf5ba2892cafae1e010004448e995c3e0ae64ee0d6ef3514e67",
+      "schema": "mfm-kaggle-full-construction-operation-v1"
+    },
+    "failed_outputs": {
+      "file_sha256": "e9f2afbd20d97953404d76d124cfb0dd14d29fb6d7e27fb4bbfb629104517a3b",
+      "record_sha256": "ce1cbf361661e1939bb98f792e2385e893d99d5d9c0b0270fd634e7d51ad11d0",
+      "schema": "mfm-kaggle-full-construction-operation-v1"
+    },
+    "failed_evidence_drive": {
+      "file_sha256": "18176e31d9d3079028f786889bcf7fcd6c8a04edfd87d668a74e55924cbc25f3",
+      "record_sha256": "4fb14165d9d78bfac5e546f757cbed58f03800283ca6ee6480e065787733bbee",
+      "schema": "mfm-kaggle-failed-construction-drive-custody-private-v1"
+    },
+    "failed_evidence_drive_public": {
+      "file_sha256": "ae1a5ab4e324ce9f7f325996b202d7c534c57d76df8905232cb73bfde3cc098d",
+      "record_sha256": "f22aab08d0f08df1c62a0800ede7c4bd92525f7aa3ef4c46a4ff7256c6cef0b8",
+      "schema": "mfm-kaggle-failed-construction-drive-custody-public-v1"
+    },
+    "runtime_diagnosis": {
+      "file_sha256": "7d1a5502680d27653aca03c37d3761e8342a95f39f7ee989029c3fe388744cf1",
+      "record_sha256": "f66f5329eba3ef7bc644a43d4e7970421813b5280b53a8d0c92f48544e4a47a1",
+      "schema": "mfm-kaggle-actual-construction-failure-diagnosis-v1"
+    },
+    "runtime_diagnosis_public": {
+      "file_sha256": "96b5f0fc09405a2a962a7bdcd3d402c062d46ef7704bd7a97f50043a4e3e845f",
+      "record_sha256": "02c4584b386c41a5341ff53f27c99016b7a36653aba16c1589bd46ad155e14d6",
+      "schema": "mfm-kaggle-source-import-failure-public-method-v1"
+    },
+    "isolated_import_controls": {
+      "file_sha256": "c802c74e4c012ee5aeaba72a19ce2cb23e9f39f330c2f5dd1ab7d1b861159063",
+      "record_sha256": "854e5d051d9d5b27d50a359567639db1f21959035c93a4b862060dae1ee4894f",
+      "schema": "mfm-kaggle-source-import-control-v1"
+    },
+    "source_correction_independent_audit": {
+      "file_sha256": "1eaa5df03ff3354af832556154ef523b94aaa87b56460308083407a025e88e69",
+      "record_sha256": "bbeda3b8e1fe0637bc2ed79a37ad2e2e92ec65cad010f9d15f0cc1dd2d6b04d0",
+      "schema": "mfm-kaggle-source-packaging-independent-review-v1"
+    },
+    "original_manifest": {
+      "file_sha256": "23c0035e4f3553555ca76671db418369b43df9112facfcfeb674c19ed22aeca2",
+      "record_sha256": "52a042f62b05e635a7124eeb4e6b9ae8426580963162156d37670a474ddc4fd0",
+      "schema": "mfm-kaggle-full-public-construction-transport-v1"
+    },
+    "corrected_preparation": {
+      "file_sha256": "e32aea2cb25dc637cbb8051147751d161dad67ae0cfa879e088de85478a5b7d6",
+      "record_sha256": "3af767b795ecb0270f91bf7c2abec97a61474289770bcd490b380b9503531186",
+      "schema": "mfm-kaggle-full-construction-preparation-v1"
+    },
+    "corrected_manifest": {
+      "file_sha256": "df8a891e27aa8b3f2e80326a918ee102d2c7ac8dfe1abd70469e766a8596e840",
+      "record_sha256": "c097617e2f1403963512bc383ccef07c6dfee26110f8e989310912a374aec9a7",
+      "schema": "mfm-kaggle-full-public-construction-transport-v1"
+    },
+    "corrected_preparation_proof": {
+      "file_sha256": "b63fd52d55e56df5758ca6c1aeeb1dc0ca3c6baa8baf5ee849abf4a68b32f47f",
+      "record_sha256": "c375e05095afd5adc92b7e43f0436b76a66d3757df413a827953678a0c754bc9",
+      "schema": "mfm-kaggle-import-correction-preparation-v1"
+    },
+    "actual_prepared_bootstrap": {
+      "file_sha256": "aa9ec86a4282720ac65944e427f04f96d28b84102566127d45cb29d8ab23859f",
+      "record_sha256": "80ab29f5ad2b9f298351f875914751985412d0c815b4c281487336fbccead286",
+      "schema": "mfm-kaggle-actual-prepared-capsule-bootstrap-v1"
+    },
+    "corrected_dataset_intent": {
+      "file_sha256": "8fede7948f96e7b6dbdc3fdc129da0c1c4cd23657b80296da4769fe382b45992",
+      "record_sha256": "afccf310e5357e0b6fafcbeda80ea65c56b638f63da0560cd795e2b497f0eae5",
+      "schema": "mfm-kaggle-full-construction-operation-v1"
+    },
+    "corrected_launch_policy": {
+      "file_sha256": "e8951db7622cd2a5800e418e920bc345c65306057c8636ff61a1bb4d126d6a60",
+      "record_sha256": "dc4739148c1d05b9b9d5c514556a913b680819cf9220bf7575d91363ef707f59",
+      "schema": "mfm-kaggle-construction-launch-policy-v1"
+    }
+  },
+  "training_started": false,
+  "producer_measurements_observed": false,
+  "fit_budget_selected": false,
+  "qualified_for_product": false,
+  "learned_public_foundation_exported": false,
+  "full_semantic_formation_built": false,
+  "authority_activated": false,
+  "independent_gold_opened": false,
+  "paid_compute_used": false,
+  "model_source_changed_by_this_record": false,
+  "new_job_launched_by_this_record": false,
+  "training_eligible": false,
+  "evaluation_eligible": false,
+  "next_action": "Recover the actual response of the already started corrected private-input dataset creation and verify its exact private identity/version/readiness. Preserve the original failed kernel and complete returned evidence. Launch the exact corrected full construction only after the new input operation and kernel contract are ready; then recover actual producer measurements before selecting a fit budget. No new GPU launch, completed upload, capacity, learning or qualification is established by this pending input operation.",
+  "record_sha256": "e5613ed239b2b89e2681bd2594bd40fb5e4702e68060f117a03a739e65d3b1de"
+}
