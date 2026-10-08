@@ -1080,3 +1080,14 @@ See [recalibration](../../evaluation/eipm/gemma_n0/receipts/magnolia_576893_time
 [guarded inventory](../../evaluation/eipm/gemma_n0/receipts/magnolia_577087_connected_timeout_inventory.json),
 [diagnostic submission](../../evaluation/eipm/gemma_n0/receipts/magnolia_577088_matched_step_profile_submission.json)
 and [v6 FBM method seed](../../training/fbm/base_assembly/personality_primary_teaching_20261008_v6.seed.json).
+
+The one-thread diagnostic control subsequently completed a real admitted N1
+optimizer step and saved its protected checkpoint. Timings: complete replay
+34.934 seconds, materialization43.720 seconds, deep admission267.815 seconds,
+optimizer step86.951 seconds, checkpoint save8.655 seconds. The original
+reviewed first batch, initial model, recipe, source closure and authorization
+matched. The 16-thread arm is still pending; no cause or correction is inferred
+from the control alone. This establishes one actual diagnostic step, not full
+curriculum fit or a constructed personality. Its sanitized
+[control receipt](../../evaluation/eipm/gemma_n0/receipts/magnolia_577088_threads01_matched_step_control.json)
+and immutable v7 successor retain that limited evidence.
