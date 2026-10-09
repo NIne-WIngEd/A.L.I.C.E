@@ -12967,6 +12967,18 @@
     "seconds": 178.44226380065084,
     "state_at_snapshot": "COMPLETED"
   },
+  "current_alignment_and_legacy_custody": {
+    "consumer_release_complete": false,
+    "design": "docs/MFM_ORIGINAL_SOURCE_ALIGNMENT_BUILD_2026-10-09.md",
+    "file_sha256": "f8131887634e9fc2b92f64dd1b65150f493fddc2b54e066265455064baed5a4f",
+    "learning_qualified": false,
+    "public_receipt": "docs/receipts/MFM_ALIGNMENT_AND_DURABLE_LEGACY_CUSTODY_20261009_TRACE98_PUBLIC.json",
+    "record_sha256": "99946633c6dcb7cb41276302ce8daf05734a9cb38be0828096af388eaa58f448",
+    "text_alignment_implemented": true,
+    "trace_id": "fbm-mfm-20261009-original-source-alignment-and-whole-legacy-custody-98",
+    "whole20_and_catalog_custody": true,
+    "whole41_custody": false
+  },
   "current_checkpoint_continuation_method": {
     "actual_checkpoint_custody": false,
     "actual_learning_result": false,
@@ -25013,7 +25025,7 @@
     "current_full_construction_measurement"
   ],
   "memory_activation": false,
-  "next_action": "Complete all41 original full hash/Drive restores and recovery catalog; admit whole history, weights/Adam/RNG/cursor and actual readonly predecessor mount, then resume the unchanged E20 source to step13728 and scheduled boundaries through45760. After fixed foundation learning, run the frozen full development/source-intervention protocol; construct caller-grounded reference selection, original-byte copy alignment, full semantic/longitudinal and native formation plus governed memory/action/outcome revision. Finish legacy20 whole verification, recovery catalog and consumer release before any project-only local cleanup. Foundation precedes private personalization.",
+  "next_action": "Complete the original41-file and catalog MFM Drive archive and admit actual model/Adam/RNG/cursor plus full history before resuming the unchanged E20 program to step13728 and the scheduled boundaries through45760. Use actual pinned Gemma geometry to continue target-field/source-position integration, caller-grounded typed selection and complete semantic/longitudinal/native formation. Complete reviewed restore-on-demand availability and consumer release before authorized project-cache cleanup. Then connect accepted memory to governed retrieval, judgment/action and observed outcomes/revision; foundation precedes personalization.",
   "next_route_data_and_frontier_audit": {
     "current_new_architecture_adopted": false,
     "frontier_commit": "756bf294f6a93e9ea7dcc12dba932a556d6080e0",

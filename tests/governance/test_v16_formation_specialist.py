@@ -85,8 +85,8 @@ class V16AdmissionTests(unittest.TestCase):
                                         "independent adjudication"):
             trainer.main()
 
-    def test_admitted_private_preflight_checks_isolation_before_manifest_open(self):
-        args = types.SimpleNamespace(mode="data-preflight", probe_only=False,
+    def private_preflight_args(self):
+        return types.SimpleNamespace(mode="data-preflight", probe_only=False,
                                      resume_checkpoint=None,
                                      public_synthetic_curriculum=None,
                                      admitted_manifest=Path("/private/never-open.json"),
@@ -96,12 +96,26 @@ class V16AdmissionTests(unittest.TestCase):
                                      epochs=1, gradient_accumulation=1,
                                      save_every_steps=1, learning_rate=1e-4,
                                      max_cross_attention_pairs=8)
+
+    def test_admitted_private_preflight_checks_isolation_before_manifest_open(self):
+        args = self.private_preflight_args()
         with patch.object(trainer, "arguments", return_value=args), \
+                patch.object(trainer.shared.sys, "platform", "linux"), \
                 patch.object(trainer.shared.socket, "if_nameindex",
                              return_value=[(1, "lo"), (2, "eth0")]), \
                 patch.object(trainer, "_examples", side_effect=AssertionError("private open")), \
                 self.assertRaisesRegex(CognitiveKernelContractError, "loopback-only"):
             trainer.main()
+
+    def test_unsupported_platform_refuses_before_interfaces_or_private_manifest(self):
+        with patch.object(trainer, "arguments", return_value=self.private_preflight_args()), \
+                patch.object(trainer.shared.sys, "platform", "win32"), \
+                patch.object(trainer.shared.socket, "if_nameindex") as interfaces, \
+                patch.object(trainer, "_examples") as examples, \
+                self.assertRaisesRegex(CognitiveKernelContractError, "Linux isolated"):
+            trainer.main()
+        interfaces.assert_not_called()
+        examples.assert_not_called()
 
 
 @unittest.skipIf(torch is None, "CPU PyTorch not installed")
