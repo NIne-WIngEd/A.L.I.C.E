@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "1f12702376bf16f03bef022aea5304db31af9616",
+      "commit": "1809f10da754333a20485d4bd58ac58fab299ca1",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -57,7 +57,7 @@
         {
           "path": "docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
           "purpose": "completed teacher fit, failed generated formation, actual causal analysis and corrected measurement handoff",
-          "blob_sha": "0bcecab18fadbfa5bdb6f62d52d6a7d58009de31"
+          "blob_sha": "9ec7275c3c401127f1db111782f744cff5a995f8"
         },
         {
           "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576702.json",
@@ -413,6 +413,11 @@
           "path": "docs/receipts/MFM_PUBLIC_DEVELOPMENT_OBSERVATION_STORAGE_20261009_TRACE92_PUBLIC.json",
           "purpose": "frozen all506/4271 prospective observations,183 existing literal-value contrasts and semantic interpretation limits; backup and semantic scoring pending",
           "blob_sha": "48cd387c8d7b9c333532e77c75961b17347f3963"
+        },
+        {
+          "path": "docs/receipts/MFM_STREAMED_PRIMARY_STORAGE_ROUTE_20261009_TRACE93_PUBLIC.json",
+          "purpose": "actual streamed fixture and recovery catalog restoration, fresh20-file backup upload pending complete custody, recovered status access with same full-fit run still running",
+          "blob_sha": "95c7898162f5a5a1311bf477c6dcb7e177f1f71f"
         },
         {
           "path": "tests/governance/test_mfm_public_conditional_foundation.py",
@@ -858,7 +863,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "8fd05219bf40c04689c3d5c23ff57474beec4dd1",
+      "commit": "d40392fc7a98624423a11904a71a8021c7fe41bc",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -938,7 +943,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "2a15c25b513724b3ba77709f6c687d098cf67b5e"
+          "blob_sha": "3ab2e7097185cd9d7db9e597f50e751cfdea2535"
         }
       ]
     }
