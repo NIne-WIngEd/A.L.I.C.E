@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "00fef6c23a33defcd7372438fcf9555b90c70588",
+      "commit": "b3fd19ac7e6cd11f9b4c6cbbda36375583df2d49",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -57,7 +57,7 @@
         {
           "path": "docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
           "purpose": "completed teacher fit, failed generated formation, actual causal analysis and corrected measurement handoff",
-          "blob_sha": "92e48a70492adb40ede2b34418794b1b65ccfbcb"
+          "blob_sha": "082760647770bde35281a8255c84af720c3d38ee"
         },
         {
           "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576702.json",
@@ -445,19 +445,24 @@
           "blob_sha": "760f3212e0db60e826bb9e3f35842856c99c526b"
         },
         {
+          "path": "docs/receipts/MFM_GEMMA_GEOMETRY_AND_LEGACY_CLEANUP_20261009_TRACE99_PUBLIC.json",
+          "purpose": "actual repeatable Gemma source geometry, preserved processor failures, deployed Drive restore and exact20 native cache cleanup; full formation learning pending",
+          "blob_sha": "4656fd5d91776b05ed354bdfb0c6bdbd2f48634d"
+        },
+        {
           "path": "docs/MFM_ORIGINAL_SOURCE_ALIGNMENT_BUILD_2026-10-09.md",
           "purpose": "original UTF8, actual rendered tokenizer positions and canonical literal alignment; real Gemma export, learned selection/copying and native/outcome formation remain explicit",
-          "blob_sha": "c47a5ac22e893bd7e559fa0cb97ba7ce93b271f5"
+          "blob_sha": "cb891177eef180d4f401afb4c4793236639e4f67"
         },
         {
           "path": "scripts/mfm/formation_source_alignment.py",
           "purpose": "caller and processor bound original UTF8, escaped source-token geometry and all literal occurrences; separate native and learned responsibilities",
-          "blob_sha": "79aa0a157215097b047ef621fcc4330f34d7c03a"
+          "blob_sha": "f8e207986a78c5e8279af436d10dfc6cd460627f"
         },
         {
           "path": "tests/governance/test_mfm_source_alignment.py",
           "purpose": "connected original-byte, escape, repetition and externally pinned rejection controls for the text representation",
-          "blob_sha": "205347e02c18fbfd8819ee7c47e785a9c3f96a59"
+          "blob_sha": "3fa9391322614a34819c20d5001a905eb780bc7a"
         },
         {
           "path": "docs/MFM_DEVELOPMENT_CONTINUATION_2026-10-09.md",
@@ -908,7 +913,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "47260faee6d96d51a9dd41ab55296359e409350c",
+      "commit": "1badf6e3261fc7bcd4f203ec4cce3508cbe72483",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -988,7 +993,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "9e0bb87a052bb00b41ce26d23a0be4470491e6bf"
+          "blob_sha": "3c5488aad0c4dc7e662904e6ef77a45f68ed47fe"
         }
       ]
     }
