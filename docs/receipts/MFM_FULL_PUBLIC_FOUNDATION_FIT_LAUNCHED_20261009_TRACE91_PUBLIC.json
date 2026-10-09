@@ -1,0 +1,347 @@
+{
+  "actual_provider_readonly_mount_behavior_pending": true,
+  "arbitrary_runtime_timeout": false,
+  "base": "frozen BF16 Gemma source-only features",
+  "base_weight_updates": false,
+  "batch_size": 16,
+  "complete_program_epochs": 20,
+  "complete_program_optimizer_steps": 45760,
+  "complete_program_pair_visits": 731940,
+  "constructor_control_weights_imported": false,
+  "development_pairs": 4271,
+  "development_selection": false,
+  "evaluation_eligible": false,
+  "evidence": {
+    "actual_cpu_bootstrap": {
+      "bytes": 10326,
+      "file_sha256": "ec2adac2c3d382f9067acea53da813b72a3570764cb760961c1c92d7b1638f84",
+      "path": "work/kaggle-full-fit-s0-20261009/actual-package-bootstrap-002/receipt.json",
+      "record_sha256": "cf775cbb276d010244e9520aec81217a80365731bb872258ffa96a45ee63f6f7"
+    },
+    "actual_linux_source_validation": {
+      "claim": "Linux source content and pinned module origin only; Docker readonly request does not prove historical mount status",
+      "evidence": {
+        "bytes": 1445,
+        "file_sha256": "c691b85c95f8e17c68b7e411c4de84186c691341b5551eadb7180d279f34af1c",
+        "path": "work/kaggle-full-fit-s0-20261009/actual-package-bootstrap-001/linux-source-validation.json",
+        "record_sha256": "1331aa8b520373a062bf7fdbc1970ee19a4cd7fbe12743898345e23f79e56a5a"
+      },
+      "extra_readonly_assertion_failure_preserved": true,
+      "literal_frozen_source_validator_passed": true,
+      "provider_history_readonly_proven": false,
+      "readonly_statvfs_observed": false,
+      "source_files": 327
+    },
+    "create": {
+      "bytes": 3604,
+      "file_sha256": "0521bc52a33c97744df47536800e3d7561c57279a5cd599d165af790fce8be44",
+      "path": "work/kaggle-full-fit-s0-20261009/create-code-dataset-001/receipt.json",
+      "record_sha256": "2cdde6a77a34e0d031b2924598c34de01c3ca3d9a5473ba25269d425e5ca6f90"
+    },
+    "current_readback_controller_source": {
+      "bytes": 15330,
+      "file_sha256": "7ae776cabdb2264cbf345497f3df5b5e575d687d8bce6c47cd79e93f4aa14266",
+      "path": "work/kaggle_full_fit_controller_20261009.py"
+    },
+    "extra_actual_source_verification": [],
+    "future_readonly_integration_research": {
+      "bytes": 5751,
+      "file_sha256": "d32c25b018ad976195c0735121f1e8350976814414dc37c3d180b0013ff79f45",
+      "path": "work/mfm-full-fit-future-readonly-integration-risk-20261009.md"
+    },
+    "launch_controller_sha256": "5958ac930882c574670596b175593400d9daa27b3fd349bb05c7d9f9d76741fc",
+    "local_future_readonly_observation": {
+      "bytes": 3665,
+      "file_sha256": "8eb9fefe40fa8e5afee28111d7dd6f0976a8ad694c2690608c95c8bf156289cf",
+      "path": "work/kaggle-fit-readonly-future-integration-probe-20261009/receipt.json",
+      "record_sha256": "d5b408e52b97a37277213bde0d071e0d44c51b26fecebaf70e72e1127ca68c24"
+    },
+    "manifest": {
+      "bytes": 92402,
+      "file_sha256": "25fe93961bcd78d3c7e977820ad4984ab8f14c39220f8fba2cacb45a58d43c2d",
+      "path": "work/kaggle-full-fit-s0-20261009/dataset/mfm-fit-transport.json",
+      "record_sha256": "d878dfd3f43811796391632d44907ea87e8f497b03edb94cf5263d5e7ee59460"
+    },
+    "observed_focused_test_source_inventory": [
+      {
+        "bytes": 17043,
+        "file_sha256": "ed5c89ab917c0f4f636319fa8a71aaad741c8f18fe53dcf6cb0152c0b3ef6d4d",
+        "path": "work/alice/tests/governance/test_mfm_public_checkpoint_history.py"
+      },
+      {
+        "bytes": 28367,
+        "file_sha256": "0cd10a11b688c517fd2f7584631cb73cb100f6a2ce5dc48fb05611c69be4c276",
+        "path": "work/alice/tests/governance/test_mfm_public_conditional_foundation.py"
+      },
+      {
+        "bytes": 16920,
+        "file_sha256": "ed27a6705148bf7ad327359be8aeb60f3d7085a16ad8cf2a91ad4bfd96e2bbb1",
+        "path": "work/alice/tests/governance/test_mfm_public_conditional_training.py"
+      },
+      {
+        "bytes": 16270,
+        "file_sha256": "44a2652eba0f3dbbb9c51c8edafdd71bfcdf2728af62edc0f895ed7255081a10",
+        "path": "work/alice/tests/governance/test_mfm_kaggle_public_foundation_fit_20261008.py"
+      },
+      {
+        "bytes": 13807,
+        "file_sha256": "05fc53a88fc558d3ca206e94ce10fbf11e4e11953e770bd2c6554360f50ce756",
+        "path": "work/test_kaggle_full_fit_controller_20261009.py"
+      }
+    ],
+    "original_launch_controller_source": {
+      "bytes": 15260,
+      "file_sha256": "5958ac930882c574670596b175593400d9daa27b3fd349bb05c7d9f9d76741fc",
+      "path": "work/kaggle_full_fit_controller_20261009.before_attachment_order_fix.py"
+    },
+    "policy": {
+      "bytes": 1613,
+      "file_sha256": "8bea3ab3cd769ec301ec2991f76906cd9c705d8bc2c0cc4229105c0d7aca0ab9",
+      "path": "work/kaggle-full-fit-s0-20261009/launch-policy.json",
+      "record_sha256": "0b21f988b909faed0d4ed5d3a5381d39a28976e4edd6628255719f19ddd72341"
+    },
+    "preparation_file_sha256": "f10d5f79df37396659ce94e159827a67c6face142990b7a66fbf90be0fdf88a9",
+    "preparation_record_sha256": "1ae69a1dbe994fde1a8b74b1d0007c0c548c8d7aa45c3d7c5dad3e4a813d1b98",
+    "program_research": {
+      "bytes": 9391,
+      "file_sha256": "cc8d091d0b91ea3ea73251e237a986f14ae0cf36f594db13fcf72ddefcbaac00",
+      "path": "work/mfm-initial-full-public-fit-program-research-20261008.json",
+      "record_sha256": "4d40bdd1a575083e2b16e084776d72736e4620647912fc6c10d159619d0d9ddd"
+    },
+    "push": {
+      "bytes": 6255,
+      "file_sha256": "b439fd82b998690177d2f19f2ee9cf3cf2d8a94dab1f8b9f230ddcccd39c7d39",
+      "path": "work/kaggle-full-fit-s0-20261009/push-kernel-001/receipt.json",
+      "record_sha256": "357acce7d154e44d62f34d57fac38b9b370c60a0c5d5761af44650249dc50725"
+    },
+    "readback": {
+      "bytes": 5017,
+      "file_sha256": "956745711a36dee6b250d8d2ff9dfaa0048e6570829a1a6b171d2e4cf6097c33",
+      "path": "work/kaggle-full-fit-s0-20261009/kernel-readback-002/receipt.json",
+      "record_sha256": "719b80462b5f14e5434e68bfcf6541a9708c091324ba12823583bd8c01668d81"
+    },
+    "readback_controller_sha256": "7ae776cabdb2264cbf345497f3df5b5e575d687d8bce6c47cd79e93f4aa14266",
+    "ready": {
+      "bytes": 4232,
+      "file_sha256": "67e9ea03e7b28118e513294c5df0e67e6e3144e5e723e9b7ba908f43282e66b0",
+      "path": "work/kaggle-full-fit-s0-20261009/code-dataset-readback-001/receipt.json",
+      "record_sha256": "4ce996a19b0354f17f5a7c00a3b3f917f4e6ae4445de4e630b09bbf77f54252b"
+    },
+    "research_document": {
+      "bytes": 8356,
+      "file_sha256": "5ef88307b93c625614ecee9d100061da48ce64a6475a409fee3e0ac8071d0f58",
+      "path": "work/mfm-initial-full-public-fit-program-research-20261008.md"
+    },
+    "stage_intents": [
+      {
+        "bytes": 3051,
+        "file_sha256": "4d4e7dfe23bc5d4fd13cacdac9d706503746d9a18293cbbe5939c3036a378c49",
+        "path": "work/kaggle-full-fit-s0-20261009/create-code-dataset-001/stage-intent.json",
+        "record_sha256": "6db925250a6de7c01210584e63be185b998b1401a83765f1fa1961dbf723dffb"
+      },
+      {
+        "bytes": 3300,
+        "file_sha256": "1dc4d1cd032f09c6226d2657a80ee162b84a3baa430773ad00e1e8df2851cc98",
+        "path": "work/kaggle-full-fit-s0-20261009/code-dataset-readback-001/stage-intent.json",
+        "record_sha256": "ecffbaf19069cd6047cdc89ce5c749b1720f81e29416262526063a21a6fcdad0"
+      },
+      {
+        "bytes": 3291,
+        "file_sha256": "938e267e5b8599baa961a4dc32d0568113e8f41d573e3c66731316994b25f0e4",
+        "path": "work/kaggle-full-fit-s0-20261009/push-kernel-001/stage-intent.json",
+        "record_sha256": "4c5dc6d1fbd90419e25522b3b5030ea8ae872078d1c3003a8d38ec6d213458ee"
+      },
+      {
+        "bytes": 3286,
+        "file_sha256": "9e71efa2a8208b1cb71db1582052a08b910b40a8ba8d534c828ce708420eb854",
+        "path": "work/kaggle-full-fit-s0-20261009/kernel-readback-002/stage-intent.json",
+        "record_sha256": "8e2d5ab4c2971ab9da27918348dcac69d2398085caed6adc032331073ee9b320"
+      },
+      {
+        "bytes": 3288,
+        "file_sha256": "80daf3446a4e5603a2ee2ebe6c45c21566cbcfb277c726b0c0bf246c99b43f46",
+        "path": "work/kaggle-full-fit-s0-20261009/kernel-status-001/stage-intent.json",
+        "record_sha256": "f7acfb2375622ec9d3ef1b0ab589cc28604b0e69e12b70ccb1e348566e5ec352"
+      }
+    ],
+    "status": {
+      "bytes": 5115,
+      "file_sha256": "88f19f2ef1cbf7453c7652489f13cc67215dd1cb59a5dcd849c5f0e2d9dc3661",
+      "path": "work/kaggle-full-fit-s0-20261009/kernel-status-001/receipt.json",
+      "record_sha256": "8d09dfab945a1b9d2f7a00755e1aca79c9ec40d45cca22cc34a475e5f711af0f"
+    }
+  },
+  "final_opened": false,
+  "first_session_complete_epochs": 3,
+  "first_session_index": 0,
+  "first_session_only_external_results_remain": true,
+  "first_session_stop_step": 6864,
+  "fixed_final_checkpoint_and_matched_seed_generation_required": true,
+  "frozen_history_source_preserved": true,
+  "full_parameter_count": 267542272,
+  "history": {
+    "method_trace_prefix": {
+      "bytes": 128513,
+      "file_sha256": "5d785715854da20888ad181e28e455b3f010816ef9685410b1ee37c6086b1fdc",
+      "path": "work/fbm/docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
+      "rows": 42
+    },
+    "mfm_state_mirror_prefix": {
+      "bytes": 1434230,
+      "file_sha256": "ea932ec601abba7e2b67e214cae263ce11ae24e74ca65722c3474dc1dd347bb1",
+      "path": "outputs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json"
+    },
+    "mfm_state_prefix": {
+      "bytes": 1434230,
+      "file_sha256": "ea932ec601abba7e2b67e214cae263ce11ae24e74ca65722c3474dc1dd347bb1",
+      "path": "work/alice/docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json"
+    },
+    "previous_public_receipt": {
+      "bytes": 6825,
+      "file_sha256": "9b3911ecd3575a24ffa6b0d347360efaac2a8584bbf22c94f7f4d929f9f06cdb",
+      "path": "work/alice/docs/receipts/MFM_FULL_CONSTRUCTOR_PASSED_20261008_TRACE90_PUBLIC.json",
+      "record_sha256": "f2f66b01a2e7ce2aedef4f18a8c967bc97eee86f912acb2797b9af43c07ec10c"
+    },
+    "previous_trace_id": "fbm-mfm-20261008-full-constructor-passed-fit-custody-gap-90",
+    "private_handoff_prefix": {
+      "bytes": 1368273,
+      "file_sha256": "8fe7c93d5c8a2ac57d0dcd0434efe825d9ca96d8822b9e0507a9a9eba6c79829",
+      "path": "outputs/MFM_EXECUTION_HANDOFF_2026-10-02.json"
+    },
+    "recursive_snapshots_added": false
+  },
+  "hosted_job_submitted": true,
+  "hosted_provider": "Kaggle-free-private",
+  "independent_gold": false,
+  "launcher_source_pins": {
+    "common_sha256": "9833c6c7db3847e384fe7488ca84484f03af5b4a35aa65b622427ea70edddab8",
+    "fit_sha256": "726138b0a2748f0841f0e07b7236c404f6c0fe487733cc5c3652713a4c3d9217"
+  },
+  "learned_capability_claimed": false,
+  "memory_activation": false,
+  "next_action": "Wait for the actual first-session result. Retrieve only small status, run, session, curriculum, construction, history, objective and failure metadata; do not download full provider outputs or checkpoint tensors to the PC. Verify the exact first-session history/seed/control/Adam/cursor/RNG lineage through an independently pinned CPU parent verifier reading retained remote bytes, then establish authenticated Drive custody and capacity for the complete retained program history. Before any learned continuation, implement and verify the missing provider resume-custody controller, bind exact private predecessor numeric identities/versions/source readbacks, and prove actual read-only mounts into a new writable allocation. Preserve the same source, runtime, objective and E20 program; never use constructor control weights as the fitting parent. Continue only from the authenticated last completed optimizer boundary; analyze fixed final train/dev and generation results after all 20 epochs without development-based selection.",
+  "objective": "complete conditional sequence token objective; original sampling and whole epochs unchanged",
+  "only_external_results_remain": false,
+  "only_external_results_scope": "first hosted session awaits external results; broader owner storage cleanup is active and future provider continuation custody/controller and full MFM qualification remain pending",
+  "optimizer_updates_observed": false,
+  "paid_compute_purchased": false,
+  "preserved_failure_refs": {
+    "initial_local_cleanup_zero_delete_failure_record_sha256": "dbe43cb029af49efb9a77037279f1d4b0ea6ef984bc0dbccd38656af98f6bf67",
+    "learning_verdict_from_these_failures": false,
+    "original_provider_attachment_order_readback": {
+      "bytes": 5417,
+      "file_sha256": "616bfd65b1360f2edc0256d0eb89c173e9c424619d6ea4b53d57d14eaa51746b",
+      "path": "work/kaggle-full-fit-s0-20261009/kernel-readback-001/receipt.json",
+      "record_sha256": "27e80f4d30b104fda1719a3ce367b6a6d3af460db82bad6e03cf58f1d3f2a5ae"
+    },
+    "windows_capsule_ordering_failure_record_sha256": "87377c93f15fe0397e7f1344a5986cb2af9eca03f368762cda5e169746558132"
+  },
+  "privacy": "PUBLIC_METHOD_ONLY",
+  "private_cloud_identifiers_published": false,
+  "producer_initialization": "fresh seeded weights",
+  "provider_resume_custody_controller_implemented": false,
+  "provider_state_observed": "RUNNING",
+  "provider_status_observed_at_utc": "2026-10-09T04:34:18.456732+00:00",
+  "purpose": "fresh-full-roster-public-foundation-fit",
+  "qualified_for_product": false,
+  "recipe": {
+    "adam_eps": 1e-08,
+    "batch_size": 16,
+    "beta1": 0.9,
+    "beta2": 0.999,
+    "epochs": 20,
+    "generation_tokens": 128,
+    "learning_rate": 0.0001,
+    "logit_chunk_tokens": 16,
+    "save_every_steps": 2288,
+    "seed": 20261008,
+    "weight_decay": 0.0
+  },
+  "record_sha256": "0fc7b11baa39bbdc00f26624db199d6c4b24a72b0e64438854f358132ceb5e8d",
+  "recorded_at_utc": "2026-10-09T04:41:46.485285+00:00",
+  "save_every_steps": 2288,
+  "schema": "mfm-full-public-foundation-fit-launch-public-v1",
+  "source_pins": {
+    "scripts/mfm/kaggle_public_foundation_fit_20261008.py": {
+      "bytes": 8607,
+      "path": "scripts/mfm/kaggle_public_foundation_fit_20261008.py",
+      "sha256": "1db6e5b5bfa334b27f79d6522547a8593386e0628a84da7fc9553e88831be9c5"
+    },
+    "scripts/mfm/public_checkpoint_history.py": {
+      "bytes": 16312,
+      "path": "scripts/mfm/public_checkpoint_history.py",
+      "sha256": "97a0c80710f73d8a5d0b7ce770301f4c8659f879e0a31c3d7475e9b49f4dd35b"
+    },
+    "scripts/mfm/train_public_conditional_foundation.py": {
+      "bytes": 49857,
+      "path": "scripts/mfm/train_public_conditional_foundation.py",
+      "sha256": "1a7a5336b1a072e71e6f47fabaaabfb5904888d65a198383fc7882e986f50645"
+    }
+  },
+  "source_revision": "268bf08760baf8a6032afca207c56e131ce20b81",
+  "storage": {
+    "bank_local_cleanup": {
+      "actual_cleanup_receipt_supplied": true,
+      "cleanup_success_claimed": true,
+      "evidence": {
+        "bytes": 47362,
+        "file_sha256": "389d7dec70de1ce579d649536970d44425aa0abffe78ac6837eb235e1d76e2a2",
+        "path": "work/drive-bank-cleanup-applied-20261009-v2.receipt.json",
+        "record_sha256": "184ecaca777cab306450bac09bb089e1766df9d4e66aedcd5eb233da10ef7616"
+      },
+      "independent_postcheck": {
+        "bytes": 792,
+        "file_sha256": "4bc298b6ae0d375f937abcf6a6e44076c69d40ddc8b5851d339f068512568ae1",
+        "path": "work/drive-bank-cleanup-independent-postcheck-20261009-v2.json",
+        "record_sha256": "f45198ab56b5b3740780b47367ba980309e113e805596a86e2efcdc48e8dd29a"
+      },
+      "new_remote_roundtrip_claimed": false,
+      "observed_disk_free_delta_bytes": 13831544832,
+      "retained_constructor_payload_part_bytes": 5355132001,
+      "retained_constructor_payload_parts": 80,
+      "unlinked_files": 56,
+      "unlinked_payload_bytes": 13835643786
+    },
+    "broader_owner_storage_cleanup_in_progress": true,
+    "complete_fitting_history_custody_verified": false,
+    "constructor_custody": {
+      "ambiguous_timeout_indices": [
+        2
+      ],
+      "authenticated_restored": 2,
+      "complete": false,
+      "constructor_outputs_are_fit_parent": false,
+      "durable_backup_verified": false,
+      "evidence": {
+        "bytes": 30646,
+        "file_sha256": "b244f57f93f2998628927237b3e771b5c22fa24d10252d7dc8f028c3c315a96e",
+        "path": "work/drive-archives/kaggle-completed-constructor-137761832-20261008/drive-transfer-continuation.json",
+        "record_sha256": "122f7dbea588f358f0c58edeeffe55b9e2ef437e4dfac1f3cb9c9d77eefb5a41"
+      },
+      "original_constructor_local_outputs_retained": true,
+      "part_occurrences": 80,
+      "uploaded_metadata_verified": 5
+    },
+    "full_checkpoint_downloads_to_pc_authorized": false,
+    "primary": "Google Drive",
+    "training_scratch": [
+      "Kaggle",
+      "Magnolia"
+    ]
+  },
+  "trace_id": "fbm-mfm-20261009-full-public-foundation-fit-launched-91",
+  "train_pairs": 36597,
+  "training_eligible": false,
+  "training_results_pending": true,
+  "verification_scope": {
+    "actual_capsule_bootstrap": "exact tiny published source and generated launcher import/help/parser only",
+    "actual_first_session_result_verified": false,
+    "actual_hosted_predecessor_readonly_continuation_proven": false,
+    "fit_package_fixture_tests": "15 passed; fixture scope only",
+    "provider_controller_fixture_tests": "12 focused tests passed; provider attachment enumeration order accepted, duplicate/extra identities and launch overrides refused",
+    "test_results_are_observed_prelaunch_history": true,
+    "tests_rerun_by_this_finalizer": false,
+    "trainer_replay_cpu_tests": "40 passed and 26 subtests; exact partial-batch loss/model/Adam/RNG replay and final global lineage",
+    "trainer_replay_interpreter": "Python3.13.5 / Torch2.7.1+cu118 CPU / safetensors0.8.0 / pytest9.1.1"
+  }
+}
