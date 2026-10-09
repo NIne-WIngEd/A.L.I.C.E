@@ -12968,16 +12968,17 @@
     "state_at_snapshot": "COMPLETED"
   },
   "current_alignment_and_legacy_custody": {
-    "consumer_release_complete": false,
+    "consumer_release_complete": true,
     "design": "docs/MFM_ORIGINAL_SOURCE_ALIGNMENT_BUILD_2026-10-09.md",
-    "file_sha256": "f8131887634e9fc2b92f64dd1b65150f493fddc2b54e066265455064baed5a4f",
+    "file_sha256": "b1c4df248f54b7a310b3eeff9bd4add22dd45c7c433901a38d42a5cc8b1ad120",
     "learning_qualified": false,
-    "public_receipt": "docs/receipts/MFM_ALIGNMENT_AND_DURABLE_LEGACY_CUSTODY_20261009_TRACE98_PUBLIC.json",
-    "record_sha256": "99946633c6dcb7cb41276302ce8daf05734a9cb38be0828096af388eaa58f448",
-    "text_alignment_implemented": true,
-    "trace_id": "fbm-mfm-20261009-original-source-alignment-and-whole-legacy-custody-98",
-    "whole20_and_catalog_custody": true,
-    "whole41_custody": false
+    "local_model_bytes_deleted": 31674449326,
+    "local_model_originals_deleted": 20,
+    "public_receipt": "docs/receipts/MFM_GEMMA_GEOMETRY_AND_LEGACY_CLEANUP_20261009_TRACE99_PUBLIC.json",
+    "real_Gemma_text_geometry_verified": true,
+    "record_sha256": "f0c44d39d6a9024a221799eb49d369a751a70241c28040bb72ecc11b1c105204",
+    "trace_id": "fbm-mfm-20261009-repeatable-real-gemma-geometry-and-usable-drive-cleanup-99",
+    "whole20_and_catalog_custody": true
   },
   "current_checkpoint_continuation_method": {
     "actual_checkpoint_custody": false,
@@ -25025,7 +25026,7 @@
     "current_full_construction_measurement"
   ],
   "memory_activation": false,
-  "next_action": "Complete the original41-file and catalog MFM Drive archive and admit actual model/Adam/RNG/cursor plus full history before resuming the unchanged E20 program to step13728 and the scheduled boundaries through45760. Use actual pinned Gemma geometry to continue target-field/source-position integration, caller-grounded typed selection and complete semantic/longitudinal/native formation. Complete reviewed restore-on-demand availability and consumer release before authorized project-cache cleanup. Then connect accepted memory to governed retrieval, judgment/action and observed outcomes/revision; foundation precedes personalization.",
+  "next_action": "Finish original41-file plus catalog Drive custody, then admit the complete original model/Adam/RNG/cursor/history and resume the unchanged E20 foundation to step13728 and scheduled boundaries through45760. Use the verified actual Gemma text geometry to build full target-field position integration, caller-grounded typed selection and complete semantic/longitudinal/native formation, then accepted memory through governed retrieval/judgment/action to observed outcome and revision. Foundation precedes personalization.",
   "next_route_data_and_frontier_audit": {
     "current_new_architecture_adopted": false,
     "frontier_commit": "756bf294f6a93e9ea7dcc12dba932a556d6080e0",

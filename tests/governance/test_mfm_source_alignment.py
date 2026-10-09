@@ -7,7 +7,7 @@ import unittest
 
 import torch
 from jinja2 import Environment
-from tokenizers import Tokenizer, decoders, models, pre_tokenizers
+from tokenizers import Tokenizer, decoders, models, pre_tokenizers, processors
 from transformers import PreTrainedTokenizerFast
 
 from cognitive_kernel.canonical import CognitiveKernelContractError, canonical_sha256
@@ -20,20 +20,26 @@ from scripts.mfm.formation_caller_input import caller_input_record
 class Processor:
     def __init__(self):
         vocab = {char: i for i, char in enumerate(sorted(pre_tokenizers.ByteLevel.alphabet()))}
-        vocab.update({'<unk>': 256, '<s>': 257, '</s>': 258})
+        vocab.update({'<unk>': 256, '<s>': 257, '</s>': 258, '<pad>': 259})
         backend = Tokenizer(models.BPE(vocab=vocab, merges=[], unk_token='<unk>'))
         backend.pre_tokenizer = pre_tokenizers.ByteLevel(add_prefix_space=False, use_regex=False)
         backend.decoder = decoders.ByteLevel()
         self.tokenizer = PreTrainedTokenizerFast(tokenizer_object=backend,
-            bos_token='<s>', eos_token='</s>', unk_token='<unk>')
+            bos_token='<s>', eos_token='</s>', unk_token='<unk>', pad_token='<pad>')
         self.mismatch = False
+        self.add_special_tokens = False
+        self.padding = False
 
     def apply_chat_template(self, messages, *, chat_template, tokenize, **kwargs):
         text = Environment().from_string(chat_template).render(messages=messages)
         if not tokenize:
             return text
-        result = self.tokenizer(text, add_special_tokens=False, return_tensors='pt')
-        if self.mismatch:
+        observed = kwargs.get('processor_kwargs', {})
+        result = self.tokenizer(text, add_special_tokens=self.add_special_tokens,
+            padding=self.padding, return_tensors='pt', return_offsets_mapping=observed.get('return_offsets_mapping', False),
+            return_special_tokens_mask=observed.get('return_special_tokens_mask', False),
+            return_attention_mask=True)
+        if self.mismatch and not observed.get('return_offsets_mapping', False):
             result['input_ids'][0, 0] += 1
         return result
 
@@ -75,6 +81,43 @@ class SourceAlignmentTests(unittest.TestCase):
         self.assertEqual(api.verify_source_alignment(processor, record, sidecar,
             caller_sha256=record['record_sha256'], alignment_sha256=sidecar['record_sha256'],
             processor_binding=binding, max_source_tokens=20000), sidecar)
+
+    def test_actual_processor_added_special_is_retained_and_ineligible(self):
+        api = self.api(); processor = Processor(); record = caller(('Café banana',))
+        processor.tokenizer.backend_tokenizer.post_processor = processors.TemplateProcessing(
+            single='<s> $A', special_tokens=[('<s>', 257)])
+        processor.add_special_tokens = True
+        binding = api.processor_binding(processor)
+        context, opened, _ = api._caller(record, record['record_sha256'])
+        baseline = api.v16.source_batch_v16(processor, context, opened, 20000)
+        batch, sidecar = api.text_source_batch_with_alignment(processor, record,
+            caller_sha256=record['record_sha256'], processor_binding=binding, max_source_tokens=20000)
+        self.assertEqual(batch['input_ids'].tolist(), baseline['input_ids'].tolist())
+        self.assertEqual(sidecar['input_ids'], baseline['input_ids'][0].tolist())
+        self.assertEqual(sidecar['input_ids'][0], 257)
+        self.assertEqual(sidecar['tokens'][0]['rendered_chars'], [0, 0])
+        self.assertFalse(sidecar['tokens'][0]['observed_source_eligible'])
+        self.assertIsNone(sidecar['tokens'][0]['source_ref'])
+        self.assertTrue(any(t['source_ref'] == 'source-0' for t in sidecar['tokens']))
+        self.assertEqual(api.verify_source_alignment(processor, record, sidecar,
+            caller_sha256=record['record_sha256'], alignment_sha256=sidecar['record_sha256'],
+            processor_binding=binding, max_source_tokens=20000), sidecar)
+
+    def test_processor_runtime_padding_truncation_preserved_for_exact_reload(self):
+        for configured in (False, True):
+            with self.subTest(configured=configured):
+                api = self.api(); processor = Processor(); record = caller(('é banana',))
+                processor.padding = True
+                if configured:
+                    processor.tokenizer.backend_tokenizer.enable_padding(length=8000, direction='left')
+                    processor.tokenizer.backend_tokenizer.enable_truncation(max_length=9000)
+                binding = api.processor_binding(processor)
+                batch, sidecar = api.text_source_batch_with_alignment(processor, record,
+                    caller_sha256=record['record_sha256'], processor_binding=binding, max_source_tokens=20000)
+                self.assertEqual(api.processor_binding(processor), binding)
+                self.assertEqual(api.verify_source_alignment(processor, record, sidecar,
+                    caller_sha256=record['record_sha256'], alignment_sha256=sidecar['record_sha256'],
+                    processor_binding=binding, max_source_tokens=20000), sidecar)
 
     def test_unicode_escape_atoms_have_exact_original_byte_boundaries(self):
         api, _, record, _, _, sidecar = self.built()
@@ -142,6 +185,43 @@ class SourceAlignmentTests(unittest.TestCase):
         with self.assertRaisesRegex(CognitiveKernelContractError, 'IDs'):
             api.text_source_batch_with_alignment(processor, record,
                 caller_sha256=record['record_sha256'], processor_binding=binding, max_source_tokens=20000)
+
+    def test_observed_processor_geometry_refuses_missing_malformed_or_changed_fields(self):
+        for fault in ('missing-offsets', 'offset-shape', 'negative-offset', 'special-type', 'changed-mask'):
+            with self.subTest(fault=fault):
+                api = self.api(); processor = Processor(); record = caller(('é',))
+                processor.padding = True
+                binding = api.processor_binding(processor); original = processor.apply_chat_template
+                def observed(*args, **kwargs):
+                    result = original(*args, **kwargs)
+                    if kwargs.get('processor_kwargs', {}).get('return_offsets_mapping', False):
+                        if fault == 'missing-offsets': result.pop('offset_mapping')
+                        elif fault == 'offset-shape': result['offset_mapping'] = result['offset_mapping'][0]
+                        elif fault == 'negative-offset': result['offset_mapping'][0, 0, 0] = -1
+                        elif fault == 'special-type': result['special_tokens_mask'] = result['special_tokens_mask'].float()
+                        elif fault == 'changed-mask': result['attention_mask'][0, 0] = 0
+                    return result
+                processor.apply_chat_template = observed
+                with self.assertRaises(CognitiveKernelContractError):
+                    api.text_source_batch_with_alignment(processor, record,
+                        caller_sha256=record['record_sha256'], processor_binding=binding, max_source_tokens=20000)
+                self.assertEqual(api.processor_binding(processor), binding)
+
+    def test_processing_semantic_tokenizer_change_is_not_restored_or_admitted(self):
+        api = self.api(); processor = Processor(); record = caller(('é',))
+        processor.padding = True
+        binding = api.processor_binding(processor); original = processor.apply_chat_template
+        def mutated(*args, **kwargs):
+            result = original(*args, **kwargs)
+            if kwargs.get('processor_kwargs', {}).get('return_offsets_mapping', False):
+                processor.tokenizer.add_tokens(['public-semantic-change'])
+            return result
+        processor.apply_chat_template = mutated
+        with self.assertRaisesRegex(CognitiveKernelContractError, 'binding changed'):
+            api.text_source_batch_with_alignment(processor, record,
+                caller_sha256=record['record_sha256'], processor_binding=binding, max_source_tokens=20000)
+        self.assertIsNone(processor.tokenizer.backend_tokenizer.padding)
+        self.assertNotEqual(api.processor_binding(processor), binding)
 
     def test_native_and_overflow_refuse_before_claiming_alignment(self):
         api, processor, record, binding, _, _ = self.built()

@@ -8,6 +8,8 @@ copy label fit. External digests bind custody; they do not authenticate callers.
 from __future__ import annotations
 
 from bisect import bisect_left, bisect_right
+from contextlib import contextmanager
+from copy import deepcopy
 from hashlib import sha256
 from importlib.metadata import version
 import json
@@ -75,6 +77,28 @@ def processor_binding(processor):
         'source_renderer_sha256': sha256(Path(shared.__file__).read_bytes()).hexdigest(),
         'media_builder_sha256': sha256(Path(media.__file__).read_bytes()).hexdigest(),
         'alignment_code_sha256': sha256(Path(__file__).read_bytes()).hexdigest()}
+
+
+@contextmanager
+def _processor_execution_settings(processor):
+    """Restore only the backend modes that Transformers changes per call.
+
+    The full serialized backend stays in the external binding. No semantic
+    tokenizer node is excluded, normalized or replaced to make reload pass.
+    """
+    backend = processor.tokenizer.backend_tokenizer
+    padding, truncation = deepcopy(backend.padding), deepcopy(backend.truncation)
+    try:
+        yield
+    finally:
+        if padding is None:
+            backend.no_padding()
+        else:
+            backend.enable_padding(**padding)
+        if truncation is None:
+            backend.no_truncation()
+        else:
+            backend.enable_truncation(**truncation)
 
 
 def _character_map(text, rendered_start, *, ascii_source):
@@ -171,20 +195,33 @@ def text_source_batch_with_alignment(processor, caller, *, caller_sha256,
     rendered = processor.apply_chat_template(messages, chat_template=shared.SOURCE_TEMPLATE,
         tokenize=False, add_generation_prompt=False)
     _require(type(rendered) is str and rendered == assembled, 'actual source template rendering differs')
-    batch = v16.source_batch_v16(processor, context, opened, max_source_tokens)
-    encoded = processor.tokenizer(rendered, add_special_tokens=False, truncation=False,
-        return_offsets_mapping=True, return_special_tokens_mask=True, return_attention_mask=True)
-    ids, masks = batch['input_ids'][0].tolist(), batch['attention_mask'][0].tolist()
-    _require(encoded['input_ids'] == ids and encoded['attention_mask'] == masks,
-             'actual processor IDs/masks differ from offset-bearing rendered tokenization')
+    with _processor_execution_settings(processor):
+        batch = v16.source_batch_v16(processor, context, opened, max_source_tokens)
+        ids, masks = batch['input_ids'][0].tolist(), batch['attention_mask'][0].tolist()
+        # Observe offsets through the same processor path as the unchanged batch.
+        # Its default special-token policy is part of processing; a standalone
+        # tokenizer call cannot substitute for that policy or shift its positions.
+        encoded = processor.apply_chat_template(messages, chat_template=shared.SOURCE_TEMPLATE,
+            tokenize=True, add_generation_prompt=False, return_dict=True, return_tensors='pt',
+            processor_kwargs={'do_sample_frames': False, 'return_offsets_mapping': True,
+                              'return_special_tokens_mask': True, 'return_attention_mask': True})
+        expected_shapes = {'input_ids': (1, len(ids)), 'attention_mask': (1, len(ids)),
+            'offset_mapping': (1, len(ids), 2), 'special_tokens_mask': (1, len(ids))}
+        _require(all(name in encoded and hasattr(encoded[name], 'tolist') and
+                     tuple(encoded[name].shape) == shape for name, shape in expected_shapes.items()),
+                 'actual processor omitted or malformed aligned IDs/masks/offsets/specials')
+        _require(encoded['input_ids'][0].tolist() == ids and encoded['attention_mask'][0].tolist() == masks,
+                 'actual processor IDs/masks differ from offset-bearing rendered tokenization')
+    _require(globals()['processor_binding'](processor) == actual_binding,
+             'processor binding changed during source observation')
     candidates = selection_candidates(context, opened, registry)
     return batch, _seal({'schema': SCHEMA, 'caller_sha256': caller_sha256,
         'context_sha256': context.content_digest(), 'processor_binding': actual_binding,
         'candidate_inventory_sha256': canonical_sha256(candidates),
         'rendered_text': rendered, 'rendered_utf8_sha256': sha256(rendered.encode()).hexdigest(),
         'input_ids': ids, 'attention_mask': masks, 'sources': sources,
-        'tokens': _tokens(rendered, sources, ids, masks, encoded['offset_mapping'],
-                          encoded['special_tokens_mask'], set(processor.tokenizer.all_special_ids)),
+        'tokens': _tokens(rendered, sources, ids, masks, encoded['offset_mapping'][0].tolist(),
+                          encoded['special_tokens_mask'][0].tolist(), set(processor.tokenizer.all_special_ids)),
         'native_locator_alignment': False, 'learning_qualified': False,
         'authority_granted': False})
 
