@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "0a16f86e26c76f109311e4d1410447fc9f3d2283",
+      "commit": "90762abf72cf7f00cdf5e70b3a2cc3f304f64897",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -47,7 +47,7 @@
         {
           "path": "docs/MFM_V16_BUILD_CONTINUATION_2026-10-02.md",
           "purpose": "MFM recovered corpus, compute decisions and remaining full-capability roadmap",
-          "blob_sha": "c1c64c0a9c0bfab28c15ef77c00d96d79f7d0fab"
+          "blob_sha": "8d6eb4debd514a3149ab32500fc37e2409c1f745"
         },
         {
           "path": "docs/MFM_COMPUTE_RECOVERY_RECEIPTS_2026-10-02.json",
@@ -57,7 +57,7 @@
         {
           "path": "docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
           "purpose": "completed teacher fit, failed generated formation, actual causal analysis and corrected measurement handoff",
-          "blob_sha": "7033a05e24da15b749ebe0cf3f8c760cf5620ea2"
+          "blob_sha": "7299abe111c8cd70903aa0b18fd70f730722727b"
         },
         {
           "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576702.json",
@@ -437,7 +437,7 @@
         {
           "path": "docs/MFM_COMPLETE_BANK_CONSTRUCTION_2026-10-08.md",
           "purpose": "full Alice/Fable foundation-before-personalization continuation from complete source-export metadata through tensor/archive/restore custody, actual producer measurement and later learning/full semantic formation",
-          "blob_sha": "69b626094e2c0d91a51c74bfcdc6a3537a5d3dd6"
+          "blob_sha": "0afcc80ee75788fbeb396d2d35f2c32506a08721"
         },
         {
           "path": "docs/receipts/MFM_COMPLETE_PUBLIC_SOURCE_METADATA_20261008_PUBLIC.json",
@@ -818,7 +818,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "e321625d24deae482a17d76cf5d46ea77265d50c",
+      "commit": "276cee99ce5117a1cb1dade43a09f32dac7d0509",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -828,7 +828,7 @@
         {
           "path": "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
           "purpose": "FBM recovered teacher CPU evidence and frozen-feature build continuation",
-          "blob_sha": "5c9a2c1915f2d228bd5f57a66d3acfd997fdd319"
+          "blob_sha": "6e9c1d84501c0e1206ee5abf7d68e935df80e4f4"
         },
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261002_MFM_RECOVERY_AND_FROZEN_FEATURE_ROUTE.jsonl",
@@ -898,7 +898,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "12901f772177847b6ea6025ac7d03cbbdcc2bce8"
+          "blob_sha": "1d1c6664fd2e59f98e52852b68f55417a6e36a98"
         }
       ]
     }
