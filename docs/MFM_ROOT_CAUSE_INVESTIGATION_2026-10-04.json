@@ -12976,6 +12976,17 @@
     "source_and_fit_event_unchanged": true,
     "trace_id": "fbm-mfm-20261009-continuation-and-storage-recovery-94"
   },
+  "current_custody_recovery": {
+    "broader_plan": "docs/MFM_DEVELOPMENT_CONTINUATION_2026-10-09.md",
+    "file_sha256": "eb71502a87ec5846b4bfb284c4c84088ebba707f8b745385f6325317ea6b32a6",
+    "original_archive_status": "FAILED_SOURCE_TRANSFER",
+    "public_receipt": "docs/receipts/MFM_CUSTODY_RECOVERY_20261009_TRACE97_PUBLIC.json",
+    "record_sha256": "dcf67919d016fb739c712cbbd7cbe1c1c4f5b09b5764de739b62cea4ea0a1a49",
+    "resume_or_learning_claimed": false,
+    "successor_status": "REPLACEMENT_UPLOAD_RUNNING",
+    "trace_id": "fbm-mfm-20261009-source-framing-and-detached-custody-recovery-97",
+    "whole_custody": false
+  },
   "current_event_field": "current_tls_custody_continuation",
   "current_full_fit_session0_completion": {
     "complete_checkpoint_custody": false,
@@ -25002,7 +25013,7 @@
     "current_full_construction_measurement"
   ],
   "memory_activation": false,
-  "next_action": "Complete the launched original41-file/full-restore/catalog archive and verify typed whole history and checkpoint lineage. Complete legacy48-part/20-file restore, then recovery catalog and exact consumer release before local cleanup. Only from accepted durable weights/Adam/RNG/cursor/history prepare unchanged-source session1 stop13728. Require actual readonly predecessor mounts and trainer state acceptance; finish fixed E20 without development selection, then matched source-fidelity evaluation and full MFM semantic formation, native modalities and governed memory/action/outcome construction before personalization.",
+  "next_action": "Complete all41 original full hash/Drive restores and recovery catalog; admit whole history, weights/Adam/RNG/cursor and actual readonly predecessor mount, then resume the unchanged E20 source to step13728 and scheduled boundaries through45760. After fixed foundation learning, run the frozen full development/source-intervention protocol; construct caller-grounded reference selection, original-byte copy alignment, full semantic/longitudinal and native formation plus governed memory/action/outcome revision. Finish legacy20 whole verification, recovery catalog and consumer release before any project-only local cleanup. Foundation precedes private personalization.",
   "next_route_data_and_frontier_audit": {
     "current_new_architecture_adopted": false,
     "frontier_commit": "756bf294f6a93e9ea7dcc12dba932a556d6080e0",
