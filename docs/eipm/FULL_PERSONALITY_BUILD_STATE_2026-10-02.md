@@ -1149,3 +1149,73 @@ FBM adds two paired procedure rows and immutable v8, parenting exact v7 without
 rewriting original failures. This is a measured construction method, not trained
 FBM weights, an eligible builder dataset, cross-user transfer or approved ALICE
 personality. Private evidence/weights remain outside public Git.
+
+## Complete N1/N2 construction and actual N3 continuation — 9 October 2026
+
+Actual 577095 completed successfully in 18:44:15: 200 N1 updates over five
+epochs, 320 N2 updates over eight epochs, all epoch/final checkpoints, and all
+60 connected responses. Guarded 577141 verified the 15 checkpoint copies and
+their actual payload/manifest seals, plus all response bindings. See the
+[completed-work recovery](../../evaluation/eipm/gemma_n0/receipts/magnolia_577141_completed_n1_n2_recovery.json).
+This closes the full intended N1/N2 construction run; it does not establish
+convergence, full personality capability or base approval.
+
+The first reload checker, 577143, failed after exact complete model state,
+native checkpoint chain and response receipt checks passed. Its final raw
+Python mapping comparison incorrectly compared native tuple metadata with
+parsed JSON lists. All eight diagnosis steps are retained in the
+[evidence diagnosis](../../evaluation/eipm/gemma_n0/receipts/magnolia_577143_reload_evidence_diagnosis_20261009.json).
+A real public-model control reproduced that mismatch, preserved exact canonical
+JSON equality and rejected a changed numeric value. Corrected guarded 577144
+verified complete actual model reconstruction, the native N1→N2 chain, the
+original new-context response, the entire canonical decision and native packet
+fingerprint in 90 seconds. No trained model, source, target or numerical
+tolerance was changed. See the [actual reload](../../evaluation/eipm/gemma_n0/receipts/magnolia_577144_actual_model_consumer_reload.json)
+and [Python JSON conversion contract](https://docs.python.org/3.11/library/json.html).
+
+The owner-designated primary teacher read all 20 actual new-context responses,
+their full conditions, source meanings and semantic labels. The separate sparse
+reviews retain contraindicated selections, ambiguity and partial fit. Expressed
+stance is distinct from response validity; unselected alternatives are not
+invented observations or negatives. Model confidence supplies no targets.
+Owner fidelity, measured failure outcomes, evidence-sufficiency targets and
+acoustic controls remain unavailable. The numerical annotations are provisional
+primary developmental judgments, not empirical outcome frequencies or owner
+approval. Original target-free documents, fixed TRAIN identity references and
+source splits remain unchanged; each actual-outcome supervision family declares
+its original calibration-episode parent. Shared teacher/checkpoint dependencies
+are disclosed. See the [primary review summary](../../evaluation/eipm/gemma_n0/receipts/primary_actual_n3_review_summary_20261009.json).
+
+The new external [calibration continuation helper](../../scripts/eipm/gemma_n0/calibrate_personality.py)
+reconstructs the exact finite governing state, reproduces reviewed original
+decisions, materializes actual-outcome cases against the source-closed store,
+uses fresh six-pin N3 admission/optimizer, verifies fixed N1/N2 state and emits
+full connected responses/decision packets. The existing identity/teaching code
+and original construction helper remain byte-identical to scientific revision
+333fcd0c8239fc81a6459b13d53bbe592b33fda6. Eight new synthetic continuation
+tests passed; a fresh root run of continuation, contextual calibration and
+actual-outcome tests passed all 13 tests. These mechanics supply no private
+identity fidelity claim.
+
+Actual N3 job **577146**, under **mxrayan**, is submitted with one CPU, 120 GiB,
+24 hours, no requeue and appended logs. It will reproduce all 20 actual reviewed
+responses before eight calibration epochs/160 planned updates, retain each
+epoch/final optimizer checkpoint, and run the full 60-document connected
+consumer. It reuses original complete 49×3840 features and preserves N1/N2
+parameters; it is a new calibration stage, not an N2 optimizer resume. The
+[bound submission](../../evaluation/eipm/gemma_n0/receipts/magnolia_577146_actual_n3_construction_submission.json)
+records the exact private plan, public helper and worker pins. Actual N3
+optimizer/checkpoint/response results remain pending.
+
+Next recover and verify the completed N3 chain and full consumer before judging
+the assembled model. Positive temperatures cannot repair an incorrect N2
+ranking; demonstrated substantive errors remain for subsequent governing-model
+diagnosis and repair, after the connected build. Owner/spoken fidelity,
+remaining Gemma influence and N0 approval remain open. Full ALICE personality
+and full Fable v1 remain the objective; FloRA is outside this task.
+
+FBM retains the original 19 trace rows, adds three paired construction/reload/N3
+procedure records and immutable v9 with exact v8 parent. No private payload,
+admitted builder training corpus, learned FBM weights or cross-user transfer is
+claimed. The next dependency is the actual N3 run; stop idle work and resume
+when the owner reports its completion.
