@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "5fc07f2da27d7b0e7b31c7bf1b4e98226f681aab",
+      "commit": "1f12702376bf16f03bef022aea5304db31af9616",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -57,7 +57,7 @@
         {
           "path": "docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
           "purpose": "completed teacher fit, failed generated formation, actual causal analysis and corrected measurement handoff",
-          "blob_sha": "faca3bc7319ad6f23e87194673acd6508c193bd2"
+          "blob_sha": "0bcecab18fadbfa5bdb6f62d52d6a7d58009de31"
         },
         {
           "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576702.json",
@@ -373,6 +373,46 @@
           "path": "scripts/mfm/train_public_conditional_foundation.py",
           "purpose": "complete-roster fresh conditional foundation construction, actual Adam/RNG checkpoint continuation and public lineage; actual resource fit and learning require execution",
           "blob_sha": "e7bb441b0f18457b778650c8975ffaa5a2e67ea0"
+        },
+        {
+          "path": "scripts/mfm/public_checkpoint_history.py",
+          "purpose": "same-run source, cursor, optimizer, RNG and historical checkpoint lineage; actual provider read-only history mounting remains separate",
+          "blob_sha": "989371259249ba03b03b3a752c0a86651828f792"
+        },
+        {
+          "path": "tests/governance/test_mfm_public_checkpoint_history.py",
+          "purpose": "real small-model history restore and tamper controls; no full learned capability claim",
+          "blob_sha": "53ddc503b71357bca6e52946b2ef669adbdba0ae"
+        },
+        {
+          "path": "scripts/mfm/kaggle_public_foundation_fit_20261008.py",
+          "purpose": "tiny exact-source full-fit capsule, fixed complete-roster learning program and storage forecast; no provider submission",
+          "blob_sha": "aff226459418fb804c3f4f95a5a9bda446ff5cd5"
+        },
+        {
+          "path": "scripts/mfm/kaggle_public_foundation_fit_20261008_runtime.py",
+          "purpose": "offline capsule/input guards and unchanged full-fit invocation; no custom duration timeout",
+          "blob_sha": "a647b05a491aafb70ecade168429c0e06d5a60b6"
+        },
+        {
+          "path": "tests/governance/test_mfm_kaggle_public_foundation_fit_20261008.py",
+          "purpose": "actual tiny archive/import/argument and package boundary controls; hosted optimizer results remain separate",
+          "blob_sha": "a8bd98c41ac228f9839903d2224827e237ab28c6"
+        },
+        {
+          "path": "docs/MFM_FULL_PUBLIC_FIT_PROGRAM_2026-10-09.md",
+          "purpose": "fixed E20/B16/C2288 fresh-producer program, complete epoch continuation, source-only Gemma and full-role destination",
+          "blob_sha": "d3b9effd8ab3072e27e28275bd95c86b5c8db5d8"
+        },
+        {
+          "path": "docs/receipts/MFM_FULL_PUBLIC_FOUNDATION_FIT_LAUNCHED_20261009_TRACE91_PUBLIC.json",
+          "purpose": "sealed actual full-fit launch and provider running observation, verified bank duplicate cleanup and pending learned result",
+          "blob_sha": "77413771870eb76e14203e35ad4aa855f95ed368"
+        },
+        {
+          "path": "docs/receipts/MFM_PUBLIC_DEVELOPMENT_OBSERVATION_STORAGE_20261009_TRACE92_PUBLIC.json",
+          "purpose": "frozen all506/4271 prospective observations,183 existing literal-value contrasts and semantic interpretation limits; backup and semantic scoring pending",
+          "blob_sha": "48cd387c8d7b9c333532e77c75961b17347f3963"
         },
         {
           "path": "tests/governance/test_mfm_public_conditional_foundation.py",
@@ -818,7 +858,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "02644f900ac07cdc6666a7215b20692f9f6adfa6",
+      "commit": "8fd05219bf40c04689c3d5c23ff57474beec4dd1",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -898,7 +938,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "c405009c59982f6faa293ceaf1b008cf11d1952f"
+          "blob_sha": "2a15c25b513724b3ba77709f6c687d098cf67b5e"
         }
       ]
     }
