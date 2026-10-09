@@ -23,6 +23,7 @@ from cognitive_kernel.formation_decision_specialist_v16 import FormationDecision
 from cognitive_kernel.formation_v1_specialist import SpecialistConfig
 from . import public_conditional_training as reader
 from . import train_v1_formation_specialist as shared
+from . import public_checkpoint_history as checkpoint_history
 from .train_v16_cached_specialist import _cpu_tree, compare_tree
 
 TASK = 'conditional_meaning_to_text'
@@ -161,26 +162,37 @@ def verify_checkpoint(path, *, binding):
     return receipt
 
 
-def resume_checkpoint(checkpoint_dir, output_dir, specialist, optimizer, *, binding):
+def resume_checkpoint(checkpoint_dir, output_dir, specialist, optimizer, *, binding, history=None):
     import torch
     from safetensors.torch import load_file
     root = _safe_root(output_dir)
     path = _safe_root(checkpoint_dir)
-    if path.parent != root or re.fullmatch(r'checkpoint-[0-9]{8}', path.name) is None:
+    if history is not None:
+        receipt = history.authorize_latest(path, binding)
+    elif path.parent != root or re.fullmatch(r'checkpoint-[0-9]{8}', path.name) is None:
         raise ValueError('public checkpoint is foreign or partial')
-    complete = []
-    for p in root.iterdir():
-        if p.name.startswith('checkpoint-'):
-            if re.fullmatch(r'checkpoint-[0-9]{8}', p.name) is None:
-                raise ValueError('unexpected public checkpoint path')
-            complete.append((verify_checkpoint(p, binding=binding)['cursor']['step'], p))
-    if not complete or max(complete)[1] != path:
-        raise ValueError('resume requires latest complete public checkpoint')
-    receipt = verify_checkpoint(path, binding=binding)
+    else:
+        complete = []
+        for p in root.iterdir():
+            if p.name.startswith('checkpoint-'):
+                if re.fullmatch(r'checkpoint-[0-9]{8}', p.name) is None:
+                    raise ValueError('unexpected public checkpoint path')
+                complete.append((verify_checkpoint(p, binding=binding)['cursor']['step'], p))
+        if not complete or max(complete)[1] != path:
+            raise ValueError('resume requires latest complete public checkpoint')
+        receipt = verify_checkpoint(path, binding=binding)
     state = torch.load(path / 'optimizer.pt', map_location='cpu', weights_only=True)
     if state['binding'] != binding or state['cursor'] != receipt['cursor']:
         raise ValueError('public optimizer container cursor or binding differs')
     _adam_cursor(state['optimizer'], receipt['cursor'])
+    current_groups = optimizer.state_dict()['param_groups']
+    saved_groups = state['optimizer']['param_groups']
+    if len(current_groups) != len(saved_groups) or any(
+            saved['params'] != current['params'] or
+            {k: v for k, v in saved.items() if k != 'params'} !=
+            {k: v for k, v in current.items() if k != 'params'}
+            for saved, current in zip(saved_groups, current_groups)):
+        raise ValueError('public optimizer exact recipe differs from bound current AdamW')
     specialist.load_state_dict(load_file(str(path / 'specialist.safetensors')), strict=True)
     optimizer.load_state_dict(state['optimizer'])
     torch.random.set_rng_state(state['torch_rng_state'])
@@ -401,10 +413,10 @@ def _verify_seed(root, run_digest, config):
 
 def _validate_run_paths(root):
     allowed = {'worker.lock', 'run.json', 'curriculum.json', 'seed-control.json', 'seed-control.safetensors',
-               'seed-generation.json', 'construction.json', 'construction-controls', 'component'}
+               'seed-generation.json', 'construction.json', 'construction-controls', 'component', 'session.json'}
     for path in root.iterdir():
         _safe_child(root, path.name)
-        if path.name not in allowed and re.fullmatch(r'(checkpoint-[0-9]{8}|\.checkpoint-[A-Za-z0-9]+|\.record-[a-f0-9]+|execution-[a-f0-9]+\.json|\.component-[a-f0-9]+)', path.name) is None:
+        if path.name not in allowed and re.fullmatch(r'(checkpoint-[0-9]{8}|history-[0-9]{8}\.json|\.checkpoint-[A-Za-z0-9]+|\.record-[a-f0-9]+|execution-[a-f0-9]+\.json|\.component-[a-f0-9]+)', path.name) is None:
             raise ValueError('unexpected path in owned public run')
         if path.is_dir():
             for item in path.rglob('*'):
@@ -455,6 +467,15 @@ def _run_locked(args, prepared):
         raise ValueError('public AdamW recipe is invalid')
     if args.session_seconds is not None and (not math.isfinite(args.session_seconds) or args.session_seconds <= 0):
         raise ValueError('scheduling allowance must be finite and positive')
+    if type(args.session_index) is not int or args.session_index < 0:
+        raise ValueError('public execution session index must be nonnegative')
+    if args.stop_step is not None and (type(args.stop_step) is not int or not 0 < args.stop_step <=
+            args.epochs * math.ceil(len(prepared.train) / args.batch_size)):
+        raise ValueError('public session stop must be an exact prescribed optimizer boundary')
+    if args.resume_history and (args.resume_checkpoint or args.measure_only or not args.resume_history_sha256):
+        raise ValueError('authenticated public history needs its pin and cannot import measurement or local resume')
+    if not args.resume_history and (args.resume_history_sha256 or args.history_source or args.session_index != 0):
+        raise ValueError('public source roots and continuation session require an authenticated history')
     if not args.provider.strip() or not args.allocation_ref.strip():
         raise ValueError('explicit provider and allocation reference required')
     device = torch.device(args.device)
@@ -502,7 +523,8 @@ def _run_locked(args, prepared):
                   Path(sys.modules[FormationDecisionSpecialist.__module__].__file__),
                   Path(sys.modules[FormationDecisionSpecialist.__bases__[0].__module__].__file__),
                   Path(sys.modules[bind_conditional_task.__module__].__file__), Path(shared.__file__),
-                  Path(reader.census_code.__file__), Path(sys.modules[_cpu_tree.__module__].__file__)]
+                  Path(reader.census_code.__file__), Path(sys.modules[_cpu_tree.__module__].__file__),
+                  Path(checkpoint_history.__file__)]
     manifest = shared._seal({'schema': RUN_SCHEMA, 'task': TASK, 'objective': OBJECTIVE,
         'purpose': 'construction-measurement-only' if args.measure_only else 'full-roster-public-fit',
         'census_sha256': args.census_sha256, 'feature_bank_sha256': args.feature_bank_sha256,
@@ -516,9 +538,12 @@ def _run_locked(args, prepared):
         'private_evidence_opened': False, 'final_payloads_opened': False, 'source_ancestry_frozen': True,
         'base_weights_loaded': False, 'qualified_for_product': False})
     root = Path(args.output_dir)
+    accepted_history = None
     if args.resume_checkpoint:
         root = _safe_root(root)
         _validate_run_paths(root)
+        if (root / 'session.json').exists():
+            raise ValueError('indexed public fit requires authenticated history and a new session output root')
         if (root / 'component').exists() or args.measure_only:
             raise ValueError('completed or measurement-only run cannot resume fitting')
         if shared._read_sealed(root / 'run.json', RUN_SCHEMA) != manifest or shared._read_sealed(root / 'curriculum.json', CURRICULUM_SCHEMA) != curriculum:
@@ -529,6 +554,21 @@ def _run_locked(args, prepared):
             raise ValueError('fresh locked public run contains unexpected files')
         shared._write_new(root / 'run.json', {k: v for k, v in manifest.items() if k != 'record_sha256'})
         shared._write_new(root / 'curriculum.json', {k: v for k, v in curriculum.items() if k != 'record_sha256'})
+        if args.resume_history:
+            sources = {}
+            for value in args.history_source:
+                index, separator, source = value.partition('=')
+                if not separator or re.fullmatch(r'0|[1-9][0-9]*', index) is None or int(index) in sources or not source:
+                    raise ValueError('public history source must be a unique SESSION_INDEX=READONLY_ROOT')
+                sources[int(index)] = Path(source)
+            prior = shared._read_sealed(_safe_root(args.resume_history), checkpoint_history.SCHEMA)
+            provisional = {'run': manifest['record_sha256'], 'seed': prior['binding']['seed'], 'epochs': args.epochs,
+                'batch_size': args.batch_size, 'train_cases': len(prepared.train)}
+            accepted_history = checkpoint_history.load(args.resume_history, args.resume_history_sha256,
+                sources=sources, manifest=manifest, curriculum=curriculum, binding=provisional)
+            seed_receipt = accepted_history.record['origin']['seed']
+            if args.session_index != accepted_history.record['session_index'] + 1:
+                raise ValueError('public continuation session index differs from accepted predecessor')
     torch.manual_seed(args.seed)
     initialization_started = perf_counter()
     model = FormationDecisionSpecialist(config).to(device=device, dtype=torch.float32)
@@ -537,7 +577,7 @@ def _run_locked(args, prepared):
     view = bind_conditional_task(model, task=TASK)
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.learning_rate, weight_decay=args.weight_decay,
         betas=(args.beta1, args.beta2), eps=args.adam_eps, foreach=False, fused=False)
-    if not args.resume_checkpoint:
+    if not args.resume_checkpoint and not accepted_history:
         seed_receipt = _seed_control(root, model, manifest['record_sha256'], config)
     binding = {'run': manifest['record_sha256'], 'seed': seed_receipt['record_sha256'], 'epochs': args.epochs,
                'batch_size': args.batch_size, 'train_cases': len(prepared.train)}
@@ -547,6 +587,10 @@ def _run_locked(args, prepared):
         if construction['run_sha256'] != binding['run'] or not construction['control_updates_restored']:
             raise ValueError('public construction binding differs')
         cursor = resume_checkpoint(args.resume_checkpoint, root, model, optimizer, binding=binding)
+    elif accepted_history:
+        construction = accepted_history.record['origin']['construction']
+        cursor = resume_checkpoint(accepted_history.latest_checkpoint, root, model, optimizer,
+            binding=binding, history=accepted_history)
     else:
         seed_generation = _generation(view, prepared, tokenizer, cap=args.generation_tokens)
         shared._write_new(root / 'seed-generation.json', {'schema': 'mfm-public-conditional-foundation-generation-v1',
@@ -558,25 +602,33 @@ def _run_locked(args, prepared):
         'provider': args.provider, 'allocation_ref': args.allocation_ref, 'device': args.device,
         'session_seconds': args.session_seconds, 'hardware': _memory(device), 'start_cursor': dict(cursor),
         'measure_only': args.measure_only, 'construction_sha256': construction['record_sha256']}
+    execution.update(session_index=args.session_index, stop_step=args.stop_step,
+        parent_history_sha256=accepted_history.record['record_sha256'] if accepted_history else None)
     if args.measure_only:
         execution.update(end_cursor=cursor, seconds=perf_counter() - started, status='construction-measured-no-fit')
         return shared._write_new(root / f'execution-{uuid4().hex}.json', execution)
+    history = None if args.resume_checkpoint else checkpoint_history.start(root, manifest=manifest,
+        curriculum=curriculum, binding=binding, session_index=args.session_index,
+        allocation_ref=args.allocation_ref, parent=accepted_history)
     cursor, latest = fit_epochs(view, optimizer, prepared, output_dir=root, binding=binding,
         seed=args.seed, cursor=cursor, save_every_steps=args.save_every_steps,
-        started=started, session_seconds=args.session_seconds, purpose=manifest['purpose'])
+        started=started, session_seconds=args.session_seconds, purpose=manifest['purpose'],
+        stop_step=args.stop_step, history=history)
     if cursor['epoch'] == args.epochs:
         model.load_state_dict(load_file(str(latest / 'specialist.safetensors')), strict=True)
         learned_generation = _generation(view, prepared, tokenizer, cap=args.generation_tokens)
         component = publish_component(view, prepared, output_dir=root, binding=binding,
-            curriculum=curriculum, cursor=cursor, checkpoint=latest, generation=learned_generation)
+            curriculum=curriculum, cursor=cursor, checkpoint=latest, generation=learned_generation, history=history)
         execution['component_sha256'] = component['record_sha256']
     execution.update(end_cursor=cursor, seconds=perf_counter() - started,
+        checkpoint_history_sha256=history.record['record_sha256'] if history else None,
+        checkpoint_history_path=history.latest_path.name if history else None,
         checkpoint_sha256=verify_checkpoint(latest, binding=binding)['record_sha256'],
         status='full-roster-fit-complete-unqualified' if cursor['epoch'] == args.epochs else 'scheduled-complete-boundary-stop')
     return shared._write_new(root / f'execution-{uuid4().hex}.json', execution)
 
 
-def publish_component(view, prepared, *, output_dir, binding, curriculum, cursor, checkpoint, generation):
+def publish_component(view, prepared, *, output_dir, binding, curriculum, cursor, checkpoint, generation, history=None):
     """Actual final component publication used by full production orchestration."""
     from safetensors.torch import save_file
     root = _safe_root(output_dir)
@@ -585,6 +637,10 @@ def publish_component(view, prepared, *, output_dir, binding, curriculum, cursor
     if final.exists():
         raise ValueError('completed public component cannot be overwritten')
     receipt = verify_checkpoint(checkpoint, binding=binding)
+    if history is not None:
+        history.authorize_latest(checkpoint, binding)
+        if history.root != root or history.record['curriculum'] != curriculum:
+            raise ValueError('public component requires its exact global fitting history')
     if _safe_root(checkpoint).parent != root or receipt['cursor'] != cursor or cursor['epoch'] != binding['epochs']:
         raise ValueError('public component requires its run-root final completed checkpoint')
     training = evaluate_objective(view, prepared, split='train', checkpoint=checkpoint, binding=binding)
@@ -595,7 +651,9 @@ def publish_component(view, prepared, *, output_dir, binding, curriculum, cursor
     component = shared._write_new(staging / 'component.json', {'schema': COMPONENT_SCHEMA, 'task': TASK,
         'objective': OBJECTIVE, 'run_sha256': binding['run'], 'curriculum_sha256': curriculum['record_sha256'],
         'seed_sha256': binding['seed'], 'checkpoint_sha256': receipt['record_sha256'],
-        'checkpoint_lineage': [verify_checkpoint(p, binding=binding)['record_sha256'] for p in sorted(root.glob('checkpoint-*'))],
+        'checkpoint_lineage': [e['receipt']['record_sha256'] for e in history.record['entries']] if history else
+            [verify_checkpoint(p, binding=binding)['record_sha256'] for p in sorted(root.glob('checkpoint-*'))],
+        'checkpoint_history_sha256': history.record['record_sha256'] if history else None,
         'specialist_sha256': shared._digest(staging / 'specialist.safetensors'), 'specialist_config': model.config.record(),
         'cursor': cursor, 'generation': generation, 'training_teacher_objective': training['value'],
         'training_objective_report': training, 'development_objective_report': development,
@@ -651,12 +709,17 @@ def evaluate_objective(view, prepared, *, split, checkpoint, binding):
 
 
 def fit_epochs(view, optimizer, prepared, *, output_dir, binding, seed, cursor,
-               save_every_steps, started, session_seconds, purpose):
+               save_every_steps, started, session_seconds, purpose, stop_step=None, history=None):
     """Prescribed fitting lifecycle, shared by the production orchestration."""
     if purpose != 'full-roster-public-fit':
         raise ValueError('measurement-only construction cannot enter or resume fitting')
     root = _safe_root(output_dir)
     _cursor(cursor, train_cases=binding['train_cases'], batch_size=binding['batch_size'], epochs=binding['epochs'])
+    total_steps = binding['epochs'] * math.ceil(binding['train_cases'] / binding['batch_size'])
+    if stop_step is not None and (type(stop_step) is not int or not cursor['step'] < stop_step <= total_steps):
+        raise ValueError('explicit session stop step must be a future prescribed optimizer boundary')
+    if history is not None and (history.root != root or history.record['binding'] != binding):
+        raise ValueError('fitting history requires this exact owned session and run')
     latest = None
     if cursor['step'] == 0:
         # Construction has restored the persisted fresh model, empty Adam and
@@ -667,8 +730,12 @@ def fit_epochs(view, optimizer, prepared, *, output_dir, binding, seed, cursor,
             verify_checkpoint(latest, binding=binding)
         else:
             latest = save_checkpoint(root, view.specialist, optimizer, binding=binding, cursor=cursor)
+        if history is not None:
+            history.append(latest)
     while cursor['epoch'] < binding['epochs']:
         if session_seconds is not None and perf_counter() - started >= session_seconds:
+            break
+        if stop_step is not None and cursor['step'] == stop_step:
             break
         batch, following = next_batch(prepared, seed=seed, epochs=binding['epochs'],
             batch_size=binding['batch_size'], cursor=cursor)
@@ -676,12 +743,18 @@ def fit_epochs(view, optimizer, prepared, *, output_dir, binding, seed, cursor,
         cursor = following
         if cursor['step'] % save_every_steps == 0 or cursor['epoch'] == binding['epochs']:
             latest = save_checkpoint(root, view.specialist, optimizer, binding=binding, cursor=cursor)
+            if history is not None:
+                history.append(latest)
     path = root / f"checkpoint-{cursor['step']:08d}"
     if not path.exists():
         latest = save_checkpoint(root, view.specialist, optimizer, binding=binding, cursor=cursor)
+        if history is not None:
+            history.append(latest)
     else:
         latest = path
         verify_checkpoint(latest, binding=binding)
+        if history is not None:
+            history.append(latest)
     return cursor, latest
 
 
@@ -697,6 +770,11 @@ def arguments(argv=None):
     for name in ('learning-rate', 'weight-decay', 'beta1', 'beta2', 'adam-eps'):
         parser.add_argument('--' + name, type=float, required=True)
     parser.add_argument('--resume-checkpoint', type=Path)
+    parser.add_argument('--resume-history', type=Path)
+    parser.add_argument('--resume-history-sha256')
+    parser.add_argument('--history-source', action='append', default=[])
+    parser.add_argument('--session-index', type=int, default=0)
+    parser.add_argument('--stop-step', type=int)
     parser.add_argument('--session-seconds', type=float)
     parser.add_argument('--measure-only', action='store_true')
     return parser.parse_args(argv)

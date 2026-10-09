@@ -1,0 +1,360 @@
+"""Pinned full-roster fit launch, using existing immutable public inputs.
+
+Only this small launcher and reviewed public source change between packaging
+and the hosted invocation. Historical checkpoints are read directly from
+authenticated readonly provider sources; they are never copied into working.
+"""
+from __future__ import annotations
+
+from hashlib import sha256
+import json
+import os
+from pathlib import Path
+import platform
+import re
+import shutil
+import subprocess
+import sys
+import time
+import traceback
+from uuid import uuid4
+
+if __package__:
+    from . import kaggle_public_foundation_20261008_runtime as common
+else:
+    common = MFM_COMMON
+
+SCHEMA = 'mfm-kaggle-full-public-fit-transport-v1'
+MANIFEST_NAME = 'mfm-fit-transport.json'
+INPUT_DATASET = 'mkrayanyan/rayan-mfm-full-inputs-imports-20261008'
+INPUT_MANIFEST_FILE_SHA256 = 'df8a891e27aa8b3f2e80326a918ee102d2c7ac8dfe1abd70469e766a8596e840'
+INPUT_MANIFEST_SHA256 = 'c097617e2f1403963512bc383ccef07c6dfee26110f8e989310912a374aec9a7'
+BANK_SHA256 = '6e923d81d30b19c9b5ee71cce66339bc2bdf6626a451aae63955981145ed6a05'
+UPDATES_PER_EPOCH = 2288
+PROGRAM_EPOCHS = 20
+PROGRAM_STEPS = PROGRAM_EPOCHS * UPDATES_PER_EPOCH
+CHECKPOINT_BYTES = 3210622859
+MODEL_BYTES = 1070181192
+CONSTRUCTOR_BYTES = 5354953308
+EMPTY_CHECKPOINT_BYTES = 1070189810
+# Actual constructor small trainer metadata is 3,446,455 bytes. Ten inventories
+# allow for new flat history snapshots and launcher/final-objective receipts.
+# This allowance forecasts future metadata; it does not prove capacity.
+METADATA_RESERVE_BYTES = 3446455 * 10
+OFFLINE_OVERLAY_BYTES = 49914181  # actual constructor overlay inventory
+
+
+def owned_id(value):
+    if not isinstance(value, str) or re.fullmatch(r'mkrayanyan/[a-z0-9]+(?:-[a-z0-9]+)*', value) is None:
+        raise ValueError('exact authenticated owner/resource identity required')
+    return value
+
+
+def validate_program(manifest):
+    if manifest.get('purpose') != 'full-roster-public-fit':
+        raise ValueError('only the full public fit purpose is authorized')
+    recipe = common.validate_recipe(manifest['recipe'])
+    fixed = {'epochs': 20, 'batch_size': 16, 'save_every_steps': 2288, 'seed': 20261008,
+             'logit_chunk_tokens': 16, 'generation_tokens': 128, 'learning_rate': 0.0001,
+             'weight_decay': 0.0, 'beta1': 0.9, 'beta2': 0.999, 'adam_eps': 1e-8}
+    if recipe != fixed:
+        raise ValueError('the reviewed full E20/B16/C2288 recipe must remain unchanged')
+    session = manifest.get('session')
+    if type(session) is not dict or set(session) != {'stop_step', 'session_index', 'resume_history', 'source_roots'}:
+        raise ValueError('explicit execution boundary and source map required; no timer fields')
+    index, stop = session['session_index'], session['stop_step']
+    if type(index) is not int or index < 0 or type(stop) is not int or not 0 < stop <= PROGRAM_STEPS or stop % UPDATES_PER_EPOCH:
+        raise ValueError('session stop must be an absolute complete-epoch update boundary')
+    # Retain at most three new complete epoch states, without deleting history.
+    expected_stop = min((index + 1) * 3 * UPDATES_PER_EPOCH, PROGRAM_STEPS)
+    if stop != expected_stop or index > 6:
+        raise ValueError('session boundary differs from the reviewed three-epoch storage program')
+    sources, history = session['source_roots'], session['resume_history']
+    if type(sources) is not list:
+        raise ValueError('explicit readonly source roster required')
+    if index == 0:
+        if history is not None or sources:
+            raise ValueError('fresh fit has no construction or historical parent')
+        return recipe
+    if type(history) is not dict or set(history) != {'path', 'sha256', 'record_sha256', 'source_session_index'} or \
+            type(history['source_session_index']) is not int or history['source_session_index'] != index - 1:
+        raise ValueError('latest immutable history descriptor required')
+    common.relative_name(history['path'])
+    common.pin(history['sha256']); common.pin(history['record_sha256'])
+    if len(sources) != index:
+        raise ValueError('every predecessor source must remain mounted')
+    identities = set()
+    for i, row in enumerate(sources):
+        if type(row) is not dict or set(row) != {'session_index', 'kernel_id', 'kernel_numeric_id', 'version_number', 'trainer_root', 'allocation_ref'} or \
+                type(row['session_index']) is not int or row['session_index'] != i or \
+                type(row['kernel_numeric_id']) is not int or row['kernel_numeric_id'] < 1 or \
+                type(row['version_number']) is not int or row['version_number'] != 1:
+            raise ValueError('exact unique private v1 predecessor identities required')
+        identity = owned_id(row['kernel_id'])
+        if identity in identities or not isinstance(row['allocation_ref'], str) or \
+                not row['allocation_ref'].startswith(identity + '/allocation-') or \
+                re.fullmatch(r'[a-zA-Z0-9-]+', row['allocation_ref'].split('/allocation-', 1)[1]) is None:
+            raise ValueError('source identity or actual allocation binding differs')
+        identities.add(identity); common.relative_name(row['trainer_root'])
+    last = sources[-1]
+    previous_step = index * 3 * UPDATES_PER_EPOCH
+    if history['path'] != last['trainer_root'] + f'/history-{previous_step:08d}.json':
+        raise ValueError('resume must reference the latest completed predecessor boundary')
+    return recipe
+
+
+def trainer_argv(manifest, inputs, *, material, metadata, output, allocation_ref, history_path, source_roots):
+    recipe = validate_program(manifest)
+    census = Path(material).joinpath(*common.relative_name(inputs['layout']['census']).parts)
+    bank = Path(material).joinpath(*common.relative_name(inputs['layout']['bank']).parts)
+    argv = ['-m', 'scripts.mfm.train_public_conditional_foundation', '--census-dir', str(census),
+            '--feature-bank', str(bank), '--output-dir', str(output), '--prepared-base-dir', str(Path(metadata) / 'processor-metadata'),
+            '--prepared-base-receipt', str(Path(metadata) / 'mfm-clone-576486.json'), '--provider', 'Kaggle-free-public',
+            '--allocation-ref', allocation_ref, '--device', 'cuda:0']
+    for name in ('census_sha256', 'feature_bank_sha256', 'prepared_clone_sha256', 'config_sha256'):
+        argv += ['--' + name.replace('_', '-'), common.pin(inputs['pins'][name])]
+    for name in common.INTEGER_FIELDS + common.FLOAT_FIELDS:
+        argv += ['--' + name.replace('_', '-'), str(recipe[name])]
+    session = manifest['session']
+    argv += ['--stop-step', str(session['stop_step']), '--session-index', str(session['session_index'])]
+    if session['session_index']:
+        if history_path is None or set(source_roots) != set(range(session['session_index'])):
+            raise ValueError('actual authenticated readonly history mounts required')
+        if any(Path(output).resolve().is_relative_to(Path(root).resolve()) or Path(root).resolve().is_relative_to(Path(output).resolve()) for root in source_roots.values()):
+            raise ValueError('new output must be disjoint from immutable source roots')
+        argv += ['--resume-history', str(history_path), '--resume-history-sha256', session['resume_history']['record_sha256']]
+        for index in sorted(source_roots):
+            argv += ['--history-source', f'{index}={source_roots[index]}']
+    elif history_path is not None or source_roots:
+        raise ValueError('fresh session cannot import checkpoint history')
+    return argv
+
+
+def read_fit_manifest(path, expected_pin):
+    path = Path(path)
+    if path.is_symlink() or not path.is_file():
+        raise ValueError('fit manifest must be an ordinary file')
+    record = json.loads(path.read_bytes())
+    if type(record) is not dict or record.get('schema') != SCHEMA or record.get('record_sha256') != common.pin(expected_pin) or \
+            common.seal({k: v for k, v in record.items() if k != 'record_sha256'}) != record:
+        raise ValueError('fit manifest external seal differs')
+    validate_program(record)
+    owned_id(record['dataset_id']); owned_id(record['kernel_id'])
+    if record['input_dataset'] != {'id': INPUT_DATASET, 'numeric_id': 12455297, 'version_number': 1, 'is_private': True,
+            'manifest_name': common.MANIFEST_NAME, 'manifest_file_sha256': INPUT_MANIFEST_FILE_SHA256,
+            'manifest_sha256': INPUT_MANIFEST_SHA256}:
+        raise ValueError('original admitted private input v1 binding differs')
+    if record['dataset_id'] in {INPUT_DATASET, record['kernel_id']} or record['kernel_id'] == INPUT_DATASET:
+        raise ValueError('new code and kernel identities must be distinct')
+    return record
+
+
+def accepted_input_manifest(path):
+    if common.digest(path) != INPUT_MANIFEST_FILE_SHA256:
+        raise ValueError('original accepted manifest FILE bytes differ')
+    record = common.read_manifest(path, INPUT_MANIFEST_SHA256)
+    if record['dataset_id'] != INPUT_DATASET or record['archives']['material']['sha256'] != BANK_SHA256 or \
+            record['archives']['material']['bytes'] != 1537293754:
+        raise ValueError('original accepted full bank identity differs')
+    return record
+
+
+def unique_manifest(root, filename):
+    paths = sorted(Path(root).rglob(filename))
+    if len(paths) != 1 or paths[0].is_symlink() or not paths[0].resolve().is_relative_to(Path(root).resolve()):
+        raise ValueError('one unambiguous mounted manifest required')
+    return paths[0]
+
+
+def require_readonly_mount(path, input_root):
+    path, input_root = Path(path), Path(input_root)
+    if not path.exists() or any(p.is_symlink() for p in [path, *path.parents]) or \
+            not path.resolve().is_relative_to(input_root.resolve()) or not hasattr(os, 'statvfs') or \
+            not os.statvfs(path).f_flag & os.ST_RDONLY:
+        raise ValueError('actual readonly input filesystem required, not chmod or a directory name')
+    return path.resolve()
+
+
+def resolve_history(manifest, input_root):
+    session = manifest['session']
+    if not session['session_index']:
+        return None, {}
+    descriptor = session['resume_history']
+    suffix = common.relative_name(descriptor['path'])
+    matches = [p for p in Path(input_root).rglob(suffix.name) if p.as_posix().endswith('/' + suffix.as_posix())]
+    if len(matches) != 1:
+        raise ValueError('latest historical source mount must be unique')
+    history_path = require_readonly_mount(matches[0], input_root)
+    if common.digest(history_path) != descriptor['sha256']:
+        raise ValueError('mounted parent history FILE pin differs')
+    history = json.loads(history_path.read_bytes())
+    if common.seal({k: v for k, v in history.items() if k != 'record_sha256'}) != history or \
+            history.get('record_sha256') != descriptor['record_sha256'] or \
+            history.get('schema') != 'mfm-public-conditional-foundation-history-v1' or \
+            history.get('session_index') != session['session_index'] - 1:
+        raise ValueError('mounted parent history logical identity differs')
+    roots = {}
+    for row in session['source_roots']:
+        expected = history['sessions'][row['session_index']]
+        if expected['allocation_ref'] != row['allocation_ref'] or expected['session_index'] != row['session_index']:
+            raise ValueError('provider source does not match sealed history allocation')
+        candidates = []
+        suffix = common.relative_name(row['trainer_root'])
+        for p in Path(input_root).rglob('session.json'):
+            if p.parent.as_posix().endswith('/' + suffix.as_posix()):
+                record = json.loads(p.read_bytes())
+                if record == expected:
+                    candidates.append(p.parent)
+        if len(candidates) != 1:
+            raise ValueError('exact predecessor session mount must be unique')
+        roots[row['session_index']] = require_readonly_mount(candidates[0], input_root)
+    return history_path, roots
+
+
+def storage_plan(manifest, inputs, *, code_bytes):
+    validate_program(manifest)
+    session = manifest['session']
+    start = session['session_index'] * 3 * UPDATES_PER_EPOCH
+    new_states = (session['stop_step'] - start) // UPDATES_PER_EPOCH
+    # Atomic staging is the Nth new state alongside N-1 published states.
+    # The last stop reuses its published checkpoint, without a second save.
+    working = new_states * CHECKPOINT_BYTES + METADATA_RESERVE_BYTES
+    if session['session_index'] == 0:
+        working += CONSTRUCTOR_BYTES + EMPTY_CHECKPOINT_BYTES
+    if session['stop_step'] == PROGRAM_STEPS:
+        working += MODEL_BYTES
+    extraction = sum(inputs['archives'][role]['uncompressed_bytes'] for role in ('material', 'metadata', 'dependencies'))
+    # Preserve input extraction and actual offline overlay; a second code-sized
+    # allowance forecasts bytecode, without inventing another archive copy.
+    extraction += 2 * code_bytes + OFFLINE_OVERLAY_BYTES
+    return {'working_required_bytes': working, 'extraction_required_bytes': extraction, 'new_epoch_states': new_states,
+            'atomic_checkpoint_staging_included_in_new_states': True, 'additional_checkpoint_transaction_bytes': 0,
+            'metadata_forecast_allowance_bytes': METADATA_RESERVE_BYTES, 'component_bytes': MODEL_BYTES if session['stop_step'] == PROGRAM_STEPS else 0,
+            'old_history_copied': False,
+            'forecast_from_measured_constructor': True, 'capacity_guaranteed': False}
+
+
+def validate_storage(plan, *, working_free, extraction_free, same_filesystem):
+    required = plan['working_required_bytes'] + (plan['extraction_required_bytes'] if same_filesystem else 0)
+    if working_free < required or (not same_filesystem and extraction_free < plan['extraction_required_bytes']):
+        raise ValueError('actual scratch filesystems lack retained states plus atomic/extraction reserve; recipe unchanged')
+
+
+def verify_source(root, manifest):
+    expected = manifest['source_files']
+    actual = common.file_inventory(root)
+    if actual != sorted(expected, key=lambda row: row['path']):
+        raise ValueError('complete exact source capsule roster or byte pins differ')
+
+
+def run(expected_pin):
+    started, fit_started = time.monotonic(), False
+    input_root = Path('/kaggle/input')
+    manifest_path = unique_manifest(input_root, MANIFEST_NAME)
+    manifest = read_fit_manifest(manifest_path, expected_pin)
+    require_readonly_mount(manifest_path, input_root)
+    old_path = unique_manifest(input_root, common.MANIFEST_NAME)
+    require_readonly_mount(old_path, input_root)
+    inputs = accepted_input_manifest(old_path)
+    allocation_ref = manifest['kernel_id'] + '/allocation-' + uuid4().hex
+    result_root = Path('/kaggle/working') / ('mfm-full-fit-' + expected_pin[:16])
+    result_root.mkdir(mode=0o700, exist_ok=False)
+    try:
+        history_path, source_roots = resolve_history(manifest, input_root)
+        common.write_record(result_root / 'history-mount-custody.json', common.seal({'schema': 'mfm-kaggle-fit-history-mount-custody-v1',
+            'transport_sha256': expected_pin, 'provider_identity_binding_source': 'externally-pinned-controller-reviewed-fit-manifest',
+            'source_bindings': manifest['session']['source_roots'], 'resolved_source_roots': {str(k): str(v) for k, v in source_roots.items()},
+            'parent_history': manifest['session']['resume_history'], 'resolved_history_path': str(history_path) if history_path else None,
+            'readonly_filesystem_checked': True, 'source_allocation_refs_match_sealed_history': True,
+            'provider_api_called_by_runtime': False, 'trainer_full_history_verification_pending': bool(source_roots), 'history_copied': False}))
+        versions = common.package_versions()
+        if platform.python_version() != '3.13.15' or versions['torch'] != '2.11.0+cu128':
+            raise ValueError('measured Python/Torch runtime required; no reinstall or alternate runtime')
+        os.environ.update(CUBLAS_WORKSPACE_CONFIG=':4096:8', HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1', HF_HUB_DISABLE_TELEMETRY='1')
+        temp_parent = Path('/kaggle/temp'); temp_parent.mkdir(exist_ok=True)
+        extraction = temp_parent / ('mfm-fit-' + uuid4().hex); extraction.mkdir(mode=0o700)
+        plan = storage_plan(manifest, inputs, code_bytes=manifest['code_archive']['uncompressed_bytes'])
+        working_disk, extract_disk = shutil.disk_usage(result_root), shutil.disk_usage(extraction)
+        same = result_root.stat().st_dev == extraction.stat().st_dev
+        validate_storage(plan, working_free=working_disk.free, extraction_free=extract_disk.free, same_filesystem=same)
+        common.write_record(result_root / 'storage-preflight.json', common.seal({'schema': 'mfm-kaggle-fit-storage-preflight-v1',
+            **plan, 'working_free_bytes': working_disk.free, 'extraction_free_bytes': extract_disk.free, 'same_filesystem': same}))
+        locations = {}
+        for role in ('material', 'metadata', 'dependencies'):
+            descriptor = inputs['archives'][role]
+            blob = old_path.parent.joinpath(*common.relative_name(descriptor['filename']).parts)
+            require_readonly_mount(blob, input_root)
+            locations[role] = extraction / role
+            common.extract_verified(blob, locations[role], descriptor)
+        code = extraction / 'code'
+        blob = manifest_path.parent.joinpath(*common.relative_name(manifest['code_archive']['filename']).parts)
+        require_readonly_mount(blob, input_root)
+        common.extract_verified(blob, code, manifest['code_archive']); verify_source(code, manifest)
+        dependency_root = locations['dependencies']
+        dependency_record = json.loads((dependency_root / 'dependency-manifest.json').read_bytes())
+        if common.verify_dependency_manifest(dependency_record) != inputs['dependency_manifest_sha256'] or \
+                {p.name for p in dependency_root.iterdir()} != {'dependency-manifest.json', common.TRANSFORMERS_WHEEL['filename']}:
+            raise ValueError('original offline dependency roster differs')
+        overlay = extraction / 'owned-python-overlay'
+        after = common.provision_overlay(dependency_root, overlay, dependency_record, versions, result_root)
+        common.verify_dependencies({'transformers': '5.17.0'}, after)
+        import torch
+        if not torch.cuda.is_available() or torch.cuda.device_count() != 2 or torch.version.cuda != '12.8' or \
+                any(torch.cuda.get_device_name(i) != 'Tesla T4' for i in range(2)):
+            raise ValueError('measured two-T4 allocation required; no pooled or CPU fallback')
+        common.write_record(result_root / 'runtime-actual-allocation.json', common.seal({'schema': 'mfm-kaggle-fit-runtime-v1',
+            'python': platform.python_version(), 'package_versions': after, 'selected_device': 'cuda:0',
+            'actual_devices': [{'ordinal': i, 'name': torch.cuda.get_device_name(i), 'total_memory_bytes': torch.cuda.get_device_properties(i).total_memory} for i in range(2)],
+            'cublas_workspace_config': ':4096:8', 'source_revision': manifest['source_revision'], 'allocation_ref': allocation_ref,
+            'pooled_memory_or_distributed_execution': False, 'session_seconds': None, 'provider_duration_verified': False}))
+        material_pin = common.verify_extracted_material(locations['material'], inputs)
+        common.write_record(result_root / 'input-custody.json', common.seal({'schema': 'mfm-kaggle-fit-input-custody-v1',
+            'transport_sha256': expected_pin, 'original_transport_sha256': INPUT_MANIFEST_SHA256,
+            'material_manifest_sha256': material_pin, 'full_bank_archive_sha256': BANK_SHA256,
+            'all_extracted_archive_files_verified': True, 'base_weights_loaded': False, 'private_evidence_opened': False}))
+        metadata = locations['metadata']
+        if {p.name for p in metadata.iterdir()} != set(common.METADATA_NAMES) | {'mfm-clone-576486.json', 'subset-manifest.json'}:
+            raise ValueError('original processor asset roster differs')
+        processor = metadata / 'processor-metadata'; processor.mkdir(mode=0o700)
+        for name in common.METADATA_NAMES:
+            (metadata / name).rename(processor / name)
+        argv = [sys.executable] + trainer_argv(manifest, inputs, material=locations['material'], metadata=metadata,
+            output=result_root / 'trainer', allocation_ref=allocation_ref, history_path=history_path, source_roots=source_roots)
+        common.write_record(result_root / 'trainer-invocation.json', common.seal({'schema': 'mfm-kaggle-full-fit-invocation-v1',
+            'transport_sha256': expected_pin, 'argv': argv, 'source_revision': manifest['source_revision'],
+            'recipe': manifest['recipe'], 'session': manifest['session'], 'mode': 'full-roster-public-fit', 'custom_runtime_timeout_sent': False}))
+        fit_started = True
+        with (result_root / 'trainer.log').open('x', encoding='utf-8') as stream:
+            process = subprocess.run(argv, cwd=code, env=common.trainer_environment(code, overlay), stdout=stream, stderr=subprocess.STDOUT, check=False)
+        outputs = common.file_inventory(result_root / 'trainer') if (result_root / 'trainer').exists() else []
+        execution_paths = list((result_root / 'trainer').glob('execution-*.json')) if (result_root / 'trainer').is_dir() else []
+        execution = json.loads(execution_paths[0].read_bytes()) if len(execution_paths) == 1 else None
+        if process.returncode == 0:
+            if execution is None or common.seal({k: v for k, v in execution.items() if k != 'record_sha256'}) != execution or \
+                    execution.get('schema') != 'mfm-public-conditional-foundation-execution-v1' or \
+                    execution.get('measure_only') is not False or execution.get('session_seconds') is not None or \
+                    execution.get('end_cursor') != {'epoch': manifest['session']['stop_step'] // UPDATES_PER_EPOCH,
+                        'next_case': 0, 'step': manifest['session']['stop_step']} or \
+                    execution.get('allocation_ref') != allocation_ref or execution.get('session_index') != manifest['session']['session_index']:
+                raise ValueError('trainer success lacks the exact sealed complete-update fit boundary')
+            history_file = result_root / 'trainer' / str(common.relative_name(execution['checkpoint_history_path']))
+            history = json.loads(history_file.read_bytes())
+            if common.seal({k: v for k, v in history.items() if k != 'record_sha256'}) != history or \
+                    history.get('record_sha256') != common.pin(execution['checkpoint_history_sha256']):
+                raise ValueError('trainer success lacks a sealed final checkpoint history')
+        receipt = common.seal({'schema': 'mfm-kaggle-full-fit-execution-v1', 'transport_sha256': expected_pin,
+            'allocation_ref': allocation_ref, 'trainer_exit_code': process.returncode, 'seconds': time.monotonic() - started,
+            'trainer_outputs': outputs, 'trainer_output_bytes': sum(row['bytes'] for row in outputs),
+            'trainer_execution': execution, 'fit_invoked': True, 'program_epochs': PROGRAM_EPOCHS,
+            'session_stop_step': manifest['session']['stop_step'], 'session_seconds': None,
+            'saved_output_quota_verified': False, 'learned_capability_claimed': False, 'durable_custody': False})
+        common.write_record(result_root / 'fit-execution.json', receipt)
+        if process.returncode != 0:
+            raise RuntimeError(f'full public fit trainer exited {process.returncode}; original trainer.log retained')
+        print(json.dumps(receipt, sort_keys=True), flush=True)
+        return receipt
+    except Exception as error:
+        common.write_record(result_root / 'launcher-failure.json', common.seal({'schema': 'mfm-kaggle-fit-failure-v1',
+            'transport_sha256': expected_pin, 'error_type': type(error).__name__, 'error': str(error), 'traceback': traceback.format_exc(),
+            'seconds': time.monotonic() - started, 'fit_invoked': fit_started, 'durable_custody': False, 'original_evidence_preserved': True}))
+        raise
