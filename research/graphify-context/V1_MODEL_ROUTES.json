@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "c1115be293691624931a9126b7bab0674e7101ec",
+      "commit": "7d611fbf1f2321ec8d3a81d0e3aaab308d786ad0",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -57,7 +57,7 @@
         {
           "path": "docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
           "purpose": "completed teacher fit, failed generated formation, actual causal analysis and corrected measurement handoff",
-          "blob_sha": "8fe4d1c14916be20ab4973570881b75115b4c502"
+          "blob_sha": "a5706c24f0be37fe83eef1aa85182d6fd0c3b136"
         },
         {
           "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576702.json",
@@ -428,6 +428,11 @@
           "path": "docs/receipts/MFM_FULL_FIT_SESSION0_AND_STORAGE_RECOVERY_20261009_TRACE95_PUBLIC.json",
           "purpose": "actual first3-epoch boundary and safe bounded metadata; completed public storage control and finite legacy progress; deployed checkpoint relay launch correction, whole custody, E20 and readonly resume pending",
           "blob_sha": "80254a1c9543ab123e7a578a77857e2dc3b3a7e1"
+        },
+        {
+          "path": "docs/receipts/MFM_TLS_CUSTODY_CONTINUATION_20261009_TRACE96_PUBLIC.json",
+          "purpose": "reviewed native trust/source roundtrip and actual41/83 custody launch; legacy48 uploads complete, whole restore/catalog, resumed state and fullMFM pending",
+          "blob_sha": "4a131097792021ed8f13289ec4f4d9dd2db50aea"
         },
         {
           "path": "tests/governance/test_mfm_public_conditional_foundation.py",
@@ -873,7 +878,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "9adc6e8bccfaca8d5377519fa62ba0cda0dd4742",
+      "commit": "f500b69fd2c369996995706a16bef1fb70bc6fbc",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -953,7 +958,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "dac4e4597ffa2b7d6a060a069b4ad8bc2b32d0cc"
+          "blob_sha": "fabe4747381358062a053e586fa0c0597923ab69"
         }
       ]
     }
