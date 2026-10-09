@@ -754,3 +754,20 @@ The complete construction launch was accepted, and its published archive/launch 
 The corrected complete-source capsule at `30c6feb02bca1b8aa23b279a247dec26a552372c` now has accepted private input creation, READY version readback, one accepted replacement launch and exact kernel contract readback. The provider reported RUNNING at 2026-10-08 23:27:34 UTC. [Corrected construction continuation](receipts/MFM_FULL_CONSTRUCTION_SUCCESSOR_20261008_TRACE89_PUBLIC.json) preserves the original failed execution separately. The accepted launch supplies no custom runtime timeout; the provider's actual duration is unverified.
 
 Recover complete terminal outputs and verify the actual full 267,542,272-parameter producer, processor/runtime, extreme backward/Adam measurements and exact next-batch replay. Use those measurements to choose the full-roster fit allocation, then build learned public foundation and full semantic formation before personalization. Accepted submission and the dated RUNNING snapshot establish no construction success, capacity, replay, fit or learned capability.
+
+<!-- fbm-mfm-20261008-full-constructor-passed-fit-custody-gap-90 f2f66b01a2e7ce2aedef4f18a8c967bc97eee86f912acb2797b9af43c07ec10c -->
+
+The corrected full constructor completed successfully. All 23 original outputs
+were retrieved, and 138 independent evidence checks passed. The unchanged
+267,542,272-parameter producer executed the full admitted material's extreme
+backward/Adam controls and exact different-next-batch model, optimizer, RNG,
+order and cursor replay, then restored its original untrained state. The
+launcher took 283.52 seconds. See the [completed constructor receipt](receipts/MFM_FULL_CONSTRUCTOR_PASSED_20261008_TRACE90_PUBLIC.json).
+
+Fitting has not started. Completed output storage on Drive is in progress;
+authenticated remote restore remains pending. Before a fresh full-roster fit,
+implement and verify retained checkpoint history, exact continuation across
+sessions and successful stops at complete update boundaries. Resource forecasts
+do not select the learning budget. The original failed execution and dated
+traces87-89 remain unchanged. Full learned foundation and semantic formation
+remain the next development stages before personalization.
