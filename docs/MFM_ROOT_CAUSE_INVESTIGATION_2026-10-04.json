@@ -12967,7 +12967,27 @@
     "seconds": 178.44226380065084,
     "state_at_snapshot": "COMPLETED"
   },
-  "current_event_field": "current_full_public_foundation_fit",
+  "current_checkpoint_continuation_method": {
+    "actual_checkpoint_custody": false,
+    "actual_learning_result": false,
+    "file_sha256": "f440cd281025eca4b3427669409e5cedfde07d42cfaf6f4ba89910953b859c38",
+    "public_receipt": "docs/receipts/MFM_CONTINUATION_AND_STORAGE_RECOVERY_20261009_TRACE94_PUBLIC.json",
+    "record_sha256": "0f9e4711f07303e05b5ff42f5e0ecfc0a49726fb6b1ba0ac5bae867c88f8bcf8",
+    "source_and_fit_event_unchanged": true,
+    "trace_id": "fbm-mfm-20261009-continuation-and-storage-recovery-94"
+  },
+  "current_event_field": "current_tls_custody_continuation",
+  "current_full_fit_session0_completion": {
+    "complete_checkpoint_custody": false,
+    "complete_program_finished": false,
+    "file_sha256": "d6642f7fb360d135ef6cfc5909e4661eda894d894ee52de3ff56a3ba7b3a5682",
+    "first_session_end_step": 6864,
+    "first_session_exit_code": 0,
+    "learning_claimed": false,
+    "public_receipt": "docs/receipts/MFM_FULL_FIT_SESSION0_AND_STORAGE_RECOVERY_20261009_TRACE95_PUBLIC.json",
+    "record_sha256": "6bab6068f24952684a3fced379f1ef8a800ebf18596befcdf7dd326cb9ea52c4",
+    "trace_id": "fbm-mfm-20261009-first-fit-boundary-and-safe-primary-storage-95"
+  },
   "current_full_public_foundation_fit": {
     "actual_provider_readonly_mount_behavior_pending": true,
     "arbitrary_runtime_timeout": false,
@@ -13321,6 +13341,22 @@
     "Rare/no-positive target identities/text and semantic scope names need distinct measurements; copied source identity is not yet established as sole cause.",
     "32prefix parity passes; later retained parse/EOS cache checks pending before causal attribution."
   ],
+  "current_primary_storage_recovery_execution": {
+    "complete_checkpoint_custody": false,
+    "complete_original_custody": false,
+    "complete_program_finished": false,
+    "file_sha256": "d6642f7fb360d135ef6cfc5909e4661eda894d894ee52de3ff56a3ba7b3a5682",
+    "finite_legacy_upload_complete_observed": false,
+    "finite_legacy_upload_launched": true,
+    "first_session_end_step": 6864,
+    "first_session_exit_code": 0,
+    "learning_claimed": false,
+    "originals_deleted": 0,
+    "public_control_custody_verified": true,
+    "public_receipt": "docs/receipts/MFM_FULL_FIT_SESSION0_AND_STORAGE_RECOVERY_20261009_TRACE95_PUBLIC.json",
+    "record_sha256": "6bab6068f24952684a3fced379f1ef8a800ebf18596befcdf7dd326cb9ea52c4",
+    "trace_id": "fbm-mfm-20261009-first-fit-boundary-and-safe-primary-storage-95"
+  },
   "current_primary_storage_route": {
     "actual_tiny_route_verified": true,
     "bulk_backup_completion_verified": false,
@@ -13331,18 +13367,39 @@
     "trace_id": "fbm-mfm-20261009-streamed-primary-storage-custody-route-93"
   },
   "current_project_storage_recovery": {
-    "public_receipt": "docs/receipts/MFM_CONTINUATION_AND_STORAGE_RECOVERY_20261009_TRACE94_PUBLIC.json",
-    "file_sha256": "f440cd281025eca4b3427669409e5cedfde07d42cfaf6f4ba89910953b859c38",
-    "record_sha256": "0f9e4711f07303e05b5ff42f5e0ecfc0a49726fb6b1ba0ac5bae867c88f8bcf8",
-    "trace_id": "fbm-mfm-20261009-continuation-and-storage-recovery-94",
+    "accepted_upload_metadata_bytes": 17179922658,
+    "accepted_upload_metadata_parts": 21,
     "actual_checkpoint_custody": false,
     "actual_learning_result": false,
-    "source_and_fit_event_unchanged": true,
-    "accepted_upload_metadata_parts": 21,
-    "accepted_upload_metadata_bytes": 17179922658,
-    "failed_attempt_reconciled": "ABSENT",
     "complete_custody": false,
-    "originals_deleted": 0
+    "failed_attempt_reconciled": "ABSENT",
+    "file_sha256": "f440cd281025eca4b3427669409e5cedfde07d42cfaf6f4ba89910953b859c38",
+    "originals_deleted": 0,
+    "public_receipt": "docs/receipts/MFM_CONTINUATION_AND_STORAGE_RECOVERY_20261009_TRACE94_PUBLIC.json",
+    "record_sha256": "0f9e4711f07303e05b5ff42f5e0ecfc0a49726fb6b1ba0ac5bae867c88f8bcf8",
+    "source_and_fit_event_unchanged": true,
+    "trace_id": "fbm-mfm-20261009-continuation-and-storage-recovery-94"
+  },
+  "current_safe_bounded_metadata_recovery": {
+    "bounded_originals": 7,
+    "complete_checkpoint_custody": false,
+    "complete_program_finished": false,
+    "file_sha256": "d6642f7fb360d135ef6cfc5909e4661eda894d894ee52de3ff56a3ba7b3a5682",
+    "first_session_end_step": 6864,
+    "first_session_exit_code": 0,
+    "history_streaming_pending": true,
+    "learning_claimed": false,
+    "public_receipt": "docs/receipts/MFM_FULL_FIT_SESSION0_AND_STORAGE_RECOVERY_20261009_TRACE95_PUBLIC.json",
+    "record_sha256": "6bab6068f24952684a3fced379f1ef8a800ebf18596befcdf7dd326cb9ea52c4",
+    "trace_id": "fbm-mfm-20261009-first-fit-boundary-and-safe-primary-storage-95"
+  },
+  "current_tls_custody_continuation": {
+    "file_sha256": "837cb5fdaf40dd8202836bd12b32fe85c6a6c70076fdb0f1c420128e52bdfaae",
+    "public_receipt": "docs/receipts/MFM_TLS_CUSTODY_CONTINUATION_20261009_TRACE96_PUBLIC.json",
+    "record_sha256": "6dcc5083568d2d239445f5336a9ccd14ce9e4cb4c40d8de02e417119c4c31ee2",
+    "resume_or_learning_claimed": false,
+    "trace_id": "fbm-mfm-20261009-native-trust-and-full-custody-continuation-96",
+    "whole_custody": false
   },
   "decision_pipeline": {
     "augmented_source_cases": 2,
@@ -24945,7 +25002,7 @@
     "current_full_construction_measurement"
   ],
   "memory_activation": false,
-  "next_action": "Preserve the completed first-session originals through complete authenticated primary Drive custody and typed whole-history validation. Continue the launched finite legacy transfer; after upload completes, authenticate full original-file/catalog restoration and exact consumer release before cleanup. Prepare unchanged-source session1 ending at step13728 only from admitted parent history and Drive custody, then require actual readonly mounts and Adam/RNG/cursor acceptance. Complete the fixed E20 program without development selection, apply the frozen matched source-fidelity observations, and continue the full MFM role build.",
+  "next_action": "Complete the launched original41-file/full-restore/catalog archive and verify typed whole history and checkpoint lineage. Complete legacy48-part/20-file restore, then recovery catalog and exact consumer release before local cleanup. Only from accepted durable weights/Adam/RNG/cursor/history prepare unchanged-source session1 stop13728. Require actual readonly predecessor mounts and trainer state acceptance; finish fixed E20 without development selection, then matched source-fidelity evaluation and full MFM semantic formation, native modalities and governed memory/action/outcome construction before personalization.",
   "next_route_data_and_frontier_audit": {
     "current_new_architecture_adopted": false,
     "frontier_commit": "756bf294f6a93e9ea7dcc12dba932a556d6080e0",
@@ -25742,55 +25799,6 @@
     ],
     "zero_formation_task_preserves_parent": true
   },
-  "status": "FULL_PUBLIC_FOUNDATION_FIT_RUNNING_RESULTS_PENDING",
-  "training_results_pending": true,
-  "current_checkpoint_continuation_method": {
-    "public_receipt": "docs/receipts/MFM_CONTINUATION_AND_STORAGE_RECOVERY_20261009_TRACE94_PUBLIC.json",
-    "file_sha256": "f440cd281025eca4b3427669409e5cedfde07d42cfaf6f4ba89910953b859c38",
-    "record_sha256": "0f9e4711f07303e05b5ff42f5e0ecfc0a49726fb6b1ba0ac5bae867c88f8bcf8",
-    "trace_id": "fbm-mfm-20261009-continuation-and-storage-recovery-94",
-    "actual_checkpoint_custody": false,
-    "actual_learning_result": false,
-    "source_and_fit_event_unchanged": true
-  },
-  "current_full_fit_session0_completion": {
-    "public_receipt": "docs/receipts/MFM_FULL_FIT_SESSION0_AND_STORAGE_RECOVERY_20261009_TRACE95_PUBLIC.json",
-    "file_sha256": "d6642f7fb360d135ef6cfc5909e4661eda894d894ee52de3ff56a3ba7b3a5682",
-    "record_sha256": "6bab6068f24952684a3fced379f1ef8a800ebf18596befcdf7dd326cb9ea52c4",
-    "trace_id": "fbm-mfm-20261009-first-fit-boundary-and-safe-primary-storage-95",
-    "first_session_exit_code": 0,
-    "first_session_end_step": 6864,
-    "complete_program_finished": false,
-    "complete_checkpoint_custody": false,
-    "learning_claimed": false
-  },
-  "current_safe_bounded_metadata_recovery": {
-    "public_receipt": "docs/receipts/MFM_FULL_FIT_SESSION0_AND_STORAGE_RECOVERY_20261009_TRACE95_PUBLIC.json",
-    "file_sha256": "d6642f7fb360d135ef6cfc5909e4661eda894d894ee52de3ff56a3ba7b3a5682",
-    "record_sha256": "6bab6068f24952684a3fced379f1ef8a800ebf18596befcdf7dd326cb9ea52c4",
-    "trace_id": "fbm-mfm-20261009-first-fit-boundary-and-safe-primary-storage-95",
-    "first_session_exit_code": 0,
-    "first_session_end_step": 6864,
-    "complete_program_finished": false,
-    "complete_checkpoint_custody": false,
-    "learning_claimed": false,
-    "bounded_originals": 7,
-    "history_streaming_pending": true
-  },
-  "current_primary_storage_recovery_execution": {
-    "public_receipt": "docs/receipts/MFM_FULL_FIT_SESSION0_AND_STORAGE_RECOVERY_20261009_TRACE95_PUBLIC.json",
-    "file_sha256": "d6642f7fb360d135ef6cfc5909e4661eda894d894ee52de3ff56a3ba7b3a5682",
-    "record_sha256": "6bab6068f24952684a3fced379f1ef8a800ebf18596befcdf7dd326cb9ea52c4",
-    "trace_id": "fbm-mfm-20261009-first-fit-boundary-and-safe-primary-storage-95",
-    "first_session_exit_code": 0,
-    "first_session_end_step": 6864,
-    "complete_program_finished": false,
-    "complete_checkpoint_custody": false,
-    "learning_claimed": false,
-    "public_control_custody_verified": true,
-    "finite_legacy_upload_launched": true,
-    "finite_legacy_upload_complete_observed": false,
-    "complete_original_custody": false,
-    "originals_deleted": 0
-  }
+  "status": "FULL_PUBLIC_FOUNDATION_SESSION0_COMPLETE_PRIMARY_CUSTODY_IN_PROGRESS",
+  "training_results_pending": true
 }
