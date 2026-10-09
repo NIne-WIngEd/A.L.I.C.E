@@ -24945,7 +24945,7 @@
     "current_full_construction_measurement"
   ],
   "memory_activation": false,
-  "next_action": "Consume the exact actual first-session result and bounded original metadata. Preserve full trainer history and establish authenticated primary Drive custody before preparing unchanged-source learned continuation. The reviewed controller is ready; actual producer-source transfer, complete custody and postallocation readonly/Adam/cursor/RNG acceptance remain required. Complete E20 without development selection, then apply the approved source-fidelity observation workflow. Continue the diagnosed native chunk recovery correction in parallel; retain all project originals until complete original-file/catalog restore and exact consumer release.",
+  "next_action": "Preserve the completed first-session originals through complete authenticated primary Drive custody and typed whole-history validation. Continue the launched finite legacy transfer; after upload completes, authenticate full original-file/catalog restoration and exact consumer release before cleanup. Prepare unchanged-source session1 ending at step13728 only from admitted parent history and Drive custody, then require actual readonly mounts and Adam/RNG/cursor acceptance. Complete the fixed E20 program without development selection, apply the frozen matched source-fidelity observations, and continue the full MFM role build.",
   "next_route_data_and_frontier_audit": {
     "current_new_architecture_adopted": false,
     "frontier_commit": "756bf294f6a93e9ea7dcc12dba932a556d6080e0",
@@ -25752,5 +25752,45 @@
     "actual_checkpoint_custody": false,
     "actual_learning_result": false,
     "source_and_fit_event_unchanged": true
+  },
+  "current_full_fit_session0_completion": {
+    "public_receipt": "docs/receipts/MFM_FULL_FIT_SESSION0_AND_STORAGE_RECOVERY_20261009_TRACE95_PUBLIC.json",
+    "file_sha256": "d6642f7fb360d135ef6cfc5909e4661eda894d894ee52de3ff56a3ba7b3a5682",
+    "record_sha256": "6bab6068f24952684a3fced379f1ef8a800ebf18596befcdf7dd326cb9ea52c4",
+    "trace_id": "fbm-mfm-20261009-first-fit-boundary-and-safe-primary-storage-95",
+    "first_session_exit_code": 0,
+    "first_session_end_step": 6864,
+    "complete_program_finished": false,
+    "complete_checkpoint_custody": false,
+    "learning_claimed": false
+  },
+  "current_safe_bounded_metadata_recovery": {
+    "public_receipt": "docs/receipts/MFM_FULL_FIT_SESSION0_AND_STORAGE_RECOVERY_20261009_TRACE95_PUBLIC.json",
+    "file_sha256": "d6642f7fb360d135ef6cfc5909e4661eda894d894ee52de3ff56a3ba7b3a5682",
+    "record_sha256": "6bab6068f24952684a3fced379f1ef8a800ebf18596befcdf7dd326cb9ea52c4",
+    "trace_id": "fbm-mfm-20261009-first-fit-boundary-and-safe-primary-storage-95",
+    "first_session_exit_code": 0,
+    "first_session_end_step": 6864,
+    "complete_program_finished": false,
+    "complete_checkpoint_custody": false,
+    "learning_claimed": false,
+    "bounded_originals": 7,
+    "history_streaming_pending": true
+  },
+  "current_primary_storage_recovery_execution": {
+    "public_receipt": "docs/receipts/MFM_FULL_FIT_SESSION0_AND_STORAGE_RECOVERY_20261009_TRACE95_PUBLIC.json",
+    "file_sha256": "d6642f7fb360d135ef6cfc5909e4661eda894d894ee52de3ff56a3ba7b3a5682",
+    "record_sha256": "6bab6068f24952684a3fced379f1ef8a800ebf18596befcdf7dd326cb9ea52c4",
+    "trace_id": "fbm-mfm-20261009-first-fit-boundary-and-safe-primary-storage-95",
+    "first_session_exit_code": 0,
+    "first_session_end_step": 6864,
+    "complete_program_finished": false,
+    "complete_checkpoint_custody": false,
+    "learning_claimed": false,
+    "public_control_custody_verified": true,
+    "finite_legacy_upload_launched": true,
+    "finite_legacy_upload_complete_observed": false,
+    "complete_original_custody": false,
+    "originals_deleted": 0
   }
 }
