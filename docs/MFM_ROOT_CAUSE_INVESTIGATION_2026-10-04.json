@@ -25720,5 +25720,14 @@
     "behavioral_consumer_implemented": false,
     "backup_completion_verified": false,
     "current_fit_event_unchanged": true
+  },
+  "current_primary_storage_route": {
+    "public_receipt": "docs/receipts/MFM_STREAMED_PRIMARY_STORAGE_ROUTE_20261009_TRACE93_PUBLIC.json",
+    "file_sha256": "d83e1eacbcc84f28b1778db1165704853105fd1582355339ed2049ea7f685d0b",
+    "record_sha256": "12650fb2dbc2f21e9992ec56fdd0e835e760e2ebd8162d6da0e25510c0887c9a",
+    "trace_id": "fbm-mfm-20261009-streamed-primary-storage-custody-route-93",
+    "actual_tiny_route_verified": true,
+    "bulk_backup_completion_verified": false,
+    "current_fit_event_unchanged": true
   }
 }
