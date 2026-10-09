@@ -25708,5 +25708,17 @@
     "full_role_sequence_successor",
     "source_sequence_construction",
     "current_full_construction_measurement"
-  ]
+  ],
+  "prospective_public_development_observation": {
+    "public_receipt": "docs/receipts/MFM_PUBLIC_DEVELOPMENT_OBSERVATION_STORAGE_20261009_TRACE92_PUBLIC.json",
+    "file_sha256": "dd08f8ea4fe6fbab09c5296ae4dc46a172d4af94d40407c13dec3d75bc95ebb9",
+    "record_sha256": "2dca8d2e1fab1c0200afbb3f69b24123d4344a83826fa8af40137f9dab8902d9",
+    "trace_id": "fbm-mfm-20261009-frozen-development-observation-storage-continuation-92",
+    "source_revision": "268bf08760baf8a6032afca207c56e131ce20b81",
+    "semantic_evaluator_admitted": false,
+    "cohort_protocol_approved": true,
+    "behavioral_consumer_implemented": false,
+    "backup_completion_verified": false,
+    "current_fit_event_unchanged": true
+  }
 }
