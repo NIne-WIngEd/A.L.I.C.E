@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "90762abf72cf7f00cdf5e70b3a2cc3f304f64897",
+      "commit": "5fc07f2da27d7b0e7b31c7bf1b4e98226f681aab",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -57,7 +57,7 @@
         {
           "path": "docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
           "purpose": "completed teacher fit, failed generated formation, actual causal analysis and corrected measurement handoff",
-          "blob_sha": "7299abe111c8cd70903aa0b18fd70f730722727b"
+          "blob_sha": "faca3bc7319ad6f23e87194673acd6508c193bd2"
         },
         {
           "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576702.json",
@@ -372,7 +372,7 @@
         {
           "path": "scripts/mfm/train_public_conditional_foundation.py",
           "purpose": "complete-roster fresh conditional foundation construction, actual Adam/RNG checkpoint continuation and public lineage; actual resource fit and learning require execution",
-          "blob_sha": "f5511fe37f11f3d0bb5eb4bf94a5838442078514"
+          "blob_sha": "e7bb441b0f18457b778650c8975ffaa5a2e67ea0"
         },
         {
           "path": "tests/governance/test_mfm_public_conditional_foundation.py",
@@ -818,7 +818,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "276cee99ce5117a1cb1dade43a09f32dac7d0509",
+      "commit": "02644f900ac07cdc6666a7215b20692f9f6adfa6",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -898,7 +898,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "1d1c6664fd2e59f98e52852b68f55417a6e36a98"
+          "blob_sha": "c405009c59982f6faa293ceaf1b008cf11d1952f"
         }
       ]
     }
