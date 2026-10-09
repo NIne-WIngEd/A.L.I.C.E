@@ -838,7 +838,7 @@
     "latest_analysis_code_commit": "64be770d8f8f4770d76c6d65f04abab582c1a2b2",
     "root_cause_investigation_20261004": {
       "schema": "mfm-root-cause-investigation-state-v1",
-      "recorded_at_utc": "2026-10-08T23:29:06Z",
+      "recorded_at_utc": "2026-10-09T03:30:05.890835+00:00",
       "source_export": {
         "jobs": {
           "576630": "TIMEOUT",
@@ -1587,7 +1587,7 @@
           "record_sha256": "fbbbd51e78a2748f6a3d66ac94c3ae0b3a04855ee81a07bafab7d32d063a0c2e"
         }
       },
-      "status": "CORRECTED_FULL_CONSTRUCTION_SUBMITTED_MEASUREMENT_RESULT_PENDING",
+      "status": "FULL_CONSTRUCTOR_MEASURED_FIT_AND_CHECKPOINT_CUSTODY_PENDING",
       "source_sequence_construction": {
         "state_at_snapshot": "COMPLETED_CAPACITY_AND_FIT_PASSED_NO_POSITIVE_FORMATION",
         "objective": "mfm-full-role-plus-source-sequence-29-strata-v1",
@@ -2848,7 +2848,7 @@
           },
           "continuation_scheduling_rule": "At most one successor ahead of the active block. Each binds its immediate successful parent dedicated terminal/progress. Preserve no-advance/failure/unknown-submission evidence and diagnose before repeat; stop at verified complete4,862-source bank. Do not reuse prior-parent recipes or prequeue a long fixed chain."
         },
-        "next_action": "Recover the exact running corrected construction result and all actual outputs when execution becomes terminal. Verify authenticated full input/runtime custody and producer measurements before selecting the real fit budget. Preserve the original failed import execution and traces87-88; accepted replacement launch and RUNNING status establish no learning, fit, replay or product qualification.",
+        "next_action": "Preserve the completed original constructor outputs through the separately authorized Drive archive and authenticated restore gate. Then implement and verify a full-roster fitting route with complete-update boundary stops, retained checkpoint storage and read-only authenticated durable lineage across sessions. Keep the original failure and traces87-89 immutable. The current health check is complete; no new fit is launched, no epoch budget is approved, and no timeout, learning or full-MFM completion is claimed.",
         "full_role_gaps": [
           "expanded independently reviewed formation teaching",
           "learned typed selection and source-span copy integrated into semantic producer",
@@ -3116,7 +3116,7 @@
         "foundation_training_implementation": {
           "contract": "docs/MFM_PUBLIC_FOUNDATION_PRODUCER_CONTRACT_2026-10-07.md",
           "plan": "docs/superpowers/plans/2026-10-07-mfm-public-foundation-training.md",
-          "state": "CORRECTED_FULL_CONSTRUCTION_SUBMITTED_MEASUREMENT_RESULT_PENDING",
+          "state": "FULL_CONSTRUCTOR_MEASURED_FIT_AND_CHECKPOINT_CUSTODY_PENDING",
           "producer": "Fresh full-geometry FormationDecisionSpecialist; frozen Gemma source encoder only.",
           "objective": "Sequence mean including EOS, then reference mean, then equal semantic-MR mean.",
           "complete_training_pairs": 36597,
@@ -3164,8 +3164,8 @@
           "trainer_task_review_passed": true,
           "trainer_final_review_passed": true,
           "trainer_final_review_open_findings": [],
-          "construction_resource_executed": false,
-          "processor_compatibility_executed": false,
+          "construction_resource_executed": true,
+          "processor_compatibility_executed": true,
           "learned_public_foundation_exported": false,
           "trainer_commit": "8037a83267f3c48e3856d838cb9d2a52b7a4da4c",
           "final_objective_report_implemented": true,
@@ -3516,8 +3516,8 @@
             "next_action": "Recover the actual response of the already started corrected private-input dataset creation and verify its exact private identity/version/readiness. Preserve the original failed kernel and complete returned evidence. Launch the exact corrected full construction only after the new input operation and kernel contract are ready; then recover actual producer measurements before selecting a fit budget. No new GPU launch, completed upload, capacity, learning or qualification is established by this pending input operation.",
             "record_sha256": "e5613ed239b2b89e2681bd2594bd40fb5e4702e68060f117a03a739e65d3b1de"
           },
-          "current_construction_execution_succeeded": null,
-          "current_construction_job_failed": null,
+          "current_construction_execution_succeeded": true,
+          "current_construction_job_failed": false,
           "current_corrected_construction_continuation": {
             "state": "CORRECTED_COMPLETE_PRIVATE_INPUT_DATASET_UPLOAD_IN_PROGRESS_RESULT_PENDING",
             "preparation_file_sha256": "e32aea2cb25dc637cbb8051147751d161dad67ae0cfa879e088de85478a5b7d6",
@@ -3575,7 +3575,7 @@
             "observed_at_utc": "2026-10-08T23:13:01Z"
           },
           "last_submitted_construction_job_failed": true,
-          "current_gpu_submission_state": "NEW_ACTUAL_LAUNCH_ACCEPTED_RESULT_PENDING",
+          "current_gpu_submission_state": "ACTUAL_FULL_CONSTRUCTION_COMPLETE_MEASURE_ONLY",
           "current_full_construction_successor": {
             "schema": "mfm-full-construction-successor-public-v1",
             "classification": "PUBLIC_METHOD_ONLY",
@@ -3651,6 +3651,158 @@
             },
             "next_action": "Recover the exact running corrected construction result and all actual outputs when execution becomes terminal. Verify authenticated full input/runtime custody and producer measurements before selecting the real fit budget. Preserve the original failed import execution and traces87-88; accepted replacement launch and RUNNING status establish no learning, fit, replay or product qualification.",
             "record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec"
+          },
+          "construction_runtime_checks_passed": true,
+          "construction_measurement_result_pending": false,
+          "fit_still_pending": true,
+          "fit_operational_contract_pending": true,
+          "current_full_construction_measurement": {
+            "schema": "mfm-full-constructor-passed-fit-custody-gap-public-v1",
+            "classification": "PUBLIC_METHOD_ONLY",
+            "trace_id": "fbm-mfm-20261008-full-constructor-passed-fit-custody-gap-90",
+            "public_receipt_path": "docs/receipts/MFM_FULL_CONSTRUCTOR_PASSED_20261008_TRACE90_PUBLIC.json",
+            "recorded_at_utc": "2026-10-09T03:30:05.890835+00:00",
+            "status": "FULL_CONSTRUCTOR_MEASURED_FIT_AND_CHECKPOINT_CUSTODY_PENDING",
+            "source_capsule_revision": "30c6feb02bca1b8aa23b279a247dec26a552372c",
+            "predecessor_public_heads": {
+              "fbm": "e321625d24deae482a17d76cf5d46ea77265d50c",
+              "graph": "6618ceb0857c7d6044778f5198111bd101629df6",
+              "mfm": "0a16f86e26c76f109311e4d1410447fc9f3d2283"
+            },
+            "predecessor_successor_record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec",
+            "predecessor_runtime_failure_record_sha256": "e5613ed239b2b89e2681bd2594bd40fb5e4702e68060f117a03a739e65d3b1de",
+            "original_failed_execution_preserved": true,
+            "history_preservation": "Exact published Git revisions and immutable traces87-89; existing context history retained without another recursive snapshot.",
+            "evidence_receipt_bindings": {
+              "construction": {
+                "file_sha256": "513c913e26aa9a362eea756ca79d4b48c9f877cda9ea9503971ca01b4c5b98d6",
+                "record_sha256": "3abd633e12b8f6192947dcdd09406a2abb116d9e7186133b488edbfaaba7b95e"
+              },
+              "constructor_archive_manifest": {
+                "file_sha256": "f08e5eee4817ad61ea5e9bd692db2954cd7ad4e9d9d28e094375f03bdf81440f",
+                "record_sha256": "5224ce4879a980d3235cb4b5eee9bb6a499fd7e5ff5f77132a19631360a1ddaf"
+              },
+              "constructor_audit": {
+                "file_sha256": "e1b7a4491327e5521ab9a8679225329d3b900b48b0ea640e595b4af293c1d969",
+                "record_sha256": "3392724b8853a9eb0103d3ff4421ad0db0d6f319768cc6f7da7534cf849e92f0"
+              },
+              "constructor_storage_gate": {
+                "file_sha256": "7d2d5600fd81030370f585cc82ece0997b287c17621ee968b67111bb4ef05f69",
+                "record_sha256": "f83cdfad6804eec640f6a7570939182deb6a78ba6ed8ceeb539b7d40a3fd0199"
+              },
+              "predecessor": {
+                "file_sha256": "d473209791f33740d24b5e1cafd322631356e04370eff2c4e09b7ee817b2037f",
+                "record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec"
+              },
+              "quota": {
+                "file_sha256": "a5e2e154f4504eb6fd2b202d0aacb37931e16d0ec99b699876e87e1fc26145a5",
+                "record_sha256": "e02db869fd0bbbce9e402f41c0ed6218b1dd34e49d544c36d2054591ae69e467"
+              },
+              "fit_custody_design": {
+                "file_sha256": "929cb29036cf2cfb2d4c40b826d661b024db12685cb3270b0f44632f33c38523",
+                "record_sha256": "a6db98899e1032031283a2fe006d100c1dfc39d2c30a2d614e7c4db433c75e71"
+              },
+              "fit_custody_design_note": {
+                "file_sha256": "c29c3cb604a5d07ddcf81907de681e13f61949d414c84edb1bab2b0a3a31f82a"
+              }
+            },
+            "actual_terminal_execution_succeeded": true,
+            "actual_terminal_job_failed": false,
+            "authenticated_complete_output_retrieved": true,
+            "output_file_count": 23,
+            "output_bytes": 5354953308,
+            "independent_constructor_checks_passed": 138,
+            "full_material": true,
+            "parameter_count": 267542272,
+            "full_training_pairs": 36597,
+            "full_development_pairs": 4271,
+            "full_sources": 4862,
+            "training_semantic_groups": 4356,
+            "development_semantic_groups": 506,
+            "measured_extremes": [
+              {
+                "role": "longest-source",
+                "source_tokens": 71,
+                "label_tokens": 51
+              },
+              {
+                "role": "longest-target",
+                "source_tokens": 37,
+                "label_tokens": 84
+              },
+              {
+                "role": "longest-joint",
+                "source_tokens": 69,
+                "label_tokens": 80
+              }
+            ],
+            "actual_batch_size": 16,
+            "different_next_batch_replay_verified": true,
+            "full_model_adam_rng_order_cursor_replay_verified": true,
+            "replay_max_difference": 0.0,
+            "control_updates_restored": true,
+            "final_control_cursor": {
+              "epoch": 0,
+              "next_case": 0,
+              "step": 0
+            },
+            "construction_measurements": {
+              "replay_peaks": {
+                "cuda_peak_allocated_bytes": 6790204928,
+                "cuda_peak_reserved_bytes": 7696547840,
+                "cuda_total_bytes": 15636037632,
+                "host_peak_rss_bytes": 8815386624
+              },
+              "checkpoint_bytes": 3210622859,
+              "checkpoint_seconds": 14.562039211000183,
+              "trainer_seconds": 118.36897948299998,
+              "launcher_seconds": 283.5152962970001,
+              "gpu_peak_semantics": "GPU peaks are cumulative within construction after one reset, not independent per-case cold-start allocations."
+            },
+            "current_timeout_policy": "provider-default",
+            "custom_timeout_seconds": null,
+            "custom_timeout_field_sent": false,
+            "provider_session_duration_verified": false,
+            "actual_launch_policy_binding": {
+              "file_sha256": "e8951db7622cd2a5800e418e920bc345c65306057c8636ff61a1bb4d126d6a60",
+              "record_sha256": "dc4739148c1d05b9b9d5c514556a913b680819cf9220bf7575d91363ef707f59"
+            },
+            "saved_output_quota_verified": false,
+            "producer_output_durable_custody_verified": false,
+            "producer_output_drive_custody_state": "AUTHORIZED_PACKAGING_IN_PROGRESS_DURABILITY_PENDING",
+            "current_free_gpu_quota_observation": {
+              "observed_at_utc": "2026-10-09T03:05:25.443083+00:00",
+              "quota_seconds": {
+                "has_ever_run": true,
+                "is_pay_to_scale_enabled": false,
+                "minimum_time_allowed_seconds": 108000.0,
+                "remaining_after_reported_active_reservations_seconds": 107582.456615,
+                "reported_remaining_without_reservations_seconds": 107582.456615,
+                "time_reserved_seconds": 0.0,
+                "time_used_seconds": 417.543385,
+                "total_time_allowed_seconds": 108000.0
+              },
+              "allocation_guaranteed_or_reserved": false,
+              "refresh_time_raw_iso8601": "2026-10-10T00:00:00",
+              "refresh_timezone_returned": false,
+              "exhaustive_allocation_inventory_performed": false
+            },
+            "fit_custody_design_bound": true,
+            "latest_quota_evidence_bound": true,
+            "fit_operational_contract_pending": true,
+            "fit_budget_selected": false,
+            "fit_epoch_budget_approved": false,
+            "future_fit_design_implementation_verified": false,
+            "training_started": false,
+            "learned_public_foundation_exported": false,
+            "full_semantic_formation_built": false,
+            "qualified_for_product": false,
+            "authority_activated": false,
+            "paid_compute_used": false,
+            "training_eligible": false,
+            "evaluation_eligible": false,
+            "next_action": "Preserve the completed original constructor outputs through the separately authorized Drive archive and authenticated restore gate. Then implement and verify a full-roster fitting route with complete-update boundary stops, retained checkpoint storage and read-only authenticated durable lineage across sessions. Keep the original failure and traces87-89 immutable. The current health check is complete; no new fit is launched, no epoch budget is approved, and no timeout, learning or full-MFM completion is claimed.",
+            "record_sha256": "f2f66b01a2e7ce2aedef4f18a8c967bc97eee86f912acb2797b9af43c07ec10c"
           }
         },
         "free_training_compute": {
@@ -5205,6 +5357,154 @@
           },
           "next_action": "Recover the exact running corrected construction result and all actual outputs when execution becomes terminal. Verify authenticated full input/runtime custody and producer measurements before selecting the real fit budget. Preserve the original failed import execution and traces87-88; accepted replacement launch and RUNNING status establish no learning, fit, replay or product qualification.",
           "record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec"
+        },
+        "current_full_construction_measurement_20261008": {
+          "schema": "mfm-full-constructor-passed-fit-custody-gap-public-v1",
+          "classification": "PUBLIC_METHOD_ONLY",
+          "trace_id": "fbm-mfm-20261008-full-constructor-passed-fit-custody-gap-90",
+          "public_receipt_path": "docs/receipts/MFM_FULL_CONSTRUCTOR_PASSED_20261008_TRACE90_PUBLIC.json",
+          "recorded_at_utc": "2026-10-09T03:30:05.890835+00:00",
+          "status": "FULL_CONSTRUCTOR_MEASURED_FIT_AND_CHECKPOINT_CUSTODY_PENDING",
+          "source_capsule_revision": "30c6feb02bca1b8aa23b279a247dec26a552372c",
+          "predecessor_public_heads": {
+            "fbm": "e321625d24deae482a17d76cf5d46ea77265d50c",
+            "graph": "6618ceb0857c7d6044778f5198111bd101629df6",
+            "mfm": "0a16f86e26c76f109311e4d1410447fc9f3d2283"
+          },
+          "predecessor_successor_record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec",
+          "predecessor_runtime_failure_record_sha256": "e5613ed239b2b89e2681bd2594bd40fb5e4702e68060f117a03a739e65d3b1de",
+          "original_failed_execution_preserved": true,
+          "history_preservation": "Exact published Git revisions and immutable traces87-89; existing context history retained without another recursive snapshot.",
+          "evidence_receipt_bindings": {
+            "construction": {
+              "file_sha256": "513c913e26aa9a362eea756ca79d4b48c9f877cda9ea9503971ca01b4c5b98d6",
+              "record_sha256": "3abd633e12b8f6192947dcdd09406a2abb116d9e7186133b488edbfaaba7b95e"
+            },
+            "constructor_archive_manifest": {
+              "file_sha256": "f08e5eee4817ad61ea5e9bd692db2954cd7ad4e9d9d28e094375f03bdf81440f",
+              "record_sha256": "5224ce4879a980d3235cb4b5eee9bb6a499fd7e5ff5f77132a19631360a1ddaf"
+            },
+            "constructor_audit": {
+              "file_sha256": "e1b7a4491327e5521ab9a8679225329d3b900b48b0ea640e595b4af293c1d969",
+              "record_sha256": "3392724b8853a9eb0103d3ff4421ad0db0d6f319768cc6f7da7534cf849e92f0"
+            },
+            "constructor_storage_gate": {
+              "file_sha256": "7d2d5600fd81030370f585cc82ece0997b287c17621ee968b67111bb4ef05f69",
+              "record_sha256": "f83cdfad6804eec640f6a7570939182deb6a78ba6ed8ceeb539b7d40a3fd0199"
+            },
+            "predecessor": {
+              "file_sha256": "d473209791f33740d24b5e1cafd322631356e04370eff2c4e09b7ee817b2037f",
+              "record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec"
+            },
+            "quota": {
+              "file_sha256": "a5e2e154f4504eb6fd2b202d0aacb37931e16d0ec99b699876e87e1fc26145a5",
+              "record_sha256": "e02db869fd0bbbce9e402f41c0ed6218b1dd34e49d544c36d2054591ae69e467"
+            },
+            "fit_custody_design": {
+              "file_sha256": "929cb29036cf2cfb2d4c40b826d661b024db12685cb3270b0f44632f33c38523",
+              "record_sha256": "a6db98899e1032031283a2fe006d100c1dfc39d2c30a2d614e7c4db433c75e71"
+            },
+            "fit_custody_design_note": {
+              "file_sha256": "c29c3cb604a5d07ddcf81907de681e13f61949d414c84edb1bab2b0a3a31f82a"
+            }
+          },
+          "actual_terminal_execution_succeeded": true,
+          "actual_terminal_job_failed": false,
+          "authenticated_complete_output_retrieved": true,
+          "output_file_count": 23,
+          "output_bytes": 5354953308,
+          "independent_constructor_checks_passed": 138,
+          "full_material": true,
+          "parameter_count": 267542272,
+          "full_training_pairs": 36597,
+          "full_development_pairs": 4271,
+          "full_sources": 4862,
+          "training_semantic_groups": 4356,
+          "development_semantic_groups": 506,
+          "measured_extremes": [
+            {
+              "role": "longest-source",
+              "source_tokens": 71,
+              "label_tokens": 51
+            },
+            {
+              "role": "longest-target",
+              "source_tokens": 37,
+              "label_tokens": 84
+            },
+            {
+              "role": "longest-joint",
+              "source_tokens": 69,
+              "label_tokens": 80
+            }
+          ],
+          "actual_batch_size": 16,
+          "different_next_batch_replay_verified": true,
+          "full_model_adam_rng_order_cursor_replay_verified": true,
+          "replay_max_difference": 0.0,
+          "control_updates_restored": true,
+          "final_control_cursor": {
+            "epoch": 0,
+            "next_case": 0,
+            "step": 0
+          },
+          "construction_measurements": {
+            "replay_peaks": {
+              "cuda_peak_allocated_bytes": 6790204928,
+              "cuda_peak_reserved_bytes": 7696547840,
+              "cuda_total_bytes": 15636037632,
+              "host_peak_rss_bytes": 8815386624
+            },
+            "checkpoint_bytes": 3210622859,
+            "checkpoint_seconds": 14.562039211000183,
+            "trainer_seconds": 118.36897948299998,
+            "launcher_seconds": 283.5152962970001,
+            "gpu_peak_semantics": "GPU peaks are cumulative within construction after one reset, not independent per-case cold-start allocations."
+          },
+          "current_timeout_policy": "provider-default",
+          "custom_timeout_seconds": null,
+          "custom_timeout_field_sent": false,
+          "provider_session_duration_verified": false,
+          "actual_launch_policy_binding": {
+            "file_sha256": "e8951db7622cd2a5800e418e920bc345c65306057c8636ff61a1bb4d126d6a60",
+            "record_sha256": "dc4739148c1d05b9b9d5c514556a913b680819cf9220bf7575d91363ef707f59"
+          },
+          "saved_output_quota_verified": false,
+          "producer_output_durable_custody_verified": false,
+          "producer_output_drive_custody_state": "AUTHORIZED_PACKAGING_IN_PROGRESS_DURABILITY_PENDING",
+          "current_free_gpu_quota_observation": {
+            "observed_at_utc": "2026-10-09T03:05:25.443083+00:00",
+            "quota_seconds": {
+              "has_ever_run": true,
+              "is_pay_to_scale_enabled": false,
+              "minimum_time_allowed_seconds": 108000.0,
+              "remaining_after_reported_active_reservations_seconds": 107582.456615,
+              "reported_remaining_without_reservations_seconds": 107582.456615,
+              "time_reserved_seconds": 0.0,
+              "time_used_seconds": 417.543385,
+              "total_time_allowed_seconds": 108000.0
+            },
+            "allocation_guaranteed_or_reserved": false,
+            "refresh_time_raw_iso8601": "2026-10-10T00:00:00",
+            "refresh_timezone_returned": false,
+            "exhaustive_allocation_inventory_performed": false
+          },
+          "fit_custody_design_bound": true,
+          "latest_quota_evidence_bound": true,
+          "fit_operational_contract_pending": true,
+          "fit_budget_selected": false,
+          "fit_epoch_budget_approved": false,
+          "future_fit_design_implementation_verified": false,
+          "training_started": false,
+          "learned_public_foundation_exported": false,
+          "full_semantic_formation_built": false,
+          "qualified_for_product": false,
+          "authority_activated": false,
+          "paid_compute_used": false,
+          "training_eligible": false,
+          "evaluation_eligible": false,
+          "next_action": "Preserve the completed original constructor outputs through the separately authorized Drive archive and authenticated restore gate. Then implement and verify a full-roster fitting route with complete-update boundary stops, retained checkpoint storage and read-only authenticated durable lineage across sessions. Keep the original failure and traces87-89 immutable. The current health check is complete; no new fit is launched, no epoch budget is approved, and no timeout, learning or full-MFM completion is claimed.",
+          "record_sha256": "f2f66b01a2e7ce2aedef4f18a8c967bc97eee86f912acb2797b9af43c07ec10c"
         }
       },
       "full_bank_completion_previous_snapshots_20261008": [
@@ -25662,6 +25962,188 @@
             }
           ]
         }
+      ],
+      "construction_measurement_events_20261008": {
+        "fbm-mfm-20261008-full-constructor-passed-fit-custody-gap-90": {
+          "schema": "mfm-full-constructor-passed-fit-custody-gap-public-v1",
+          "classification": "PUBLIC_METHOD_ONLY",
+          "trace_id": "fbm-mfm-20261008-full-constructor-passed-fit-custody-gap-90",
+          "public_receipt_path": "docs/receipts/MFM_FULL_CONSTRUCTOR_PASSED_20261008_TRACE90_PUBLIC.json",
+          "recorded_at_utc": "2026-10-09T03:30:05.890835+00:00",
+          "status": "FULL_CONSTRUCTOR_MEASURED_FIT_AND_CHECKPOINT_CUSTODY_PENDING",
+          "source_capsule_revision": "30c6feb02bca1b8aa23b279a247dec26a552372c",
+          "predecessor_public_heads": {
+            "fbm": "e321625d24deae482a17d76cf5d46ea77265d50c",
+            "graph": "6618ceb0857c7d6044778f5198111bd101629df6",
+            "mfm": "0a16f86e26c76f109311e4d1410447fc9f3d2283"
+          },
+          "predecessor_successor_record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec",
+          "predecessor_runtime_failure_record_sha256": "e5613ed239b2b89e2681bd2594bd40fb5e4702e68060f117a03a739e65d3b1de",
+          "original_failed_execution_preserved": true,
+          "history_preservation": "Exact published Git revisions and immutable traces87-89; existing context history retained without another recursive snapshot.",
+          "evidence_receipt_bindings": {
+            "construction": {
+              "file_sha256": "513c913e26aa9a362eea756ca79d4b48c9f877cda9ea9503971ca01b4c5b98d6",
+              "record_sha256": "3abd633e12b8f6192947dcdd09406a2abb116d9e7186133b488edbfaaba7b95e"
+            },
+            "constructor_archive_manifest": {
+              "file_sha256": "f08e5eee4817ad61ea5e9bd692db2954cd7ad4e9d9d28e094375f03bdf81440f",
+              "record_sha256": "5224ce4879a980d3235cb4b5eee9bb6a499fd7e5ff5f77132a19631360a1ddaf"
+            },
+            "constructor_audit": {
+              "file_sha256": "e1b7a4491327e5521ab9a8679225329d3b900b48b0ea640e595b4af293c1d969",
+              "record_sha256": "3392724b8853a9eb0103d3ff4421ad0db0d6f319768cc6f7da7534cf849e92f0"
+            },
+            "constructor_storage_gate": {
+              "file_sha256": "7d2d5600fd81030370f585cc82ece0997b287c17621ee968b67111bb4ef05f69",
+              "record_sha256": "f83cdfad6804eec640f6a7570939182deb6a78ba6ed8ceeb539b7d40a3fd0199"
+            },
+            "predecessor": {
+              "file_sha256": "d473209791f33740d24b5e1cafd322631356e04370eff2c4e09b7ee817b2037f",
+              "record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec"
+            },
+            "quota": {
+              "file_sha256": "a5e2e154f4504eb6fd2b202d0aacb37931e16d0ec99b699876e87e1fc26145a5",
+              "record_sha256": "e02db869fd0bbbce9e402f41c0ed6218b1dd34e49d544c36d2054591ae69e467"
+            },
+            "fit_custody_design": {
+              "file_sha256": "929cb29036cf2cfb2d4c40b826d661b024db12685cb3270b0f44632f33c38523",
+              "record_sha256": "a6db98899e1032031283a2fe006d100c1dfc39d2c30a2d614e7c4db433c75e71"
+            },
+            "fit_custody_design_note": {
+              "file_sha256": "c29c3cb604a5d07ddcf81907de681e13f61949d414c84edb1bab2b0a3a31f82a"
+            }
+          },
+          "actual_terminal_execution_succeeded": true,
+          "actual_terminal_job_failed": false,
+          "authenticated_complete_output_retrieved": true,
+          "output_file_count": 23,
+          "output_bytes": 5354953308,
+          "independent_constructor_checks_passed": 138,
+          "full_material": true,
+          "parameter_count": 267542272,
+          "full_training_pairs": 36597,
+          "full_development_pairs": 4271,
+          "full_sources": 4862,
+          "training_semantic_groups": 4356,
+          "development_semantic_groups": 506,
+          "measured_extremes": [
+            {
+              "role": "longest-source",
+              "source_tokens": 71,
+              "label_tokens": 51
+            },
+            {
+              "role": "longest-target",
+              "source_tokens": 37,
+              "label_tokens": 84
+            },
+            {
+              "role": "longest-joint",
+              "source_tokens": 69,
+              "label_tokens": 80
+            }
+          ],
+          "actual_batch_size": 16,
+          "different_next_batch_replay_verified": true,
+          "full_model_adam_rng_order_cursor_replay_verified": true,
+          "replay_max_difference": 0.0,
+          "control_updates_restored": true,
+          "final_control_cursor": {
+            "epoch": 0,
+            "next_case": 0,
+            "step": 0
+          },
+          "construction_measurements": {
+            "replay_peaks": {
+              "cuda_peak_allocated_bytes": 6790204928,
+              "cuda_peak_reserved_bytes": 7696547840,
+              "cuda_total_bytes": 15636037632,
+              "host_peak_rss_bytes": 8815386624
+            },
+            "checkpoint_bytes": 3210622859,
+            "checkpoint_seconds": 14.562039211000183,
+            "trainer_seconds": 118.36897948299998,
+            "launcher_seconds": 283.5152962970001,
+            "gpu_peak_semantics": "GPU peaks are cumulative within construction after one reset, not independent per-case cold-start allocations."
+          },
+          "current_timeout_policy": "provider-default",
+          "custom_timeout_seconds": null,
+          "custom_timeout_field_sent": false,
+          "provider_session_duration_verified": false,
+          "actual_launch_policy_binding": {
+            "file_sha256": "e8951db7622cd2a5800e418e920bc345c65306057c8636ff61a1bb4d126d6a60",
+            "record_sha256": "dc4739148c1d05b9b9d5c514556a913b680819cf9220bf7575d91363ef707f59"
+          },
+          "saved_output_quota_verified": false,
+          "producer_output_durable_custody_verified": false,
+          "producer_output_drive_custody_state": "AUTHORIZED_PACKAGING_IN_PROGRESS_DURABILITY_PENDING",
+          "current_free_gpu_quota_observation": {
+            "observed_at_utc": "2026-10-09T03:05:25.443083+00:00",
+            "quota_seconds": {
+              "has_ever_run": true,
+              "is_pay_to_scale_enabled": false,
+              "minimum_time_allowed_seconds": 108000.0,
+              "remaining_after_reported_active_reservations_seconds": 107582.456615,
+              "reported_remaining_without_reservations_seconds": 107582.456615,
+              "time_reserved_seconds": 0.0,
+              "time_used_seconds": 417.543385,
+              "total_time_allowed_seconds": 108000.0
+            },
+            "allocation_guaranteed_or_reserved": false,
+            "refresh_time_raw_iso8601": "2026-10-10T00:00:00",
+            "refresh_timezone_returned": false,
+            "exhaustive_allocation_inventory_performed": false
+          },
+          "fit_custody_design_bound": true,
+          "latest_quota_evidence_bound": true,
+          "fit_operational_contract_pending": true,
+          "fit_budget_selected": false,
+          "fit_epoch_budget_approved": false,
+          "future_fit_design_implementation_verified": false,
+          "training_started": false,
+          "learned_public_foundation_exported": false,
+          "full_semantic_formation_built": false,
+          "qualified_for_product": false,
+          "authority_activated": false,
+          "paid_compute_used": false,
+          "training_eligible": false,
+          "evaluation_eligible": false,
+          "next_action": "Preserve the completed original constructor outputs through the separately authorized Drive archive and authenticated restore gate. Then implement and verify a full-roster fitting route with complete-update boundary stops, retained checkpoint storage and read-only authenticated durable lineage across sessions. Keep the original failure and traces87-89 immutable. The current health check is complete; no new fit is launched, no epoch budget is approved, and no timeout, learning or full-MFM completion is claimed.",
+          "record_sha256": "f2f66b01a2e7ce2aedef4f18a8c967bc97eee86f912acb2797b9af43c07ec10c"
+        }
+      },
+      "construction_measurement_predecessor_bindings_20261008": [
+        {
+          "predecessor_public_heads": {
+            "fbm": "e321625d24deae482a17d76cf5d46ea77265d50c",
+            "graph": "6618ceb0857c7d6044778f5198111bd101629df6",
+            "mfm": "0a16f86e26c76f109311e4d1410447fc9f3d2283"
+          },
+          "predecessor_event_record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec",
+          "predecessor_files": [
+            {
+              "path": "work/alice/docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
+              "file_sha256": "cfd04053dda95cecd5e7d59ef554acc2004588108699ee27ea4f24cc03428b1b",
+              "bytes": 1409814
+            },
+            {
+              "path": "outputs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
+              "file_sha256": "cfd04053dda95cecd5e7d59ef554acc2004588108699ee27ea4f24cc03428b1b",
+              "bytes": 1409814
+            },
+            {
+              "path": "outputs/MFM_EXECUTION_HANDOFF_2026-10-02.json",
+              "file_sha256": "9f3592b7d0cdab6afe787f2e11fa391b914bad4ffd9ca36e93b488540c7255cd",
+              "bytes": 1336612
+            },
+            {
+              "path": "work/fbm/training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
+              "file_sha256": "581864578b0b1c1c0434772486b53485543915238375df619ad3df746dd7cda8",
+              "bytes": 4845895
+            }
+          ]
+        }
       ]
     },
     "latest_decision_model_code_commit": "532bdeb1c5e537b334e62cdacc391737b1335715",
@@ -27367,7 +27849,7 @@
         },
         "continuation_scheduling_rule": "At most one successor ahead of the active block. Each binds its immediate successful parent dedicated terminal/progress. Preserve no-advance/failure/unknown-submission evidence and diagnose before repeat; stop at verified complete4,862-source bank. Do not reuse prior-parent recipes or prequeue a long fixed chain."
       },
-      "next_action": "Recover the exact running corrected construction result and all actual outputs when execution becomes terminal. Verify authenticated full input/runtime custody and producer measurements before selecting the real fit budget. Preserve the original failed import execution and traces87-88; accepted replacement launch and RUNNING status establish no learning, fit, replay or product qualification.",
+      "next_action": "Preserve the completed original constructor outputs through the separately authorized Drive archive and authenticated restore gate. Then implement and verify a full-roster fitting route with complete-update boundary stops, retained checkpoint storage and read-only authenticated durable lineage across sessions. Keep the original failure and traces87-89 immutable. The current health check is complete; no new fit is launched, no epoch budget is approved, and no timeout, learning or full-MFM completion is claimed.",
       "full_role_gaps": [
         "expanded independently reviewed formation teaching",
         "learned typed selection and source-span copy integrated into semantic producer",
@@ -27635,7 +28117,7 @@
       "foundation_training_implementation": {
         "contract": "docs/MFM_PUBLIC_FOUNDATION_PRODUCER_CONTRACT_2026-10-07.md",
         "plan": "docs/superpowers/plans/2026-10-07-mfm-public-foundation-training.md",
-        "state": "CORRECTED_FULL_CONSTRUCTION_SUBMITTED_MEASUREMENT_RESULT_PENDING",
+        "state": "FULL_CONSTRUCTOR_MEASURED_FIT_AND_CHECKPOINT_CUSTODY_PENDING",
         "producer": "Fresh full-geometry FormationDecisionSpecialist; frozen Gemma source encoder only.",
         "objective": "Sequence mean including EOS, then reference mean, then equal semantic-MR mean.",
         "complete_training_pairs": 36597,
@@ -27683,8 +28165,8 @@
         "trainer_task_review_passed": true,
         "trainer_final_review_passed": true,
         "trainer_final_review_open_findings": [],
-        "construction_resource_executed": false,
-        "processor_compatibility_executed": false,
+        "construction_resource_executed": true,
+        "processor_compatibility_executed": true,
         "learned_public_foundation_exported": false,
         "trainer_commit": "8037a83267f3c48e3856d838cb9d2a52b7a4da4c",
         "final_objective_report_implemented": true,
@@ -28035,8 +28517,8 @@
           "next_action": "Recover the actual response of the already started corrected private-input dataset creation and verify its exact private identity/version/readiness. Preserve the original failed kernel and complete returned evidence. Launch the exact corrected full construction only after the new input operation and kernel contract are ready; then recover actual producer measurements before selecting a fit budget. No new GPU launch, completed upload, capacity, learning or qualification is established by this pending input operation.",
           "record_sha256": "e5613ed239b2b89e2681bd2594bd40fb5e4702e68060f117a03a739e65d3b1de"
         },
-        "current_construction_execution_succeeded": null,
-        "current_construction_job_failed": null,
+        "current_construction_execution_succeeded": true,
+        "current_construction_job_failed": false,
         "current_corrected_construction_continuation": {
           "state": "CORRECTED_COMPLETE_PRIVATE_INPUT_DATASET_UPLOAD_IN_PROGRESS_RESULT_PENDING",
           "preparation_file_sha256": "e32aea2cb25dc637cbb8051147751d161dad67ae0cfa879e088de85478a5b7d6",
@@ -28094,7 +28576,7 @@
           "observed_at_utc": "2026-10-08T23:13:01Z"
         },
         "last_submitted_construction_job_failed": true,
-        "current_gpu_submission_state": "NEW_ACTUAL_LAUNCH_ACCEPTED_RESULT_PENDING",
+        "current_gpu_submission_state": "ACTUAL_FULL_CONSTRUCTION_COMPLETE_MEASURE_ONLY",
         "current_full_construction_successor": {
           "schema": "mfm-full-construction-successor-public-v1",
           "classification": "PUBLIC_METHOD_ONLY",
@@ -28170,6 +28652,158 @@
           },
           "next_action": "Recover the exact running corrected construction result and all actual outputs when execution becomes terminal. Verify authenticated full input/runtime custody and producer measurements before selecting the real fit budget. Preserve the original failed import execution and traces87-88; accepted replacement launch and RUNNING status establish no learning, fit, replay or product qualification.",
           "record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec"
+        },
+        "construction_runtime_checks_passed": true,
+        "construction_measurement_result_pending": false,
+        "fit_still_pending": true,
+        "fit_operational_contract_pending": true,
+        "current_full_construction_measurement": {
+          "schema": "mfm-full-constructor-passed-fit-custody-gap-public-v1",
+          "classification": "PUBLIC_METHOD_ONLY",
+          "trace_id": "fbm-mfm-20261008-full-constructor-passed-fit-custody-gap-90",
+          "public_receipt_path": "docs/receipts/MFM_FULL_CONSTRUCTOR_PASSED_20261008_TRACE90_PUBLIC.json",
+          "recorded_at_utc": "2026-10-09T03:30:05.890835+00:00",
+          "status": "FULL_CONSTRUCTOR_MEASURED_FIT_AND_CHECKPOINT_CUSTODY_PENDING",
+          "source_capsule_revision": "30c6feb02bca1b8aa23b279a247dec26a552372c",
+          "predecessor_public_heads": {
+            "fbm": "e321625d24deae482a17d76cf5d46ea77265d50c",
+            "graph": "6618ceb0857c7d6044778f5198111bd101629df6",
+            "mfm": "0a16f86e26c76f109311e4d1410447fc9f3d2283"
+          },
+          "predecessor_successor_record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec",
+          "predecessor_runtime_failure_record_sha256": "e5613ed239b2b89e2681bd2594bd40fb5e4702e68060f117a03a739e65d3b1de",
+          "original_failed_execution_preserved": true,
+          "history_preservation": "Exact published Git revisions and immutable traces87-89; existing context history retained without another recursive snapshot.",
+          "evidence_receipt_bindings": {
+            "construction": {
+              "file_sha256": "513c913e26aa9a362eea756ca79d4b48c9f877cda9ea9503971ca01b4c5b98d6",
+              "record_sha256": "3abd633e12b8f6192947dcdd09406a2abb116d9e7186133b488edbfaaba7b95e"
+            },
+            "constructor_archive_manifest": {
+              "file_sha256": "f08e5eee4817ad61ea5e9bd692db2954cd7ad4e9d9d28e094375f03bdf81440f",
+              "record_sha256": "5224ce4879a980d3235cb4b5eee9bb6a499fd7e5ff5f77132a19631360a1ddaf"
+            },
+            "constructor_audit": {
+              "file_sha256": "e1b7a4491327e5521ab9a8679225329d3b900b48b0ea640e595b4af293c1d969",
+              "record_sha256": "3392724b8853a9eb0103d3ff4421ad0db0d6f319768cc6f7da7534cf849e92f0"
+            },
+            "constructor_storage_gate": {
+              "file_sha256": "7d2d5600fd81030370f585cc82ece0997b287c17621ee968b67111bb4ef05f69",
+              "record_sha256": "f83cdfad6804eec640f6a7570939182deb6a78ba6ed8ceeb539b7d40a3fd0199"
+            },
+            "predecessor": {
+              "file_sha256": "d473209791f33740d24b5e1cafd322631356e04370eff2c4e09b7ee817b2037f",
+              "record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec"
+            },
+            "quota": {
+              "file_sha256": "a5e2e154f4504eb6fd2b202d0aacb37931e16d0ec99b699876e87e1fc26145a5",
+              "record_sha256": "e02db869fd0bbbce9e402f41c0ed6218b1dd34e49d544c36d2054591ae69e467"
+            },
+            "fit_custody_design": {
+              "file_sha256": "929cb29036cf2cfb2d4c40b826d661b024db12685cb3270b0f44632f33c38523",
+              "record_sha256": "a6db98899e1032031283a2fe006d100c1dfc39d2c30a2d614e7c4db433c75e71"
+            },
+            "fit_custody_design_note": {
+              "file_sha256": "c29c3cb604a5d07ddcf81907de681e13f61949d414c84edb1bab2b0a3a31f82a"
+            }
+          },
+          "actual_terminal_execution_succeeded": true,
+          "actual_terminal_job_failed": false,
+          "authenticated_complete_output_retrieved": true,
+          "output_file_count": 23,
+          "output_bytes": 5354953308,
+          "independent_constructor_checks_passed": 138,
+          "full_material": true,
+          "parameter_count": 267542272,
+          "full_training_pairs": 36597,
+          "full_development_pairs": 4271,
+          "full_sources": 4862,
+          "training_semantic_groups": 4356,
+          "development_semantic_groups": 506,
+          "measured_extremes": [
+            {
+              "role": "longest-source",
+              "source_tokens": 71,
+              "label_tokens": 51
+            },
+            {
+              "role": "longest-target",
+              "source_tokens": 37,
+              "label_tokens": 84
+            },
+            {
+              "role": "longest-joint",
+              "source_tokens": 69,
+              "label_tokens": 80
+            }
+          ],
+          "actual_batch_size": 16,
+          "different_next_batch_replay_verified": true,
+          "full_model_adam_rng_order_cursor_replay_verified": true,
+          "replay_max_difference": 0.0,
+          "control_updates_restored": true,
+          "final_control_cursor": {
+            "epoch": 0,
+            "next_case": 0,
+            "step": 0
+          },
+          "construction_measurements": {
+            "replay_peaks": {
+              "cuda_peak_allocated_bytes": 6790204928,
+              "cuda_peak_reserved_bytes": 7696547840,
+              "cuda_total_bytes": 15636037632,
+              "host_peak_rss_bytes": 8815386624
+            },
+            "checkpoint_bytes": 3210622859,
+            "checkpoint_seconds": 14.562039211000183,
+            "trainer_seconds": 118.36897948299998,
+            "launcher_seconds": 283.5152962970001,
+            "gpu_peak_semantics": "GPU peaks are cumulative within construction after one reset, not independent per-case cold-start allocations."
+          },
+          "current_timeout_policy": "provider-default",
+          "custom_timeout_seconds": null,
+          "custom_timeout_field_sent": false,
+          "provider_session_duration_verified": false,
+          "actual_launch_policy_binding": {
+            "file_sha256": "e8951db7622cd2a5800e418e920bc345c65306057c8636ff61a1bb4d126d6a60",
+            "record_sha256": "dc4739148c1d05b9b9d5c514556a913b680819cf9220bf7575d91363ef707f59"
+          },
+          "saved_output_quota_verified": false,
+          "producer_output_durable_custody_verified": false,
+          "producer_output_drive_custody_state": "AUTHORIZED_PACKAGING_IN_PROGRESS_DURABILITY_PENDING",
+          "current_free_gpu_quota_observation": {
+            "observed_at_utc": "2026-10-09T03:05:25.443083+00:00",
+            "quota_seconds": {
+              "has_ever_run": true,
+              "is_pay_to_scale_enabled": false,
+              "minimum_time_allowed_seconds": 108000.0,
+              "remaining_after_reported_active_reservations_seconds": 107582.456615,
+              "reported_remaining_without_reservations_seconds": 107582.456615,
+              "time_reserved_seconds": 0.0,
+              "time_used_seconds": 417.543385,
+              "total_time_allowed_seconds": 108000.0
+            },
+            "allocation_guaranteed_or_reserved": false,
+            "refresh_time_raw_iso8601": "2026-10-10T00:00:00",
+            "refresh_timezone_returned": false,
+            "exhaustive_allocation_inventory_performed": false
+          },
+          "fit_custody_design_bound": true,
+          "latest_quota_evidence_bound": true,
+          "fit_operational_contract_pending": true,
+          "fit_budget_selected": false,
+          "fit_epoch_budget_approved": false,
+          "future_fit_design_implementation_verified": false,
+          "training_started": false,
+          "learned_public_foundation_exported": false,
+          "full_semantic_formation_built": false,
+          "qualified_for_product": false,
+          "authority_activated": false,
+          "paid_compute_used": false,
+          "training_eligible": false,
+          "evaluation_eligible": false,
+          "next_action": "Preserve the completed original constructor outputs through the separately authorized Drive archive and authenticated restore gate. Then implement and verify a full-roster fitting route with complete-update boundary stops, retained checkpoint storage and read-only authenticated durable lineage across sessions. Keep the original failure and traces87-89 immutable. The current health check is complete; no new fit is launched, no epoch budget is approved, and no timeout, learning or full-MFM completion is claimed.",
+          "record_sha256": "f2f66b01a2e7ce2aedef4f18a8c967bc97eee86f912acb2797b9af43c07ec10c"
         }
       },
       "free_training_compute": {
@@ -29724,6 +30358,154 @@
         },
         "next_action": "Recover the exact running corrected construction result and all actual outputs when execution becomes terminal. Verify authenticated full input/runtime custody and producer measurements before selecting the real fit budget. Preserve the original failed import execution and traces87-88; accepted replacement launch and RUNNING status establish no learning, fit, replay or product qualification.",
         "record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec"
+      },
+      "current_full_construction_measurement_20261008": {
+        "schema": "mfm-full-constructor-passed-fit-custody-gap-public-v1",
+        "classification": "PUBLIC_METHOD_ONLY",
+        "trace_id": "fbm-mfm-20261008-full-constructor-passed-fit-custody-gap-90",
+        "public_receipt_path": "docs/receipts/MFM_FULL_CONSTRUCTOR_PASSED_20261008_TRACE90_PUBLIC.json",
+        "recorded_at_utc": "2026-10-09T03:30:05.890835+00:00",
+        "status": "FULL_CONSTRUCTOR_MEASURED_FIT_AND_CHECKPOINT_CUSTODY_PENDING",
+        "source_capsule_revision": "30c6feb02bca1b8aa23b279a247dec26a552372c",
+        "predecessor_public_heads": {
+          "fbm": "e321625d24deae482a17d76cf5d46ea77265d50c",
+          "graph": "6618ceb0857c7d6044778f5198111bd101629df6",
+          "mfm": "0a16f86e26c76f109311e4d1410447fc9f3d2283"
+        },
+        "predecessor_successor_record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec",
+        "predecessor_runtime_failure_record_sha256": "e5613ed239b2b89e2681bd2594bd40fb5e4702e68060f117a03a739e65d3b1de",
+        "original_failed_execution_preserved": true,
+        "history_preservation": "Exact published Git revisions and immutable traces87-89; existing context history retained without another recursive snapshot.",
+        "evidence_receipt_bindings": {
+          "construction": {
+            "file_sha256": "513c913e26aa9a362eea756ca79d4b48c9f877cda9ea9503971ca01b4c5b98d6",
+            "record_sha256": "3abd633e12b8f6192947dcdd09406a2abb116d9e7186133b488edbfaaba7b95e"
+          },
+          "constructor_archive_manifest": {
+            "file_sha256": "f08e5eee4817ad61ea5e9bd692db2954cd7ad4e9d9d28e094375f03bdf81440f",
+            "record_sha256": "5224ce4879a980d3235cb4b5eee9bb6a499fd7e5ff5f77132a19631360a1ddaf"
+          },
+          "constructor_audit": {
+            "file_sha256": "e1b7a4491327e5521ab9a8679225329d3b900b48b0ea640e595b4af293c1d969",
+            "record_sha256": "3392724b8853a9eb0103d3ff4421ad0db0d6f319768cc6f7da7534cf849e92f0"
+          },
+          "constructor_storage_gate": {
+            "file_sha256": "7d2d5600fd81030370f585cc82ece0997b287c17621ee968b67111bb4ef05f69",
+            "record_sha256": "f83cdfad6804eec640f6a7570939182deb6a78ba6ed8ceeb539b7d40a3fd0199"
+          },
+          "predecessor": {
+            "file_sha256": "d473209791f33740d24b5e1cafd322631356e04370eff2c4e09b7ee817b2037f",
+            "record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec"
+          },
+          "quota": {
+            "file_sha256": "a5e2e154f4504eb6fd2b202d0aacb37931e16d0ec99b699876e87e1fc26145a5",
+            "record_sha256": "e02db869fd0bbbce9e402f41c0ed6218b1dd34e49d544c36d2054591ae69e467"
+          },
+          "fit_custody_design": {
+            "file_sha256": "929cb29036cf2cfb2d4c40b826d661b024db12685cb3270b0f44632f33c38523",
+            "record_sha256": "a6db98899e1032031283a2fe006d100c1dfc39d2c30a2d614e7c4db433c75e71"
+          },
+          "fit_custody_design_note": {
+            "file_sha256": "c29c3cb604a5d07ddcf81907de681e13f61949d414c84edb1bab2b0a3a31f82a"
+          }
+        },
+        "actual_terminal_execution_succeeded": true,
+        "actual_terminal_job_failed": false,
+        "authenticated_complete_output_retrieved": true,
+        "output_file_count": 23,
+        "output_bytes": 5354953308,
+        "independent_constructor_checks_passed": 138,
+        "full_material": true,
+        "parameter_count": 267542272,
+        "full_training_pairs": 36597,
+        "full_development_pairs": 4271,
+        "full_sources": 4862,
+        "training_semantic_groups": 4356,
+        "development_semantic_groups": 506,
+        "measured_extremes": [
+          {
+            "role": "longest-source",
+            "source_tokens": 71,
+            "label_tokens": 51
+          },
+          {
+            "role": "longest-target",
+            "source_tokens": 37,
+            "label_tokens": 84
+          },
+          {
+            "role": "longest-joint",
+            "source_tokens": 69,
+            "label_tokens": 80
+          }
+        ],
+        "actual_batch_size": 16,
+        "different_next_batch_replay_verified": true,
+        "full_model_adam_rng_order_cursor_replay_verified": true,
+        "replay_max_difference": 0.0,
+        "control_updates_restored": true,
+        "final_control_cursor": {
+          "epoch": 0,
+          "next_case": 0,
+          "step": 0
+        },
+        "construction_measurements": {
+          "replay_peaks": {
+            "cuda_peak_allocated_bytes": 6790204928,
+            "cuda_peak_reserved_bytes": 7696547840,
+            "cuda_total_bytes": 15636037632,
+            "host_peak_rss_bytes": 8815386624
+          },
+          "checkpoint_bytes": 3210622859,
+          "checkpoint_seconds": 14.562039211000183,
+          "trainer_seconds": 118.36897948299998,
+          "launcher_seconds": 283.5152962970001,
+          "gpu_peak_semantics": "GPU peaks are cumulative within construction after one reset, not independent per-case cold-start allocations."
+        },
+        "current_timeout_policy": "provider-default",
+        "custom_timeout_seconds": null,
+        "custom_timeout_field_sent": false,
+        "provider_session_duration_verified": false,
+        "actual_launch_policy_binding": {
+          "file_sha256": "e8951db7622cd2a5800e418e920bc345c65306057c8636ff61a1bb4d126d6a60",
+          "record_sha256": "dc4739148c1d05b9b9d5c514556a913b680819cf9220bf7575d91363ef707f59"
+        },
+        "saved_output_quota_verified": false,
+        "producer_output_durable_custody_verified": false,
+        "producer_output_drive_custody_state": "AUTHORIZED_PACKAGING_IN_PROGRESS_DURABILITY_PENDING",
+        "current_free_gpu_quota_observation": {
+          "observed_at_utc": "2026-10-09T03:05:25.443083+00:00",
+          "quota_seconds": {
+            "has_ever_run": true,
+            "is_pay_to_scale_enabled": false,
+            "minimum_time_allowed_seconds": 108000.0,
+            "remaining_after_reported_active_reservations_seconds": 107582.456615,
+            "reported_remaining_without_reservations_seconds": 107582.456615,
+            "time_reserved_seconds": 0.0,
+            "time_used_seconds": 417.543385,
+            "total_time_allowed_seconds": 108000.0
+          },
+          "allocation_guaranteed_or_reserved": false,
+          "refresh_time_raw_iso8601": "2026-10-10T00:00:00",
+          "refresh_timezone_returned": false,
+          "exhaustive_allocation_inventory_performed": false
+        },
+        "fit_custody_design_bound": true,
+        "latest_quota_evidence_bound": true,
+        "fit_operational_contract_pending": true,
+        "fit_budget_selected": false,
+        "fit_epoch_budget_approved": false,
+        "future_fit_design_implementation_verified": false,
+        "training_started": false,
+        "learned_public_foundation_exported": false,
+        "full_semantic_formation_built": false,
+        "qualified_for_product": false,
+        "authority_activated": false,
+        "paid_compute_used": false,
+        "training_eligible": false,
+        "evaluation_eligible": false,
+        "next_action": "Preserve the completed original constructor outputs through the separately authorized Drive archive and authenticated restore gate. Then implement and verify a full-roster fitting route with complete-update boundary stops, retained checkpoint storage and read-only authenticated durable lineage across sessions. Keep the original failure and traces87-89 immutable. The current health check is complete; no new fit is launched, no epoch budget is approved, and no timeout, learning or full-MFM completion is claimed.",
+        "record_sha256": "f2f66b01a2e7ce2aedef4f18a8c967bc97eee86f912acb2797b9af43c07ec10c"
       }
     },
     "full_bank_completion_events_20261008": {
@@ -79868,6 +80650,186 @@
       },
       "next_action": "Recover the exact running corrected construction result and all actual outputs when execution becomes terminal. Verify authenticated full input/runtime custody and producer measurements before selecting the real fit budget. Preserve the original failed import execution and traces87-88; accepted replacement launch and RUNNING status establish no learning, fit, replay or product qualification.",
       "record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec"
+    },
+    "construction_measurement_predecessor_bindings_20261008": [
+      {
+        "predecessor_public_heads": {
+          "fbm": "e321625d24deae482a17d76cf5d46ea77265d50c",
+          "graph": "6618ceb0857c7d6044778f5198111bd101629df6",
+          "mfm": "0a16f86e26c76f109311e4d1410447fc9f3d2283"
+        },
+        "predecessor_event_record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec",
+        "predecessor_files": [
+          {
+            "path": "work/alice/docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
+            "file_sha256": "cfd04053dda95cecd5e7d59ef554acc2004588108699ee27ea4f24cc03428b1b",
+            "bytes": 1409814
+          },
+          {
+            "path": "outputs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
+            "file_sha256": "cfd04053dda95cecd5e7d59ef554acc2004588108699ee27ea4f24cc03428b1b",
+            "bytes": 1409814
+          },
+          {
+            "path": "outputs/MFM_EXECUTION_HANDOFF_2026-10-02.json",
+            "file_sha256": "9f3592b7d0cdab6afe787f2e11fa391b914bad4ffd9ca36e93b488540c7255cd",
+            "bytes": 1336612
+          },
+          {
+            "path": "work/fbm/training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
+            "file_sha256": "581864578b0b1c1c0434772486b53485543915238375df619ad3df746dd7cda8",
+            "bytes": 4845895
+          }
+        ]
+      }
+    ],
+    "current_full_construction_measurement": {
+      "schema": "mfm-full-constructor-passed-fit-custody-gap-public-v1",
+      "classification": "PUBLIC_METHOD_ONLY",
+      "trace_id": "fbm-mfm-20261008-full-constructor-passed-fit-custody-gap-90",
+      "public_receipt_path": "docs/receipts/MFM_FULL_CONSTRUCTOR_PASSED_20261008_TRACE90_PUBLIC.json",
+      "recorded_at_utc": "2026-10-09T03:30:05.890835+00:00",
+      "status": "FULL_CONSTRUCTOR_MEASURED_FIT_AND_CHECKPOINT_CUSTODY_PENDING",
+      "source_capsule_revision": "30c6feb02bca1b8aa23b279a247dec26a552372c",
+      "predecessor_public_heads": {
+        "fbm": "e321625d24deae482a17d76cf5d46ea77265d50c",
+        "graph": "6618ceb0857c7d6044778f5198111bd101629df6",
+        "mfm": "0a16f86e26c76f109311e4d1410447fc9f3d2283"
+      },
+      "predecessor_successor_record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec",
+      "predecessor_runtime_failure_record_sha256": "e5613ed239b2b89e2681bd2594bd40fb5e4702e68060f117a03a739e65d3b1de",
+      "original_failed_execution_preserved": true,
+      "history_preservation": "Exact published Git revisions and immutable traces87-89; existing context history retained without another recursive snapshot.",
+      "evidence_receipt_bindings": {
+        "construction": {
+          "file_sha256": "513c913e26aa9a362eea756ca79d4b48c9f877cda9ea9503971ca01b4c5b98d6",
+          "record_sha256": "3abd633e12b8f6192947dcdd09406a2abb116d9e7186133b488edbfaaba7b95e"
+        },
+        "constructor_archive_manifest": {
+          "file_sha256": "f08e5eee4817ad61ea5e9bd692db2954cd7ad4e9d9d28e094375f03bdf81440f",
+          "record_sha256": "5224ce4879a980d3235cb4b5eee9bb6a499fd7e5ff5f77132a19631360a1ddaf"
+        },
+        "constructor_audit": {
+          "file_sha256": "e1b7a4491327e5521ab9a8679225329d3b900b48b0ea640e595b4af293c1d969",
+          "record_sha256": "3392724b8853a9eb0103d3ff4421ad0db0d6f319768cc6f7da7534cf849e92f0"
+        },
+        "constructor_storage_gate": {
+          "file_sha256": "7d2d5600fd81030370f585cc82ece0997b287c17621ee968b67111bb4ef05f69",
+          "record_sha256": "f83cdfad6804eec640f6a7570939182deb6a78ba6ed8ceeb539b7d40a3fd0199"
+        },
+        "predecessor": {
+          "file_sha256": "d473209791f33740d24b5e1cafd322631356e04370eff2c4e09b7ee817b2037f",
+          "record_sha256": "a43519df793e6a63451391f127fa2fc98135193caed2152a6dc8261996975fec"
+        },
+        "quota": {
+          "file_sha256": "a5e2e154f4504eb6fd2b202d0aacb37931e16d0ec99b699876e87e1fc26145a5",
+          "record_sha256": "e02db869fd0bbbce9e402f41c0ed6218b1dd34e49d544c36d2054591ae69e467"
+        },
+        "fit_custody_design": {
+          "file_sha256": "929cb29036cf2cfb2d4c40b826d661b024db12685cb3270b0f44632f33c38523",
+          "record_sha256": "a6db98899e1032031283a2fe006d100c1dfc39d2c30a2d614e7c4db433c75e71"
+        },
+        "fit_custody_design_note": {
+          "file_sha256": "c29c3cb604a5d07ddcf81907de681e13f61949d414c84edb1bab2b0a3a31f82a"
+        }
+      },
+      "actual_terminal_execution_succeeded": true,
+      "actual_terminal_job_failed": false,
+      "authenticated_complete_output_retrieved": true,
+      "output_file_count": 23,
+      "output_bytes": 5354953308,
+      "independent_constructor_checks_passed": 138,
+      "full_material": true,
+      "parameter_count": 267542272,
+      "full_training_pairs": 36597,
+      "full_development_pairs": 4271,
+      "full_sources": 4862,
+      "training_semantic_groups": 4356,
+      "development_semantic_groups": 506,
+      "measured_extremes": [
+        {
+          "role": "longest-source",
+          "source_tokens": 71,
+          "label_tokens": 51
+        },
+        {
+          "role": "longest-target",
+          "source_tokens": 37,
+          "label_tokens": 84
+        },
+        {
+          "role": "longest-joint",
+          "source_tokens": 69,
+          "label_tokens": 80
+        }
+      ],
+      "actual_batch_size": 16,
+      "different_next_batch_replay_verified": true,
+      "full_model_adam_rng_order_cursor_replay_verified": true,
+      "replay_max_difference": 0.0,
+      "control_updates_restored": true,
+      "final_control_cursor": {
+        "epoch": 0,
+        "next_case": 0,
+        "step": 0
+      },
+      "construction_measurements": {
+        "replay_peaks": {
+          "cuda_peak_allocated_bytes": 6790204928,
+          "cuda_peak_reserved_bytes": 7696547840,
+          "cuda_total_bytes": 15636037632,
+          "host_peak_rss_bytes": 8815386624
+        },
+        "checkpoint_bytes": 3210622859,
+        "checkpoint_seconds": 14.562039211000183,
+        "trainer_seconds": 118.36897948299998,
+        "launcher_seconds": 283.5152962970001,
+        "gpu_peak_semantics": "GPU peaks are cumulative within construction after one reset, not independent per-case cold-start allocations."
+      },
+      "current_timeout_policy": "provider-default",
+      "custom_timeout_seconds": null,
+      "custom_timeout_field_sent": false,
+      "provider_session_duration_verified": false,
+      "actual_launch_policy_binding": {
+        "file_sha256": "e8951db7622cd2a5800e418e920bc345c65306057c8636ff61a1bb4d126d6a60",
+        "record_sha256": "dc4739148c1d05b9b9d5c514556a913b680819cf9220bf7575d91363ef707f59"
+      },
+      "saved_output_quota_verified": false,
+      "producer_output_durable_custody_verified": false,
+      "producer_output_drive_custody_state": "AUTHORIZED_PACKAGING_IN_PROGRESS_DURABILITY_PENDING",
+      "current_free_gpu_quota_observation": {
+        "observed_at_utc": "2026-10-09T03:05:25.443083+00:00",
+        "quota_seconds": {
+          "has_ever_run": true,
+          "is_pay_to_scale_enabled": false,
+          "minimum_time_allowed_seconds": 108000.0,
+          "remaining_after_reported_active_reservations_seconds": 107582.456615,
+          "reported_remaining_without_reservations_seconds": 107582.456615,
+          "time_reserved_seconds": 0.0,
+          "time_used_seconds": 417.543385,
+          "total_time_allowed_seconds": 108000.0
+        },
+        "allocation_guaranteed_or_reserved": false,
+        "refresh_time_raw_iso8601": "2026-10-10T00:00:00",
+        "refresh_timezone_returned": false,
+        "exhaustive_allocation_inventory_performed": false
+      },
+      "fit_custody_design_bound": true,
+      "latest_quota_evidence_bound": true,
+      "fit_operational_contract_pending": true,
+      "fit_budget_selected": false,
+      "fit_epoch_budget_approved": false,
+      "future_fit_design_implementation_verified": false,
+      "training_started": false,
+      "learned_public_foundation_exported": false,
+      "full_semantic_formation_built": false,
+      "qualified_for_product": false,
+      "authority_activated": false,
+      "paid_compute_used": false,
+      "training_eligible": false,
+      "evaluation_eligible": false,
+      "next_action": "Preserve the completed original constructor outputs through the separately authorized Drive archive and authenticated restore gate. Then implement and verify a full-roster fitting route with complete-update boundary stops, retained checkpoint storage and read-only authenticated durable lineage across sessions. Keep the original failure and traces87-89 immutable. The current health check is complete; no new fit is launched, no epoch budget is approved, and no timeout, learning or full-MFM completion is claimed.",
+      "record_sha256": "f2f66b01a2e7ce2aedef4f18a8c967bc97eee86f912acb2797b9af43c07ec10c"
     }
   }
 }
