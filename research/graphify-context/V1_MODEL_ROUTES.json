@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "7d611fbf1f2321ec8d3a81d0e3aaab308d786ad0",
+      "commit": "00fef6c23a33defcd7372438fcf9555b90c70588",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -57,7 +57,7 @@
         {
           "path": "docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
           "purpose": "completed teacher fit, failed generated formation, actual causal analysis and corrected measurement handoff",
-          "blob_sha": "a5706c24f0be37fe83eef1aa85182d6fd0c3b136"
+          "blob_sha": "92e48a70492adb40ede2b34418794b1b65ccfbcb"
         },
         {
           "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576702.json",
@@ -433,6 +433,36 @@
           "path": "docs/receipts/MFM_TLS_CUSTODY_CONTINUATION_20261009_TRACE96_PUBLIC.json",
           "purpose": "reviewed native trust/source roundtrip and actual41/83 custody launch; legacy48 uploads complete, whole restore/catalog, resumed state and fullMFM pending",
           "blob_sha": "4a131097792021ed8f13289ec4f4d9dd2db50aea"
+        },
+        {
+          "path": "docs/receipts/MFM_CUSTODY_RECOVERY_20261009_TRACE97_PUBLIC.json",
+          "purpose": "preserved source EOF and SSH failures; reviewed atomic recovery, detached verification and actual replacement launch; whole custody and full role remain pending",
+          "blob_sha": "e666065b8116aa93c58fe8d498a8dc688f0c9070"
+        },
+        {
+          "path": "docs/receipts/MFM_ALIGNMENT_AND_DURABLE_LEGACY_CUSTODY_20261009_TRACE98_PUBLIC.json",
+          "purpose": "caller-bound text geometry, independent regressions and actual whole20/catalog custody; preserved restore-consumer publication failures and full learned role pending",
+          "blob_sha": "760f3212e0db60e826bb9e3f35842856c99c526b"
+        },
+        {
+          "path": "docs/MFM_ORIGINAL_SOURCE_ALIGNMENT_BUILD_2026-10-09.md",
+          "purpose": "original UTF8, actual rendered tokenizer positions and canonical literal alignment; real Gemma export, learned selection/copying and native/outcome formation remain explicit",
+          "blob_sha": "c47a5ac22e893bd7e559fa0cb97ba7ce93b271f5"
+        },
+        {
+          "path": "scripts/mfm/formation_source_alignment.py",
+          "purpose": "caller and processor bound original UTF8, escaped source-token geometry and all literal occurrences; separate native and learned responsibilities",
+          "blob_sha": "79aa0a157215097b047ef621fcc4330f34d7c03a"
+        },
+        {
+          "path": "tests/governance/test_mfm_source_alignment.py",
+          "purpose": "connected original-byte, escape, repetition and externally pinned rejection controls for the text representation",
+          "blob_sha": "205347e02c18fbfd8819ee7c47e785a9c3f96a59"
+        },
+        {
+          "path": "docs/MFM_DEVELOPMENT_CONTINUATION_2026-10-09.md",
+          "purpose": "unchanged E20 continuation, source interventions, caller reference selection, original-byte copy alignment and full governed formation roadmap",
+          "blob_sha": "a8c52a56dc3ce3a816c485da146ebe40d278c003"
         },
         {
           "path": "tests/governance/test_mfm_public_conditional_foundation.py",
@@ -878,7 +908,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "f500b69fd2c369996995706a16bef1fb70bc6fbc",
+      "commit": "47260faee6d96d51a9dd41ab55296359e409350c",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -958,7 +988,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "fabe4747381358062a053e586fa0c0597923ab69"
+          "blob_sha": "9e0bb87a052bb00b41ce26d23a0be4470491e6bf"
         }
       ]
     }
