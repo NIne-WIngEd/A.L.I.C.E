@@ -128,6 +128,8 @@ ROUTES = {
             "docs/receipts/MFM_TASK_CONTENT_SCHEMA_ADMISSION_20261010_TRACE108_PUBLIC.json": "TRACE108 failed schema admission, ordered coherent closure and static scope-only root admission method",
             "docs/MFM_S1_LINEAGE_AND_CONNECTED_INPUT_PROGRESS_2026-10-10.md": "actual S1 epoch6 metadata lineage, original-observation identity correction and full-role continuation gaps",
             "docs/receipts/MFM_S1_LINEAGE_AND_INPUT_METHOD_20261010_TRACE109_PUBLIC.json": "TRACE109 actual original metadata and real custody controls; no tensor custody or learning qualification",
+            "docs/MFM_ORIGINAL_CUSTODY_AND_EVIDENCE_METHOD_2026-10-10.md": "faithful custody and evidence lifecycle source; actual complete input budget refusal preserved",
+            "docs/receipts/MFM_ORIGINAL_CUSTODY_AND_EVIDENCE_20261010_TRACE110_PUBLIC.json": "TRACE110 faithful custody and returned evidence; preserved v3/v4 complete-budget failures, completed exact143 cleanup; full MFM and S1 whole custody pending",
             "docs/receipts/MFM_EPISODE_ORIGINAL_PRIOR_INPUT_20261010_TRACE107_PUBLIC.json": "admitted input construction; original exit1/72 and separate36 saved checks; no fresh tokenization or full-role qualification",
             "scripts/mfm/formation_episode_input.py": "genuine Episode metadata/full/summary and append-invocation/profile originals",
             "scripts/mfm/formation_caller_meaning_v2.py": "Claim/Episode target-free meaning and historically bound member registrations",
