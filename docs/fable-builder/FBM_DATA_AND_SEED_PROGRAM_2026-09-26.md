@@ -6,6 +6,16 @@ for the shared pretrained base and private per-user learned components.
 Fresh-initialization-only passages below remain the future first-party-base
 destination. Process traces are still procedure seeds, not builder gold.
 
+**Current continuation (2026-10-10):** See the
+[component-state pointer](../../training/fbm/base_assembly/mfm_v1_current_continuation_20261010.seed.json).
+Historical fit-pending snapshots below do not negate later observed fits.
+The older PostgreSQL/lighter-profile paragraph is superseded as an Alice
+physical selection by current main memory/execution/migration/StageG
+contracts. Fable's JetStream/JanusGraph profile conflicts with Alice's
+Kurrent/JetStream-ingress/Nebula selection and needs policy reconciliation
+before automatic activation. This does not change MFM or Claim authority,
+select a new backend or qualify complete builder cases.
+
 **Status:** proposed build contract; no FBM weights or consumer qualification claimed. 2026-09-26.  
 **Inputs reviewed:** `fable-builder-model@6a787d72`, `alice-eipm-v1-n0-full-envelope-foundation-build-v1@4270bfa2`, A.L.I.C.E. `main@75db33c5`, `research/frontier-watch@2b9a9311`, `research/mfm-foundation-20260923@efbc6b3a`, and Fable Sleight `main@63bc85f`.
 

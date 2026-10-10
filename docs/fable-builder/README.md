@@ -7,11 +7,15 @@ learned components. See
 The [V1 shared-base dissection and five-role recipe](FBM_V1_GEMMA4_BASE_DISSECTION_AND_ROLE_RECIPE_2026-09-30.md)
 pins the publisher checkpoint metadata and records the verification and
 specialization gates. The exact pretrained source has now been downloaded
-and rehashed locally; the receipt is linked in that recipe. No 12B forward
-pass or base edit has been observed.
+and rehashed locally; the receipt is linked in that recipe. Later source
+feature extraction, historical teacher fitting and fresh-decoder S0 training
+are recorded in the construction traces. Full MFM and FBM remain unqualified.
 Earlier fresh-initialization-only passages below describe the future
-first-party replacement, not V1 production ancestry. No V1 base-derived
-MFM or FBM build is trained or qualified.
+first-party replacement, not V1 production ancestry. Use the
+[current continuation pointer](../../training/fbm/base_assembly/mfm_v1_current_continuation_20261010.seed.json)
+for the latest observed component state; dated seed fields retain their
+original historical meaning. Procedure traces do not establish a trained
+builder, learned full-role formation or consumer qualification.
 
 **Branch:** `fable-builder-model`  
 **Status:** active architecture and process-capture workstream  

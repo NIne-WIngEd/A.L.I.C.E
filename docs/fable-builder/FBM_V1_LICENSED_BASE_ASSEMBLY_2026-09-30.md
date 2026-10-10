@@ -1,10 +1,21 @@
 # FBM V1 shared licensed base and personal assembly
 
 **Owner-local direction:** 2026-09-29. **Status:** build contract, not a trained
-FBM, MFM, personality successor, or qualified consumer product. For V1, this
+complete FBM, full-role MFM, personality successor, or qualified consumer product.
+For V1, this
 supersedes the fresh-initialization-only rule in earlier FBM documents. A
 future version aims to replace the shared base with a separately qualified,
 scratch-trained first-party base. This does not edit the ongoing N0 branch.
+
+**Current component evidence (2026-10-10):** Historical teacher fits and a
+fresh native conditional-language decoder S0 fit have since executed. Original
+S0 output/catalog custody and accepted S1 launch are recorded in TRACE100.
+Actual resumed state, complete E20 learning, learned full formation and the
+governed consumer loop remain separate obligations. The table and earlier
+dated receipts below preserve historical checkpoints; use the
+[current continuation pointer](../../training/fbm/base_assembly/mfm_v1_current_continuation_20261010.seed.json)
+before treating them as a current build decision. No paid fit or complete
+consumer FBM assembly is claimed.
 
 ## Shared base and each person's build
 
@@ -318,7 +329,7 @@ draft or packet bytes are published in FBM Git.
 The [active FBM procedure seed](../../training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json)
 separates these receipts so one passing step cannot stand in for another:
 
-| Step | Required evidence | Current state |
+| Step | Required evidence | State at historical capture |
 | --- | --- | --- |
 | Source and MFM role clone | Eight pinned source hashes and a fresh clone receipt | Magnolia job `576486` completed `0:0`; owner checked both sealed receipt digests, parent, role and all eight file rows. Full JSON and script were not transferred. |
 | Full-role corpus | Rights-checked, source-bound v1.6 teaching cases for gradients; independently reviewed development and sealed FINAL for qualification | Historical 49,819 rows fail v1.6 coverage; the 21-case 1.6 authoring seed is diagnostic only. Neither is a complete admitted teacher corpus or independent gold. |
