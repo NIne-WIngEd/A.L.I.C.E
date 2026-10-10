@@ -12,9 +12,14 @@ feature extraction, historical teacher fitting and fresh-decoder S0 training
 are recorded in the construction traces. Full MFM and FBM remain unqualified.
 Earlier fresh-initialization-only passages below describe the future
 first-party replacement, not V1 production ancestry. Use the
-[current continuation pointer](../../training/fbm/base_assembly/mfm_v1_current_continuation_20261010.seed.json)
-for the latest observed component state; dated seed fields retain their
-original historical meaning. Procedure traces do not establish a trained
+[continuation snapshot](../../training/fbm/base_assembly/mfm_v1_current_continuation_20261010.seed.json)
+for its frozen S0/S1 and roots-audit state, then subsequent
+[construction traces](traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl).
+TRACE102 admits target-free caller meaning and complete joint text input:
+80 owner/80 independent controls,23 actual offline processor checks and95
+independent saved-geometry checks. This is input construction, not learned
+full-role formation. Dated seed fields retain their original historical
+meaning. Procedure traces do not establish a trained
 builder, learned full-role formation or consumer qualification.
 
 **Branch:** `fable-builder-model`  
