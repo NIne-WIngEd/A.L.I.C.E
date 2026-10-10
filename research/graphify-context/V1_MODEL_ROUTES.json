@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "2ded2e4eadcc2df6cde178ea9a8da1b51a41ae38",
+      "commit": "8b9265f9b07b6b0b08debd12969b043aded244c5",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -508,6 +508,26 @@
           "path": "docs/research/MFM_TASK_CONTENT_INPUT_NEXT_CONSTRUCTION_2026-10-10.md",
           "purpose": "reviewed next original Mission/Result/Workspace and distinct uncertainty input direction; exact schemas and implementation outstanding",
           "blob_sha": "d603ae093f0fc007880a3bf41ceb232e257573e1"
+        },
+        {
+          "path": "docs/research/MFM_TASK_CONTENT_INPUT_SCHEMA_REVISION2_2026-10-10.md",
+          "purpose": "root-admitted exact original task and uncertainty schemas; implementation and learned use separate",
+          "blob_sha": "d74a78a59677634f1c2eb86a5dd7449b0b145075"
+        },
+        {
+          "path": "docs/research/MFM_TASK_CONTENT_INPUT_PLAN_REVISION2_2026-10-10.md",
+          "purpose": "connected real-producer input plan with current per-part permissions and separately held actual processor control",
+          "blob_sha": "d068e4e665da6aa9dab852f6fe914202f4331a47"
+        },
+        {
+          "path": "docs/research/MFM_TASK_CONTENT_DEPENDENCY_READ_MATRIX_2026-10-10.md",
+          "purpose": "complete typed causal dependency and verification-versus-delivery read closure matrix",
+          "blob_sha": "0aa25f05f21090f14836b925003acd7d4fd355fd"
+        },
+        {
+          "path": "docs/receipts/MFM_TASK_CONTENT_SCHEMA_ADMISSION_20261010_TRACE108_PUBLIC.json",
+          "purpose": "TRACE108 failed schema admission, ordered coherent closure and static scope-only root admission method",
+          "blob_sha": "28623220f8ed00ed287ff87c5f90402aaca1e849"
         },
         {
           "path": "docs/receipts/MFM_EPISODE_ORIGINAL_PRIOR_INPUT_20261010_TRACE107_PUBLIC.json",
@@ -1058,7 +1078,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "fd93700c5ba6beb549f4f8d5209b148961d97515",
+      "commit": "03394b81f9aef8b1b76a7d0781191408e86f36fc",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1138,7 +1158,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "6b9f55f9cf084653eabab325354864736eaa6a8c"
+          "blob_sha": "8409ffd27265d254024f01699d52593f1a812f7a"
         }
       ]
     }
