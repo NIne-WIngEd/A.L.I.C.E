@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "24c6b3cbc8d89cf24ae78e8fef3234af28c7fb6d",
+      "commit": "2ded2e4eadcc2df6cde178ea9a8da1b51a41ae38",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -500,6 +500,76 @@
           "blob_sha": "46b8868e1555a989e94e9a609cacb9b62a67de15"
         },
         {
+          "path": "docs/MFM_EPISODE_ORIGINAL_PRIOR_INPUT_2026-10-10.md",
+          "purpose": "original Episode metadata/full/summary, historical/current role separation and honest actual-failure saved closure",
+          "blob_sha": "a47b38d0f0b7c5dbb73a05fc381a722775e6c24d"
+        },
+        {
+          "path": "docs/research/MFM_TASK_CONTENT_INPUT_NEXT_CONSTRUCTION_2026-10-10.md",
+          "purpose": "reviewed next original Mission/Result/Workspace and distinct uncertainty input direction; exact schemas and implementation outstanding",
+          "blob_sha": "d603ae093f0fc007880a3bf41ceb232e257573e1"
+        },
+        {
+          "path": "docs/receipts/MFM_EPISODE_ORIGINAL_PRIOR_INPUT_20261010_TRACE107_PUBLIC.json",
+          "purpose": "admitted input construction; original exit1/72 and separate36 saved checks; no fresh tokenization or full-role qualification",
+          "blob_sha": "a2f82a95d3bfa30893a83b25720747cf6b46674a"
+        },
+        {
+          "path": "scripts/mfm/formation_episode_input.py",
+          "purpose": "genuine Episode metadata/full/summary and append-invocation/profile originals",
+          "blob_sha": "86c0ef302bf2cfa71b9e6b9dd8ec2fbb43c110ca"
+        },
+        {
+          "path": "scripts/mfm/formation_caller_meaning_v2.py",
+          "purpose": "Claim/Episode target-free meaning and historically bound member registrations",
+          "blob_sha": "006757521e88d7fe0f91ede2261242e95fd29051"
+        },
+        {
+          "path": "scripts/mfm/formation_world_replay_v2.py",
+          "purpose": "exact causal original history and commit-time Episode registration proof",
+          "blob_sha": "dcb334eb433caa7ae8a3f1993edf55df7cc8f7f9"
+        },
+        {
+          "path": "scripts/mfm/formation_world_caller_v2.py",
+          "purpose": "current per-part read-boundary responsibility and complete permitted originals",
+          "blob_sha": "b25f61f6eedfe7bd8e2ae79d9e62ace4a53683bf"
+        },
+        {
+          "path": "scripts/mfm/formation_joint_input_v2.py",
+          "purpose": "whole original-part field/token/candidate/cache joins; no prior observation promotion",
+          "blob_sha": "76f4435a35eaad7a1dcea820fdf3dec5b85db170"
+        },
+        {
+          "path": "tests/governance/mfm_episode_fixtures.py",
+          "purpose": "real reversible original producers and fictional each-part permission adapter",
+          "blob_sha": "39fcbd4b599544f944c08c8ff6a404d0b742b9cd"
+        },
+        {
+          "path": "tests/governance/test_mfm_episode_input.py",
+          "purpose": "complete original Episode parts and genuine contract/receipt refusal controls",
+          "blob_sha": "66f84b152d0f965e67ea5f62fbd5c077ef3722ef"
+        },
+        {
+          "path": "tests/governance/test_mfm_caller_meaning_v2.py",
+          "purpose": "original family meanings, lifecycle and historical role provenance",
+          "blob_sha": "ccfa1a3cb779baeece23c45d71c4177b382ed5d7"
+        },
+        {
+          "path": "tests/governance/test_mfm_world_replay_v2.py",
+          "purpose": "causal commits, independent counters, future and changed-original refusal",
+          "blob_sha": "41746f3e8e51829dad24070cccc2f2acfb8623e8"
+        },
+        {
+          "path": "tests/governance/test_mfm_world_caller_v2.py",
+          "purpose": "historical-current separation and stop at first changed part permission",
+          "blob_sha": "45f45fe65df86411acc37692fe76fc02d16d4045"
+        },
+        {
+          "path": "tests/governance/test_mfm_joint_input_v2.py",
+          "purpose": "complete original field joins and source ineligibility with saved-cache responsibilities",
+          "blob_sha": "5144f0794b4f72814551e304dc7ee04056383a2d"
+        },
+        {
           "path": "docs/receipts/MFM_FABLE_STACK_DOC_CORRECTION_20261010_TRACE104_PUBLIC.json",
           "purpose": "exact published Fable doc branch correction; capability/release predicates preserved and main unchanged",
           "blob_sha": "9240326c9b4e06308773a865e2758681e0ff7c84"
@@ -542,7 +612,7 @@
         {
           "path": "docs/MFM_DEVELOPMENT_CONTINUATION_2026-10-09.md",
           "purpose": "unchanged E20 continuation, source interventions, caller reference selection, original-byte copy alignment and full governed formation roadmap",
-          "blob_sha": "3498459081ec1b5d83bb9614b67195502ba0a707"
+          "blob_sha": "bf59c2ac01b982431203de71c483dd8ad443e907"
         },
         {
           "path": "tests/governance/test_mfm_public_conditional_foundation.py",
@@ -988,7 +1058,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "606d9df6c19eafa8244803b3e3fa3cc78f2931c2",
+      "commit": "fd93700c5ba6beb549f4f8d5209b148961d97515",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1068,7 +1138,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "618a271c0bf6fd58ff0b1a4d666230f64cd4f92a"
+          "blob_sha": "6b9f55f9cf084653eabab325354864736eaa6a8c"
         }
       ]
     }
