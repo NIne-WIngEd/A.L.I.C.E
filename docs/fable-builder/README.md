@@ -22,6 +22,13 @@ full-role formation. Dated seed fields retain their original historical
 meaning. Procedure traces do not establish a trained
 builder, learned full-role formation or consumer qualification.
 
+**Current stack, October10:** TRACE103 records the latest owner-ratified
+selection: KurrentDB canonical events, JetStream transport, XTDB Claims,
+LadybugDB local and NebulaGraph scale-out. Older Fable NATS-as-authority and
+JanusGraph wording is documentation lag. FloRA exercises the selected engines
+needed for its smaller experiment. This calls for continuing current MFM
+construction, not reopening stack selection or claiming physical cutover.
+
 **Branch:** `fable-builder-model`  
 **Status:** active architecture and process-capture workstream  
 **Created:** 2026-09-13
