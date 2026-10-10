@@ -2,9 +2,11 @@
 
 The current artifact is a fresh native conditional-language foundation on frozen non-IT Gemma features. S0 completed epoch3/step6864 of the immutable E20/45760-step program. This is a useful producer component, not full Alice/Fable memory formation. Storage recovery preserves its model, Adam, RNG, cursor and complete history; no Gemma answer head, private biography or failed formation parent is introduced.
 
+**Current continuation, October10:** All41 original S0 outputs and the recovery catalog have verified Drive custody; [TRACE100](receipts/MFM_FULL_TARGET_AND_S1_CONTINUATION_20261010_TRACE100_PUBLIC.json) preserves that evidence and the immutable S1 continuation. A read-only S1 observation reported RUNNING at01:14UTC; that status alone does not verify actual allocation or resumed model/optimizer state. [Complete caller meaning and joint input](MFM_CALLER_MEANING_AND_JOINT_INPUT_2026-10-10.md) is now independently reviewed and root-admitted as input construction, with80 owner/80 independent controls,23 actual offline processor checks and95 independent saved-geometry checks. The next construction is causal longitudinal world replay and actual governed prior snapshots before separate full-role target authoring. Full MFM learning, native geometry and the consumer outcome loop remain unfinished.
+
 ## Immediate construction
 
-Close whole original41-file and catalog Drive custody, then verify the original typed history and exact resumed state. Resume the fixed source/objective/roster through scheduled boundaries13728/20592/27456/34320/41184/45760. Scheduling stops are continuation boundaries, not smaller training objectives. Development scores do not choose the epoch budget or a favored checkpoint.
+Verify the original typed history and exact resumed state when actual S1 outputs become available. Continue the fixed source/objective/roster through scheduled boundaries13728/20592/27456/34320/41184/45760. Scheduling stops are continuation boundaries, not smaller training objectives. Development scores do not choose the epoch budget or a favored checkpoint.
 
 At the completed foundation, run the already frozen full language-development and paired source-intervention protocol. Inspect generated meaning, warranted fields, omissions/additions, lexical identities and source-change responses alongside loss. Preserve per-case failures and distinguish probability/rank response from correct generated choices. This decides the next component's actual starting evidence; it cannot certify personal memory, native media or downstream usefulness.
 
@@ -23,6 +25,8 @@ Freeze the new stage's task/data/export/initialization/parent/optimizer recipe e
 ## Evidence and authority
 
 Primary mechanisms are the existing E2E conditional-material grant/paper, RAT-SQL's typed schema selection and its multi-token-pointer limitations, and pinned Fairseq's generation/copy separation. These explain responsibilities; they do not justify importing their platforms or claiming their benchmark scores for MFM. The current frontier-watch branch at3aedd37 reinforces separate evidence roots, active versus rejected intent and capability-wise regression; those constraints belong in longitudinal cases and governed integration, not a replacement truth authority.
+
+The later roots audit reads frontier5e9795e3e3543c70ec4e1ebf375857f674f87cfb, including October7–9 intake on admissibility, completed evidence and current-state validity. Dual parametric memory remains a future challenger. The older frontier pin above records the earlier route's research snapshot, not an instruction to revert current decisions.
 
 Finish with accepted-memory -> retrieval/native judgment/action -> observed outcome/revision construction, including temporal evolution, provenance, correction/deletion/revocation and source-person/host/Alice-self/relationship separation. Claim owns writes and current authority. Foundational shared competence precedes governed private personalization. No aggregate language score or successful serializer substitutes for the full Alice/Fable V1 role.
 
