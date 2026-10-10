@@ -13,7 +13,12 @@ weights. It will integrate with the selected Stage G successor stack after its
 interfaces qualify; it does not change the current Phase 2 authority path.
 The [native lineage decision](MFM_NATIVE_LINEAGE_DECISION_2026-09-29.md)
 records the future first-party-base route. It does not supersede the licensed
-pretrained-base V1 decision. No native MFM weights have been trained.
+pretrained-base V1 decision. A fresh native conditional-language decoder has
+now been trained through S0 on frozen non-IT Gemma features; this does not
+qualify a complete MFM or a scratch-trained replacement base. See the
+[current roots and capability audit](MFM_ROOTS_ALIGNMENT_AUDIT_2026-10-10.md)
+and [TRACE100](receipts/MFM_FULL_TARGET_AND_S1_CONTINUATION_20261010_TRACE100_PUBLIC.json)
+for the dated component evidence and remaining full-role obligations.
 
 ## Destination and boundaries
 
