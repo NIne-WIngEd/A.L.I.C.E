@@ -115,6 +115,8 @@ ROUTES = {
             "docs/MFM_ROOTS_ALIGNMENT_AUDIT_2026-10-10.md": "comic and entity roots audit, full MFM shipment and remaining governed outcome and builder transfer sequence",
             "docs/receipts/MFM_CALLER_MEANING_AND_JOINT_INPUT_20261010_TRACE102_PUBLIC.json": "admitted target-free caller meaning and causal whole text; independent80 controls and actual geometry; learned full-role remains unqualified",
             "docs/MFM_CALLER_MEANING_AND_JOINT_INPUT_2026-10-10.md": "complete original prior Claim and source byte joins, input boundaries and causal world construction next",
+            "docs/receipts/MFM_CURRENT_STACK_ALIGNMENT_20261010_TRACE103_PUBLIC.json": "latest owner-ratified stack alignment; older Fable prose is lag and FloRA implements a compatible slice",
+            "docs/MFM_CURRENT_STACK_ALIGNMENT_2026-10-10.md": "current Kurrent/JetStream transport/XTDB/LadybugDB/NebulaGraph selection; bounded FloRA engines and no model change",
             "docs/MFM_FULL_TARGET_FIELD_BUILD_2026-10-10.md": "complete canonical target fields, actual Gemma token positions and original shifted decoder construction",
             "docs/research/MFM_CALLER_CANDIDATE_INPUT_RESEARCH_2026-10-10.md": "missing complete caller semantic features and primary joint versus separate encoding mechanisms",
             "scripts/mfm/formation_target_alignment.py": "whole target field and syntax geometry with independent caller ancestry before supervision",

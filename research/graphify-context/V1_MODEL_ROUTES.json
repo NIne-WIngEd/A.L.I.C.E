@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "d70595592104949ddd48e37ef50d29fbc0402914",
+      "commit": "68435fb0a260916cbcc71a9028b2d50cb576e64b",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -475,6 +475,16 @@
           "blob_sha": "0f689334126b3feb5742320079a36ad1260fd296"
         },
         {
+          "path": "docs/receipts/MFM_CURRENT_STACK_ALIGNMENT_20261010_TRACE103_PUBLIC.json",
+          "purpose": "latest owner-ratified stack alignment; older Fable prose is lag and FloRA implements a compatible slice",
+          "blob_sha": "7aefb19c79346395f057c13233bc8b0e06144bb4"
+        },
+        {
+          "path": "docs/MFM_CURRENT_STACK_ALIGNMENT_2026-10-10.md",
+          "purpose": "current Kurrent/JetStream transport/XTDB/LadybugDB/NebulaGraph selection; bounded FloRA engines and no model change",
+          "blob_sha": "1e010ed15685956a55b3c872e52ed2f46cb7f41a"
+        },
+        {
           "path": "docs/MFM_FULL_TARGET_FIELD_BUILD_2026-10-10.md",
           "purpose": "complete canonical target fields, actual Gemma token positions and original shifted decoder construction",
           "blob_sha": "7174a9ba40a3d2ce817d3f7666372fd4dc2cf7ed"
@@ -512,7 +522,7 @@
         {
           "path": "docs/MFM_DEVELOPMENT_CONTINUATION_2026-10-09.md",
           "purpose": "unchanged E20 continuation, source interventions, caller reference selection, original-byte copy alignment and full governed formation roadmap",
-          "blob_sha": "265084ec8cadb391f2b2ef68a5d90a9f2adb0876"
+          "blob_sha": "3498459081ec1b5d83bb9614b67195502ba0a707"
         },
         {
           "path": "tests/governance/test_mfm_public_conditional_foundation.py",
@@ -958,7 +968,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "ed416c042f0d984415ca9c3c59be62d62a66b849",
+      "commit": "418be4e2bfe1b042fa1d48969db63d3f53a875b4",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1038,7 +1048,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "6d89d7a44f85bd7bfe0c58897dd7fc1f14afe481"
+          "blob_sha": "edd954687e72428dc49ba0140d29fed6a68e4d02"
         }
       ]
     }
