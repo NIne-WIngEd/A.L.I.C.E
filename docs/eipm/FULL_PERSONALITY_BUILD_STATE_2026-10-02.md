@@ -1219,3 +1219,14 @@ procedure records and immutable v9 with exact v8 parent. No private payload,
 admitted builder training corpus, learned FBM weights or cross-user transfer is
 claimed. The next dependency is the actual N3 run; stop idle work and resume
 when the owner reports its completion.
+
+
+## 10 October: initial connected N3 and bounded governing continuation
+
+Actual owner job577146 completed160N3updates/8epochs and60fullresponses withN1/N2unchanged. The initial connected Gemma-backed N1/N2/N3 candidate is retained UNQUALIFIED; it is not full learned personality or approved N0. Read-only owner recovery577185 verifies allnineN3copies, actual complete tensor/native chain and all60saved outputs. At last check20/60exactresponses reproduced; finalcompletion pending.
+
+The complete roots check is finished and its [bounded continuation](PERSONALITY_ROOTS_ALIGNMENT_AND_NEXT_STEP_2026-10-10.md) preserves the original fullALICE/Fablev1 purpose. Real native consumer defects required an implementation correction: full governing verdict/teaching scope now reaches replaceable rendering, and preferred-but-invalid behavior remains unresolved instead of being silently treated as acceptable. The separately pinned helper leaves original scientific core and checkpoints unchanged. Publicaffectedverification:29tests/8subtests in492.97s; fourgovernancevalidators passed. Private execution through this new helper and full conversation/Experience/voice assembly remain unfinished.
+
+Original target-fit review locates weakN1conditional fit alongside strong familiarN2fit; currentpermission native error remains afterN3. Next: finish guarded recovery and use one actual conditional-input diagnostic plus primary semantic review before the supported N1/N2teaching correction. Do not retry calibration to reverse wrong governing rank/sign, change architecture withoutcause, or reopen rootsaudit as an edge-case program.
+
+FBMimmutablev10 parents exactv9; original22traceprefix preserved,25rows total. Methods include actual connected construction, complete response handoff and honest current semantic scope, failed and corrected public checks, researched conditional diagnostic and remaining limitations. Seeds remain procedure-only and ineligible for buildertraining/evaluation; no builderweights, cross-user transfer or private identity payload published.
