@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "68435fb0a260916cbcc71a9028b2d50cb576e64b",
+      "commit": "6c5900ebaf95dff243443843129f23d808f1412f",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -482,7 +482,12 @@
         {
           "path": "docs/MFM_CURRENT_STACK_ALIGNMENT_2026-10-10.md",
           "purpose": "current Kurrent/JetStream transport/XTDB/LadybugDB/NebulaGraph selection; bounded FloRA engines and no model change",
-          "blob_sha": "1e010ed15685956a55b3c872e52ed2f46cb7f41a"
+          "blob_sha": "34ffb9b88f96e6816e64703dd4b4f6c0a8d4be7a"
+        },
+        {
+          "path": "docs/receipts/MFM_FABLE_STACK_DOC_CORRECTION_20261010_TRACE104_PUBLIC.json",
+          "purpose": "exact published Fable doc branch correction; capability/release predicates preserved and main unchanged",
+          "blob_sha": "9240326c9b4e06308773a865e2758681e0ff7c84"
         },
         {
           "path": "docs/MFM_FULL_TARGET_FIELD_BUILD_2026-10-10.md",
@@ -968,7 +973,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "418be4e2bfe1b042fa1d48969db63d3f53a875b4",
+      "commit": "bece47b67f9fe0c1116c395f1fb6ade66542c807",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1048,7 +1053,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "edd954687e72428dc49ba0140d29fed6a68e4d02"
+          "blob_sha": "a5aac833cba7b1ccf7ff92d4538821beae097b15"
         }
       ]
     }
