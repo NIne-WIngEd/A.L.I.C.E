@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "8b9265f9b07b6b0b08debd12969b043aded244c5",
+      "commit": "74289882410953dc0ecebd73a2dc39a0bb3ac4d8",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -528,6 +528,16 @@
           "path": "docs/receipts/MFM_TASK_CONTENT_SCHEMA_ADMISSION_20261010_TRACE108_PUBLIC.json",
           "purpose": "TRACE108 failed schema admission, ordered coherent closure and static scope-only root admission method",
           "blob_sha": "28623220f8ed00ed287ff87c5f90402aaca1e849"
+        },
+        {
+          "path": "docs/MFM_S1_LINEAGE_AND_CONNECTED_INPUT_PROGRESS_2026-10-10.md",
+          "purpose": "actual S1 epoch6 metadata lineage, original-observation identity correction and full-role continuation gaps",
+          "blob_sha": "a3e92675829ee9cfcbbeb534810715a7549cbfa7"
+        },
+        {
+          "path": "docs/receipts/MFM_S1_LINEAGE_AND_INPUT_METHOD_20261010_TRACE109_PUBLIC.json",
+          "purpose": "TRACE109 actual original metadata and real custody controls; no tensor custody or learning qualification",
+          "blob_sha": "e9ce6457a08acdda4f5ee09211da25875b9cadb6"
         },
         {
           "path": "docs/receipts/MFM_EPISODE_ORIGINAL_PRIOR_INPUT_20261010_TRACE107_PUBLIC.json",
@@ -1078,7 +1088,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "03394b81f9aef8b1b76a7d0781191408e86f36fc",
+      "commit": "a2e7f2f344de5a805673420abba06037cbe1ea1d",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1158,7 +1168,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "8409ffd27265d254024f01699d52593f1a812f7a"
+          "blob_sha": "354c663c0f40ceef348c60c2f7a15c11f59d9571"
         }
       ]
     }

@@ -126,6 +126,8 @@ ROUTES = {
             "docs/research/MFM_TASK_CONTENT_INPUT_PLAN_REVISION2_2026-10-10.md": "connected real-producer input plan with current per-part permissions and separately held actual processor control",
             "docs/research/MFM_TASK_CONTENT_DEPENDENCY_READ_MATRIX_2026-10-10.md": "complete typed causal dependency and verification-versus-delivery read closure matrix",
             "docs/receipts/MFM_TASK_CONTENT_SCHEMA_ADMISSION_20261010_TRACE108_PUBLIC.json": "TRACE108 failed schema admission, ordered coherent closure and static scope-only root admission method",
+            "docs/MFM_S1_LINEAGE_AND_CONNECTED_INPUT_PROGRESS_2026-10-10.md": "actual S1 epoch6 metadata lineage, original-observation identity correction and full-role continuation gaps",
+            "docs/receipts/MFM_S1_LINEAGE_AND_INPUT_METHOD_20261010_TRACE109_PUBLIC.json": "TRACE109 actual original metadata and real custody controls; no tensor custody or learning qualification",
             "docs/receipts/MFM_EPISODE_ORIGINAL_PRIOR_INPUT_20261010_TRACE107_PUBLIC.json": "admitted input construction; original exit1/72 and separate36 saved checks; no fresh tokenization or full-role qualification",
             "scripts/mfm/formation_episode_input.py": "genuine Episode metadata/full/summary and append-invocation/profile originals",
             "scripts/mfm/formation_caller_meaning_v2.py": "Claim/Episode target-free meaning and historically bound member registrations",
