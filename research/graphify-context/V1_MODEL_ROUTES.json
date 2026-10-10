@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "6f20edef306b634dc108cef20669680c1025b019",
+      "commit": "d004b87172179743ab1c8af6e94939c5893e448a",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -453,6 +453,16 @@
           "path": "docs/receipts/MFM_FULL_TARGET_AND_S1_CONTINUATION_20261010_TRACE100_PUBLIC.json",
           "purpose": "complete original target geometry, original41 catalog custody, immutable S1 running; full caller features and full MFM pending",
           "blob_sha": "f5c7dae8da28a99333064f652fa0f8ae1eda410a"
+        },
+        {
+          "path": "docs/receipts/MFM_ROOTS_ALIGNMENT_20261010_PUBLIC.json",
+          "purpose": "original purpose, source-pinned roles and honest full MFM/FBM gaps; unresolved physical policy conflict",
+          "blob_sha": "144a2fcbc060375fcccb0d67edffb0cdf807bd3b"
+        },
+        {
+          "path": "docs/MFM_ROOTS_ALIGNMENT_AUDIT_2026-10-10.md",
+          "purpose": "comic and entity roots audit, full MFM shipment and remaining governed outcome and builder transfer sequence",
+          "blob_sha": "05564e18a702a691494d54766508f08d1149c73c"
         },
         {
           "path": "docs/MFM_FULL_TARGET_FIELD_BUILD_2026-10-10.md",
@@ -938,7 +948,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "46a8385b6888a20825c7711fc51c4be47a6332b2",
+      "commit": "f2b7de0441f6d7bcaf15cdb23a451d926adc9678",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1018,7 +1028,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "41b6b5d81c06c12c78e0b9d7bc65387695fbb318"
+          "blob_sha": "1cf4f1a179a32210a0337961f93ae1b7b9164e45"
         }
       ]
     }

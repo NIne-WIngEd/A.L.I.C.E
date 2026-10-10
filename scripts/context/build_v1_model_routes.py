@@ -111,6 +111,8 @@ ROUTES = {
             "docs/receipts/MFM_ALIGNMENT_AND_DURABLE_LEGACY_CUSTODY_20261009_TRACE98_PUBLIC.json": "caller-bound text geometry, independent regressions and actual whole20/catalog custody; preserved restore-consumer publication failures and full learned role pending",
             "docs/receipts/MFM_GEMMA_GEOMETRY_AND_LEGACY_CLEANUP_20261009_TRACE99_PUBLIC.json": "actual repeatable Gemma source geometry, preserved processor failures, deployed Drive restore and exact20 native cache cleanup; full formation learning pending",
             "docs/receipts/MFM_FULL_TARGET_AND_S1_CONTINUATION_20261010_TRACE100_PUBLIC.json": "complete original target geometry, original41 catalog custody, immutable S1 running; full caller features and full MFM pending",
+            "docs/receipts/MFM_ROOTS_ALIGNMENT_20261010_PUBLIC.json": "original purpose, source-pinned roles and honest full MFM/FBM gaps; unresolved physical policy conflict",
+            "docs/MFM_ROOTS_ALIGNMENT_AUDIT_2026-10-10.md": "comic and entity roots audit, full MFM shipment and remaining governed outcome and builder transfer sequence",
             "docs/MFM_FULL_TARGET_FIELD_BUILD_2026-10-10.md": "complete canonical target fields, actual Gemma token positions and original shifted decoder construction",
             "docs/research/MFM_CALLER_CANDIDATE_INPUT_RESEARCH_2026-10-10.md": "missing complete caller semantic features and primary joint versus separate encoding mechanisms",
             "scripts/mfm/formation_target_alignment.py": "whole target field and syntax geometry with independent caller ancestry before supervision",
