@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "b3fd19ac7e6cd11f9b4c6cbbda36375583df2d49",
+      "commit": "6f20edef306b634dc108cef20669680c1025b019",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -57,7 +57,7 @@
         {
           "path": "docs/MFM_ROOT_CAUSE_INVESTIGATION_2026-10-04.json",
           "purpose": "completed teacher fit, failed generated formation, actual causal analysis and corrected measurement handoff",
-          "blob_sha": "082760647770bde35281a8255c84af720c3d38ee"
+          "blob_sha": "148626d85a378f8f9ab79dc0128ec7bc1ead25d2"
         },
         {
           "path": "docs/receipts/MFM_V16_ROOT_ANALYSIS_576702.json",
@@ -448,6 +448,31 @@
           "path": "docs/receipts/MFM_GEMMA_GEOMETRY_AND_LEGACY_CLEANUP_20261009_TRACE99_PUBLIC.json",
           "purpose": "actual repeatable Gemma source geometry, preserved processor failures, deployed Drive restore and exact20 native cache cleanup; full formation learning pending",
           "blob_sha": "4656fd5d91776b05ed354bdfb0c6bdbd2f48634d"
+        },
+        {
+          "path": "docs/receipts/MFM_FULL_TARGET_AND_S1_CONTINUATION_20261010_TRACE100_PUBLIC.json",
+          "purpose": "complete original target geometry, original41 catalog custody, immutable S1 running; full caller features and full MFM pending",
+          "blob_sha": "f5c7dae8da28a99333064f652fa0f8ae1eda410a"
+        },
+        {
+          "path": "docs/MFM_FULL_TARGET_FIELD_BUILD_2026-10-10.md",
+          "purpose": "complete canonical target fields, actual Gemma token positions and original shifted decoder construction",
+          "blob_sha": "7174a9ba40a3d2ce817d3f7666372fd4dc2cf7ed"
+        },
+        {
+          "path": "docs/research/MFM_CALLER_CANDIDATE_INPUT_RESEARCH_2026-10-10.md",
+          "purpose": "missing complete caller semantic features and primary joint versus separate encoding mechanisms",
+          "blob_sha": "865c5448d9811a7a23527b392c02c2823f378bd7"
+        },
+        {
+          "path": "scripts/mfm/formation_target_alignment.py",
+          "purpose": "whole target field and syntax geometry with independent caller ancestry before supervision",
+          "blob_sha": "bbd12217f42c9efaa6d5fe7f781cbaee2b6ad43d"
+        },
+        {
+          "path": "scripts/mfm/formation_field_responsibility.py",
+          "purpose": "normative typed field roles and independently authored reference and original literal declarations",
+          "blob_sha": "f4d957bab088bc3f442647a129b64d1277105b24"
         },
         {
           "path": "docs/MFM_ORIGINAL_SOURCE_ALIGNMENT_BUILD_2026-10-09.md",
@@ -913,7 +938,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "1badf6e3261fc7bcd4f203ec4cce3508cbe72483",
+      "commit": "46a8385b6888a20825c7711fc51c4be47a6332b2",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -993,7 +1018,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "3c5488aad0c4dc7e662904e6ef77a45f68ed47fe"
+          "blob_sha": "41b6b5d81c06c12c78e0b9d7bc65387695fbb318"
         }
       ]
     }
