@@ -13417,6 +13417,19 @@
     "record_sha256": "6bab6068f24952684a3fced379f1ef8a800ebf18596befcdf7dd326cb9ea52c4",
     "trace_id": "fbm-mfm-20261009-first-fit-boundary-and-safe-primary-storage-95"
   },
+  "current_target_field_and_S1_continuation": {
+    "S1_running_observed": true,
+    "actual_runtime_resume_accepted": false,
+    "design": "docs/MFM_FULL_TARGET_FIELD_BUILD_2026-10-10.md",
+    "file_sha256": "b2e386a62e99150bfd0859b6ecd9f86baa021844513e94fff47e4525af96a1e7",
+    "full_MFM_qualified": false,
+    "next_input_research": "docs/research/MFM_CALLER_CANDIDATE_INPUT_RESEARCH_2026-10-10.md",
+    "original41_catalog_custody_complete": true,
+    "public_receipt": "docs/receipts/MFM_FULL_TARGET_AND_S1_CONTINUATION_20261010_TRACE100_PUBLIC.json",
+    "record_sha256": "a7d8563d79a71d6fca9648dd17bb956c537f9847e9c7fa10084cecd5c05948cb",
+    "target_geometry_verified": true,
+    "trace_id": "fbm-mfm-20261010-complete-target-geometry-and-immutable-s1-continuation-100"
+  },
   "current_tls_custody_continuation": {
     "file_sha256": "837cb5fdaf40dd8202836bd12b32fe85c6a6c70076fdb0f1c420128e52bdfaae",
     "public_receipt": "docs/receipts/MFM_TLS_CUSTODY_CONTINUATION_20261009_TRACE96_PUBLIC.json",
@@ -25026,7 +25039,7 @@
     "current_full_construction_measurement"
   ],
   "memory_activation": false,
-  "next_action": "Finish original41-file plus catalog Drive custody, then admit the complete original model/Adam/RNG/cursor/history and resume the unchanged E20 foundation to step13728 and scheduled boundaries through45760. Use the verified actual Gemma text geometry to build full target-field position integration, caller-grounded typed selection and complete semantic/longitudinal/native formation, then accepted memory through governed retrieval/judgment/action to observed outcome and revision. Foundation precedes personalization.",
+  "next_action": "Verify actual S1 allocation, original checkpoint mount and exact model/Adam/RNG/cursor/history resume evidence; continue the immutable E20/45760-update foundation through scheduled boundaries. Build complete target-free caller/candidate semantic input and identity-to-feature joins before learned reference/span/semantic integration, then full longitudinal/native formation and accepted-memory through governed retrieval/judgment/action to observed outcomes and revision. Foundation precedes personalization; Claim owns current authority and writes.",
   "next_route_data_and_frontier_audit": {
     "current_new_architecture_adopted": false,
     "frontier_commit": "756bf294f6a93e9ea7dcc12dba932a556d6080e0",
