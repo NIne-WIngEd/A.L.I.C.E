@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "6c5900ebaf95dff243443843129f23d808f1412f",
+      "commit": "24c6b3cbc8d89cf24ae78e8fef3234af28c7fb6d",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -482,7 +482,22 @@
         {
           "path": "docs/MFM_CURRENT_STACK_ALIGNMENT_2026-10-10.md",
           "purpose": "current Kurrent/JetStream transport/XTDB/LadybugDB/NebulaGraph selection; bounded FloRA engines and no model change",
-          "blob_sha": "34ffb9b88f96e6816e64703dd4b4f6c0a8d4be7a"
+          "blob_sha": "19a8ca5c90dde9bdf9ca2419445c023c8e99a4ae"
+        },
+        {
+          "path": "docs/receipts/MFM_CAUSAL_WORLD_INPUT_20261010_TRACE105_PUBLIC.json",
+          "purpose": "root-admitted original causal input or exact licensing clarification; full role and deployment qualification distinct",
+          "blob_sha": "a5bffa60b87a37d70828784259b14b83d543ef0c"
+        },
+        {
+          "path": "docs/receipts/MFM_KURRENT_LICENSE_CLARIFICATION_20261010_TRACE106_PUBLIC.json",
+          "purpose": "root-admitted original causal input or exact licensing clarification; full role and deployment qualification distinct",
+          "blob_sha": "2558a17da65d0331fb2f53e78ace257770e926d7"
+        },
+        {
+          "path": "docs/MFM_CAUSAL_WORLD_INPUT_2026-10-10.md",
+          "purpose": "original Experience/Claim causal cuts and current-boundary delivery; separate full-family extension next",
+          "blob_sha": "46b8868e1555a989e94e9a609cacb9b62a67de15"
         },
         {
           "path": "docs/receipts/MFM_FABLE_STACK_DOC_CORRECTION_20261010_TRACE104_PUBLIC.json",
@@ -973,7 +988,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "bece47b67f9fe0c1116c395f1fb6ade66542c807",
+      "commit": "606d9df6c19eafa8244803b3e3fa3cc78f2931c2",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1053,7 +1068,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "a5aac833cba7b1ccf7ff92d4538821beae097b15"
+          "blob_sha": "618a271c0bf6fd58ff0b1a4d666230f64cd4f92a"
         }
       ]
     }
