@@ -140,6 +140,8 @@ ROUTES = {
             "docs/receipts/MFM_IMPORT_PACKAGE_AND_PAIRED_CONSTRUCTION_20261011_TRACE114_PUBLIC.json": "TRACE114 exact safe construction snapshot; no full source capacity, corpus or learning qualification",
             "docs/MFM_PAIRED_GEOMETRY_AND_MATERIAL_READ_METHOD_2026-10-11.md": "actual saved pair, exact21 published source and admitted active material reads; explicit unfinished full-role limits",
             "docs/receipts/MFM_PAIRED_GEOMETRY_AND_MATERIAL_READ_20261011_TRACE115_PUBLIC.json": "TRACE115 genuine source and paired proofs; original styleFAILED retained, no corpus, capacity or learning claim",
+            "docs/MFM_MATERIAL_READ_AND_SAVED_EXPORT_METHOD_2026-10-11.md": "completed private material protocol; failed whole plus separate saved continuation, awaiting annotations and supplied-rights limits",
+            "docs/receipts/MFM_MATERIAL_READ_AND_SAVED_EXPORT_20261011_TRACE116_PUBLIC.json": "TRACE116 exact current reads, saved FileRef export and composed reviews; procedure only, no corpus or learning authority",
             "docs/receipts/MFM_EPISODE_ORIGINAL_PRIOR_INPUT_20261010_TRACE107_PUBLIC.json": "admitted input construction; original exit1/72 and separate36 saved checks; no fresh tokenization or full-role qualification",
             "scripts/mfm/formation_caller_meaning_v3.py": "target-free complete permitted original task/uncertainty meanings and typed historical joins",
             "scripts/mfm/formation_input_content_prototype.py": "strict original RawBuffer capture/reference custody and finite immutable input commits",
