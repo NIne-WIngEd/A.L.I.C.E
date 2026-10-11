@@ -1,11 +1,13 @@
 # Full Alice personality build state
 
-**Current snapshot:** see [11 October parallel governing and N0 development](#11-october-parallel-governing-and-n0-development).
+**Current snapshot:** see [11 October completed results and broader curriculum](#11-october-completed-results-and-broader-curriculum).
 The initial connected N1/N2/N3 candidate is constructed and all 60 saved native
 outputs reproduce exactly. Owner jobs 577239 and 577240 advance governing
-diagnosis and authentic N0 semantic evidence in parallel. Their actual results,
-full personality capability and N0 approval remain pending; earlier snapshots
-below are historical.
+diagnosis and authentic N0 semantic evidence in parallel. Both jobs completed;
+the full handoff is mechanically preserved, while eight of 60 fresh-context
+binary comparisons fail. Full personality capability and N0 approval remain
+unfinished. Broader curriculum authoring and cumulative learned-state
+continuation now govern the next build; earlier snapshots below are historical.
 
 The owner requires the full Alice personality described in the comic and
 contracts, with its construction captured for full Fable v1 FBM. There is no
@@ -21,9 +23,10 @@ Later custom-N0 branches contain substantial generic semantic/evidence/graph
 modules, not learned Elaina personality stages. Their objectives and checkpoints
 must not be relabeled as personality.
 
-The owner accepts residual Gemma influence as a v1 constraint. Use practical
-best-effort suppression of measured judgment interference, preserve semantic
-capabilities and record residuals; complete suppression is not required.
+Complete suppression of Gemma influence is impractical under the owner's v1
+decision. Use practical best-effort suppression of established governing
+interference, preserve semantic capabilities and record residuals. Remaining
+established governing influence is a defect, never accepted personality.
 
 The current Gemma route prepares a frozen, headless source provider. Its v2
 interface preserves all actual text hidden layers and binds source geometry,
@@ -1244,3 +1247,13 @@ Gemma stays frozen. N1–N3 and EIPM supply personality authority and behavior. 
 Public affected checks passed 55 tests / 19 subtests for conditional/governance/model/contrast/codec and 34 tests / 9 subtests for the new N0 worker and affected interfaces; these suites overlap. Reviews' caller and callback findings were reproduced before correction, with original failures retained and no scientific core mutation. FBM v11 preserves exact v10 and the preceding 25 trace rows, adding three procedure entries. Builder training/evaluation, learned automation and private identity payload publication remain absent. Current frontier intake db910c3c was checked without architecture diversion.
 
 Six actual conditional-channel measurements subsequently completed within 577239. Their protected file and row seals verified; preferred choices do not flip and raw N2 logit effects are small before calibration on this slice. This supports investigating conditional teaching/readout use alongside authentic new semantic evidence; it does not identify Gemma as the cause or justify a capacity change. Immutable FBM v12 preserves v11 and adds this actual bounded result, bringing the trace to 29 rows. Full job outputs and N0/whole-personality qualification remain pending.
+
+## 11 October completed results and broader curriculum
+
+Both owner jobs completed with exit `0:0`: 577239 in 1h21m08s and 577240 in 2h44m31s. The former preserves all 60 original decisions/preferences through the full governed response. The latter closes a genuinely fresh frozen-feature session and retains ten actual judgments. Independent primary readback confirms eight wrong binary regions among 60 reviewed comparisons, all in two decisive-context variants. Six irrelevant-cue controls remain unchanged; unchanged wrong behavior cannot pass. N0 and the full personality remain unapproved, and the joint-path cause remains unlocalized across provider/readout/governors.
+
+The owner's broader coverage concern is substantiated by actual cases: three implemented N1 fields and eleven implemented N2 fields lack reviewed targets, and relationship/emotion/value/drift meanings are narrow. The [broader curriculum](PERSONALITY_BROADER_CURRICULUM_AND_CONTINUATION_2026-10-11.md) reconciles the full role and identifies teaching, real-evidence and owning-runtime work. Its concrete 38-family / 192-facet design and twelve interacting lessons are authoring scope, not learned coverage or a capability ceiling. Fourteen additional primary source-bound lesson pairs have been authored privately after reading all 60 closure records; quantitative corpus completion remains unfinished.
+
+Preserve compatible learned state and valid prior teaching. The retained unlaunched v4 conditional repair is one tranche inside the broader curriculum. Changed data needs new admission and explicit successor lineage; it does not require randomly remaking N1/N2/N3. The existing trainer can receive trained initial state, but the monotonic construction/consumer chain needs a bounded successor seam and calibration-applicability handling. That seam is not yet implemented. Typed action/interpretation and delivery alternatives, persistent state and actual Experience remain separate integration obligations.
+
+The reporting helper passed six focused tests and independently reproduced the retained actual error count. FBM v13 preserves exact v12 and the original 29 trace rows, recording completed results and broader research/authoring. No new training run, upstream gradient, production activation, builder-weight training or private payload publication occurred.

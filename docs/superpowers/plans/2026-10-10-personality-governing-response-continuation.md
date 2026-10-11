@@ -37,7 +37,7 @@
 - [x] Write a real optimized public model test: learned preference favors one candidate while taught co-validity rejects it. The response must retain the original preference as evidence and withhold realization rather than silently promote it to an acceptable behavior.
 - [x] Write the positive control: a valid preferred response reaches two replaceable renderer callbacks with identical complete governing packet, evidence pointers and uncertainty. Changed realization remains unresolved; unavailable fidelity and numeric voice outputs are not presented as taught.
 - [x] Observe missing interface RED, implement the helper, and run the new tests plus affected native consumer/outcome/continuation regressions: 29 tests / 8 subtests passed in 492.97 seconds. One focused public review's two material scope findings were reproduced RED and corrected in one pass. Private candidate execution and full runtime assembly remain separate next work.
-- [ ] Actual full governing handoff and faithful text callback through all 60 retained cases: owner job 577239 submitted October 11; exact native decisions/preferences and current teaching scope must remain bound. Actual result pending.
+- [x] Actual full governing handoff and faithful text callback through all 60 retained cases: owner job 577239 completed October 11; exact native decisions/preferences and current teaching scope remain bound. This is a handoff mechanics pass, not correct-personality qualification.
 
 ## Task 3: Diagnose governing teaching before a further learning run
 
@@ -45,9 +45,9 @@
 **Produces:** One evidence-backed N1/N2 teaching correction with actual source/supervision ancestry, supported by matched semantic contrasts. No optimizer job is submitted merely because an error is visible.
 
 - [x] Inspect the existing conditional concepts and N1/N2 teaching. Exact original TRAIN fit is N1 applicability63/80, N2 validity119/120 and contraindication118/120 binary-region matches. Native N2 receives conditional signals; original cases change context and wording together. Cause remains unresolved among target meaning, conditional coverage, input use, objective and capacity.
-- [ ] Use one bounded actual conditional-input comparison and primary semantic review to distinguish the remaining causes. Keep a whole conditional governing policy distinct from permission to perform its expressive behavior.
+- [x] Complete the bounded conditional-input and authentic fresh-context comparisons with primary semantic review. Whole-policy relevance and permission for one expressive behavior are distinct; original teaching changes current context and candidate words together. Joint provider/readout/governor cause is not uniquely localized.
 - [x] Implement a separately pinned read-only measurement of applicability clamps, removed conditional messages and a query-only donor swap. Preserve original state, source/candidate authority and nonintervened context. Public mechanics verified; six actual source-bound measurements are running within 577239. Latent mixtures are not authentic responses or gold.
-- [x] Recover all six actual measurements and inspect pre-calibration N2 logits: no preferred-choice flips and small channel effects on this slice. Original protected row/file seals verified; this does not localize absent base semantics or prove inadequate capacity. Authentic fresh-context evidence and the full handoff result remain pending before a correction is chosen.
+- [x] Recover all six actual measurements and inspect pre-calibration N2 logits: no preferred-choice flips and small channel effects on this slice. Original protected row/file seals verified; this does not localize absent base semantics or prove inadequate capacity. Completed fresh-context evidence confirms eight wrong regions among 60 reviewed comparisons.
 - [ ] Complete all eight diagnosis steps and relevant primary/project research before correcting that responsible path. Preserve original examples and failed outputs; never resplit reviewed calibration episodes to manufacture fresh TRAIN evidence.
 - [ ] Implement the smallest supported governing correction, verify its predicted behavior and affected regressions, then continue substantive training through existing owner compute.
 
@@ -55,11 +55,24 @@
 
 - [x] Recover exact source and role-specific headless preparation; inspect retired narrow relation tests and current actual semantic consumer. Preserve completed preparation/forward/reload evidence without reviving the old prerequisite tournament.
 - [x] Primary teacher authors ten coherent target-free matched current contexts from two original TRAIN situations: original, paraphrase, irrelevant praise, neutral added detail and permission withdrawal. Identity/candidate/record authority stays fixed; duplicated current-context channels change coherently. Separate provisional directional reviews remain outside source inputs; old ambiguous applicability gold is excluded.
-- [x] Implement actual fresh full-token/all-layer source extraction, publisher close, exact new-store replay and complete native governed response. Fresh public review's callback mismatch reproduced and corrected; 34 affected tests / 9 subtests pass. Owner job 577240 submitted; actual results pending.
-- [ ] Interpret fresh source/native behavior alongside 577239's channel measurements; distinguish provider meaning from first-party interpretation/judgment before a supported suppression or teaching repair. Token-count nuisance and shared teacher/TRAIN ancestry remain disclosed. Two families cannot qualify the full N0 role.
+- [x] Implement actual fresh full-token/all-layer source extraction, publisher close, exact new-store replay and complete native governed response. Fresh public review's callback mismatch reproduced and corrected; 34 affected tests / 9 subtests pass. Owner job 577240 completed; actual sealed results retained.
+- [x] Interpret fresh source/native behavior alongside 577239's channel measurements and independently recompute the target-region errors from actual native decisions. Six irrelevant controls stay unchanged; two decisive-condition variants retain eight errors. Sole provider/readout/governor cause remains unresolved. Token-count nuisance and shared teacher/TRAIN ancestry remain disclosed. Two families cannot qualify the full N0 role.
 - [ ] Advance concrete uncovered normal-use semantics and make an evidence-backed role decision when the actual scope supports it. Gemma stays frozen; N1–N3/EIPM govern personality. Every established residual inherited influence on governing behavior remains a defect to suppress practically.
 
-October 11 methods/results are recorded in immutable FBM v11/v12 with exact parent succession and preserved 25-row trace prefix, now 29 rows; full source/native job results, full runtime assembly and personality/N0 approvals remain unfinished. See [continuation evidence](../../eipm/PERSONALITY_CONDITIONAL_AND_N0_CONTINUATION_2026-10-11.md) and [N0 role research](../../eipm/PERSONALITY_N0_ROLE_PREPARATION_AND_RESEARCH_2026-10-11.md).
+October 11 completed methods/results and broader curriculum design are recorded in FBM v13 with exact parent v12 and the original 29 trace rows preserved. Full broader quantitative teaching, cumulative learning, runtime assembly and personality/N0 approvals remain unfinished. See [continuation evidence](../../eipm/PERSONALITY_CONDITIONAL_AND_N0_CONTINUATION_2026-10-11.md), [N0 role research](../../eipm/PERSONALITY_N0_ROLE_PREPARATION_AND_RESEARCH_2026-10-11.md) and [broader curriculum research](../../eipm/PERSONALITY_BROADER_CURRICULUM_AND_CONTINUATION_2026-10-11.md).
+
+## Task 4: Broader curriculum before the next governing update
+
+The owner rejected routine N1–N3 remakes after discovering teaching holes. The unlaunched 20-topic v4 repair is retained as one tranche, not submitted as a complete successor.
+
+- [x] Validate original reviewed cases and all 2,556 source-record structures; identify three missing N1 target fields, eleven missing N2 target fields and narrow actual head meanings. Source inventory is not admitted teaching.
+- [x] Reconcile comic, role/coverage/voice, personal-development, Mission and Experience contracts; inspect actual objective, trainer, exact-resume and consumer continuation mechanisms.
+- [x] Research personality elicitation, counterfactual limits, temporal personalization and replay using primary papers and implementations; preserve current architecture and individual character.
+- [x] Author the 38-family / 192-facet design with 38 concrete family lessons and 12 interacting lessons. Distinguish teaching, real-evidence and owning-runtime dependencies. These counts are not a capability ceiling or proof of saturation.
+- [x] Begin substantive primary material: 14 source-bound lesson pairs / 28 current hypothetical scenes after root reads all 60 source closure records. Historical support remains narrow; synthetic directions remain synthetic. No quantitative target-completion or learned claim.
+- [ ] Complete the broader individually reviewed source/target package, including differentiated semantic meanings and justified previously missing outputs. Preserve v4 repair, valid earlier teaching, CAL/diagnostic ancestry and all unknown evidence.
+- [ ] Implement the bounded successor-lineage/consumer seam outside immutable scientific core; distinguish compatible warm-start from exact resume and transfer auxiliary objective state explicitly when reused.
+- [ ] Continue only affected learned stages with valid cumulative replay; test original errors, broader complete judgment and retention before binding fresh calibration outcomes. Do not reset N1/N2/N3 merely because data grew.
 
 ## Remaining shipment path
 
