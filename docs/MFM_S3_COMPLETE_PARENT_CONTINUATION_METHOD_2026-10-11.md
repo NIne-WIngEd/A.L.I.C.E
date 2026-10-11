@@ -1,0 +1,13 @@
+# Complete-parent fixed foundation continuation
+
+S2 reached its scheduled step20592 boundary. Its supported COMPLETE original, complete27-file output roster and separate local original-resume acceptance are now bound. Local validation checks original readonly mounting, cumulative history and model/Adam/cursor/RNG metadata; it does not open serialized tensors or independently inspect RNG state. The unchanged trainer performed the actual state loads. Neither COMPLETE nor local acceptance proves useful learning.
+
+S3 has an accepted create/readback/push/readback chain. Submission and exact private version-one source/attachment readback do not yet establish its allocation or resumed state.
+
+The distinct S3 route continues unchanged E20 step20592/epoch9 to27456/epoch12. It preserves S0, S1 and S2 read-only mounts, original source, complete sampler/history/model/Adam/RNG/cursor checks, and the original strict five-file package. The 28 owner controls and eight independent focused controls include genuine S2 original ancestry, changed model/Adam/history/version/source refusal, typed four-stage operations, ambiguous-operation no replay and pending-custody truthfulness. Those controls do not run hosted training.
+
+The parent backup observation remains scoped: S1 pending and S2 not evaluated at admission. The finite55-operation archive program is active separately; no completed whole27-file or catalog custody is claimed. Pending backup is not replaced by a false custody record and does not alter the owner-authorized retained-parent compute route. Preserve provider originals while archival work continues.
+
+The separate CPU preflight diagnostic now records the first failed original allocation predicate at reference line51. It stopped before namespace, cached runtime or source forward; no model/input payload was read. This is an allocation-admission failure, not a model capacity result. The original earlier allocated-study failure retains its unknown historical predicate. Preserve safe producer metadata and diagnose the responsible parser/predicate before any correction; a terminal scheduler snapshot cannot recreate historical at-time evidence.
+
+[TRACE112](receipts/MFM_S3_COMPLETE_PARENT_CONTINUATION_20261011_TRACE112_PUBLIC.json) binds these scoped originals by digest and appends one procedure-only method. Original TRACE111 retains its earlier RUNNING/pending-resume observation. Full E20 completion, generated conditional meaning, full-role formation, native inputs, teaching, governed consumers and observed outcome learning remain unfinished. No objective, selected stack, default main, cleanup, credential or corpus authority changes.
