@@ -1,11 +1,11 @@
 # Full Alice personality build state
 
-**Current snapshot:** see the [interruption recovery and continuation](#interruption-recovery-and-continuation--6-october-2026).
-Job 576704 completed its source feature closure before a node failure. Guarded
-recovery verified 643 sealed entries and 60 closed documents, with no published
-checkpoint or response. Continuation 576893 is running as `mxrayan`, reusing
-that source closure for governing-layer construction. N3 and approval remain
-pending; earlier snapshots below are historical.
+**Current snapshot:** see [11 October parallel governing and N0 development](#11-october-parallel-governing-and-n0-development).
+The initial connected N1/N2/N3 candidate is constructed and all 60 saved native
+outputs reproduce exactly. Owner jobs 577239 and 577240 advance governing
+diagnosis and authentic N0 semantic evidence in parallel. Their actual results,
+full personality capability and N0 approval remain pending; earlier snapshots
+below are historical.
 
 The owner requires the full Alice personality described in the comic and
 contracts, with its construction captured for full Fable v1 FBM. There is no
@@ -1230,3 +1230,17 @@ The complete roots check is finished and its [bounded continuation](PERSONALITY_
 Original target-fit review locates weakN1conditional fit alongside strong familiarN2fit; currentpermission native error remains afterN3. Next: finish guarded recovery and use one actual conditional-input diagnostic plus primary semantic review before the supported N1/N2teaching correction. Do not retry calibration to reverse wrong governing rank/sign, change architecture withoutcause, or reopen rootsaudit as an edge-case program.
 
 FBMimmutablev10 parents exactv9; original22traceprefix preserved,25rows total. Methods include actual connected construction, complete response handoff and honest current semantic scope, failed and corrected public checks, researched conditional diagnostic and remaining limitations. Seeds remain procedure-only and ineligible for buildertraining/evaluation; no builderweights, cross-user transfer or private identity payload published.
+
+## 11 October: parallel governing and N0 development
+
+Recovery 577185 completed as mxrayan, verifying nine finite N3 copies, the actual complete N1→N2→N3 chain and all 60 exact saved native decisions/responses. This confirms reproducibility of the retained unqualified candidate; its known governing errors remain.
+
+The [bounded continuation](PERSONALITY_CONDITIONAL_AND_N0_CONTINUATION_2026-10-11.md) runs complete governing response propagation and six read-only conditional-channel measurements in job 577239. Primary review separates whole-policy relevance from expressive permission; latent clamps/swaps are diagnostics, never new authentic responses or gold. No further optimizer correction is chosen before its cause is supported.
+
+In parallel, the [N0 role-specific preparation and research](PERSONALITY_N0_ROLE_PREPARATION_AND_RESEARCH_2026-10-11.md) recovers exact prepared non-IT Gemma and the actual semantic consumer. Job 577240 extracts ten fresh, complete target-free contexts from two original TRAIN situations, verifies publisher closure, replays its new feature store, and records complete actual native governed judgments. Candidate wording, identity evidence and record authority remain fixed. Provisional directional review stays separate; token-count nuisance and shared ancestry remain disclosed. Actual results are pending.
+
+Gemma stays frozen. N1–N3 and EIPM supply personality authority and behavior. Every established residual Gemma influence on governing behavior is a defect requiring practical suppression. Two developmental families cannot qualify the full N0 role or grant personality/owner/spoken approval.
+
+Public affected checks passed 55 tests / 19 subtests for conditional/governance/model/contrast/codec and 34 tests / 9 subtests for the new N0 worker and affected interfaces; these suites overlap. Reviews' caller and callback findings were reproduced before correction, with original failures retained and no scientific core mutation. FBM v11 preserves exact v10 and the preceding 25 trace rows, adding three procedure entries. Builder training/evaluation, learned automation and private identity payload publication remain absent. Current frontier intake db910c3c was checked without architecture diversion.
+
+Six actual conditional-channel measurements subsequently completed within 577239. Their protected file and row seals verified; preferred choices do not flip and raw N2 logit effects are small before calibration on this slice. This supports investigating conditional teaching/readout use alongside authentic new semantic evidence; it does not identify Gemma as the cause or justify a capacity change. Immutable FBM v12 preserves v11 and adds this actual bounded result, bringing the trace to 29 rows. Full job outputs and N0/whole-personality qualification remain pending.

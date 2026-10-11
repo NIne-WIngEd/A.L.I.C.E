@@ -23,7 +23,7 @@
 ## Task 1: Recover and characterize the connected candidate
 
 - [x] Preserve 577146 original logs, complete attempt accounting and successful sealed summary. Observed 160 N3 updates / 8 epochs / 60 outputs; unchanged N1/N2.
-- [ ] Guarded 577185: verify all nine N3 checkpoint copies, full finite model state, actual N1→N2→N3 lineage and all 60 saved responses/native packets against reloaded execution. No gradients.
+- [x] Guarded 577185 completed as mxrayan: all nine finite N3 checkpoint copies, actual N1→N2→N3 lineage and all 60 saved responses/native decisions reproduce exactly. Original logs, accounting and sealed receipt retained; no gradients or behavior-qualification claim.
 - [x] Primary review of retained before/after outcomes establishes that the changed-permission validity error remains. This is development target-fit evidence, not independent evaluation.
 - [x] Public learned diagnostic independently establishes missing full-verdict propagation and selected-as-acceptable conflict. Preserve its original result.
 
@@ -37,6 +37,7 @@
 - [x] Write a real optimized public model test: learned preference favors one candidate while taught co-validity rejects it. The response must retain the original preference as evidence and withhold realization rather than silently promote it to an acceptable behavior.
 - [x] Write the positive control: a valid preferred response reaches two replaceable renderer callbacks with identical complete governing packet, evidence pointers and uncertainty. Changed realization remains unresolved; unavailable fidelity and numeric voice outputs are not presented as taught.
 - [x] Observe missing interface RED, implement the helper, and run the new tests plus affected native consumer/outcome/continuation regressions: 29 tests / 8 subtests passed in 492.97 seconds. One focused public review's two material scope findings were reproduced RED and corrected in one pass. Private candidate execution and full runtime assembly remain separate next work.
+- [ ] Actual full governing handoff and faithful text callback through all 60 retained cases: owner job 577239 submitted October 11; exact native decisions/preferences and current teaching scope must remain bound. Actual result pending.
 
 ## Task 3: Diagnose governing teaching before a further learning run
 
@@ -45,8 +46,20 @@
 
 - [x] Inspect the existing conditional concepts and N1/N2 teaching. Exact original TRAIN fit is N1 applicability63/80, N2 validity119/120 and contraindication118/120 binary-region matches. Native N2 receives conditional signals; original cases change context and wording together. Cause remains unresolved among target meaning, conditional coverage, input use, objective and capacity.
 - [ ] Use one bounded actual conditional-input comparison and primary semantic review to distinguish the remaining causes. Keep a whole conditional governing policy distinct from permission to perform its expressive behavior.
+- [x] Implement a separately pinned read-only measurement of applicability clamps, removed conditional messages and a query-only donor swap. Preserve original state, source/candidate authority and nonintervened context. Public mechanics verified; six actual source-bound measurements are running within 577239. Latent mixtures are not authentic responses or gold.
+- [x] Recover all six actual measurements and inspect pre-calibration N2 logits: no preferred-choice flips and small channel effects on this slice. Original protected row/file seals verified; this does not localize absent base semantics or prove inadequate capacity. Authentic fresh-context evidence and the full handoff result remain pending before a correction is chosen.
 - [ ] Complete all eight diagnosis steps and relevant primary/project research before correcting that responsible path. Preserve original examples and failed outputs; never resplit reviewed calibration episodes to manufacture fresh TRAIN evidence.
 - [ ] Implement the smallest supported governing correction, verify its predicted behavior and affected regressions, then continue substantive training through existing owner compute.
+
+## Parallel N0 development requested October 11
+
+- [x] Recover exact source and role-specific headless preparation; inspect retired narrow relation tests and current actual semantic consumer. Preserve completed preparation/forward/reload evidence without reviving the old prerequisite tournament.
+- [x] Primary teacher authors ten coherent target-free matched current contexts from two original TRAIN situations: original, paraphrase, irrelevant praise, neutral added detail and permission withdrawal. Identity/candidate/record authority stays fixed; duplicated current-context channels change coherently. Separate provisional directional reviews remain outside source inputs; old ambiguous applicability gold is excluded.
+- [x] Implement actual fresh full-token/all-layer source extraction, publisher close, exact new-store replay and complete native governed response. Fresh public review's callback mismatch reproduced and corrected; 34 affected tests / 9 subtests pass. Owner job 577240 submitted; actual results pending.
+- [ ] Interpret fresh source/native behavior alongside 577239's channel measurements; distinguish provider meaning from first-party interpretation/judgment before a supported suppression or teaching repair. Token-count nuisance and shared teacher/TRAIN ancestry remain disclosed. Two families cannot qualify the full N0 role.
+- [ ] Advance concrete uncovered normal-use semantics and make an evidence-backed role decision when the actual scope supports it. Gemma stays frozen; N1–N3/EIPM govern personality. Every established residual inherited influence on governing behavior remains a defect to suppress practically.
+
+October 11 methods/results are recorded in immutable FBM v11/v12 with exact parent succession and preserved 25-row trace prefix, now 29 rows; full source/native job results, full runtime assembly and personality/N0 approvals remain unfinished. See [continuation evidence](../../eipm/PERSONALITY_CONDITIONAL_AND_N0_CONTINUATION_2026-10-11.md) and [N0 role research](../../eipm/PERSONALITY_N0_ROLE_PREPARATION_AND_RESEARCH_2026-10-11.md).
 
 ## Remaining shipment path
 
