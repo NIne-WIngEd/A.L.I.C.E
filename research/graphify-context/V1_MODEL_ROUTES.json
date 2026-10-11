@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "179d5d2c3d89e2bb461799d5205587d3b220eae6",
+      "commit": "44cf1d86f6b1d63ab33df7d5feebe69d482b797b",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -593,6 +593,111 @@
           "path": "docs/receipts/MFM_EPISODE_ORIGINAL_PRIOR_INPUT_20261010_TRACE107_PUBLIC.json",
           "purpose": "admitted input construction; original exit1/72 and separate36 saved checks; no fresh tokenization or full-role qualification",
           "blob_sha": "a2f82a95d3bfa30893a83b25720747cf6b46674a"
+        },
+        {
+          "path": "scripts/mfm/formation_caller_meaning_v3.py",
+          "purpose": "target-free complete permitted original task/uncertainty meanings and typed historical joins",
+          "blob_sha": "3e44b6ea7183283aa607442bd786847c2518b596"
+        },
+        {
+          "path": "scripts/mfm/formation_input_content_prototype.py",
+          "purpose": "strict original RawBuffer capture/reference custody and finite immutable input commits",
+          "blob_sha": "f8602d6f5335eea07904001f6aaf42bd49bf211d"
+        },
+        {
+          "path": "scripts/mfm/formation_joint_input_v3.py",
+          "purpose": "original complete task-input contextual geometry; preserved custody-heavy profile",
+          "blob_sha": "5dce9d2291e1413fd05e0155471fdaceb719d9d1"
+        },
+        {
+          "path": "scripts/mfm/formation_joint_input_v4.py",
+          "purpose": "complete semantic model input with exact custody companion, field/part geometry and cache bindings",
+          "blob_sha": "8414f14e0260232cb865120da267208ebe8d293f"
+        },
+        {
+          "path": "scripts/mfm/formation_joint_target_alignment.py",
+          "purpose": "whole shifted-target geometry, typed candidate ordinal and explicit literal alternatives",
+          "blob_sha": "de5abd72fc85f8794f8c12ac2c885282b53c848d"
+        },
+        {
+          "path": "scripts/mfm/formation_paired_teaching.py",
+          "purpose": "versioned saved-J4 supplied-record freeze before independently authored complete v1.6 targets",
+          "blob_sha": "14095832fdfcb1141b14663e2b86aa5aea4209ab"
+        },
+        {
+          "path": "scripts/mfm/formation_task_content_input.py",
+          "purpose": "typed Mission/Result/Workspace and attempt/outcome original validation; supplied input scope",
+          "blob_sha": "19d84a0953bac7d44aa4b0143768afabe873e6cb"
+        },
+        {
+          "path": "scripts/mfm/formation_uncertainty_input.py",
+          "purpose": "immutable uncertainty identity and genuinely new original resolution history; input-only",
+          "blob_sha": "8aff3d67922346428cc9e19a814c7e6ff69c46ef"
+        },
+        {
+          "path": "scripts/mfm/formation_world_caller_v3.py",
+          "purpose": "current per-part delivery and independent verification boundaries with authorized audience projection",
+          "blob_sha": "72080419ba6f4379a31fdebd4631656d21625578"
+        },
+        {
+          "path": "scripts/mfm/formation_world_replay_v3.py",
+          "purpose": "exact causal task-content/material bindings, original dependencies and proof-only verification responsibility",
+          "blob_sha": "991ce16c1d19002042a3794acb9743722dbdbf31"
+        },
+        {
+          "path": "tests/governance/mfm_task_content_fixtures.py",
+          "purpose": "real finite RawBuffer/Experience/projection producers with fictional current-policy adapter",
+          "blob_sha": "242317934324847247cd67ccc9ee68adafc16bcf"
+        },
+        {
+          "path": "tests/governance/test_mfm_caller_meaning_v3.py",
+          "purpose": "Connected fictional controls for caller meaning v3; component evidence only",
+          "blob_sha": "cd49fa0fdc50f86182818485095a9da81e948320"
+        },
+        {
+          "path": "tests/governance/test_mfm_input_content_prototype.py",
+          "purpose": "Connected fictional controls for input content prototype; component evidence only",
+          "blob_sha": "2e181bddf342fec3c1a5bb1cb6eb1a3612bfc5ae"
+        },
+        {
+          "path": "tests/governance/test_mfm_joint_input_v3.py",
+          "purpose": "Connected fictional controls for joint input v3; component evidence only",
+          "blob_sha": "11b82c5e5b07d8da3b9d61100ef412c860ce30a2"
+        },
+        {
+          "path": "tests/governance/test_mfm_joint_input_v4.py",
+          "purpose": "Connected fictional controls for joint input v4; component evidence only",
+          "blob_sha": "76392e9728a03300579abc82bfcb6a54582fd927"
+        },
+        {
+          "path": "tests/governance/test_mfm_joint_target_alignment.py",
+          "purpose": "Five portable literal/role controls; full original saved-evidence suite retained privately and explicitly",
+          "blob_sha": "72f3529b388cf5bcd8da70cf2a554f37dccec221"
+        },
+        {
+          "path": "tests/governance/test_mfm_paired_teaching.py",
+          "purpose": "Connected fictional controls for paired teaching; component evidence only",
+          "blob_sha": "16e46f385cecf5b3026da995e8d63c84e5383b21"
+        },
+        {
+          "path": "tests/governance/test_mfm_task_content_input.py",
+          "purpose": "Connected fictional controls for task content input; component evidence only",
+          "blob_sha": "5b52b93affae26ba40620438a2401fd65d7c6a13"
+        },
+        {
+          "path": "tests/governance/test_mfm_uncertainty_input.py",
+          "purpose": "Connected fictional controls for uncertainty input; component evidence only",
+          "blob_sha": "9cc22990571641b00790c7a5623b0badc98e4f63"
+        },
+        {
+          "path": "tests/governance/test_mfm_world_caller_v3.py",
+          "purpose": "Connected fictional controls for world caller v3; component evidence only",
+          "blob_sha": "e4adbe059a114f58c4bcd34946f7aecf8dbff971"
+        },
+        {
+          "path": "tests/governance/test_mfm_world_replay_v3.py",
+          "purpose": "Connected fictional controls for world replay v3; component evidence only",
+          "blob_sha": "1ca2385b44e636aed7d15c57554c5475623f6e5f"
         },
         {
           "path": "scripts/mfm/formation_episode_input.py",
