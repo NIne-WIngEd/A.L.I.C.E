@@ -132,6 +132,8 @@ ROUTES = {
             "docs/receipts/MFM_ORIGINAL_CUSTODY_AND_EVIDENCE_20261010_TRACE110_PUBLIC.json": "TRACE110 faithful custody and returned evidence; preserved v3/v4 complete-budget failures, completed exact143 cleanup; full MFM and S1 whole custody pending",
             "docs/MFM_S2_RETAINED_PARENT_CONTINUATION_METHOD_2026-10-10.md": "unchanged E20 retained-parent continuation alongside explicit pending backup; restored S2 state remains unverified",
             "docs/receipts/MFM_S2_RETAINED_PARENT_CONTINUATION_20261010_TRACE111_PUBLIC.json": "TRACE111 accepted S2 launch and bracketed RUNNING, preserved non-Drive lineage and credential/runtime claim boundaries",
+            "docs/MFM_S3_COMPLETE_PARENT_CONTINUATION_METHOD_2026-10-11.md": "unchanged S3 continuation from genuine S2 originals with pending custody and first CPU allocation failure locus",
+            "docs/receipts/MFM_S3_COMPLETE_PARENT_CONTINUATION_20261011_TRACE112_PUBLIC.json": "TRACE112 original S2 accepted resume and exact S3 source or launch status; no full-role learning or custody promotion",
             "docs/receipts/MFM_EPISODE_ORIGINAL_PRIOR_INPUT_20261010_TRACE107_PUBLIC.json": "admitted input construction; original exit1/72 and separate36 saved checks; no fresh tokenization or full-role qualification",
             "scripts/mfm/formation_episode_input.py": "genuine Episode metadata/full/summary and append-invocation/profile originals",
             "scripts/mfm/formation_caller_meaning_v2.py": "Claim/Episode target-free meaning and historically bound member registrations",
