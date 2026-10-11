@@ -136,6 +136,8 @@ ROUTES = {
             "docs/receipts/MFM_S3_COMPLETE_PARENT_CONTINUATION_20261011_TRACE112_PUBLIC.json": "TRACE112 original S2 accepted resume and exact S3 source or launch status; no full-role learning or custody promotion",
             "docs/MFM_COMPLETE_JOINT_RUNTIME_IDENTITY_METHOD_2026-10-11.md": "reviewed two-command numeric owner correction and actual front/inner boundary; whole source study unproved",
             "docs/receipts/MFM_COMPLETE_JOINT_RUNTIME_IDENTITY_20261011_TRACE113_PUBLIC.json": "TRACE113 safe node-scoped boundary evidence and preserved original failures; no model capacity or learning qualification",
+            "docs/MFM_IMPORT_PACKAGE_AND_PAIRED_CONSTRUCTION_METHOD_2026-10-11.md": "complete package before imports, supplied paired promotion and durable original replay; finite source proofs",
+            "docs/receipts/MFM_IMPORT_PACKAGE_AND_PAIRED_CONSTRUCTION_20261011_TRACE114_PUBLIC.json": "TRACE114 exact safe construction snapshot; no full source capacity, corpus or learning qualification",
             "docs/receipts/MFM_EPISODE_ORIGINAL_PRIOR_INPUT_20261010_TRACE107_PUBLIC.json": "admitted input construction; original exit1/72 and separate36 saved checks; no fresh tokenization or full-role qualification",
             "scripts/mfm/formation_episode_input.py": "genuine Episode metadata/full/summary and append-invocation/profile originals",
             "scripts/mfm/formation_caller_meaning_v2.py": "Claim/Episode target-free meaning and historically bound member registrations",
