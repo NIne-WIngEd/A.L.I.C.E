@@ -134,6 +134,8 @@ ROUTES = {
             "docs/receipts/MFM_S2_RETAINED_PARENT_CONTINUATION_20261010_TRACE111_PUBLIC.json": "TRACE111 accepted S2 launch and bracketed RUNNING, preserved non-Drive lineage and credential/runtime claim boundaries",
             "docs/MFM_S3_COMPLETE_PARENT_CONTINUATION_METHOD_2026-10-11.md": "unchanged S3 continuation from genuine S2 originals with pending custody and first CPU allocation failure locus",
             "docs/receipts/MFM_S3_COMPLETE_PARENT_CONTINUATION_20261011_TRACE112_PUBLIC.json": "TRACE112 original S2 accepted resume and exact S3 source or launch status; no full-role learning or custody promotion",
+            "docs/MFM_COMPLETE_JOINT_RUNTIME_IDENTITY_METHOD_2026-10-11.md": "reviewed two-command numeric owner correction and actual front/inner boundary; whole source study unproved",
+            "docs/receipts/MFM_COMPLETE_JOINT_RUNTIME_IDENTITY_20261011_TRACE113_PUBLIC.json": "TRACE113 safe node-scoped boundary evidence and preserved original failures; no model capacity or learning qualification",
             "docs/receipts/MFM_EPISODE_ORIGINAL_PRIOR_INPUT_20261010_TRACE107_PUBLIC.json": "admitted input construction; original exit1/72 and separate36 saved checks; no fresh tokenization or full-role qualification",
             "scripts/mfm/formation_episode_input.py": "genuine Episode metadata/full/summary and append-invocation/profile originals",
             "scripts/mfm/formation_caller_meaning_v2.py": "Claim/Episode target-free meaning and historically bound member registrations",
