@@ -144,6 +144,8 @@ ROUTES = {
             "docs/receipts/MFM_MATERIAL_READ_AND_SAVED_EXPORT_20261011_TRACE116_PUBLIC.json": "TRACE116 exact current reads, saved FileRef export and composed reviews; procedure only, no corpus or learning authority",
             "docs/MFM_NEW_WORLD_SOURCE_OBSERVATION_METHOD_2026-10-11.md": "new-world original source method; two complete cuts plus whole default capacity refusal, exact restoration and provenance",
             "docs/receipts/MFM_NEW_WORLD_SOURCE_OBSERVATION_20261011_TRACE117_PUBLIC.json": "TRACE117 preserved setup/origin failures and actual38564-over32768 refusal; procedure only, no six-cut or learning success",
+            "docs/MFM_S3_COMPLETION_AND_S4_PREPARATION_METHOD_2026-10-11.md": "genuine S3 original checkpoint acceptance and unchanged S4 preparation; exact restoration, quota and CPU-study boundaries",
+            "docs/receipts/MFM_S3_COMPLETION_AND_S4_PREPARATION_20261011_TRACE118_PUBLIC.json": "TRACE118 S3 epoch12 step27456 and preserved history; preparation only, no S4 launch or full learning qualification",
             "docs/receipts/MFM_EPISODE_ORIGINAL_PRIOR_INPUT_20261010_TRACE107_PUBLIC.json": "admitted input construction; original exit1/72 and separate36 saved checks; no fresh tokenization or full-role qualification",
             "scripts/mfm/formation_caller_meaning_v3.py": "target-free complete permitted original task/uncertainty meanings and typed historical joins",
             "scripts/mfm/formation_input_content_prototype.py": "strict original RawBuffer capture/reference custody and finite immutable input commits",
