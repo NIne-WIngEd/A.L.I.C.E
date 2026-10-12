@@ -148,6 +148,8 @@ ROUTES = {
             "docs/receipts/MFM_S3_COMPLETION_AND_S4_PREPARATION_20261011_TRACE118_PUBLIC.json": "TRACE118 S3 epoch12 step27456 and preserved history; preparation only, no S4 launch or full learning qualification",
             "docs/MFM_S4_ACCEPTANCE_AND_FINAL_S5_CONTINUATION_METHOD_2026-10-11.md": "accepted original S4 and exact final-five S5 continuation; compact complete history, distinct launcher profile and honest lifecycle scope",
             "docs/receipts/MFM_S4_ACCEPTANCE_AND_FINAL_S5_CONTINUATION_20261011_TRACE119_PUBLIC.json": "TRACE119 S4 epoch15 step34320 and final S5 profile evidence; no final E20 or full-MFM qualification by inference",
+            "docs/MFM_S5_FOUNDATION_COMPLETION_2026-10-12.md": "genuine E20 conditional foundation fit; owner parked full-system stress draft and returned to actual model construction",
+            "docs/receipts/MFM_S5_FOUNDATION_COMPLETION_20261012_TRACE120_PUBLIC.json": "TRACE120 complete21-entry six-session lineage and full split likelihood reports; full formation, new reload and Drive custody remain unqualified",
             "docs/receipts/MFM_EPISODE_ORIGINAL_PRIOR_INPUT_20261010_TRACE107_PUBLIC.json": "admitted input construction; original exit1/72 and separate36 saved checks; no fresh tokenization or full-role qualification",
             "scripts/mfm/formation_caller_meaning_v3.py": "target-free complete permitted original task/uncertainty meanings and typed historical joins",
             "scripts/mfm/formation_input_content_prototype.py": "strict original RawBuffer capture/reference custody and finite immutable input commits",
