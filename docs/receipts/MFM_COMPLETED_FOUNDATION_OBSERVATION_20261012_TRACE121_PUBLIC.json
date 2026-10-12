@@ -1,0 +1,39 @@
+{
+  "PC_tensor_downloads": 0,
+  "actual_reload_generation_success_claimed": false,
+  "controls": {
+    "affected_regression_passes": 46,
+    "new_controls_passed": 11,
+    "old_functions_AST_same": 25,
+    "original_timeout_preserved": true,
+    "unchanged_timeout_control_passed_isolated": true
+  },
+  "counts": {
+    "audit_groups": 431,
+    "calibration_groups": 75,
+    "contrasts": 183,
+    "pairs_per_condition": 4271,
+    "previously_exposed_audit_groups": 1,
+    "sources_per_condition": 506
+  },
+  "fitting": false,
+  "full_MFM_qualified": false,
+  "initial_status": "RUNNING",
+  "initial_status_utc": "2026-10-12T18:55:33.484114+00:00",
+  "kernel_id": "mkrayanyan/rayan-mfm-foundation-observation-20261012",
+  "kernel_numeric_id": 138375666,
+  "kernel_version": 1,
+  "main_FILE_sha256": "399bbe52f202d632bb27b121e0f8dcb106862a380ab6729dc0929fd3bb19beec",
+  "manifest_FILE_sha256": "de352c23cbca5c2c092b1f3e18dd2faefd4d9c278e7d9d10875930f81b134b1b",
+  "new_training_updates": 0,
+  "next_capability_implementation_waits_for_observation": false,
+  "paid_compute": false,
+  "producer_FILE_sha256": "bf6bc02f5ecd4c5f958531e1779cf61e1eea7c25b836458b47ced5d93334f8c6",
+  "record_sha256": "7fc45ab1225a5525158b60eddf125563ff45036a0db2dc564a0641c493415f94",
+  "review_FILE_sha256": "a4640a4d0d0a00f46c90fedd05a5502f999b7f90c461f81a2199afd7dd1dfbbf",
+  "schema": "mfm-completed-foundation-native-observation-public-v1",
+  "status_readback_FILE_sha256": "a0e79339899c4f9a91a5513f4bd174466cbbeaf2d5487a421620f2da1bb8c4de",
+  "stress_draft_parked": true,
+  "tests_FILE_sha256": "ec3faa6f9f4cba33951802d525fc9875ea3f19370ffc1b1cebd431506fca5f06",
+  "timestamp_utc": "2026-10-12T19:05:33.891232+00:00"
+}

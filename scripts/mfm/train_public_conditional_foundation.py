@@ -6,6 +6,7 @@ owner-independent qualification. No foundation model weights are loaded.
 from __future__ import annotations
 
 import argparse
+from hashlib import sha256
 import json
 import math
 import os
@@ -17,7 +18,7 @@ import sys
 from time import perf_counter
 from uuid import uuid4
 
-from cognitive_kernel.canonical import canonical_sha256, require_sha256
+from cognitive_kernel.canonical import canonical_json_bytes, canonical_sha256, require_sha256
 from cognitive_kernel.formation_conditional_task import bind_conditional_task
 from cognitive_kernel.formation_decision_specialist_v16 import FormationDecisionSpecialist, INITIALIZATION
 from cognitive_kernel.formation_v1_specialist import SpecialistConfig
@@ -780,5 +781,591 @@ def arguments(argv=None):
     return parser.parse_args(argv)
 
 
+def _observation_record(path, file_sha256, schema):
+    """Check FILE bytes and the actual writers' UTF-8 compact logical seal."""
+    path = _safe_root(path)
+    if not path.is_file() or shared._digest(path) != require_sha256(file_sha256, 'observation FILE pin'):
+        raise ValueError('observation FILE digest differs')
+    row = reader.features._json(path.read_bytes())
+    if row.get('schema') != schema or not _observation_sealed(row):
+        raise ValueError('observation schema or writer logical seal differs')
+    return row
+
+
+def _observation_sealed(row):
+    return type(row) is dict and row == shared._seal({k: v for k, v in row.items() if k != 'record_sha256'})
+
+
+def _observation_partitions(groups, edges, version):
+    adjacency = {key: set() for key in groups}
+    for left, right in edges:
+        adjacency[left].add(right)
+        adjacency[right].add(left)
+    remaining, rows = set(groups), []
+    while remaining:
+        stack, members = [min(remaining)], set()
+        while stack:
+            key = stack.pop()
+            if key not in members:
+                members.add(key)
+                stack.extend(adjacency[key] - members)
+        remaining -= members
+        component = sha256('\n'.join(sorted(members)).encode('ascii')).hexdigest()
+        digest = sha256((version + '\n' + component).encode('ascii')).hexdigest()
+        partition = 'calibration' if int(digest, 16) % 5 == 0 else 'audit'
+        rows.extend({'semantic_input_sha256': key, 'component_sha256': component, 'partition': partition}
+                    for key in sorted(members))
+    return sorted(rows, key=lambda row: row['semantic_input_sha256'])
+
+
+def read_observation_plan(plan_dir, proposal_sha256, approval_sha256, exposure_path, exposure_sha256, prepared) -> dict:
+    """Authenticate the complete frozen cohort, actual-source fanout and graph.
+
+    Source MR fields describe the declared input. Human references stay as
+    custody associations and never become expected answers or decoder inputs.
+    """
+    from .prepare_public_conditional_material import semantic_mr, SLOTS
+    root = _safe_root(plan_dir)
+    proposal = _observation_record(_safe_child(root, 'proposal.json'), proposal_sha256,
+                                  'mfm-public-development-observation-input-proposal-v1')
+    approval = _observation_record(_safe_child(root, 'root-prospective-rubric-v2-approval.json'), approval_sha256,
+                                  'mfm-root-prospective-semantic-workflow-approval-v1')
+    if approval.get('decision') != 'APPROVED_PROSPECTIVE_SOURCE_FIDELITY_OBSERVATION_WORKFLOW_ONLY' or \
+            any(approval.get(k) is not False for k in ('semantic_evaluator_admitted', 'automatic_score_or_threshold_admitted', 'qualified_for_product')):
+        raise ValueError('observation prospective approval scope differs')
+    rubric = _observation_record(_safe_child(root, 'semantic-adjudication-rubric-proposal-v2.json'),
+        approval['proposal']['file_sha256'], 'mfm-public-development-semantic-adjudication-proposal-v2')
+    if rubric['record_sha256'] != approval['proposal']['record_sha256']:
+        raise ValueError('observation approved rubric logical pin differs')
+    cohort = _observation_record(_safe_child(root, 'cohort.json'), proposal['cohort']['sha256'],
+                                'mfm-public-development-observation-cohort-v1')
+    controls = _observation_record(_safe_child(root, 'single-attribute-controls.json'),
+        proposal['single_attribute_controls']['sha256'], 'mfm-observed-development-single-attribute-controls-v1')
+    for name, record, binding in [('proposal.json', proposal, rubric['input_bindings']['proposal.json']),
+                                 ('cohort.json', cohort, proposal['cohort']),
+                                 ('single-attribute-controls.json', controls, proposal['single_attribute_controls'])]:
+        if record['record_sha256'] != binding['logical_sha256'] or (root/name).stat().st_size != binding['bytes'] or \
+                rubric['input_bindings'][name] != binding:
+            raise ValueError('observation frozen file/logical binding differs')
+    evidence = proposal['input_evidence']
+    if cohort['census_sha256'] != prepared.census['record_sha256'] or \
+            evidence['census']['logical_sha256'] != prepared.census['record_sha256'] or \
+            evidence['encoded_pairs']['sha256'] != prepared.census['encoded_pairs_sha256'] or \
+            evidence['source_inputs']['sha256'] != prepared.census['source_inputs_sha256'] or \
+            proposal['accepted_bank_external_pin'] != prepared.bank['record_sha256'] or \
+            rubric['accepted_bank_external_pin'] != prepared.bank['record_sha256'] or \
+            any(cohort.get(k) is not False for k in ('semantic_gold_created', 'targets_rewritten', 'development_gradient_effect')):
+        raise ValueError('observation public material or teaching boundary differs')
+    cases = [p['case_id'] for p in prepared.development]
+    if [p['case_id'] for p in cohort['pairs']] != cases or len(set(cases)) != len(cases) or \
+            canonical_sha256(cases) != cohort['case_order_sha256']:
+        raise ValueError('observation complete pair order differs')
+    group_cases, source_cases = {}, {}
+    for frozen, pair in zip(cohort['pairs'], prepared.development):
+        key = canonical_sha256({'task': reader.census_code.TASK, 'source_ids': pair['source_ids']})
+        expected = {'encoded_pair_record_sha256': canonical_sha256(pair), 'source_ids_sha256': canonical_sha256(pair['source_ids']),
+                    'labels_sha256': canonical_sha256(pair['labels']), 'label_tokens': len(pair['labels']), 'source_key': key,
+                    'semantic_input_sha256': pair['semantic_input_sha256'], 'reference_count': pair['semantic_reference_count'],
+                    'source_payload_sha256': pair['source_payload_sha256']}
+        if any(frozen.get(k) != value for k, value in expected.items()) or prepared.pair_by_case.get(pair['case_id']) != pair:
+            raise ValueError('observation encoded pair/source custody differs')
+        group_cases.setdefault(pair['semantic_input_sha256'], []).append(pair['case_id'])
+        source_cases.setdefault(key, []).append(pair['case_id'])
+    source_order = cohort['generation_source_keys']
+    source_map = {s['source_key']: s for s in prepared.sources if s['split'] == 'development'}
+    if source_order != sorted(source_cases) or set(source_map) != set(source_cases) or \
+            canonical_sha256(source_order) != cohort['generation_source_order_sha256']:
+        raise ValueError('observation complete exact source order differs')
+    for key, source in source_map.items():
+        if source['case_ids'] != sorted(source_cases[key]) or prepared.source_by_key.get(key) != source:
+            raise ValueError('observation exact source fanout differs')
+    groups = {g['semantic_input_sha256']: g for g in cohort['groups']}
+    if len(groups) != len(cohort['groups']) or list(groups) != sorted(group_cases) or \
+            canonical_sha256(list(groups)) != cohort['semantic_group_order_sha256']:
+        raise ValueError('observation semantic group order differs')
+    source_groups = {key: [] for key in source_order}
+    for key, group in groups.items():
+        expected_keys = sorted({p['source_key'] for p in cohort['pairs'] if p['semantic_input_sha256'] == key})
+        if group['case_ids'] != sorted(group_cases[key]) or group['reference_count'] != len(group_cases[key]) or \
+                group['source_keys'] != expected_keys or [m['source_key'] for m in group['original_mrs']] != expected_keys:
+            raise ValueError('observation complete group/source associations differ')
+        for mr in group['original_mrs']:
+            source = source_map[mr['source_key']]
+            parsed_slots = semantic_mr(mr['source_text'])
+            if dict(parsed_slots) != group['observed_slots'] or canonical_sha256(parsed_slots) != key or \
+                    mr['source_input_record_sha256'] != canonical_sha256(source) or \
+                    mr['source_payload_sha256s'] != source['source_payload_sha256s']:
+                raise ValueError('observation original declared source fields differ')
+            source_groups[mr['source_key']].append(key)
+    counts = {'pairs': len(cases), 'semantic_groups': len(groups), 'distinct_processed_sources': len(source_order),
+              'label_tokens': sum(len(p['labels']) for p in prepared.development)}
+    if counts != cohort['counts'] or proposal['measurement_protocol']['ce']['cases'] != counts['pairs'] or \
+            proposal['measurement_protocol']['ce']['semantic_groups'] != counts['semantic_groups'] or \
+            proposal['measurement_protocol']['ce']['label_tokens'] != counts['label_tokens']:
+        raise ValueError('observation complete cohort counts differ')
+    decode = proposal['measurement_protocol']['decode']
+    required_decode = {'bos_token_id': 2, 'eos_token_id': 1, 'generation_tokens': 128, 'method': 'greedy_argmax',
+        'gradient': False, 'malformed_outputs_retained': True, 'repair_or_base_head_fallback': False,
+        'rng_and_model_mode_restored': True, 'skip_special_tokens': False, 'temperature_sampling': False,
+        'tokenizer_cleanup': False, 'source_order': source_order,
+        'output_unit': 'one output per distinct frozen development source_key per checkpoint'}
+    if decode != required_decode or controls['cohort_file_sha256'] != proposal['cohort']['sha256'] or \
+            controls['cohort_logical_sha256'] != cohort['record_sha256']:
+        raise ValueError('observation frozen decode or contrast binding differs')
+    # Recompute all naturally existing one-attribute edges, including zero-slot gaps.
+    edges = {}
+    keys = list(groups)
+    for i, left in enumerate(keys):
+        a = groups[left]['observed_slots']
+        for right in keys[i+1:]:
+            b = groups[right]['observed_slots']
+            changed = [slot for slot in a if a[slot] != b.get(slot)]
+            if set(a) == set(b) and len(changed) == 1:
+                edges[left, right] = changed[0]
+    observed_edges = {}
+    for edge in controls['controls']:
+        left, right = edge['left_semantic_input_sha256'], edge['right_semantic_input_sha256']
+        slot = edges.get((left, right))
+        if slot is None or (left, right) in observed_edges or edge['changed_slot'] != slot:
+            raise ValueError('observation contrast edge differs or is repeated')
+        for side, key in [('left', left), ('right', right)]:
+            if edge[side+'_source_keys'] != groups[key]['source_keys'] or \
+                    edge[side+'_reference_case_ids'] != groups[key]['case_ids'] or \
+                    edge[side+'_value'] != groups[key]['observed_slots'][slot]:
+                raise ValueError('observation contrast endpoint fanout/value differs')
+        if edge['unchanged_slots'] != {k: v for k, v in groups[left]['observed_slots'].items() if k != slot}:
+            raise ValueError('observation contrast unchanged source fields differ')
+        observed_edges[left, right] = slot
+    unmatched = sorted(set(groups) - {key for edge in edges for key in edge})
+    slot_counts = {slot: sum(s == slot for s in edges.values()) for slot in SLOTS}
+    if observed_edges != edges or controls['unmatched_group_sha256s'] != unmatched or \
+            controls['counts']['controls'] != len(edges) or \
+            controls['counts']['groups_with_controls'] != len(groups)-len(unmatched) or \
+            controls['counts']['groups_without_controls'] != len(unmatched) or \
+            any(controls['counts']['by_changed_slot'].get(slot, 0) != count for slot, count in slot_counts.items()) or \
+            approval['frozen_cohort'] != {'groups': len(groups), 'pairs_per_checkpoint': len(cases),
+                                         'existing_contrast_edges': len(edges), 'rewritten_targets': 0}:
+        raise ValueError('observation contrast coverage or approved cohort differs')
+    route = rubric['calibration_route_proposed']
+    if route['partition_version'] != 'mfm-e2e-semantic-rubric-partition-v1':
+        raise ValueError('observation partition version differs')
+    rows = _observation_partitions(groups, edges, route['partition_version'])
+    assignments = {row['semantic_input_sha256']: row['partition'] for row in rows}
+    if canonical_sha256(rows) != route['actual_partition_counts']['assignment_sha256']:
+        raise ValueError('observation frozen source partition digest differs')
+    for partition in ('calibration', 'audit'):
+        actual = {'groups': sum(v == partition for v in assignments.values()),
+                  'pairs_per_checkpoint': sum(len(group_cases[k]) for k,v in assignments.items() if v == partition),
+                  'edges': sum(assignments[a] == partition and assignments[b] == partition for a,b in edges)}
+        for field, value in actual.items():
+            approved_field = partition + '_' + ('pairs' if field == 'pairs_per_checkpoint' else field)
+            if route['actual_partition_counts']['counts'][partition][field] != value or \
+                    approval['source_only_partition'][approved_field] != value:
+                raise ValueError('observation frozen partition counts differ')
+    if any(assignments[a] != assignments[b] for a,b in edges) or \
+            approval['source_only_partition']['cross_partition_edges'] != 0 or route['actual_partition_counts']['cross_partition_edges'] != 0:
+        raise ValueError('observation contrast graph crosses partition')
+    exposure = _observation_record(exposure_path, exposure_sha256, 'mfm-existing-development-output-exposure-ledger-v1')
+    if exposure['cohort_file_sha256'] != proposal['cohort']['sha256'] or \
+            exposure['assignment_sha256'] != canonical_sha256(rows) or \
+            exposure['cohort_and_partition_unchanged'] is not True or exposure['drop_or_rebalance_performed'] is not False or \
+            exposure['fixed_audit_groups'] != sum(v == 'audit' for v in assignments.values()) or \
+            exposure['fixed_audit_outputs_both_conditions'] != 2*exposure['fixed_audit_groups']:
+        raise ValueError('observation exposure ledger binding differs')
+    exposed_audit = set()
+    for row in exposure['known_exposures']:
+        key = row['semantic_input_sha256']
+        if key not in groups or row['partition'] != assignments[key] or row['case_id'] not in group_cases[key]:
+            raise ValueError('observation known exposure membership differs')
+        if assignments[key] == 'audit':
+            exposed_audit.add(key)
+    if len(exposed_audit) != exposure['known_exposed_audit_groups_in_these_contexts'] or \
+            (exposed_audit and exposure['all_audit_outputs_untouched_claim_valid_for_these_contexts'] is not False):
+        raise ValueError('observation known audit exposure cannot be concealed')
+    return {'source_order': source_order, 'sources': source_map, 'source_groups': source_groups, 'groups': groups,
+            'assignments': assignments, 'partition_rows': rows, 'decode': decode, 'counts': counts,
+            'controls': controls, 'proposal': proposal, 'exposure': exposure,
+            'bindings': {'proposal_file_sha256': proposal_sha256, 'approval_file_sha256': approval_sha256,
+                         'rubric_file_sha256': approval['proposal']['file_sha256'], 'exposure_file_sha256': exposure_sha256,
+                         'cohort_file_sha256': proposal['cohort']['sha256'], 'assignment_sha256': canonical_sha256(rows)}}
+
+
+def _load_observation_weights(view, path, expected_sha256):
+    """Verify every actual tensor before strict loading; never deserialize Adam."""
+    import torch
+    from safetensors.torch import load_file
+    path = _safe_root(path)
+    if shared._digest(path) != require_sha256(expected_sha256, 'observation actual weight bytes'):
+        raise ValueError('observation actual weight digest differs')
+    state = load_file(str(path), device='cpu')
+    expected = view.state_dict()
+    if set(state) != set(expected) or any(state[k].shape != expected[k].shape for k in state):
+        raise ValueError('observation actual state keys or shapes differ')
+    if any(v.dtype != torch.float32 or not torch.isfinite(v).all() for v in state.values()):
+        raise ValueError('observation actual weights require finite FP32 dtype')
+    view.specialist.load_state_dict(state, strict=True)
+    del state
+
+
+def observe_public_development(view, prepared, tokenizer, plan, *, output_dir, condition, weight_sha256) -> dict:
+    """Save every raw source-only output and expose only calibration text.
+
+    Incremental/reference mismatch stops, retains diagnostic evidence and never
+    silently falls back. Check first32 prefixes per source and every actual
+    prefix through EOS/cap for the longest frozen source in each condition.
+    """
+    import torch
+    from cognitive_kernel.formation_incremental_decoder import CachedFormationDecoder
+    if getattr(view, 'task', None) != TASK or not hasattr(view, 'specialist'):
+        raise ValueError('completed observation requires explicit public task binding')
+    if any(p.dtype != torch.float32 for p in view.parameters()):
+        raise ValueError('completed observation requires FP32 parameters')
+    if re.fullmatch(r'[a-z0-9-]{1,80}', condition or '') is None:
+        raise ValueError('observation opaque condition identifier is invalid')
+    require_sha256(weight_sha256, 'observation weight pin')
+    cap = plan['decode']['generation_tokens']
+    if cap != 128 or cap > view.config.max_target_tokens or view.config.start_token_id != 2 or view.config.end_token_id != 1:
+        raise ValueError('observation complete BOS/EOS/cap differs')
+    longest_source = max(plan['source_order'], key=lambda key: len(plan['sources'][key]['source_ids']))
+    root = _safe_root(output_dir)
+    raw_path, calibration_path = root/f'raw-{condition}.jsonl', root/f'calibration-{condition}.jsonl'
+    if any(p.exists() or p.is_symlink() for p in (raw_path, calibration_path, root/f'observation-{condition}.json')):
+        raise ValueError('observation completed or partial evidence cannot be overwritten')
+    device = next(view.parameters()).device
+    modes = [(module, module.training) for module in view.specialist.modules()]
+    started, completed, associations, steps, ended_count, compared = perf_counter(), 0, 0, 0, 0, 0
+    active, parity, longest_check = None, None, None
+    try:
+        view.eval()
+        with raw_path.open('xb') as raw, calibration_path.open('xb') as calibration, \
+                torch.random.fork_rng(devices=list(range(torch.cuda.device_count()))), \
+                torch.inference_mode(), torch.autocast(device.type, enabled=False):
+            for key in plan['source_order']:
+                reference_budget = cap if key == longest_source else min(32, cap)
+                active, parity = key, {'compared_greedy_prefixes': 0, 'max_abs_difference': 0.,
+                    'atol': 1e-4, 'rtol': 1e-4, 'argmaxes_equal': True,
+                    'reference_budget': reference_budget, 'longest_source_full_actual_prefix_check': key == longest_source}
+                source = plan['sources'][key]
+                receipt, tensors = reader.features.read_source(prepared.feature_bank, source,
+                    prepared.export['record_sha256'], prepared.census['base_hidden_size'])
+                if receipt['record_sha256'] != prepared.source_receipt_by_key[key]:
+                    raise ValueError('observation source receipt differs from pinned complete bank')
+                states = tensors['states'].detach().to(device)
+                mask = tensors['attention_mask'].detach().to(device)
+                # Target tensors and decoder_inputs are intentionally not constructed.
+                decoder = CachedFormationDecoder(view, base_states=states, source_mask=mask)
+                prefix, ids, eos, case_steps = [2], [], False, 0
+                case_started = perf_counter()
+                for index in range(cap):
+                    logits = decoder.step(prefix[-1])
+                    if logits.dtype != torch.float32 or not torch.isfinite(logits).all():
+                        raise ValueError('observation generated logits must be finite FP32')
+                    token = int(logits[0].argmax().item())
+                    if index < reference_budget:
+                        reference = view.next_token_logits(base_states=states, source_mask=mask,
+                            input_ids=torch.tensor([prefix], dtype=torch.long, device=device))
+                        finite = bool(torch.isfinite(reference).all())
+                        difference = float((reference-logits).abs().max().cpu()) if finite else None
+                        equal = bool(reference.dtype == torch.float32 and finite and
+                            torch.allclose(reference, logits, atol=1e-4, rtol=1e-4) and
+                            int(reference[0].argmax().item()) == token)
+                        parity.update(compared_greedy_prefixes=index+1,
+                            max_abs_difference=max(parity['max_abs_difference'], difference) if finite else None,
+                            argmaxes_equal=equal, reference_finite=finite)
+                        if not equal:
+                            parity.update(reference_argmax=int(reference[0].argmax().item()), cached_argmax=token,
+                                          failed_prefix_ids=list(prefix))
+                            raise ValueError('observation actual FP32 cache/reference parity differs')
+                    case_steps += 1
+                    if token == 1:
+                        eos = True
+                        break
+                    ids.append(token)
+                    prefix.append(token)
+                raw_text, decode_error = None, None
+                try:
+                    raw_text = tokenizer.decode(ids, skip_special_tokens=False, clean_up_tokenization_spaces=False)
+                except Exception as exc:
+                    decode_error = type(exc).__name__ + ': ' + str(exc)
+                row = {'schema': 'mfm-public-completed-source-observation-v1', 'condition': condition,
+                    'observation_id': canonical_sha256({'source_key': key, 'condition': condition}),
+                    'source_key': key, 'source_receipt_sha256': receipt['record_sha256'],
+                    'semantic_input_sha256s': plan['source_groups'][key], 'case_ids': source['case_ids'],
+                    'raw_token_ids': ids, 'raw_output_text': raw_text, 'tokenizer_decode_error': decode_error,
+                    'eos_observed': eos, 'cap_exhausted': not eos, 'decoder_steps': case_steps,
+                    'parity': parity, 'seconds': perf_counter()-case_started,
+                    'semantic_verdict': 'not-adjudicated', 'malformed_or_special_tokens_repaired': False}
+                raw.write(canonical_json_bytes(row)+b'\n')
+                raw.flush()
+                partitions = {plan['assignments'][g] for g in plan['source_groups'][key]}
+                if len(partitions) != 1:
+                    raise ValueError('observation exact source associates across partitions')
+                if partitions == {'calibration'}:
+                    exposed = {**row, 'declared_source_fields': [
+                        {'semantic_input_sha256': g, 'observed_slots': plan['groups'][g]['observed_slots'],
+                         'original_mrs': plan['groups'][g]['original_mrs']} for g in plan['source_groups'][key]]}
+                    calibration.write(canonical_json_bytes(exposed)+b'\n')
+                    calibration.flush()
+                completed += 1
+                if key == longest_source:
+                    longest_check = {'source_key': key, 'source_tokens': len(source['source_ids']),
+                        'actual_decoder_steps': case_steps, 'compared_greedy_prefixes': parity['compared_greedy_prefixes'],
+                        'eos_observed': eos, 'cap_exhausted': not eos, 'argmaxes_equal': True}
+                associations += len(source['case_ids'])
+                steps += case_steps
+                ended_count += int(eos)
+                compared += parity['compared_greedy_prefixes']
+                del decoder, tensors, states, mask, logits
+    except BaseException as exc:
+        shared._write_new(root/f'observation-failure-{condition}.json', {
+            'schema': 'mfm-public-completed-observation-failure-v1', 'condition': condition,
+            'completed_sources': completed, 'active_source_key': active, 'parity': parity,
+            'raw_file': raw_path.name, 'raw_file_sha256': shared._digest(raw_path) if raw_path.exists() else None,
+            'error': type(exc).__name__ + ': ' + str(exc), 'automatic_retry': False})
+        raise
+    finally:
+        for module, mode in modes:
+            module.training = mode
+    seconds = perf_counter()-started
+    return shared._write_new(root/f'observation-{condition}.json', {
+        'schema': 'mfm-public-completed-observation-condition-v1', 'condition': condition,
+        'weight_sha256': weight_sha256, 'source_order_sha256': canonical_sha256(plan['source_order']),
+        'sources': completed, 'pair_associations': associations, 'decoder_steps': steps,
+        'eos_outputs': ended_count, 'cap_exhausted_outputs': completed-ended_count,
+        'compared_greedy_prefixes': compared,
+        'cache_method': 'FP32-first32-per-source-and-full-longest-actual-prefix-reference-checked',
+        'longest_source_reference_check': longest_check,
+        'raw_file': raw_path.name, 'raw_file_sha256': shared._digest(raw_path),
+        'calibration_file': calibration_path.name, 'calibration_file_sha256': shared._digest(calibration_path),
+        'seconds': seconds, 'decoder_steps_per_second': steps/seconds, 'memory': _memory(device),
+        'target_visible_to_generation': False, 'optimizer_created': False, 'optimizer_updates': 0,
+        'qualified_for_product': False, 'semantic_score_created': False})
+
+
+def _read_completed_observation(args, prepared, metadata, plan):
+    """Authenticate complete pinned metadata and declared direct tensor paths.
+
+    This checks the accepted index, not every historical binary. It deliberately
+    does not call History.load, restore an optimizer or open intermediate weights.
+    """
+    root, seed_root = _safe_root(args.completed_run_dir), _safe_root(args.seed_dir)
+    component_root = _safe_root(args.component_dir)
+    if component_root != root/'component' or seed_root == root:
+        raise ValueError('observation explicit component/seed source directories differ')
+    component = _observation_record(component_root/'component.json', args.component_file_sha256, COMPONENT_SCHEMA)
+    manifest = _observation_record(root/'run.json', args.run_file_sha256, RUN_SCHEMA)
+    curriculum = _observation_record(root/'curriculum.json', args.curriculum_file_sha256, CURRICULUM_SCHEMA)
+    seed = _observation_record(seed_root/'seed-control.json', args.seed_file_sha256, SEED_SCHEMA)
+    config = SpecialistConfig(**manifest['specialist_config'])
+    if canonical_sha256(config.record()) != require_sha256(args.config_sha256, 'completed observation config pin') or \
+            component['specialist_config'] != config.record() or seed['specialist_config'] != config.record() or \
+            manifest['task'] != TASK or component['task'] != TASK or curriculum['task'] != TASK or \
+            manifest['objective'] != OBJECTIVE or component['objective'] != OBJECTIVE or curriculum['objective'] != OBJECTIVE or \
+            manifest['purpose'] != 'full-roster-public-fit' or manifest['initialization'] != INITIALIZATION or \
+            seed['initialization'] != INITIALIZATION or seed['optimizer_steps'] != 0 or \
+            curriculum['sampling'] != SAMPLER or curriculum['development_gradient_or_selection_effect'] is not False or \
+            component['development_selection_effect'] is not False or component['qualified_for_product'] is not False or \
+            any(manifest[k] is not False for k in ('base_weights_loaded', 'private_evidence_opened', 'final_payloads_opened', 'qualified_for_product')):
+        raise ValueError('observation completed config/task/recipe or seed-control meaning differs')
+    recipe = plan['proposal']['fit_program']
+    if curriculum['epochs'] != recipe['epochs'] or curriculum['batch_size'] != recipe['batch_size'] or \
+            curriculum['train_cases'] != len(prepared.train) or curriculum['development_cases'] != len(prepared.development) or \
+            curriculum['seed'] != manifest['seed'] or manifest['curriculum_sha256'] != curriculum['record_sha256'] or \
+            component['curriculum_sha256'] != curriculum['record_sha256'] or \
+            component['run_sha256'] != manifest['record_sha256'] or seed['run_sha256'] != manifest['record_sha256'] or \
+            component['seed_sha256'] != seed['record_sha256'] or manifest['metadata'] != metadata or \
+            manifest['code']['train_public_conditional_foundation.py'] != plan['proposal']['source_code']['trainer']['git_export_sha256']:
+        raise ValueError('observation exact completed run/curriculum/seed/source binding differs')
+    for field, value in [('census_sha256', prepared.census['record_sha256']),
+                         ('feature_bank_sha256', prepared.bank['record_sha256']),
+                         ('encoded_pairs_sha256', prepared.census['encoded_pairs_sha256']),
+                         ('source_inputs_sha256', prepared.census['source_inputs_sha256']),
+                         ('export_sha256', prepared.export['record_sha256'])]:
+        if manifest[field] != value:
+            raise ValueError('observation completed public processor binding differs')
+    binding = {'run': manifest['record_sha256'], 'seed': seed['record_sha256'], 'epochs': curriculum['epochs'],
+               'batch_size': curriculum['batch_size'], 'train_cases': curriculum['train_cases']}
+    _cursor(component['cursor'], train_cases=binding['train_cases'], batch_size=binding['batch_size'], epochs=binding['epochs'])
+    if component['cursor']['epoch'] != binding['epochs'] or component['cursor']['next_case'] != 0:
+        raise ValueError('observation requires fixed final completed E20 checkpoint')
+    step = component['cursor']['step']
+    checkpoint = _observation_record(root/f'checkpoint-{step:08d}'/'checkpoint.json', args.checkpoint_file_sha256, CHECKPOINT_SCHEMA)
+    history = _observation_record(root/f'history-{step:08d}.json', args.history_file_sha256, checkpoint_history.SCHEMA)
+    if checkpoint['binding'] != binding or checkpoint['cursor'] != component['cursor'] or \
+            checkpoint['record_sha256'] != component['checkpoint_sha256'] or \
+            checkpoint['specialist_sha256'] != component['specialist_sha256'] or \
+            history['record_sha256'] != component['checkpoint_history_sha256'] or history['binding'] != binding or \
+            history['run'] != manifest or history['curriculum'] != curriculum or \
+            history['origin']['seed'] != seed or history['purpose'] != 'full-roster-public-fit':
+        raise ValueError('observation completed checkpoint/history/origin differs')
+    previous, last_step, last_session = None, -1, 0
+    for entry in history['entries']:
+        receipt = entry['receipt']
+        if not _observation_sealed(entry) or entry['schema'] != checkpoint_history.ENTRY_SCHEMA or \
+                not _observation_sealed(receipt) or receipt['schema'] != CHECKPOINT_SCHEMA or \
+                receipt['binding'] != binding or entry['previous_entry_sha256'] != previous or \
+                type(entry['session_index']) is not int or not last_session <= entry['session_index'] <= history['session_index']:
+            raise ValueError('observation complete metadata history chain differs')
+        _cursor(receipt['cursor'], train_cases=binding['train_cases'], batch_size=binding['batch_size'], epochs=binding['epochs'])
+        current = receipt['cursor']['step']
+        if current <= last_step or (last_step == -1 and current != 0) or entry['path'] != f'checkpoint-{current:08d}':
+            raise ValueError('observation metadata history order differs')
+        previous, last_step, last_session = entry['record_sha256'], current, entry['session_index']
+    if not history['entries'] or history['entries'][-1]['receipt'] != checkpoint or \
+            history['entries'][-1]['session_index'] != history['session_index'] or \
+            component['checkpoint_lineage'] != [entry['receipt']['record_sha256'] for entry in history['entries']] or \
+            history['entries'][0]['receipt']['specialist_sha256'] != seed['specialist_sha256'] or \
+            len(history['sessions']) != history['session_index']+1:
+        raise ValueError('observation complete final/step-zero history membership differs')
+    for index, session in enumerate(history['sessions']):
+        prior = [entry for entry in history['entries'] if entry['session_index'] < index]
+        expected_cursor = prior[-1]['receipt']['cursor'] if prior else {'epoch': 0, 'next_case': 0, 'step': 0}
+        if not _observation_sealed(session) or session['schema'] != checkpoint_history.SESSION_SCHEMA or \
+                session['session_index'] != index or session['run_sha256'] != binding['run'] or \
+                not session['allocation_ref'].strip() or session['parent_entry_count'] != len(prior) or \
+                session['start_cursor'] != expected_cursor or (index == 0 and session['parent_history_sha256'] is not None):
+            raise ValueError('observation complete lineage session metadata differs')
+    for declared, expected in [(component['specialist_sha256'], args.final_weight_sha256),
+                               (seed['specialist_sha256'], args.seed_weight_sha256)]:
+        if declared != require_sha256(expected, 'completed observation actual tensor pin'):
+            raise ValueError('observation declared final/seed tensor pin differs')
+    final_path, seed_path = component_root/'specialist.safetensors', seed_root/'seed-control.safetensors'
+    return {'config': config, 'component': component, 'run': manifest, 'curriculum': curriculum,
+            'history': history, 'checkpoint': checkpoint, 'seed': seed,
+            'weight_paths': {'final': final_path, 'seed': seed_path}, 'binding': binding,
+            'history_verification': 'accepted complete sealed metadata; no fresh full binary ancestry audit'}
+
+
+def _verify_observation_weight_bytes(records, args):
+    """Unconditional runtime preflight, separate from metadata-only review."""
+    for role in ('final', 'seed'):
+        if shared._digest(_safe_root(records['weight_paths'][role])) != getattr(args, role+'_weight_sha256'):
+            raise ValueError('observation actual final/seed tensor bytes differ')
+
+
+def run_completed_observation(args) -> dict:
+    """Native readonly completed-component observation; no Adam or base head."""
+    import gc
+    import torch
+    import transformers
+    started = perf_counter()
+    if not args.provider.strip() or not args.allocation_ref.strip() or \
+            (args.device != 'cpu' and re.fullmatch(r'cuda:(0|[1-9][0-9]*)', args.device) is None):
+        raise ValueError('observation explicit device/provider/allocation required')
+    device = torch.device(args.device)
+    if device.type == 'cuda' and (not torch.cuda.is_available() or device.index >= torch.cuda.device_count()):
+        raise ValueError('observation CUDA ordinal is unavailable')
+    if device.type == 'cuda' and os.environ.get('CUBLAS_WORKSPACE_CONFIG') not in {':4096:8', ':16:8'}:
+        raise ValueError('observation exact CUDA arithmetic requires configured CUBLAS_WORKSPACE_CONFIG')
+    # Provider readonly placement is explicit; the observation output stays new.
+    for path in (args.completed_run_dir, args.seed_dir):
+        checkpoint_history.require_readonly_root(path)
+    prepared = reader.load_public_training(args.census_dir, args.census_sha256, args.feature_bank, args.feature_bank_sha256)
+    require_full_material(prepared)
+    plan = read_observation_plan(args.plan_dir, args.proposal_sha256, args.approval_sha256,
+                                 args.exposure_path, args.exposure_sha256, prepared)
+    metadata = verify_tokenizer_metadata(args.prepared_base_dir, args.prepared_base_receipt, args.prepared_clone_sha256, prepared.census)
+    records = _read_completed_observation(args, prepared, metadata, plan)
+    _verify_observation_weight_bytes(records, args)
+    config = records['config']
+    if (config.base_hidden_size, config.vocabulary_size, config.width, config.layers, config.heads,
+            config.max_target_tokens, config.start_token_id, config.end_token_id) != (3840, 262144, 768, 6, 12, 8192, 2, 1):
+        raise ValueError('observation exact admitted full producer geometry differs')
+    processor = transformers.AutoProcessor.from_pretrained(str(args.prepared_base_dir), local_files_only=True, trust_remote_code=False)
+    tokenizer = processor.tokenizer
+    text_config = reader.features._json((args.prepared_base_dir/'config.json').read_bytes())['text_config']
+    if len(tokenizer) != config.vocabulary_size or tokenizer.bos_token_id != 2 or tokenizer.eos_token_id != 1 or \
+            tokenizer.pad_token_id != config.pad_token_id or text_config['pad_token_id'] != config.pad_token_id or \
+            text_config['hidden_size'] != config.base_hidden_size or text_config['vocab_size'] != config.vocabulary_size:
+        raise ValueError('observation bound actual tokenizer/config differs')
+    root = Path(args.output_dir)
+    if root.exists() or root.is_symlink():
+        raise ValueError('observation requires a new owned output directory')
+    _safe_root(root.parent)
+    root.mkdir(mode=0o700)
+    conditions = ['condition-'+uuid4().hex, 'condition-'+uuid4().hex]
+    # Randomize the opaque mapping using OS entropy; preserve it separately.
+    random.SystemRandom().shuffle(conditions)
+    mapping = dict(zip(conditions, ('final', 'seed')))
+    old_tf32 = torch.backends.cuda.matmul.allow_tf32, torch.backends.cudnn.allow_tf32
+    old_deterministic = torch.are_deterministic_algorithms_enabled(), torch.is_deterministic_algorithms_warn_only_enabled()
+    reports = []
+    try:
+        torch.backends.cuda.matmul.allow_tf32 = torch.backends.cudnn.allow_tf32 = False
+        torch.use_deterministic_algorithms(True)
+        with reader.features.worker_lock(root), torch.random.fork_rng(devices=list(range(torch.cuda.device_count()))):
+            shared._write_new(root/'condition-mapping.json', {'schema': 'mfm-public-completed-observation-opaque-mapping-v1',
+                'conditions': {condition: {'role': role, 'weight_sha256': getattr(args, role+'_weight_sha256')}
+                               for condition, role in mapping.items()}, 'successful_blinding_established': False})
+            shared._write_new(root/'protocol.json', {'schema': 'mfm-public-completed-observation-protocol-v1',
+                'bindings': plan['bindings'], 'decode': plan['decode'], 'counts': plan['counts'],
+                'partitions': plan['partition_rows'], 'contrasts': plan['controls'], 'exposure': plan['exposure'],
+                'component_sha256': records['component']['record_sha256'],
+                'history_sha256': records['history']['record_sha256'], 'history_verification': records['history_verification'],
+                'direct_final_seed_bytes_verified': True,
+                'producer_sha256': shared._digest(Path(__file__)), 'runtime': _runtime(torch, transformers),
+                'provider': args.provider, 'allocation_ref': args.allocation_ref, 'device': str(device),
+                'target_visible_to_generation': False, 'optimizer_created': False, 'qualified_for_product': False})
+            # Execute opaque conditions in opaque-name order, so ordering alone
+            # cannot disclose the final/seed role. Only one model is resident.
+            for condition in sorted(mapping):
+                role = mapping[condition]
+                load_started = perf_counter()
+                model = FormationDecisionSpecialist(config)
+                view = bind_conditional_task(model, task=TASK)
+                _load_observation_weights(view, records['weight_paths'][role], getattr(args, role+'_weight_sha256'))
+                model.to(device=device, dtype=torch.float32)
+                if device.type == 'cuda':
+                    torch.cuda.synchronize(device)
+                    torch.cuda.reset_peak_memory_stats(device)
+                load_seconds = perf_counter()-load_started
+                load_memory = _memory(device)
+                report = observe_public_development(view, prepared, tokenizer, plan, output_dir=root,
+                    condition=condition, weight_sha256=getattr(args, role+'_weight_sha256'))
+                reports.append({'condition': condition, 'record_sha256': report['record_sha256'],
+                                'load_seconds': load_seconds, 'load_memory': load_memory, 'memory': _memory(device)})
+                del view, model
+                gc.collect()
+                if device.type == 'cuda':
+                    torch.cuda.empty_cache()
+            # A whole-file custody seal accompanies the per-condition seals.
+            raw_path = root/'all-raw-observations.jsonl'
+            with raw_path.open('xb') as stream:
+                for condition in sorted(mapping):
+                    with (root/f'raw-{condition}.jsonl').open('rb') as source:
+                        for block in iter(lambda: source.read(8*1024*1024), b''):
+                            stream.write(block)
+            return shared._write_new(root/'observation.json', {
+                'schema': 'mfm-public-completed-observation-run-v1', 'status': 'complete-raw-development-observation-unqualified',
+                'condition_reports': reports, 'counts_per_condition': plan['counts'],
+                'raw_file': raw_path.name, 'raw_file_sha256': shared._digest(raw_path),
+                'protocol_file_sha256': shared._digest(root/'protocol.json'),
+                'condition_mapping_file_sha256': shared._digest(root/'condition-mapping.json'),
+                'known_exposed_audit_groups': plan['exposure']['known_exposed_audit_groups_in_these_contexts'],
+                'all_audit_outputs_untouched_claim': False, 'semantic_score_created': False,
+                'optimizer_created': False, 'optimizer_updates': 0, 'qualified_for_product': False,
+                'seconds': perf_counter()-started})
+    finally:
+        torch.backends.cuda.matmul.allow_tf32, torch.backends.cudnn.allow_tf32 = old_tf32
+        torch.use_deterministic_algorithms(old_deterministic[0], warn_only=old_deterministic[1])
+
+
+def observation_arguments(argv=None):
+    """A completed-component purpose with no fitting or optimizer arguments."""
+    parser = argparse.ArgumentParser(description='Observe the completed public foundation and its persisted same-run seed.')
+    for name in ('census-dir', 'feature-bank', 'output-dir', 'prepared-base-dir', 'prepared-base-receipt',
+                 'component-dir', 'completed-run-dir', 'seed-dir', 'plan-dir', 'exposure-path'):
+        parser.add_argument('--' + name, type=Path, required=True)
+    for name in ('census-sha256', 'feature-bank-sha256', 'config-sha256', 'prepared-clone-sha256',
+                 'component-file-sha256', 'run-file-sha256', 'curriculum-file-sha256', 'history-file-sha256',
+                 'checkpoint-file-sha256', 'seed-file-sha256', 'final-weight-sha256', 'seed-weight-sha256',
+                 'proposal-sha256', 'approval-sha256', 'exposure-sha256', 'provider', 'allocation-ref', 'device'):
+        parser.add_argument('--' + name, required=True)
+    return parser.parse_args(argv)
+
+
 if __name__ == '__main__':
-    print(json.dumps(run(arguments()), sort_keys=True))
+    if sys.argv[1:2] == ['observe-completed']:
+        print(json.dumps(run_completed_observation(observation_arguments(sys.argv[2:])), sort_keys=True))
+    else:
+        print(json.dumps(run(arguments()), sort_keys=True))

@@ -63,3 +63,8 @@ Controlling project sources: MFM_PUBLIC_FOUNDATION_PRODUCER_CONTRACT_2026-10-07.
 
 
 **October12 final foundation update:** [TRACE120](receipts/MFM_S5_FOUNDATION_COMPLETION_20261012_TRACE120_PUBLIC.json) records genuine S5 COMPLETE, exit0, epoch20/step45760, complete21-entry/6-session history and five new checkpoints. Exact original runtime/source joins support S4 model/Adam/CPU-CUDA RNG continuation, with no PC tensor download. Complete fixed-checkpoint objectives are train0.8207965525 over36597 pairs and development1.0347727028 over4271 pairs; these are teacher likelihood, not full generated-meaning or formation qualification. The real final component is exported; independent new-state reload and Drive custody remain pending. The owner parked the premature full-system stress-test design and directed continuation of the actual model build. Follow the existing full generated-development/source-intervention next step, then learned reference selection, exact original copying, full formation/native and governed consumer/outcome construction. Magnolia577247 remains an unchanged CPU source-capacity study; its result cannot admit the retained38564-token new-world cut by inference. No stress-test job or wrapper/helper platform was created.
+
+
+## 12 October: native observation and parallel next construction
+
+[The direct producer operation](MFM_COMPLETED_FOUNDATION_OBSERVATION_2026-10-12.md) is implemented. Exact private Kaggle138375666/v1 source was initially RUNNING. This is zero-update S5/seed generation. Missing learned reference/source-copy construction proceeds in parallel, informed without waiting for observations. Full-world training still needs actual capacity/material admission. The stress draft remains parked.
