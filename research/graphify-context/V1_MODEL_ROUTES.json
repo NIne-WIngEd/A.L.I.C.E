@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "7ee65d254a7cc44dd1b132783ba23ad900405fbb",
+      "commit": "0cde1fef8140211ba50e69344bc0a4d223a30afd",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -630,6 +630,16 @@
           "blob_sha": "7e2127cb2a1cc9831473db4ac0f7411b53644be4"
         },
         {
+          "path": "docs/MFM_S4_ACCEPTANCE_AND_FINAL_S5_CONTINUATION_METHOD_2026-10-11.md",
+          "purpose": "accepted original S4 and exact final-five S5 continuation; compact complete history, distinct launcher profile and honest lifecycle scope",
+          "blob_sha": "7837eb3ff0265cd64762ae7affcd12ce33fb4a4e"
+        },
+        {
+          "path": "docs/receipts/MFM_S4_ACCEPTANCE_AND_FINAL_S5_CONTINUATION_20261011_TRACE119_PUBLIC.json",
+          "purpose": "TRACE119 S4 epoch15 step34320 and final S5 profile evidence; no final E20 or full-MFM qualification by inference",
+          "blob_sha": "83dbc5689f5737207eb93a056dd95bfbc3a4f0d1"
+        },
+        {
           "path": "docs/receipts/MFM_EPISODE_ORIGINAL_PRIOR_INPUT_20261010_TRACE107_PUBLIC.json",
           "purpose": "admitted input construction; original exit1/72 and separate36 saved checks; no fresh tokenization or full-role qualification",
           "blob_sha": "a2f82a95d3bfa30893a83b25720747cf6b46674a"
@@ -837,7 +847,7 @@
         {
           "path": "docs/MFM_DEVELOPMENT_CONTINUATION_2026-10-09.md",
           "purpose": "unchanged E20 continuation, source interventions, caller reference selection, original-byte copy alignment and full governed formation roadmap",
-          "blob_sha": "a22f18f69fbec9eecdf7029c4f3c386239b683bc"
+          "blob_sha": "a274db1ea7ab81682eb2bd731be95c006c79c0b5"
         },
         {
           "path": "tests/governance/test_mfm_public_conditional_foundation.py",
@@ -1283,7 +1293,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "4c3203040ea342178a2411841f9412c7860c6b61",
+      "commit": "bd6777fb51aa08ca4c0263e40405cfd57282df02",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1363,7 +1373,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "f5e565f1432056d6bb2d094b38e352fc43fd4a8b"
+          "blob_sha": "171a3583290ddb67cacb07fbadb1cd407f053824"
         }
       ]
     }
