@@ -1,0 +1,68 @@
+{
+  "actual_BatchFeature_container_regression_preserved": true,
+  "actual_original_default_and_offset_observations": true,
+  "all_source_parts_tokens_fields_candidates_and_cut_semantics_preserved": true,
+  "candidate_ordinal_counts": [
+    7,
+    12,
+    13,
+    14,
+    17,
+    17
+  ],
+  "complete_native_fields": [
+    "input_ids",
+    "attention_mask",
+    "mm_token_type_ids"
+  ],
+  "complete_native_lengths": [
+    22475,
+    28814,
+    38564,
+    42784,
+    52466,
+    52488
+  ],
+  "corrected_live_mapping_and_saved_typed_JSON_contracts": true,
+  "current_binding_migration_is_new_processor_observation": false,
+  "full_Gemma_forward_or_capacity_proved": false,
+  "full_MFM_qualified": false,
+  "independent_exact_original_groups": 3,
+  "independent_review": "GREEN_SCOPED",
+  "independent_review_manifest_FILE_sha256": "628caed336f13b4698a3459b893e8cf85218676478ea99b605f0c72028b3009d",
+  "native_integer_alias_failure_preserved": true,
+  "native_media_claimed": false,
+  "next": "Complete current-cut authored teaching and15-FileRef material; explicit J6 consumer/feature/learner interfaces with compatible full138-state source migration; actual host/owned-stage capacity and joint fitting.",
+  "observed_utc": "2026-10-13T17:17:33.966731+00:00",
+  "original_J5_failure_preserved": true,
+  "original_J5_limit": 32768,
+  "original_actual_six_freeze_receipt_FILE_sha256": "a01d1399c0398f76ee7d2cb3401a117b9ab0e1a8025699e49f569b6a96170572",
+  "original_actual_source_FILE_sha256": "19c63014fb55e0633985db3e555e21cb6c61a1c710a54bd2bbcc42382bedf8de",
+  "original_private_dependency_files_verified": 143,
+  "privacy": "PUBLIC_AGGREGATE_ONLY",
+  "production_PC_tensors": false,
+  "proposed_J6_construction_bound": 52488,
+  "record_sha256": "efde0f74c20c69b12d26a5f19d7b1170a88c88f3e56925f48a04e8ade4757878",
+  "rights_or_targets_or_joint_fit_proved": false,
+  "root_final_controls": {
+    "count": 3,
+    "original_result_FILE_sha256": "930fa93e99927f52b0508aeec8a814a927d1d40197eb38b76a013a4f09032852",
+    "runtime": {
+      "device": "cpu",
+      "python": "3.13.5",
+      "threads": 1,
+      "torch": "2.7.1+cu118"
+    },
+    "seconds": 0.2711803000420332,
+    "successful": true
+  },
+  "root_whole_six_migration_FILE_sha256": "230c98101f5807f09ae009a099adaae13fd97ba4bfb101c1ccdf8c76d57994f4",
+  "schema": "mfm-J6-complete-source-construction-public-v1",
+  "source_FILEs": {
+    "scripts/mfm/formation_joint_input_v6.py": "21ad69358dab645aa420cfa48aa07917393a100c3a5d856fe9b4006ac2f760c9",
+    "tests/governance/test_mfm_joint_input_v6.py": "9c76ee3de407396adbd3db1d8515e740925d59b9bcab81a3897aaf448ee3e562"
+  },
+  "stress_draft": "parked",
+  "trace_id": "fbm-mfm-20261013-complete-J6-source-construction-135",
+  "whole_six_binding_migration_receipt_FILE_sha256": "43a2e57e2f2b4f29dca0c4736378bcd65254f604c1629b3b5d494bd394d316f4"
+}
