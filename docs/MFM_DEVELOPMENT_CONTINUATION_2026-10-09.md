@@ -68,3 +68,7 @@ Controlling project sources: MFM_PUBLIC_FOUNDATION_PRODUCER_CONTRACT_2026-10-07.
 ## 12 October: native observation and parallel next construction
 
 [The direct producer operation](MFM_COMPLETED_FOUNDATION_OBSERVATION_2026-10-12.md) is implemented. Exact private Kaggle138375666/v1 source was initially RUNNING. This is zero-update S5/seed generation. Missing learned reference/source-copy construction proceeds in parallel, informed without waiting for observations. Full-world training still needs actual capacity/material admission. The stress draft remains parked.
+
+## 13 October: native reference producer and runtime-closure recovery
+
+[The actual native reference producer](MFM_NATIVE_REFERENCE_PRODUCER_2026-10-13.md) now connects owned semantic generation, exact generated-wire queries, typed reference-head predictions and original compilation/explicit grounding. These are untrained source mechanics; no full MFM, reference fit or actual full-shape reload is claimed. Original-copy design is adopted as the next native component. The separate zero-update S5 observation failed before model loading because its new producer was placed over an older incomplete runtime source closure; correction reuses the complete original fit capsule and package-confined imports. Drive and Magnolia evidence remain independent, and the longitudinal stress draft stays parked.
