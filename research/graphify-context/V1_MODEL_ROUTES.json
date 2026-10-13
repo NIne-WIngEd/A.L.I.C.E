@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "12e03959a568e3b8013f0eb7da0686add7e20016",
+      "commit": "b1dd59562d551ea02474b9aa708f3e251d775548",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -747,7 +747,7 @@
         {
           "path": "docs/MFM_FULL_SIZE_NATIVE_COMPONENT_BUILD_2026-10-13.md",
           "purpose": "genuine S5 lexical-to-reference-to-complete-joint assembly and full-state reload; source/packet admission separate from runtime",
-          "blob_sha": "1138ab9fc32cf2daec9c56f502766f2434f8d80f"
+          "blob_sha": "7b7f4d0942c9a50a08319b79cc7f88df28525f91"
         },
         {
           "path": "docs/receipts/MFM_FULL_SIZE_NATIVE_COMPONENT_BUILD_20261013_TRACE130_PUBLIC.json",
@@ -756,8 +756,13 @@
         },
         {
           "path": "scripts/mfm/build_native_joint_component.py",
-          "purpose": "direct two strict parent migrations, preserved fresh heads, actual whole export/reload and immutable parent/source/RNG brackets; zero updates",
-          "blob_sha": "c8580e4204d91ba8a70e0e5874b81b17a522a077"
+          "purpose": "direct parent assembly plus explicit complete-state source-lineage migration with original isolated strict cold load and current strict whole reload, complete source/parent/RNG brackets; zero updates",
+          "blob_sha": "4ed35666930858d443db951dc6219f72321b1fd1"
+        },
+        {
+          "path": "docs/receipts/MFM_COMPLETE_STATE_SOURCE_MIGRATION_20261013_TRACE139_PUBLIC.json",
+          "purpose": "TRACE139 actual103-file source import and genuine48-tensor original/current migration, reviewed full138-state CPU packet and original pre-dataset upload failure; full-size migration pending",
+          "blob_sha": "b0405275e91098402980e2db5d2eba2643e4cd18"
         },
         {
           "path": "docs/receipts/MFM_ACTUAL_NATIVE_JOINT_COMPLETION_20261013_TRACE131_PUBLIC.json",
@@ -882,7 +887,7 @@
         {
           "path": "tests/governance/test_mfm_native_joint_component_build.py",
           "purpose": "genuine tiny migration chain and coherent metadata/readonly/import/state refusal controls",
-          "blob_sha": "2ed5d05c4819b9cde9ae473aba3c3114873f16ba"
+          "blob_sha": "25bda837466dd04cea435bae55e19258e6f0114b"
         },
         {
           "path": "docs/MFM_NATIVE_REFERENCE_PRODUCER_2026-10-13.md",
@@ -1603,7 +1608,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "9460bf6ba78bdbbd97b4cec715e3463e0ed278f6",
+      "commit": "651c8813ebdc2e907c627857bf16f0799a482f8e",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1683,7 +1688,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "a5a06e592eadbed1829d1a101bc917e7a5719605"
+          "blob_sha": "932ead34d0b60682e137945a1e5773cad815849a"
         },
         {
           "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
@@ -1698,7 +1703,7 @@
         {
           "path": "docs/fable-builder/MFM_JOINT_LEARNING_AND_FIXED_REVIEW_CAPTURE_2026-10-13.md",
           "purpose": "complete original review/custody and actual joint objective/full-component construction with coherent canonical binding diagnosis; procedure only",
-          "blob_sha": "e91182b32ed8ce56be2a79d9d67e9b8f92ea2118"
+          "blob_sha": "76675a0e13f46e1cb412f9f461bad97a2fdd8fd1"
         }
       ]
     }
