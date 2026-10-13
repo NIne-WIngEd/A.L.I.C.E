@@ -1,0 +1,69 @@
+{
+  "Gemma_or_weights_constructed": false,
+  "actual_12B_capacity_proved": false,
+  "all_values_shapes_types_render_bodies_and_FILEs_verified": true,
+  "complete_native_text_fields": [
+    "input_ids",
+    "attention_mask",
+    "mm_token_type_ids"
+  ],
+  "cut_lengths": [
+    {
+      "cut_id": "initial-state",
+      "old_j5_budget_exceeded": false,
+      "tokens": 22475
+    },
+    {
+      "cut_id": "question-open",
+      "old_j5_budget_exceeded": false,
+      "tokens": 28814
+    },
+    {
+      "cut_id": "actor-report",
+      "old_j5_budget_exceeded": true,
+      "tokens": 38564
+    },
+    {
+      "cut_id": "contrary-observation",
+      "old_j5_budget_exceeded": true,
+      "tokens": 42784
+    },
+    {
+      "cut_id": "supported-revision",
+      "old_j5_budget_exceeded": true,
+      "tokens": 52466
+    },
+    {
+      "cut_id": "withdrawal-intent",
+      "old_j5_budget_exceeded": true,
+      "tokens": 52488
+    }
+  ],
+  "full_MFM_qualified": false,
+  "maximum_tokens": 52488,
+  "native_media_claimed": false,
+  "network_attempts": 0,
+  "next": "Separately versioned complete J6 input geometry/freeze under explicitly proposed measured-roster bound; later actual model capacity and material/feature/learning admission.",
+  "observed_utc": "2026-10-13T16:47:22.915657+00:00",
+  "observer_FILE_sha256": "8ef2dfb77a52a7f296b919089e45612f172d15666f9f53658112fbe1dddaad10",
+  "original_census_receipt_FILE_sha256": "bd6f0bdbd2e22f951b8a9a57781e3b960ef57c15e56a02b15c5b043c1bc401e2",
+  "over_budget_cases": 4,
+  "privacy": "PUBLIC_AGGREGATE_ONLY",
+  "production_PC_tensors": false,
+  "record_sha256": "f1958b9652480e475d4f2de4cd9d0d949a7c104903d1a9d9d89bf470d4758e46",
+  "reported_original_preflight": {
+    "metadata_assets_checked": 7,
+    "overlay_files_checked": 2893,
+    "source_dependency_files_checked": 143,
+    "source_originals_checked": 268
+  },
+  "root_complete_readback_FILE_sha256": "5b2ae7fcb27431f99a02674b8149b62af47cb9697d84e3b686fbe11fc182ec5d",
+  "schema": "mfm-complete-six-cut-source-census-public-v1",
+  "source_offsets_or_freeze_proved_by_census": false,
+  "source_only_offline": true,
+  "stress_draft": "parked",
+  "targets_accessed": false,
+  "trace_id": "fbm-mfm-20261013-complete-six-cut-source-census-134",
+  "training_or_rights_admitted": false,
+  "unchanged_J5_limit": 32768
+}

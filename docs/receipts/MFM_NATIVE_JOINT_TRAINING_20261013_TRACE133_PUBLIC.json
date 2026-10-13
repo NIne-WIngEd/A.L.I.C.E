@@ -1,0 +1,52 @@
+{
+  "P1_J4_positive_mechanics_verified": true,
+  "actual_CUDA_proof": false,
+  "actual_Gemma_12B_features": false,
+  "actual_production_fit": false,
+  "equal_world_cut_variant_mass_preserved_in_partial_windows": true,
+  "exact_owned_model_AdamW_CPU_RNG_continuation": true,
+  "explicit_update_budget_accumulation_and_cursor": true,
+  "full_MFM_qualified": false,
+  "generated_real_trained_consumer_assessment": false,
+  "genuine_J5_successor_positive_material_proved": false,
+  "inactive_head_counters_preserved": true,
+  "independent_original_restart_groups": 3,
+  "independent_review": "GREEN_SCOPED",
+  "independent_review_manifest_FILE_sha256": "f8d5123030f7cedd699739e45334bda0ac4740ced3e874af76e5591344bbfbdd",
+  "invalid_native_RNG_refuses_before_live_mutation": true,
+  "named_optimizer_identity_checked": true,
+  "native_media_claimed": false,
+  "new_optimizer_not_S5_epoch21": true,
+  "next": "Complete real J6 material and source features, actual longest-case capacity, authorized full-role teaching and owned joint fit; then native media and accepted-memory/outcome integration.",
+  "observed_utc": "2026-10-13T16:47:22.915657+00:00",
+  "old_P2_false_authority_preserved": true,
+  "one_bank_lifetime_witness": {
+    "next_read_prior_banks": 0,
+    "patched_IO_and_scalar_loss_only": true,
+    "peak": 1
+  },
+  "original_invalid_RNG_mutation_failure_preserved": true,
+  "owned_lexical_reference_whole_copy_objectives": true,
+  "privacy": "PUBLIC_AGGREGATE_ONLY",
+  "production_PC_payload": false,
+  "record_sha256": "5b119c5ea0ac1e83b6d654342147021425d5d59a937433ae24f29b05ebed3a4f",
+  "root_final_controls": {
+    "count": 8,
+    "original_result_FILE_sha256": "21128a038a8a7df4d81c964c100f1437d3c040b92fb7907f681f77ee39be3397",
+    "runtime": {
+      "device": "cpu",
+      "python": "3.13.5",
+      "threads": 1,
+      "torch": "2.7.1+cu118"
+    },
+    "seconds": 156.9674455000786,
+    "successful": true
+  },
+  "schema": "mfm-native-joint-training-construction-public-v1",
+  "source_FILEs": {
+    "scripts/mfm/train_native_joint_formation.py": "1f3073420fc9d7e3f991308e81f605af7b4e519a55eb80464c9d73f2ccbc415a",
+    "tests/governance/test_mfm_native_joint_training.py": "eb804cb108348797bf78c24e9fe65cdbfe63b9dc5b77d072c37eb88435b632bc"
+  },
+  "stress_draft": "parked",
+  "trace_id": "fbm-mfm-20261013-direct-native-joint-training-construction-133"
+}
