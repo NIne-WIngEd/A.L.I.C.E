@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "8ee28035a7b2e2ff187e59d1ea3877c6a9c76bb1",
+      "commit": "db6618d18018d5f09b75585990a11d61be97a313",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -785,6 +785,51 @@
           "blob_sha": "34cb6173fdea9c44e485934ede9f187f0ad95c6e"
         },
         {
+          "path": "docs/MFM_NATIVE_JOINT_TRAINING_2026-10-13.md",
+          "purpose": "direct owned joint learner, complete authored physical joins, explicit globally weighted update windows and coherent native RNG pre-mutation restart correction; actual production fit and J5 positive material pending",
+          "blob_sha": "7c2b8cc682b28385932a94e89e7a1190ed1e2f97"
+        },
+        {
+          "path": "docs/receipts/MFM_NATIVE_JOINT_TRAINING_20261013_TRACE133_PUBLIC.json",
+          "purpose": "TRACE133 root8 final controls and independent original-path exact owned restart, invalid RNG/named-order refusal and separately scoped bank-lifetime witness; P1 mechanics and failclosed J5 candidate",
+          "blob_sha": "ed8d59faddd4f2f9b0e3ab3af1919e82b86aebe2"
+        },
+        {
+          "path": "scripts/mfm/train_native_joint_formation.py",
+          "purpose": "direct complete lexical/reference/copy fit over independently admitted material, new named AdamW, one-bank consumption, complete boundary cursor/state restart and raw generated consumer; no default production schedule",
+          "blob_sha": "6b671757429c825cca506aed45c26fdc7c2b5471"
+        },
+        {
+          "path": "tests/governance/test_mfm_native_joint_training.py",
+          "purpose": "complete author-conversion/world-cut-variant/native-field/owned-update/restart controls and supplied P2 refusal; fixture and real-material scope kept separate",
+          "blob_sha": "b1b653a6a3d9160415508b4298ab1b81e0760606"
+        },
+        {
+          "path": "docs/MFM_FULL_SOURCE_TEXT_CONSTRUCTION_2026-10-13.md",
+          "purpose": "actual complete six-cut default census and separate full-source J6 geometry construction; unchanged J5 refusals, no host capacity or rights inferred",
+          "blob_sha": "5f31ea51695edb3be53b08edc0145d0f1ad81dfa"
+        },
+        {
+          "path": "docs/receipts/MFM_FULL_SOURCE_CENSUS_20261013_TRACE134_PUBLIC.json",
+          "purpose": "TRACE134 actual22475/28814/38564/42784/52466/52488 complete native text batches and independent full physical typed readback; source observation only",
+          "blob_sha": "84f815d23ea8aa47f7f80ad1351a98f6da9a2747"
+        },
+        {
+          "path": "docs/receipts/MFM_J6_FULL_SOURCE_CONSTRUCTION_20261013_TRACE135_PUBLIC.json",
+          "purpose": "TRACE135 actual full6 default/offset geometry, final typed Mapping/saved JSON correction and complete code-binding migration preserving original native/semantic data; no processor rerun/capacity/rights/fit",
+          "blob_sha": "0b9f436a2c2d5615aa9fda77b618fd6a4f4c28f5"
+        },
+        {
+          "path": "scripts/mfm/formation_joint_input_v6.py",
+          "purpose": "explicit pinned original J5 render/joins, complete J6 native text default/offset field identity and strict saved full-source freeze under52488 proposed construction bound; existing consumers require explicit interface expansion",
+          "blob_sha": "ab0f26689b807d3c664efcd5570776e9cc379052"
+        },
+        {
+          "path": "tests/governance/test_mfm_joint_input_v6.py",
+          "purpose": "three strict live/saved native field and actual BatchFeature mapping controls; preserved numeric-alias and wrong-container failures",
+          "blob_sha": "c947798e577a62e9098ac6a02569cce3bd66936c"
+        },
+        {
           "path": "tests/governance/test_mfm_native_joint_component_build.py",
           "purpose": "genuine tiny migration chain and coherent metadata/readonly/import/state refusal controls",
           "blob_sha": "2ed5d05c4819b9cde9ae473aba3c3114873f16ba"
@@ -1508,7 +1553,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "21e9f0eb6868bbd16c1d1f9b4cbf8ce1a2bc02f8",
+      "commit": "d506d8e6830e6f9699f5ce6d6e9c87fcad86f8a1",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1588,7 +1633,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "806c1cc747ae8bf555ea7f22de0b3e8f8cabeed5"
+          "blob_sha": "3a75d2c06cc2a205e9bd6a026d6d3025a9af4aa4"
         },
         {
           "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
@@ -1603,7 +1648,7 @@
         {
           "path": "docs/fable-builder/MFM_JOINT_LEARNING_AND_FIXED_REVIEW_CAPTURE_2026-10-13.md",
           "purpose": "complete original review/custody and actual joint objective/full-component construction with coherent canonical binding diagnosis; procedure only",
-          "blob_sha": "a6b5a2f230d791e0e1c838ff4f975283e084d6bd"
+          "blob_sha": "5c2d719a42e81f575facdbca889a064be627ee9b"
         }
       ]
     }
