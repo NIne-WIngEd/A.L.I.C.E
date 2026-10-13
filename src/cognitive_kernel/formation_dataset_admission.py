@@ -19,8 +19,21 @@ from .canonical import CognitiveKernelContractError, require_identifier, require
 SCHEMA = "mfm-formation-corpus-v1"
 TEACHER_SCHEMA = "mfm-v16-owner-teacher-corpus-v1"
 TEACHER_SCHEMA_V2 = "mfm-v16-owner-teacher-corpus-v2"
+TEACHER_SCHEMA_V3 = "mfm-v16-owner-teacher-corpus-v3"
+MODEL_AUTHOR_ORIGIN = "owner-authorized-model-author"
 RIGHTS_SCHEMA = "mfm-source-rights-v1"
 SPLITS = frozenset({"train", "development", "final"})
+
+
+def _model_authorship(value: object) -> dict:
+    """Declared model authorship grants neither authentication nor gold."""
+    if (type(value) is not dict or set(value) != {
+            "generation_kind", "authenticated_service", "independent_gold"} or
+            value["generation_kind"] != "stochastic-model-authored" or
+            value["authenticated_service"] is not False or
+            value["independent_gold"] is not False):
+        raise CognitiveKernelContractError("model authorship must be stochastic and unqualified")
+    return dict(value)
 
 
 def _identifier(value: object, name: str) -> str:
@@ -189,8 +202,10 @@ def admit_formation_corpus(manifest_path: str | Path, *,
     if digest != _digest(expected_sha256, "expected_sha256"):
         raise CognitiveKernelContractError("corpus manifest differs from frozen digest")
     manifest = _unique_json(raw, "corpus manifest")
-    teacher_v2 = teacher_training and manifest.get("schema") == TEACHER_SCHEMA_V2
-    if manifest.get("schema") not in ((TEACHER_SCHEMA, TEACHER_SCHEMA_V2)
+    teacher_v3 = teacher_training and manifest.get("schema") == TEACHER_SCHEMA_V3
+    teacher_v2 = teacher_training and manifest.get("schema") in (
+        TEACHER_SCHEMA_V2, TEACHER_SCHEMA_V3)
+    if manifest.get("schema") not in ((TEACHER_SCHEMA, TEACHER_SCHEMA_V2, TEACHER_SCHEMA_V3)
                                       if teacher_training else (SCHEMA,)):
         raise CognitiveKernelContractError("unsupported formation corpus schema")
     if teacher_training:
@@ -243,10 +258,11 @@ def admit_formation_corpus(manifest_path: str | Path, *,
         split = row.get("split")
         if split not in (SPLITS - {"final"} if teacher_training else SPLITS):
             raise CognitiveKernelContractError("unsupported corpus split")
+        origins = {"owner-authorized-service-teacher", "licensed-deterministic-generator"}
+        if teacher_v3:
+            origins.add(MODEL_AUTHOR_ORIGIN)
         if teacher_training and (not isinstance(row.get("target_origin"), str) or
-                row["target_origin"] not in {
-                    "owner-authorized-service-teacher",
-                    "licensed-deterministic-generator"}):
+                row["target_origin"] not in origins):
             raise CognitiveKernelContractError("teacher target lacks supported origin")
         case_rights_binding: tuple[str, str] | None = None
         if teacher_training:
@@ -347,16 +363,23 @@ def admit_formation_corpus(manifest_path: str | Path, *,
             root, target_row, "target", open_payload=split != "final")
         if teacher_training:
             provenance = _object(row.get("target_provenance"), "target_provenance")
+            model_author = row["target_origin"] == MODEL_AUTHOR_ORIGIN
+            extra = {"authorship"} if model_author else set()
             if set(provenance) != {"producer_id", "producer_version", "input",
-                                   "output", "conversion"} or \
+                                   "output", "conversion", *extra} or \
                     _identifier(provenance.get("producer_id"), "producer_id") != author:
                 raise CognitiveKernelContractError("teacher target producer differs from author")
             _identifier(provenance.get("producer_version"), "producer_version")
+            if model_author:
+                _model_authorship(provenance["authorship"])
             if row["target_origin"] == "owner-authorized-service-teacher":
                 # Do not let differently named generator families place one
                 # service teacher's output on both sides of diagnostic split.
                 # Steward authentication is still required for an asserted ID.
                 groups.add(("service_teacher_producer_id", author))
+            if teacher_v3 and (model_author or row["target_origin"] ==
+                               "owner-authorized-service-teacher"):
+                groups.add(("stochastic_target_producer_id", author))
             for field in ("input", "output", "conversion"):
                 _checked_bytes(root, _object(provenance[field], field),
                                f"target provenance {field}", open_payload=True)
@@ -366,7 +389,7 @@ def admit_formation_corpus(manifest_path: str | Path, *,
             provenance_paths = {field: _path(root, provenance[field]["path"],
                                              f"target provenance {field}")[1]
                                 for field in ("input", "output", "conversion")}
-            if row["target_origin"] == "owner-authorized-service-teacher":
+            if model_author or row["target_origin"] == "owner-authorized-service-teacher":
                 if (len(set(provenance_paths.values())) != 3 or
                         set(provenance_paths.values()) & (source_paths | {target_absolute})):
                     raise CognitiveKernelContractError(

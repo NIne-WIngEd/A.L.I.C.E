@@ -22,6 +22,30 @@ receipt bound to its source ID, hash and host, with unrevoked formation
 training/distribution rights for train or evaluation rights for development.
 The owner/steward must authenticate those assertions outside this hash check.
 
+The explicit October13 successor uses assembly intake
+`mfm-v16-owner-teacher-assembly-intake-v3` and corpus
+`mfm-v16-owner-teacher-corpus-v3` for stochastic first-party model authors.
+Its new origin is `owner-authorized-model-author`; v1/v2 continue to refuse
+that origin. It retains v2's exact registered case/source authorization
+bindings and all existing unqualified teacher-lane requirements.
+`target_provenance.authorship` has exactly `generation_kind` set to
+`stochastic-model-authored`, `authenticated_service=false` and
+`independent_gold=false`. The declared producer equals the author; its
+version, original input, raw output and converter remain separately pinned.
+Raw output stays distinct from converted target and opened sources. A
+model-author conversion binds `model_author_output_sha256`. Stochastic
+model and service producer identities share the v3 split exclusion group,
+so changing their origin labels cannot disconnect the same producer.
+
+This records actual model authorship; it does not authenticate a service,
+create source rights or complete unknown adjudications. The six current J6
+drafts remain ineligible until their substantive semantic, reference and
+copy decisions are complete and physically bound. The provenance mechanism
+follows the existing owner-teacher contract and the explicit separation of
+raw model output and formatted generation in [Distilabel1.2.4's primary
+documentation](https://distilabel.argilla.io/1.2.4/sections/how_to_guides/basic/task/).
+No Distilabel runtime or pipeline is introduced.
+
 Each case declares `target_origin` as
 `owner-authorized-service-teacher` or `licensed-deterministic-generator` and
 pins `target_provenance`: `producer_id` (equal to `author_id`),

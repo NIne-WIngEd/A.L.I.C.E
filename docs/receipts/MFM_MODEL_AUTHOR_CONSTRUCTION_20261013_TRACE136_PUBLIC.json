@@ -1,0 +1,58 @@
+{
+  "actual_six_case_corpus_admitted": false,
+  "assertion_rebind_is_new_author_invocation": false,
+  "assertion_revalidation_receipt_FILE_sha256": "dbe0195184ce65465ab1d454254175064a01015b7dd671cfadadfae2c01518f7",
+  "corrected_six_current_cut_proof_descriptors_verified": true,
+  "corrected_view_receipt_FILE_sha256": "18ebae79f3032634a6bc68defc6e96502152ec1150d0efbd14416adb7c372621",
+  "draft_review_manifest_FILE_sha256": "ae95935d492506d84f1271cc49378d9b5d226462dde23c0a5c2a292b123d5b59",
+  "full_MFM_qualified": false,
+  "independent_origin_review_manifest_FILE_sha256": "23b6bb35d99ede7445a57a860a59b5397b0087a9cf6bf4f4f9a47625fb1bbe2f",
+  "new_joint_training_or_capacity_proved": false,
+  "next": "Complete substantive current-cut targets/choices and J6 paired geometry, then connect actual feature/material/joint learner consumers with complete-state lineage migration.",
+  "observed_utc": "2026-10-13T17:56:04.603179+00:00",
+  "original_raw_proof_author_view_failure_preserved": true,
+  "privacy": "PUBLIC_METHOD_ONLY",
+  "record_sha256": "eb01a8e218a227679758334aeed221e1880f6772b243dbf79a0f61bb9320bcca",
+  "research": {
+    "new_dependency_or_pipeline": false,
+    "primary": "https://distilabel.argilla.io/1.2.4/sections/how_to_guides/basic/task/",
+    "transferred_mechanism": "Raw stochastic output and model identity remain separate from formatted target."
+  },
+  "reviewed_draft_snapshot": {
+    "cut_count": 6,
+    "supervised_eligible": false,
+    "supported_statements": 8,
+    "unauthored_reference_choices": 48,
+    "unknown_adjudications": 41,
+    "whole_copy_choices_complete": false
+  },
+  "root_controls": {
+    "count": 21,
+    "log_FILE_sha256": "915177e87ab6b569af0a290112a12070766d99bd34b52de25e43a305a23b0150",
+    "scope": "actual owner-teacher assembly and original signed corpus admission",
+    "seconds": 2.218,
+    "successful": true
+  },
+  "schema": "mfm-model-author-and-proof-projection-construction-public-v1",
+  "source_FILEs": {
+    "scripts/mfm/assemble_v16_owner_teacher_corpus.py": "d42d664710d5ca8aa59be7a694d54bb0133e81bbdf89268825c9003741e4f521",
+    "src/cognitive_kernel/formation_dataset_admission.py": "b22b644ecaf3522a44a33eb1d4e5a2145a7a1fe7f88fa40788d5e6c15e5d72ad",
+    "tests/governance/test_mfm_v16_owner_teacher_assembly.py": "bc363e7a4f0f730f2be6d300f2e10b8846e2fbb833636cfd64fd848bc2ff5ed7"
+  },
+  "source_rights_created": false,
+  "stress_draft": "parked",
+  "teacher_successor": {
+    "authorship": {
+      "authenticated_service": false,
+      "generation_kind": "stochastic-model-authored",
+      "independent_gold": false
+    },
+    "common_stochastic_producer_split_exclusion": true,
+    "corpus": "mfm-v16-owner-teacher-corpus-v3",
+    "intake": "mfm-v16-owner-teacher-assembly-intake-v3",
+    "old_v1_v2_origin_rules_preserved": true,
+    "origin": "owner-authorized-model-author",
+    "separate_original_raw_input_output_conversion_target": true
+  },
+  "trace_id": "fbm-mfm-20261013-source-grounded-model-author-construction-136"
+}

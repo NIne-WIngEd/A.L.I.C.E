@@ -136,6 +136,87 @@ class OwnerTeacherAssemblyTests(unittest.TestCase):
         with self.assertRaises(FileExistsError):
             self.run_assembly()
 
+    def model_author_intake(self):
+        """A stochastic author keeps raw output separate from its conversion."""
+        self.mixed_authorization()
+        self.intake['schema'] = 'mfm-v16-owner-teacher-assembly-intake-v3'
+        for entry in self.intake['cases']:
+            entry['target_origin'] = 'owner-authorized-model-author'
+            entry['authorship'] = {
+                'generation_kind': 'stochastic-model-authored',
+                'authenticated_service': False, 'independent_gold': False}
+            path = entry['converter_provenance']['path']
+            record = json.loads((self.root / path).read_bytes())
+            record['model_author_output_sha256'] = record.pop('teacher_response_sha256')
+            entry['converter_provenance'] = write(self.root, path, raw(record))
+
+    def test_v3_model_author_retains_raw_output_and_unqualified_origin(self):
+        self.model_author_intake()
+        raw_outputs = {entry['case_id']: (self.root / entry['response']['path']).read_bytes()
+                       for entry in self.intake['cases']}
+        receipt = self.run_assembly()
+        manifest = json.loads(Path(receipt['manifest_path']).read_bytes())
+        self.assertEqual(manifest['schema'], 'mfm-v16-owner-teacher-corpus-v3')
+        self.assertFalse(receipt['qualified_for_product'])
+        for case in manifest['cases']:
+            self.assertEqual(case['target_origin'], 'owner-authorized-model-author')
+            provenance = case['target_provenance']
+            self.assertEqual(provenance['authorship'], {
+                'generation_kind': 'stochastic-model-authored',
+                'authenticated_service': False, 'independent_gold': False})
+            self.assertEqual((self.root / provenance['output']['path']).read_bytes(),
+                             raw_outputs[case['case_id']])
+            self.assertEqual(len({provenance[k]['path'] for k in ('input', 'output', 'conversion')}
+                                 | {case['target']['path']}), 4)
+            self.assertEqual(case['reviews'], [])
+
+    def test_model_origin_does_not_relabel_old_routes_or_authenticate_itself(self):
+        self.model_author_intake()
+        self.intake['schema'] = INTAKE_SCHEMA_V2
+        with self.assertRaisesRegex(ValueError, 'origin|unsupported fields'):
+            self.run_assembly()
+        self.intake['schema'] = 'mfm-v16-owner-teacher-assembly-intake-v3'
+        self.intake['cases'][0]['authorship']['authenticated_service'] = True
+        with self.assertRaisesRegex(ValueError, 'authorship'):
+            self.run_assembly()
+        self.assertFalse((self.root / 'owner-teacher-manifest.json').exists())
+
+    def test_model_author_split_and_original_output_are_rechecked_at_admission(self):
+        self.model_author_intake()
+        receipt = self.run_assembly()
+        manifest = json.loads(Path(receipt['manifest_path']).read_bytes())
+        manifest['cases'][1]['author_id'] = manifest['cases'][0]['author_id']
+        manifest['cases'][1]['target_provenance']['producer_id'] = manifest['cases'][0]['author_id']
+        changed = write(self.root, 'changed-manifest.json', raw(manifest))
+        with self.assertRaisesRegex(CognitiveKernelContractError, 'lineage leaks'):
+            admit_formation_corpus(self.root / changed['path'], expected_sha256=changed['sha256'],
+                teacher_training=True, owner_authorization_ref='fictional-owner-attestation')
+        manifest['cases'][1]['target_origin'] = 'owner-authorized-service-teacher'
+        manifest['cases'][1]['target_provenance'].pop('authorship')
+        changed = write(self.root, 'mixed-origin-manifest.json', raw(manifest))
+        with self.assertRaisesRegex(CognitiveKernelContractError, 'lineage leaks'):
+            admit_formation_corpus(self.root / changed['path'], expected_sha256=changed['sha256'],
+                teacher_training=True, owner_authorization_ref='fictional-owner-attestation')
+        original = json.loads(Path(receipt['manifest_path']).read_bytes())
+        for value in (True, 0):
+            changed_manifest = json.loads(Path(receipt['manifest_path']).read_bytes())
+            changed_manifest['cases'][0]['target_provenance']['authorship']['independent_gold'] = value
+            changed = write(self.root, 'false-gold-manifest.json', raw(changed_manifest))
+            with self.assertRaisesRegex(CognitiveKernelContractError, 'authorship'):
+                admit_formation_corpus(self.root / changed['path'], expected_sha256=changed['sha256'],
+                    teacher_training=True, owner_authorization_ref='fictional-owner-attestation')
+        changed_manifest = json.loads(Path(receipt['manifest_path']).read_bytes())
+        changed_manifest['cases'][0]['target_provenance']['output'] = changed_manifest['cases'][0]['target']
+        changed = write(self.root, 'aliased-response-manifest.json', raw(changed_manifest))
+        with self.assertRaisesRegex(CognitiveKernelContractError, 'paths must be distinct'):
+            admit_formation_corpus(self.root / changed['path'], expected_sha256=changed['sha256'],
+                teacher_training=True, owner_authorization_ref='fictional-owner-attestation')
+        output_path = self.root / original['cases'][0]['target_provenance']['output']['path']
+        output_path.write_bytes(output_path.read_bytes() + b'changed')
+        with self.assertRaisesRegex(CognitiveKernelContractError, 'bytes differ'):
+            admit_formation_corpus(receipt['manifest_path'], expected_sha256=receipt['manifest_sha256'],
+                teacher_training=True, owner_authorization_ref='fictional-owner-attestation')
+
     def test_v2_preserves_original_case_authorizations_and_rights_authorities(self):
         self.mixed_authorization()
         receipt = self.run_assembly()

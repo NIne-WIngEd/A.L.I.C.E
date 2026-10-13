@@ -18,3 +18,17 @@ The original J5 maximum remains32,768 and its failed source is preserved. Four a
 [TRACE135](receipts/MFM_J6_FULL_SOURCE_CONSTRUCTION_20261013_TRACE135_PUBLIC.json) binds the final source/tests, original actual six-cut observations, independent review and separately executed whole-six code-binding migration. Review preserved two genuine findings: saved numeric equality accepted a float in an integer modality field, and the first correction rejected the real processor's BatchFeature mapping container. Final live validation accepts that mapping protocol with closed fields and exact CPU integer tensors; saved JSON requires complete typed integer arrays and canonical joins. Root's three final controls and independent original-path rechecks pass. The native input and all geometry remain unchanged through the new code/cache/seals; migration is not a new processor observation.
 
 The full input geometry enables the later actual frozen-base forward and owned backward/Adam capacity measurement. Production fit admission remains separate. All six cuts share one training ancestry; a different development world does not by itself establish independence when author/generator families still connect the split. Complete authorized targets and reference/copy annotations, the15-FileRef material assembly and explicit J6 feature/learner/reference/copy interfaces remain under construction. Those consumer source changes require a compatible complete-state/code-lineage migration of the zero-update native seed, preserving all138 tensors and their original trained/fresh values. These long timestamped training sources do not activate the parked full-system stress test or qualify the complete MFM.
+
+The first-party author-visible projection now uses the existing proof
+descriptor for episode/task custody companions. The original view incorrectly
+copied raw proof-only artifacts while declaring their exclusion. Ordered
+diagnosis and an exclusive successor preserve all original source geometry
+and authorized delivered content, while excluding those raw companions from
+the author view. All six projections and their assertion ancestry were
+rechecked. Existing eight draft assertions were revalidated against current
+delivered evidence; that rebinding was not a new author-model invocation.
+At this checkpoint,41 adjudications remain unknown,48 reference choices are
+unauthored and whole copy alternatives remain incomplete. A valid shape,
+matching source span or uniquely available candidate does not supply the
+author's decision. The separately versioned J6 paired target/geometry is
+under construction; these drafts have not entered fitting.

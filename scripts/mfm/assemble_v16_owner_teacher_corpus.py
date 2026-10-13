@@ -21,7 +21,8 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from cognitive_kernel.canonical import canonical_json_bytes
 from cognitive_kernel.formation_dataset_admission import (
-    TEACHER_SCHEMA, TEACHER_SCHEMA_V2, _identifier, _path, _unique_json,
+    TEACHER_SCHEMA, TEACHER_SCHEMA_V2, TEACHER_SCHEMA_V3, MODEL_AUTHOR_ORIGIN,
+    _identifier, _path, _unique_json, _model_authorship,
     admit_formation_corpus,
 )
 from cognitive_kernel.formation_learning_v16 import (
@@ -32,6 +33,7 @@ from cognitive_kernel.formation_learning_v16 import (
 
 INTAKE_SCHEMA = "mfm-v16-owner-teacher-assembly-intake-v1"
 INTAKE_SCHEMA_V2 = "mfm-v16-owner-teacher-assembly-intake-v2"
+INTAKE_SCHEMA_V3 = "mfm-v16-owner-teacher-assembly-intake-v3"
 STATUS = "owner-authorized-teacher-training-only-unqualified"
 FAMILY_FIELDS = ("host_family", "source_family", "generator_family",
                  "scenario_family", "duplicate_group")
@@ -88,8 +90,10 @@ def _provenance(root: Path, value: object, *, candidate: dict, case_raw: bytes,
     bindings = {"case_id": candidate["case_id"], "case_sha256": _sha(case_raw),
                 "rendered_prompt_sha256": prompt["sha256"],
                 "converter_sha256": converter["sha256"]}
-    bindings[("teacher_response_sha256" if origin == "owner-authorized-service-teacher"
-              else "generator_output_sha256")] = response["sha256"]
+    output_binding = ("model_author_output_sha256" if origin == MODEL_AUTHOR_ORIGIN
+                      else "teacher_response_sha256" if origin ==
+                      "owner-authorized-service-teacher" else "generator_output_sha256")
+    bindings[output_binding] = response["sha256"]
     for name, expected in bindings.items():
         if record.get(name) != expected:
             raise ValueError(f"converter provenance has wrong {name}")
@@ -147,8 +151,9 @@ def assemble(bundle_root: Path, intake_path: Path, *, intake_sha256: str,
     if _sha(raw) != intake_sha256:
         raise ValueError("intake differs from externally pinned SHA-256")
     intake = _unique_json(raw, "assembly intake")
-    multi_auth = intake.get("schema") == INTAKE_SCHEMA_V2
-    if (intake.get("schema") not in {INTAKE_SCHEMA, INTAKE_SCHEMA_V2} or
+    model_author_version = intake.get("schema") == INTAKE_SCHEMA_V3
+    multi_auth = intake.get("schema") in {INTAKE_SCHEMA_V2, INTAKE_SCHEMA_V3}
+    if (intake.get("schema") not in {INTAKE_SCHEMA, INTAKE_SCHEMA_V2, INTAKE_SCHEMA_V3} or
             intake.get("status") != STATUS or
             not isinstance(intake.get("cases"), list) or not intake["cases"]):
         raise ValueError("intake needs owner teacher schema, status and cases")
@@ -177,11 +182,14 @@ def assemble(bundle_root: Path, intake_path: Path, *, intake_sha256: str,
     rows, outputs = [], {}
     used_authorizations: set[tuple[str, str]] = set()
     for item in intake["cases"]:
+        model_author = (isinstance(item, dict) and
+                        item.get("target_origin") == MODEL_AUTHOR_ORIGIN)
+        extra = {"authorship"} if model_author_version and model_author else set()
         if not isinstance(item, dict) or set(item) != {
                 "case_id", "split", "author_id", *FAMILY_FIELDS,
                 "parent_case_ids", "candidate", "sources", "target_origin",
                 "producer_version", "prompt", "response", "converter",
-                "converter_provenance", *(("authorization_id",) if multi_auth else ())}:
+                "converter_provenance", *(("authorization_id",) if multi_auth else ()), *extra}:
             raise ValueError("intake case has missing or unsupported fields")
         case_id = _identifier(item["case_id"], "case_id")
         if item["split"] not in {"train", "development"}:
@@ -201,9 +209,13 @@ def assemble(bundle_root: Path, intake_path: Path, *, intake_sha256: str,
         for parent in parents:
             _identifier(parent, "parent_case_id")
         origin = item["target_origin"]
-        if origin not in {"owner-authorized-service-teacher",
-                          "licensed-deterministic-generator"}:
+        origins = {"owner-authorized-service-teacher", "licensed-deterministic-generator"}
+        if model_author_version:
+            origins.add(MODEL_AUTHOR_ORIGIN)
+        if origin not in origins:
             raise ValueError("unsupported target origin")
+        if model_author:
+            _model_authorship(item["authorship"])
         candidate, candidate_raw = _candidate(root, item, case_authorization)
         if multi_auth:
             for source in item["sources"]:
@@ -223,12 +235,12 @@ def assemble(bundle_root: Path, intake_path: Path, *, intake_sha256: str,
                   **{key: candidate["target"][key] for key in (
                       "proposals", "dispositions", "adjudications")}}
         target_raw = canonical_json_bytes(target) + b"\n"
-        target_path = (f"targets/{case_id}.json" if origin ==
-                       "owner-authorized-service-teacher" else response["path"])
+        stochastic = model_author or origin == "owner-authorized-service-teacher"
+        target_path = f"targets/{case_id}.json" if stochastic else response["path"]
         _, absolute = _path(root, target_path, "assembled target")
         if absolute == manifest_file or target_path in outputs:
             raise FileExistsError(f"assembled target path collides: {target_path}")
-        if origin == "owner-authorized-service-teacher":
+        if stochastic:
             if absolute.exists() or absolute.is_symlink():
                 raise FileExistsError(f"assembled target path already exists: {target_path}")
             outputs[target_path] = target_raw
@@ -243,13 +255,15 @@ def assemble(bundle_root: Path, intake_path: Path, *, intake_sha256: str,
                          "producer_id": item["author_id"],
                          "producer_version": item["producer_version"],
                          "input": prompt, "output": response,
-                         "conversion": converter},
+                         "conversion": converter,
+                         **({"authorship": dict(item["authorship"])} if model_author else {})},
                      "sources": item["sources"],
                      "target": {"path": target_path, "sha256": _sha(target_raw)},
                      "reviews": []})
     if multi_auth and used_authorizations != set(authorizations):
         raise ValueError("mixed intake has unused authorization binding")
-    manifest = {"schema": TEACHER_SCHEMA_V2 if multi_auth else TEACHER_SCHEMA,
+    manifest = {"schema": (TEACHER_SCHEMA_V3 if model_author_version else
+                           TEACHER_SCHEMA_V2 if multi_auth else TEACHER_SCHEMA),
                 "corpus_id": corpus_id,
                 "status": STATUS, "authorization_id": authorization,
                 "case_count": len(rows), "cases": rows}
