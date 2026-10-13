@@ -1,0 +1,57 @@
+{
+  "actual_full_size_migration": false,
+  "actual_generated_compiler_grounder_after_genuine_reload": true,
+  "actual_joint_optimizer_fit": false,
+  "coefficients_are_not_proven_optimal_or_full_fit_budget": true,
+  "complete_local_Python_import_initializer_closure_files": 100,
+  "external_provenance_does_not_grant_authority": true,
+  "frozen_source_features_detached": true,
+  "full_MFM_qualified": false,
+  "historical_native_parent_controls": {
+    "not_one_composed_50_control_run": true,
+    "parent_files_unchanged": true,
+    "rerun_after_followup": false,
+    "tests": 38
+  },
+  "independent_followup": {
+    "genuine_export_reload_and_joint_loss_controls_passed": true,
+    "malformed_manifest_variants_refused_before_load": 10,
+    "manifest_FILE_sha256": "2064ddc82fb962a6436cadeca7428a53894d855204534e77c067a2b5ec8431ed",
+    "target_input_variants_refused_before_decode": 6
+  },
+  "initial_coefficients": [
+    1,
+    1,
+    1
+  ],
+  "material_admission_from_fixtures": false,
+  "native_media_or_governed_outcome_qualified": false,
+  "new_reference_copy_parameters_trained": false,
+  "next": "Genuine full-size S5 lexical→fresh reference→complete joint seed and strict reload on private Kaggle CPU; complete full-role feature/target material and new optimizer/curriculum remain required",
+  "observed_utc": "2026-10-13T09:50:46.179561+00:00",
+  "operation": "One actual own decoder hidden packet; original chunked lexical CE plus typed reference CE plus authored complete-copy-tuple marginal",
+  "original_failures_retained": [
+    "swapped eligible reference/copy supervision",
+    "foreign tokenizer geometry",
+    "canonical config and decision aliases",
+    "physically changed unpinned grounder",
+    "manifest type/container/actual provenance aliases",
+    "actual processor input numeric alias"
+  ],
+  "privacy": "PUBLIC_CODE_AND_METHOD_ONLY",
+  "record_sha256": "3fcfbd2c3e2e218c7ed34cb6cd07c0f79d3f03c6d9ff78627647370b59ff3fee",
+  "root_final_focused_controls": {
+    "FILE_sha256": "cb6ed1af15270a19f81089ed636b276f75cd68c1a6d068229d0507f2a8f6f326",
+    "seconds": 107.78950189996976,
+    "tests": 12
+  },
+  "schema": "mfm-native-joint-learning-source-public-v1",
+  "source_FILE_pins": {
+    "src/cognitive_kernel/formation_joint_learning.py": "0d58086cd0a07b35659334f7e05903f80f3323d09c7ab160cb95bb9b4de436de",
+    "tests/governance/test_mfm_joint_learning.py": "57a8cbd75cec67597d721c96331547a4f40bdcaa6291a14336086d7f6b7da793"
+  },
+  "stress_draft": "parked",
+  "trace_id": "fbm-mfm-20261013-native-joint-learning-source-129",
+  "whole_finite_FP32_state_and_actual_config_reload": true,
+  "whole_target_view_and_actual_processor_canonical_binding": true
+}

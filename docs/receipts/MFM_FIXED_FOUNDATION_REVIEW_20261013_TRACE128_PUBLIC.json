@@ -1,0 +1,126 @@
+{
+  "audit_counts": {
+    "audit-condition-696f6c1879c04a2c98cf391bb3caf94a": {
+      "omitted": 2375,
+      "rows": 431,
+      "rows_manual_malformed_repetition_no_recognizable_source_assertion": 431,
+      "rows_with_omitted": 431,
+      "source_facts": 2375
+    },
+    "audit-condition-a03eed362ce344f5b61f6fcb310512c5": {
+      "assertions_source-incompatible": 3,
+      "assertions_source-unsupported": 275,
+      "assertions_unresolved": 70,
+      "full": 2071,
+      "omitted": 153,
+      "replacement-or-contradiction": 12,
+      "rows": 431,
+      "rows_all_declared_facts_full": 266,
+      "rows_all_declared_facts_full_without_additional_unresolved_or_unsupported_commitments": 126,
+      "rows_redundant_factual_repetition": 7,
+      "rows_with_omitted": 93,
+      "rows_with_replacement-or-contradiction": 12,
+      "rows_with_source-incompatible_assertion": 3,
+      "rows_with_source-unsupported_assertion": 254,
+      "rows_with_unresolved": 82,
+      "rows_with_unresolved_assertion": 70,
+      "rows_with_weaker-or-hedged": 39,
+      "source_facts": 2375,
+      "unresolved": 100,
+      "weaker-or-hedged": 39
+    }
+  },
+  "calibration_counts": {
+    "calibration-condition-696f6c1879c04a2c98cf391bb3caf94a": {
+      "omitted": 436,
+      "rows": 75,
+      "rows_manual_malformed_repetition_no_recognizable_source_assertion": 75,
+      "rows_with_omitted": 75,
+      "source_facts": 436
+    },
+    "calibration-condition-a03eed362ce344f5b61f6fcb310512c5": {
+      "assertions_source-incompatible": 1,
+      "assertions_source-unsupported": 45,
+      "assertions_unresolved": 12,
+      "full": 380,
+      "omitted": 31,
+      "replacement-or-contradiction": 5,
+      "rows": 75,
+      "rows_all_declared_facts_full": 43,
+      "rows_all_declared_facts_full_without_additional_unresolved_or_unsupported_commitments": 21,
+      "rows_redundant_factual_repetition": 3,
+      "rows_with_omitted": 21,
+      "rows_with_replacement-or-contradiction": 4,
+      "rows_with_source-incompatible_assertion": 1,
+      "rows_with_source-unsupported_assertion": 42,
+      "rows_with_unresolved": 12,
+      "rows_with_unresolved_assertion": 12,
+      "rows_with_weaker-or-hedged": 7,
+      "source_facts": 436,
+      "unresolved": 13,
+      "weaker-or-hedged": 7
+    }
+  },
+  "condition_mapping": {
+    "696f6c": "persisted-seed",
+    "a03eed": "trained-S5-E20"
+  },
+  "contrast_edges_semantically_adjudicated": 0,
+  "corrected_root_custody": {
+    "FILE_sha256": "2bfe2b170b9bb84a9cc9dd31c9625343f31450d61c4c04407379593aa522eaf3",
+    "empty_missing_roster_controls_refused": 2,
+    "exact_spans": 1210,
+    "lossless_text_token_roundtrips": 862,
+    "original_fact_instances": 4750,
+    "original_rows": 862,
+    "referenced_FILES": 35
+  },
+  "durable_Drive_whole_readbacks": {
+    "finite_review": {
+      "bytes": 1971182,
+      "fresh_prewrite_storage_gate": true,
+      "original_files": 50,
+      "sha256": "a4e381923d7f48803b166f52a1e414f9f9954da0b51b7c2ed1602c5d1eea6830"
+    },
+    "original_observation": {
+      "bytes": 1624907,
+      "sha256": "f5d2c445c826b425de9a3ab079ef3ed0a407ca824c46bba82a780813059a4a7b"
+    },
+    "separate_original_mapping": {
+      "bytes": 491,
+      "sha256": "ff459d3828462c6754c5fe7858ca2da40a92fa4fa2d3b83dee1c7c47b73975a9"
+    }
+  },
+  "fixed_audit_rows": 862,
+  "frozen_policy_FILE_sha256": "615676e7cd72b9bb297e08e46be7808155dceeea00ce46f498b2cd56e35096cc",
+  "full_MFM_qualified": false,
+  "global_untouched_audit": false,
+  "independent_gold": false,
+  "malformed_capped_seed_sources": 506,
+  "manual_review_type": "one finite model-based original-row review",
+  "mapping_opened_by_root_only_after_all_annotations_finalized": true,
+  "new_reference_copy_heads_trained": false,
+  "next": "Actual full-size parent migration, complete admitted joint material and native lexical/reference/copy fitting; no speculative S5 patch",
+  "no_audit_rule_or_threshold_tuning": true,
+  "observed_utc": "2026-10-13T09:50:46.179561+00:00",
+  "original_kernel": {
+    "numeric_id": 138375666,
+    "status": "COMPLETE",
+    "version": 3
+  },
+  "original_root_custody_overclaim_preserved_and_rejected": true,
+  "prior_raw_archive_prewrite_gap_retained": true,
+  "privacy": "PUBLIC_AGGREGATE_ONLY",
+  "production_tensors_on_PC": false,
+  "raw_outputs": 1012,
+  "record_sha256": "c9f58644aaa8895ee96ea11a17f50d90c505259aae47ba185b2f6e5fea8d0c0b",
+  "schema": "mfm-fixed-foundation-review-public-v1",
+  "scores_or_pass_thresholds": false,
+  "semantic_judgments_automatically_validated": false,
+  "separate_calibration_rows": 150,
+  "source_groups": 506,
+  "stress_draft": "parked",
+  "successful_blinding_established": false,
+  "trace_id": "fbm-mfm-20261013-complete-fixed-foundation-review-128",
+  "valid_value_text_EOS_trained_sources": 506
+}
