@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "b1dd59562d551ea02474b9aa708f3e251d775548",
+      "commit": "a4b56d58f1cf89e8b008a99fa5f4b49a3a7ca8d6",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -763,6 +763,16 @@
           "path": "docs/receipts/MFM_COMPLETE_STATE_SOURCE_MIGRATION_20261013_TRACE139_PUBLIC.json",
           "purpose": "TRACE139 actual103-file source import and genuine48-tensor original/current migration, reviewed full138-state CPU packet and original pre-dataset upload failure; full-size migration pending",
           "blob_sha": "b0405275e91098402980e2db5d2eba2643e4cd18"
+        },
+        {
+          "path": "docs/MFM_BROADER_FOUNDATION_MATERIAL_2026-10-13.md",
+          "purpose": "three source-first chronological cases extending the original six, exact caller/registry grounding and source-use declarations; full native geometry and learning remain pending",
+          "blob_sha": "224efebdf924fb3f7861343c95b89336231a9710"
+        },
+        {
+          "path": "docs/receipts/MFM_BROADER_GROUNDED_FOUNDATION_20261013_TRACE140_PUBLIC.json",
+          "purpose": "TRACE140 nine-case material covers all ten dimensions and six critical kinds; actual source/codec/reference construction with separate diagnostic development, no learning or independent-gold claim",
+          "blob_sha": "75573e736a4f1e5e32ca75d67a07f9f11fd95b6b"
         },
         {
           "path": "docs/receipts/MFM_ACTUAL_NATIVE_JOINT_COMPLETION_20261013_TRACE131_PUBLIC.json",
@@ -1608,7 +1618,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "651c8813ebdc2e907c627857bf16f0799a482f8e",
+      "commit": "b5126a3017ac039da62ffd3c1de3d614101feb9c",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1688,7 +1698,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "932ead34d0b60682e137945a1e5773cad815849a"
+          "blob_sha": "ddd7c5e968abb42bda9a0fdf0fdf6d204745729b"
         },
         {
           "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
@@ -1703,7 +1713,7 @@
         {
           "path": "docs/fable-builder/MFM_JOINT_LEARNING_AND_FIXED_REVIEW_CAPTURE_2026-10-13.md",
           "purpose": "complete original review/custody and actual joint objective/full-component construction with coherent canonical binding diagnosis; procedure only",
-          "blob_sha": "76675a0e13f46e1cb412f9f461bad97a2fdd8fd1"
+          "blob_sha": "4098267c48928e933d47c604b16f3fe977bc8f74"
         }
       ]
     }
