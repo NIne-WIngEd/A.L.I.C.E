@@ -1,0 +1,75 @@
+{
+  "controls": {
+    "consumer_final": 11,
+    "consumer_final_log_FILE_sha256": "6f1eb57173a6c9830bff0fd33e3e585aec8f504d37b24bcd20548112c709c030",
+    "final_composed_total": 65,
+    "producer_final": 17,
+    "producer_final_log_FILE_sha256": "5c9a420f15b4c1c31271d89c11e096f1537eaf526485ff07ca006509fceaaa8f",
+    "root_CPU_test_threads": 1,
+    "root_Torch": "2.7.1+cu118",
+    "root_affected": 48,
+    "root_log_FILE_sha256": "fc32d798d12132d28e52fecbab10a531cccc1e3e6ba18a62c7f619032fd40068",
+    "single65_test_run": false
+  },
+  "foundation_before_personalization": true,
+  "gemma_frozen_source_only": true,
+  "independent_review": {
+    "open_critical_or_important": 0,
+    "original_teacher_reference_omission_reproduced_and_corrected": true,
+    "report_FILE_sha256": "d08e36e43198663333e1f0a20f5720b99193e62211007bfbe6ee7a7880b32f15",
+    "source_evidence_manifest_FILE_sha256": "e44642838b9f85c1c8f986281e57806c4b67844b02b032d75f12d68d9bd723d5",
+    "spec": "PASS"
+  },
+  "limits": {
+    "FBM_training_or_eval_eligible": false,
+    "actual_fullshape_migration_verified": false,
+    "full_MFM_finished": false,
+    "learned_numeric_anchor_selection": false,
+    "native_media_qualified": false,
+    "new_learning_or_stress_job": false,
+    "private_J5_or_service_rights_admitted_here": false,
+    "reference_copy_trained": false
+  },
+  "mechanism": [
+    "strict full lexical/reference FP32 parent migration",
+    "actual target-free original-byte/context boundary keys",
+    "source/start/conditional-end probabilities",
+    "complete authored tuple marginal",
+    "same actual generated mixed wire for both native query kinds",
+    "exact UTF8 copying and ordered byte provenance",
+    "own-proposal citation and actual anchor coverage",
+    "original compilation and explicit grounding",
+    "first raw failures retained without repair/retry"
+  ],
+  "model_feature_optimizer_payloads_on_PC": 0,
+  "privacy": "PUBLIC_METHOD_ONLY",
+  "private_failure_and_control_originals_retained": true,
+  "record_sha256": "317c607623603e02783d97407d57048345b5ba86771049659d91e73d91cb38c6",
+  "reference_parent_source_FILE_sha256": "99a3cd13bbd9925bf5a8a771140035edc35435be4815219c4c57078a074ed1e1",
+  "schema": "mfm-native-original-copy-source-public-v1",
+  "source_construction_complete": true,
+  "source_files": [
+    {
+      "FILE_sha256": "9f21fb13487a734f963bf33048747b503ee13008a8fb98f4bbaa0cf2256086eb",
+      "path": "scripts/mfm/formation_original_copy_target_alignment.py"
+    },
+    {
+      "FILE_sha256": "2749e68b4cb5b2081069933ebae1c0ad821af97bff930b06d29b8e5892e68dd2",
+      "path": "src/cognitive_kernel/formation_original_copy_decision.py"
+    },
+    {
+      "FILE_sha256": "7424135cf2dea8c777bdb16d6cf12e3a5efde3d17a803e0e84a1506d8c1b1fe1",
+      "path": "src/cognitive_kernel/formation_original_copy_specialist.py"
+    },
+    {
+      "FILE_sha256": "5d90fe334a851804e79df68102f0d9e218c9e79755cb3cfbdd6d37ea9ce2e0b8",
+      "path": "tests/governance/test_mfm_original_copy_decision.py"
+    },
+    {
+      "FILE_sha256": "020f0abb59d82451c21155e29ef69f46c16fac757bd2cdddc8d2ed4af89361cf",
+      "path": "tests/governance/test_mfm_original_copy_specialist.py"
+    }
+  ],
+  "trace_id": "fbm-mfm-20261013-native-original-copy-whole-wire-construction-123",
+  "untrained_mechanics_only": true
+}
