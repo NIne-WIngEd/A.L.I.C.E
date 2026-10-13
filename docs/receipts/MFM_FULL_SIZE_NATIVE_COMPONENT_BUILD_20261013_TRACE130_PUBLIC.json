@@ -1,0 +1,78 @@
+{
+  "Drive_primary": true,
+  "actual_full_size_migration": false,
+  "actual_provider_launch": false,
+  "forecast_is_not_capacity_or_executed_build": true,
+  "full_MFM_qualified": false,
+  "genuine_migrations": "lexical→fresh-reference→complete-joint-seed→strict-whole-reload",
+  "independent_each_real_API_calls": 1,
+  "independent_optimizer_constructions": 0,
+  "metadata_only_shape_forecast": {
+    "joint": {
+      "FP32_payload_bytes": 1113581696,
+      "parameter_elements": 278395424,
+      "state_tensor_count": 138
+    },
+    "reference": {
+      "FP32_payload_bytes": 1079689216,
+      "parameter_elements": 269922304,
+      "state_tensor_count": 122
+    }
+  },
+  "new_joint_updates": 0,
+  "next": "Single reviewed privateofflineCPU full-size component assembly, complete jointsource features and admitted full-role targets, then real fitting and governed consumer learning",
+  "observed_utc": "2026-10-13T10:22:13.752607+00:00",
+  "original_S5_and_new_joint_large_payload_custody": "separate unfinished route; originalS1 and small evidence backups complete",
+  "original_language_parent": {
+    "epoch": 20,
+    "history_entries": 21,
+    "parameters": 267542272,
+    "sessions": 6,
+    "standalone_original_config_exists": false,
+    "step": 45760,
+    "weight_FILE_sha256": "383bfc8497e616df1423ef996ebe1ecb649008ca98008ba7032c2c8b66f432df",
+    "weight_bytes": 1070181192
+  },
+  "original_readonly_parent_mutation_refused_before_effect_after_correction": true,
+  "owned_tiny_controls": 12,
+  "package": {
+    "FILE_sha256": "3651743420de600500de0c99897a174465c18739cf82a3d50b4877a4755342a6",
+    "active_interface_files": 100,
+    "actual_source_import_origins": 103,
+    "capsule_FILE_sha256": "a7cc9fc28624ba4f0fd7d6eab1bca27b45c0b7345866944bd43932ae78fa2323",
+    "capsule_bytes": 872164,
+    "controls": 9,
+    "main_FILE_sha256": "273576d68d077f177593ac90004b9bcf4450df97f71874c3c155c1db9ee20966",
+    "main_bytes": 9773,
+    "plan_FILE_sha256": "f58ba135bef9ff919fa81597f74199700ff9d1f9961597aa7ab15365fca0dfca",
+    "review_manifest_FILE_sha256": "7f47ebf9ab86399a68822d3b493d35b53273e5cfd8a2b36ad1e4ea5b018d54bf",
+    "source_members": 469,
+    "unreviewed_transport_is_not_activated_source": true
+  },
+  "privacy": "PUBLIC_CODE_AND_METHOD_ONLY",
+  "prospective_execution": {
+    "CPU": true,
+    "GPU_or_TPU_requested": false,
+    "code_only_dataset": true,
+    "custom_timeout_sent": false,
+    "offline": true,
+    "only_tensor_notebook_parent": "originalS5",
+    "private": true,
+    "provider": "Kaggle"
+  },
+  "record_sha256": "d7ba7d19c5658622963bd05b0ad1f050a6d83c9a818148de337e6bee946de010",
+  "reference_copy_heads_trained": false,
+  "root_core_original_evidence_Drive_archive": {
+    "bytes": 3174007,
+    "original_members": 699,
+    "sha256": "3a25fbf918f6412c6d1668fa6ae6e77519cd59a8d4022418be01a9d1da4af67a",
+    "whole_readback": true
+  },
+  "schema": "mfm-full-size-native-component-source-admission-public-v1",
+  "source_FILE_pins": {
+    "scripts/mfm/build_native_joint_component.py": "6ad0fad4ef6d7933fa5f314f633561fd96dbad06b6c9c2fb76c07aa32eb6fdff",
+    "tests/governance/test_mfm_native_joint_component_build.py": "a1c9306adbfeab18f977803d19b47b54bae9a591e52e814130983e0b6f8fed99"
+  },
+  "stress_draft": "parked",
+  "trace_id": "fbm-mfm-20261013-full-size-native-component-source-admission-130"
+}
