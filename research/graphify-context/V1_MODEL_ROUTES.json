@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "4cd9bbb7052818f89894d21d8a5c5c2efa4ad6c2",
+      "commit": "12e03959a568e3b8013f0eb7da0686add7e20016",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -786,8 +786,8 @@
         },
         {
           "path": "docs/MFM_NATIVE_JOINT_TRAINING_2026-10-13.md",
-          "purpose": "direct owned joint learner, complete authored physical joins, explicit globally weighted update windows and coherent native RNG pre-mutation restart correction; actual production fit and J5 positive material pending",
-          "blob_sha": "7c2b8cc682b28385932a94e89e7a1190ed1e2f97"
+          "purpose": "direct owned J4/J5/J6 joint learner, complete authored physical joins and bundle-derived full proof/delivery roster, connected world mass and exact owned restart; production fit remains pending",
+          "blob_sha": "13195c914613c17b81f4bc70572577a206caee71"
         },
         {
           "path": "docs/receipts/MFM_NATIVE_JOINT_TRAINING_20261013_TRACE133_PUBLIC.json",
@@ -797,12 +797,12 @@
         {
           "path": "scripts/mfm/train_native_joint_formation.py",
           "purpose": "direct complete lexical/reference/copy fit over independently admitted material, new named AdamW, one-bank consumption, complete boundary cursor/state restart and raw generated consumer; no default production schedule",
-          "blob_sha": "6b671757429c825cca506aed45c26fdc7c2b5471"
+          "blob_sha": "e6d443d137ecd94f6c2c531c7f3cc74af300c0c7"
         },
         {
           "path": "tests/governance/test_mfm_native_joint_training.py",
           "purpose": "complete author-conversion/world-cut-variant/native-field/owned-update/restart controls and supplied P2 refusal; fixture and real-material scope kept separate",
-          "blob_sha": "b1b653a6a3d9160415508b4298ab1b81e0760606"
+          "blob_sha": "a59da3d89bce95e0f986e6a53552656a29484164"
         },
         {
           "path": "docs/MFM_FULL_SOURCE_TEXT_CONSTRUCTION_2026-10-13.md",
@@ -826,8 +826,13 @@
         },
         {
           "path": "docs/MFM_COMPLETE_TEXT_JOINT_MATERIAL_2026-10-13.md",
-          "purpose": "complete six-cut authored targets, actual canonical native geometry, material15 readback and reviewed J6 feature/reference/copy joins; direct learner, mixed-wire geometry, rights/production features/capacity remain separate",
-          "blob_sha": "54bc51a164abf6aac4af9a0bf5e69076de56aea5"
+          "purpose": "complete six-cut authored targets and canonical/mixed-wire native geometry, material15 and direct learner joins; seven positive dimensions, broader foundation and admitted production features/capacity remain pending",
+          "blob_sha": "80578e332093d351560e918c8a7b01496de39caf"
+        },
+        {
+          "path": "docs/receipts/MFM_J6_DIRECT_LEARNER_AND_MIXED_WIRE_20261013_TRACE138_PUBLIC.json",
+          "purpose": "TRACE138 actual six mixed-wire observations, final learner six root controls and unchanged original omitted-roster refusal; no production joint fit or full-role qualification",
+          "blob_sha": "b25d0f9d6d239589353e31079553c32b3c07890f"
         },
         {
           "path": "docs/receipts/MFM_COMPLETE_J6_MATERIAL_AND_CONSUMERS_20261013_TRACE137_PUBLIC.json",
@@ -1598,7 +1603,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "0d09c07d9035ac41229aa6f9c0ba6c67a3097d32",
+      "commit": "9460bf6ba78bdbbd97b4cec715e3463e0ed278f6",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1678,7 +1683,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "b974363462e4e551fef3313e7a47982b3bccdf49"
+          "blob_sha": "a5a06e592eadbed1829d1a101bc917e7a5719605"
         },
         {
           "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
@@ -1693,7 +1698,7 @@
         {
           "path": "docs/fable-builder/MFM_JOINT_LEARNING_AND_FIXED_REVIEW_CAPTURE_2026-10-13.md",
           "purpose": "complete original review/custody and actual joint objective/full-component construction with coherent canonical binding diagnosis; procedure only",
-          "blob_sha": "010709926edf8db1c4da90b48f5355d1896ae547"
+          "blob_sha": "e91182b32ed8ce56be2a79d9d67e9b8f92ea2118"
         }
       ]
     }
