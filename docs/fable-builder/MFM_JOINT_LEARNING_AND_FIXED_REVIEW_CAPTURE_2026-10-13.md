@@ -71,3 +71,12 @@ Actual103-file import and a genuine48-tensor control establish packet mechanics;
 the intended138-tensor CPU result remains separate. A successful first upload
 reference followed by a missing body response creates neither a dataset nor a
 model job. Retain that original boundary and diagnose it before continuation.
+
+TRACE140 extends actual source-first chronological teaching rather than filling
+coverage through draft context. Preserve the original prefix, replay genuine
+caller contexts, retain existing identity support and register only new
+source-backed targets. Ground fictional assistant self with explicit role and
+current source identity; retain reported uncertainty and proposal authority.
+Reuse existing owner-directed fictional issuance for exact source-use records.
+Nine-case material coverage, diagnostic development and codec/reference joins
+remain separate from native geometry, corpus admission and model learning.
