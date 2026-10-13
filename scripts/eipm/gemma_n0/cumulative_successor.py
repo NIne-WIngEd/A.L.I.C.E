@@ -64,8 +64,10 @@ def _strict_tensors(state, expected, label):
             raise TeachingError(f'{label} tensor geometry/dtype or finite state differs')
 
 
-def _checkpoint(config, pin, *, device='cpu'):
+def _checkpoint(config, pin, *, device='cpu', deep_custody=True):
     """Read full exact state, then run native evidence and admission validation."""
+    if type(deep_custody) is not bool:
+        raise TeachingError('checkpoint custody depth requires an actual Boolean')
     if type(pin) is not CheckpointPin:
         raise TeachingError('checkpoint needs its exact external typed pin')
     path = _path(pin.path, directory=True)
@@ -102,7 +104,7 @@ def _checkpoint(config, pin, *, device='cpu'):
         admission = TeachingAdmission({name: ArtifactPin(value['path'], value['file_sha256'])
             for name, value in binding['artifacts'].items()}, binding['model_config_sha256'],
             binding['model_initial_state_sha256'], binding['recipe_sha256'], binding['code_sha256'])
-        reviewed, _, authorization = admission.verify(model, recipe)
+        reviewed, _, authorization = admission.verify(model, recipe, deep_custody=deep_custody)
     except (IdentityError, KeyError, TypeError) as error:
         raise TeachingError('checkpoint native evidence/admission differs') from error
     if canonical(admission.binding()) != canonical(binding) or recipe.phase != manifest['phase']:
@@ -190,15 +192,21 @@ class CumulativeSuccessor:
         self = cls()
         self.config, self.parent_checkpoints, self.successors = config, checkpoints, successors
         self.model = None
-        verified = self._verify(device=device)
+        verified = self._verify(device=device, deep_custody=True)
         self.model = verified['model']
         return self
 
-    def _verify(self, *, device=None):
+    def _verify(self, *, device=None, deep_custody=False):
+        if type(deep_custody) is not bool:
+            raise TeachingError('successor custody depth requires an actual Boolean')
+        # Match native trainer reuse: full custody before first use, then
+        # recheck the exact bound artifacts and complete checkpoint evidence.
+        deep_custody = self.model is None or deep_custody
         target_device = device or (str(next(self.model.parameters()).device) if self.model is not None else 'cpu')
         manifests, checkpoint_pins = [], list(self.parent_checkpoints)
         for expected, pin in zip(('n1', 'n2', 'calibration'), self.parent_checkpoints):
-            model, manifest, _ = _checkpoint(self.config, pin, device=target_device)
+            model, manifest, _ = _checkpoint(self.config, pin, device=target_device,
+                deep_custody=deep_custody)
             if manifest['phase'] != expected:
                 raise TeachingError('parent governing stage order changed')
             manifests.append(manifest)
@@ -223,7 +231,8 @@ class CumulativeSuccessor:
                     or receipt.get('qualification') != 'UNQUALIFIED' or receipt.get('acceptance_authority') is not False):
                 raise TeachingError('successor receipt/pinned parent lineage differs')
             child_pin = CheckpointPin(**receipt['checkpoint'])
-            child, manifest, objective = _checkpoint(self.config, child_pin, device=target_device)
+            child, manifest, objective = _checkpoint(self.config, child_pin, device=target_device,
+                deep_custody=deep_custody)
             if (manifest['phase'] not in ('n1', 'n2')
                     or manifest['binding']['model_initial_state_sha256'] != previous
                     or manifest['binding']['artifacts']['prepared_receipt']['file_sha256'] != prepared_sha
@@ -249,7 +258,8 @@ class CumulativeSuccessor:
                 source_pin = CheckpointPin(**transfer)
                 if source_pin not in checkpoint_pins:
                     raise TeachingError('objective transfer lacks an exact parent checkpoint pin')
-                _, source_manifest, source_objective = _checkpoint(self.config, source_pin, device=target_device)
+                _, source_manifest, source_objective = _checkpoint(self.config, source_pin, device=target_device,
+                    deep_custody=deep_custody)
                 if receipt['objective_initial_state_sha256'] != fingerprint(source_objective):
                     raise TeachingError('successor initial auxiliary objective lineage differs')
                 if manifest['phase'] == 'n1' and source_manifest['phase'] != 'n1':
@@ -271,7 +281,7 @@ class CumulativeSuccessor:
                 or type(admission) is not TeachingAdmission or type(epochs) is not int or epochs < 1
                 or not callable(batch_loader)):
             raise TeachingError('compatible governor continuation needs a new N1/N2 admission and explicit replay')
-        verified = self._verify()
+        verified = self._verify(deep_custody=True)
         reviewed, _, _ = admission.verify(self.model, recipe, initial=True)
         order = reviewed['batch_order'].get('TRAIN')
         if type(order) is not list or not order or len(set(order)) != len(order):
