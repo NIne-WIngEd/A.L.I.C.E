@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "db6618d18018d5f09b75585990a11d61be97a313",
+      "commit": "ddc0e4f92ba0211fc724cf849711ce84d21cd88c",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -807,7 +807,7 @@
         {
           "path": "docs/MFM_FULL_SOURCE_TEXT_CONSTRUCTION_2026-10-13.md",
           "purpose": "actual complete six-cut default census and separate full-source J6 geometry construction; unchanged J5 refusals, no host capacity or rights inferred",
-          "blob_sha": "5f31ea51695edb3be53b08edc0145d0f1ad81dfa"
+          "blob_sha": "a9523d672beb172ec3c299af03df3d0c890e484b"
         },
         {
           "path": "docs/receipts/MFM_FULL_SOURCE_CENSUS_20261013_TRACE134_PUBLIC.json",
@@ -818,6 +818,26 @@
           "path": "docs/receipts/MFM_J6_FULL_SOURCE_CONSTRUCTION_20261013_TRACE135_PUBLIC.json",
           "purpose": "TRACE135 actual full6 default/offset geometry, final typed Mapping/saved JSON correction and complete code-binding migration preserving original native/semantic data; no processor rerun/capacity/rights/fit",
           "blob_sha": "0b9f436a2c2d5615aa9fda77b618fd6a4f4c28f5"
+        },
+        {
+          "path": "docs/receipts/MFM_MODEL_AUTHOR_CONSTRUCTION_20261013_TRACE136_PUBLIC.json",
+          "purpose": "TRACE136 proof-safe current-cut author views and explicit stochastic model-author provenance; raw output retained, unqualified route controls only",
+          "blob_sha": "42fc63d4dcab8c840186d60d8e65c4887af45a52"
+        },
+        {
+          "path": "src/cognitive_kernel/formation_dataset_admission.py",
+          "purpose": "original corpus rights/source/split admission and versioned unqualified model-author origin; assertions are not cryptographic identity or gold",
+          "blob_sha": "b8606ae4623aae898d969474b958626ec6fd0097"
+        },
+        {
+          "path": "scripts/mfm/assemble_v16_owner_teacher_corpus.py",
+          "purpose": "existing complete target assembly with raw model input/output/converter lineage and explicit intake-v3 origin",
+          "blob_sha": "cf47abebe70932470bfc338a8e9ea7545e10c62a"
+        },
+        {
+          "path": "docs/MFM_V16_OWNER_TEACHER_TRAINING_LANE_2026-10-01.md",
+          "purpose": "owner-authorized unqualified teaching with versioned stochastic model-author provenance and preserved old routes",
+          "blob_sha": "abde83935a3af928910786b63fb1bee69fdf70fe"
         },
         {
           "path": "scripts/mfm/formation_joint_input_v6.py",
@@ -1553,7 +1573,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "d506d8e6830e6f9699f5ce6d6e9c87fcad86f8a1",
+      "commit": "cc438d5ad9f4c133f4e44808e350495783386c39",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1633,7 +1653,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "3a75d2c06cc2a205e9bd6a026d6d3025a9af4aa4"
+          "blob_sha": "0a9bd7709aab67bc9f8e8a76456804d09db5b2ef"
         },
         {
           "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
@@ -1648,7 +1668,7 @@
         {
           "path": "docs/fable-builder/MFM_JOINT_LEARNING_AND_FIXED_REVIEW_CAPTURE_2026-10-13.md",
           "purpose": "complete original review/custody and actual joint objective/full-component construction with coherent canonical binding diagnosis; procedure only",
-          "blob_sha": "5c2d719a42e81f575facdbca889a064be627ee9b"
+          "blob_sha": "4a98fe8133ea46b023e0fd49bc369ff8dfc7d8ba"
         }
       ]
     }
