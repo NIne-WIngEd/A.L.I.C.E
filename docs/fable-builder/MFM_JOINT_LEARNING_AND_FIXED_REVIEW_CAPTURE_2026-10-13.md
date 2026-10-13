@@ -38,3 +38,14 @@ route; it admits neither the actual incomplete six cases nor full-role
 coverage or learning. The next work remains actual complete formation
 targets, J6 paired/native geometry and the model's existing feature/learner
 consumers.
+
+TRACE137 adds the complete six-cut first-party target/material and existing
+feature/reference/copy connections. Preserve external source FILE identity before
+author consumption, dimension-specific original evidence, explicit ordinal and
+whole-copy intent, and actual material ancestry during native-pair rebinding.
+Actual canonical target tokenization is separate from lowered mixed-wire query
+geometry. Reuse completed checks and retain the nested-source, annotation,
+full-world/prefix-world and placeholder-lineage failures. Fifteen source FileRefs
+and authored controls do not grant rights, prove independence or train a model.
+The next procedure is direct J6 joint learning with complete138-state lineage
+migration and real admitted production inputs; no head reset or epoch replay.
