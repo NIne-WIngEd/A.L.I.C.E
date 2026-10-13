@@ -1,5 +1,16 @@
 # Native joint lexical, reference and original-copy learning
 
+[TRACE141](receipts/MFM_ACTUAL_COMPLETE_STATE_SOURCE_MIGRATION_20261013_TRACE141_PUBLIC.json)
+records the later actual complete-state source migration, after the construction
+steps described below. Private offline CPU job138564470 strictly cold-loaded the
+original component, preserved all138 tensors and exported/reloaded the102-interface
+successor. The whole weight FILE and20epoch/45760step cursor are unchanged; source,
+parent, package and RNG brackets passed. Root verified fifteen original metadata
+FILEs without downloading weights to the PC. This is zero-update construction:
+reference/copy learning and full MFM qualification remain pending. The broader
+nine-case source/material/learner revision retains its own admission, production
+feature and final source-closure requirements. The stress draft remains parked.
+
 `FormationJointLearning` now supplies the actual owned numerical learning operation and strict complete-component export/reload for the implemented original-copy producer. S5's twenty-epoch language stage remains complete. Reference and copy parameters remain untrained. The new operation makes the next formation stage buildable; it does not turn unadmitted fixtures into a training corpus.
 
 One teacher-forced own-decoder invocation supplies the complete mixed-wire states for original tied lexical CE, typed reference selection CE and the marginal probability of authored complete source/start/end copy tuples. Lexical projection preserves the existing checkpointed vocabulary chunks. The operation reports actual token/request counts and each loss; no-reference/no-copy examples retain zero selection mass and the original no-copy `None`. Explicit initial coefficients 1/1/1 are a transparent construction baseline, not a proven optimal recipe or a selected full-fit allocation. Source features detach while owned decoder, lexical, reference and copy parameters receive gradients.

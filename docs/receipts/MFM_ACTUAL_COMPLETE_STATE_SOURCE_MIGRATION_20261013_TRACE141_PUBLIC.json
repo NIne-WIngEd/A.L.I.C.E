@@ -1,0 +1,69 @@
+{
+  "Drive_durable_custody_proved": false,
+  "actual_originals": {
+    "PC_metadata_bytes": 314496,
+    "PC_tensor_payloads": 0,
+    "metadata_custody_FILE_sha256": "5b9d2615bea9ec63fef16a1c93c1fe310a0e46032367c26dd54e0afbf4ea657d",
+    "old_cold_load_FILE_sha256": "74b7fab436529a30ad885f9f9c43bf3578538c93d80275597daaacfbcf81c580",
+    "result_FILE_sha256": "1cf04f421b6441f2942df85763e6dcb2216025d8962082d2cc860e47dd40ee60",
+    "root_metadata_files_checked": 15,
+    "state_signatures_FILE_sha256": "bcb5640f6c996a845188d411971f1ab2a790b090de288411672aaab79cddcc45"
+  },
+  "actual_state": {
+    "caller_cpu_RNG_restored": true,
+    "complete_tensors": 138,
+    "component_FILE_sha256": "a5e68a010f49e390b76ad3ebf8a13e1576971dfed34b4bd9af0897fd32a53a3f",
+    "execution_seconds": 97.17927894000002,
+    "isolated_original_cold_load": true,
+    "language_cursor": {
+      "epoch": 20,
+      "next_case": 0,
+      "step": 45760
+    },
+    "old_current_interfaces": [
+      100,
+      102
+    ],
+    "parameters": 278395424,
+    "source_files": 103,
+    "source_parent_and_package_unchanged": true,
+    "strict_current_export_reload": true,
+    "tensor_signatures_exactly_equal": true,
+    "weight_bytes": 1113595976,
+    "whole_weight_FILE_sha256": "c3900ff29e162279de88c2456987e774fb8397530d994aaf7569e4c6a5f6a556"
+  },
+  "full_MFM_build_finished": false,
+  "full_MFM_qualified": false,
+  "joint_updates": 0,
+  "kernel": {
+    "accelerator": false,
+    "id": 138564470,
+    "offline": true,
+    "private": true,
+    "sole_parent": "mkrayanyan/rayan-mfm-native-joint-build-20261013/1",
+    "source_FILE_sha256": "eda4e46716a18232d5fddcd2721dd26f14627ad2b2b59933f8757f444bddce22",
+    "status": "COMPLETE",
+    "version": 1
+  },
+  "new_copy_heads_trained": false,
+  "new_reference_heads_trained": false,
+  "next": "Complete broader native pairing/material and explicit nine-case learner, bind its final source closure without changing any tensor, then admit real source-use material and measured production features for joint learning.",
+  "observed_utc": "2026-10-13T21:56:02.570354+00:00",
+  "privacy": "PUBLIC_METHOD_ONLY",
+  "provider_recovery": {
+    "READY_dataset_preserved": true,
+    "bare_selector_proven_with_exact_v1_source_private_guards": true,
+    "credential_writes": 0,
+    "exact_native_output_origin_controls_passed": true,
+    "model_job_relaunched": false,
+    "original_GCS_only_reader_refusal_retained": true,
+    "original_label404_and_numeric403_retained": true,
+    "signed_URLs_retained": false,
+    "single_SaveKernel": true
+  },
+  "record_sha256": "14539d7242d8739b718cd2abad82bdd0593545aac48be52c483751e079c884f1",
+  "schema": "mfm-actual-complete-state-source-migration-public-v1",
+  "stress_draft": "parked",
+  "trace_id": "fbm-mfm-20261013-actual-complete-state-source-migration-141",
+  "training_authorized": false
+}
