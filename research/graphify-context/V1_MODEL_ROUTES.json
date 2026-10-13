@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "ff28a3408063ebd87be1f58f28b9579835956c85",
+      "commit": "272cb2916f779b27ae0eabda9fcba6120e2ffba8",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -371,8 +371,33 @@
         },
         {
           "path": "scripts/mfm/train_public_conditional_foundation.py",
-          "purpose": "complete-roster fresh conditional foundation construction, actual Adam/RNG checkpoint continuation and public lineage; actual resource fit and learning require execution",
-          "blob_sha": "e7bb441b0f18457b778650c8975ffaa5a2e67ea0"
+          "purpose": "complete E20 conditional foundation and zero-update final/seed observation; actual exported runtime closure is separate from checkout imports",
+          "blob_sha": "fdfff6cfa2df1dabed1e78efb0de9875e724a82d"
+        },
+        {
+          "path": "src/cognitive_kernel/formation_reference_specialist.py",
+          "purpose": "owned typed reference head, strict full lexical parent migration and actual lexical generation through predicted references to grounding; untrained mechanics",
+          "blob_sha": "1b4dee9dafac29175ebc331089cbc8c807da5a5c"
+        },
+        {
+          "path": "src/cognitive_kernel/formation_reference_decision.py",
+          "purpose": "exact caller/global-role binding and real predicted-identity resolution through original compiler plus explicit grounding",
+          "blob_sha": "096c94a9a1b74abdddb406cdfaa5d8bc0341ae3a"
+        },
+        {
+          "path": "scripts/mfm/formation_reference_target_alignment.py",
+          "purpose": "distinct complete original-pair reference view, explicit ordinal teaching and exact actual generated whole-wire geometry",
+          "blob_sha": "e8930c5545a4f1ef78d203a09c93500dfb5efa47"
+        },
+        {
+          "path": "tests/governance/test_mfm_reference_specialist.py",
+          "purpose": "strict migration, owned gradients, typed masks and complete inference/raw failure/RNG/no-retry mechanics; no learned behavior",
+          "blob_sha": "c8a4f4c2efb622b5df22a5a6afbd36059985f802"
+        },
+        {
+          "path": "tests/governance/test_mfm_reference_decision.py",
+          "purpose": "complete bound target/reference/consumer controls and registered-but-unsupported grounding refusal",
+          "blob_sha": "0a1a45c53cc004bcd2c77cd0aa738af80e52579d"
         },
         {
           "path": "scripts/mfm/public_checkpoint_history.py",
@@ -650,6 +675,51 @@
           "blob_sha": "d7fbe3f5f0d47d6c58d89808c42285dfd70eae5d"
         },
         {
+          "path": "docs/MFM_COMPLETED_FOUNDATION_OBSERVATION_2026-10-12.md",
+          "purpose": "direct zero-update final/seed source-only observation and independently continuing missing native capability construction",
+          "blob_sha": "43c9b9291e76d80cde83839f137dd621c76d253f"
+        },
+        {
+          "path": "docs/receipts/MFM_COMPLETED_FOUNDATION_OBSERVATION_20261012_TRACE121_PUBLIC.json",
+          "purpose": "TRACE121 reviewed source/package and initial provider RUNNING only; no successful generated behavior by implication",
+          "blob_sha": "15f4d974b3c2bd6eb8e4faa2f2cc10cb57bad798"
+        },
+        {
+          "path": "tests/governance/test_mfm_public_completed_observation.py",
+          "purpose": "full frozen cohort, exact parent/control bytes and longest-source actual prefix parity mechanics",
+          "blob_sha": "425823714ab276662980bc09d909bc5076d3b7c5"
+        },
+        {
+          "path": "docs/MFM_NATIVE_REFERENCE_PRODUCER_2026-10-13.md",
+          "purpose": "concrete native generated-reference producer, independent grounding and unfinished original-copy/full-formation roadmap",
+          "blob_sha": "fa3e1b97406ba9fc120c36f7c221505ec0177541"
+        },
+        {
+          "path": "docs/receipts/MFM_NATIVE_REFERENCE_PRODUCER_20261013_TRACE122_PUBLIC.json",
+          "purpose": "TRACE122 root37 and independent4 mechanics, retained original failures and failed observation runtime closure; no learned reference/full MFM claim",
+          "blob_sha": "236c8dcccca3b5f8182fd7494180793ebb9fe6d3"
+        },
+        {
+          "path": "docs/superpowers/specs/2026-10-12-mfm-native-reference-producer-design.md",
+          "purpose": "adopted actual own-generation/reference/compiler/grounding contract with teacher-free inference and raw first failures",
+          "blob_sha": "74e8110b696254ae91d7e3d9f437eab40c8a596b"
+        },
+        {
+          "path": "docs/superpowers/plans/2026-10-12-mfm-native-reference-producer.md",
+          "purpose": "native model plus complete target/consumer source construction and actual assembly plan",
+          "blob_sha": "31a732c1a430ff2d070a4cad81e90eadc6126219"
+        },
+        {
+          "path": "docs/superpowers/specs/2026-10-12-mfm-native-original-copy-design.md",
+          "purpose": "adopted next native source/start/conditional UTF8 end and byte/context representation; exact tuple supervision and citation/anchor coverage",
+          "blob_sha": "0858469d9a02dd340ae183fadc8f49f6c9d388f9"
+        },
+        {
+          "path": "docs/superpowers/plans/2026-10-12-mfm-native-original-copy-producer.md",
+          "purpose": "next owned original-copy construction; complete source/target/model path rather than a stress wrapper",
+          "blob_sha": "70e1f593e4812aa56cf91554249694443d7419ff"
+        },
+        {
           "path": "docs/receipts/MFM_EPISODE_ORIGINAL_PRIOR_INPUT_20261010_TRACE107_PUBLIC.json",
           "purpose": "admitted input construction; original exit1/72 and separate36 saved checks; no fresh tokenization or full-role qualification",
           "blob_sha": "a2f82a95d3bfa30893a83b25720747cf6b46674a"
@@ -857,7 +927,7 @@
         {
           "path": "docs/MFM_DEVELOPMENT_CONTINUATION_2026-10-09.md",
           "purpose": "unchanged E20 continuation, source interventions, caller reference selection, original-byte copy alignment and full governed formation roadmap",
-          "blob_sha": "e92c6ddcca017d947f1b02d32c91a12f96ad8eca"
+          "blob_sha": "0216030748a3e6fb2f025353703e3898f71093ee"
         },
         {
           "path": "tests/governance/test_mfm_public_conditional_foundation.py",
@@ -1303,7 +1373,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "1dcee1a6f5fe48b6b58eef5a4296a122fa08ce05",
+      "commit": "60c1bab01775c4ce73e1f265b75801073b1092af",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1382,8 +1452,8 @@
         },
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
-          "purpose": "completed fit versus failed formation, causal diagnosis and metric review methods; procedure only",
-          "blob_sha": "87711083d50c780b72c7788b8aab33da4cb8c411"
+          "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
+          "blob_sha": "fde89a2ffc58daeb9106ad79c1c358819d83dd99"
         }
       ]
     }
