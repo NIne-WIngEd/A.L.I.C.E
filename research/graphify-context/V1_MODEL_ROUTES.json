@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "1b2cdc15a79e31462bb0a80094201bbb5a5935b6",
+      "commit": "8ee28035a7b2e2ff187e59d1ea3877c6a9c76bb1",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -747,7 +747,7 @@
         {
           "path": "docs/MFM_FULL_SIZE_NATIVE_COMPONENT_BUILD_2026-10-13.md",
           "purpose": "genuine S5 lexical-to-reference-to-complete-joint assembly and full-state reload; source/packet admission separate from runtime",
-          "blob_sha": "ef5321334c29f7e5c9ba8788f07ebb1246cdf524"
+          "blob_sha": "1138ab9fc32cf2daec9c56f502766f2434f8d80f"
         },
         {
           "path": "docs/receipts/MFM_FULL_SIZE_NATIVE_COMPONENT_BUILD_20261013_TRACE130_PUBLIC.json",
@@ -758,6 +758,31 @@
           "path": "scripts/mfm/build_native_joint_component.py",
           "purpose": "direct two strict parent migrations, preserved fresh heads, actual whole export/reload and immutable parent/source/RNG brackets; zero updates",
           "blob_sha": "c8580e4204d91ba8a70e0e5874b81b17a522a077"
+        },
+        {
+          "path": "docs/receipts/MFM_ACTUAL_NATIVE_JOINT_COMPLETION_20261013_TRACE131_PUBLIC.json",
+          "purpose": "TRACE131 actual full-size private offline CPU completion; complete115-to122-to138 state preserved and strict full reload, zero joint updates and large Drive custody pending",
+          "blob_sha": "a75316e367c3de5261e939b3ac9373ff15831de4"
+        },
+        {
+          "path": "docs/MFM_NATIVE_JOINT_SOURCE_FEATURES_2026-10-13.md",
+          "purpose": "complete frozen native text source construction and coherent preflight/output/native-field diagnoses; actual12B features and full admitted material remain pending",
+          "blob_sha": "df1ebd80725c20964ca1519ca5253cea940df38f"
+        },
+        {
+          "path": "docs/receipts/MFM_NATIVE_JOINT_SOURCE_FEATURES_20261013_TRACE132_PUBLIC.json",
+          "purpose": "TRACE132 final native-field root3 controls and independent unchanged actual saved-field readback review; fixture mechanics only",
+          "blob_sha": "4c6ac56afb9e9d905f1b713f6aaf29c7d37c10c0"
+        },
+        {
+          "path": "scripts/mfm/export_joint_source_features.py",
+          "purpose": "complete native text fields and detached BF16 frozen backbone source states, physical clone/bank and whole original profile bindings; no targets or answer head",
+          "blob_sha": "0f85c80bbe07655b34241a61b958035bd460e412"
+        },
+        {
+          "path": "tests/governance/test_mfm_joint_source_features.py",
+          "purpose": "whole native field forward/save/readback and original budget/path/preload/tensor controls with explicit fixture/host limits",
+          "blob_sha": "34cb6173fdea9c44e485934ede9f187f0ad95c6e"
         },
         {
           "path": "tests/governance/test_mfm_native_joint_component_build.py",
@@ -1037,7 +1062,7 @@
         {
           "path": "docs/MFM_DEVELOPMENT_CONTINUATION_2026-10-09.md",
           "purpose": "unchanged E20 continuation, source interventions, caller reference selection, original-byte copy alignment and full governed formation roadmap",
-          "blob_sha": "7bbdc87f042b335b8ac0b3d9a496e8e93c14af40"
+          "blob_sha": "5b7c824f050d0771163d1c1d178119077d91093b"
         },
         {
           "path": "tests/governance/test_mfm_public_conditional_foundation.py",
@@ -1483,7 +1508,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "d4801375eddb583fc48fddde23eeed7fa65635d4",
+      "commit": "21e9f0eb6868bbd16c1d1f9b4cbf8ce1a2bc02f8",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1563,7 +1588,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "53344fbf71abc7e76c5277c9ea23413517c96898"
+          "blob_sha": "806c1cc747ae8bf555ea7f22de0b3e8f8cabeed5"
         },
         {
           "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
@@ -1578,7 +1603,7 @@
         {
           "path": "docs/fable-builder/MFM_JOINT_LEARNING_AND_FIXED_REVIEW_CAPTURE_2026-10-13.md",
           "purpose": "complete original review/custody and actual joint objective/full-component construction with coherent canonical binding diagnosis; procedure only",
-          "blob_sha": "b66a95568e0c6a96690d4a0c0eec42aa440a744c"
+          "blob_sha": "a6b5a2f230d791e0e1c838ff4f975283e084d6bd"
         }
       ]
     }
