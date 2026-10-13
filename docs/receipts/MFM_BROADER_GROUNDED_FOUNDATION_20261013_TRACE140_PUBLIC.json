@@ -1,0 +1,63 @@
+{
+  "S5_lexical_epochs": 20,
+  "actual_source_world": {
+    "R3_W3_replay_observed": true,
+    "manifest_FILE_sha256": "577d91942faa9c9c93cab47b9ff6058ea3bd89d5082a728cc31bd6ff118acdf3",
+    "new_artifacts": 131,
+    "new_cuts": [
+      35,
+      36,
+      37
+    ],
+    "new_records": 37,
+    "original_artifacts_preserved": 121,
+    "original_records_preserved": 30
+  },
+  "current_six_case_program_unchanged": true,
+  "full_MFM_qualified": false,
+  "handoff_FILE_sha256": "91e63374c49e71881ba040f2d3eb1fa6071e657fdef56ecee1348c0f81f9a49c",
+  "historical_false_flags_unchanged": true,
+  "independent_gold": false,
+  "native_geometry_built": false,
+  "negative_controls": [
+    "Board/body alias refused",
+    "Missing charter identity support refused"
+  ],
+  "new_model_fit_or_capacity_proved": false,
+  "next": "Construct complete native source/target/mixed-wire and whole-copy geometry, admit exact material and revise the existing learner explicitly for nine chronological cases before production features and fitting.",
+  "observed_utc": "2026-10-13T21:28:49.804656+00:00",
+  "privacy": "PUBLIC_METHOD_ONLY",
+  "record_sha256": "9da593e8a2ff60047c9481df3760f863ceb13afcc7860a31ee0d81506cb0dbe6",
+  "retained_failures": [
+    "Unsupported chronological frequency",
+    "Wrong immediate author/parent lineage",
+    "Family-only workspace body alias",
+    "Draft context differs from actual registry"
+  ],
+  "root_physical_handoff_files_verified": 19,
+  "schema": "mfm-broader-grounded-foundation-public-v1",
+  "source_use": {
+    "authenticated_legal_identity_claimed": false,
+    "diagnostic_dev_cases": 9,
+    "diagnostic_dev_sources": 29,
+    "index_FILE_sha256": "83bdbb53f685ffc13cc0b72cb690be803cb32ac8b01cfe1666a8396f923c629b",
+    "new_legal_approval_hold": false,
+    "prior_owner_directed_authority_reused": true,
+    "project_side_declarations": 40,
+    "world_sources": 11
+  },
+  "stress_draft": "parked",
+  "teaching": {
+    "actual_registry_source_grounding": true,
+    "combined_cases": 9,
+    "combined_critical_kinds": 6,
+    "combined_positive_dimensions": 10,
+    "fictional_assistant_self_separate_from_Alice_Fable": true,
+    "genuine_reference_choices": 48,
+    "new_cases": 3,
+    "receipt_FILE_sha256": "ec47bdccea54a2c73a9be83bf1ba139366bbd3c653f260880130b2dfe3b8b5d3",
+    "reported_pattern_uncertainty_retained": true
+  },
+  "trace_id": "fbm-mfm-20261013-broader-grounded-foundation-material-140",
+  "training_corpus_admitted": false
+}
