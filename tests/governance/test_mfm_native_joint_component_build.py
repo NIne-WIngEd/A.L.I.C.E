@@ -267,5 +267,115 @@ class NativeJointBuildTests(unittest.TestCase):
         self.assertEqual(before,after)
 
 
+class NativeJointSourceMigrationTests(unittest.TestCase):
+    """Whole-state identity, foreign-source refusal, and explicit cold migration."""
+    def setUp(self):
+        import io,shutil,subprocess,sys,tarfile
+        NativeJointBuildTests.setUp(self)
+        self.builder=importlib.import_module('scripts.mfm.build_native_joint_component')
+        self.old_source=self.root/'old-source';self.old_source.mkdir()
+        files={**_interface_pins(),'scripts/mfm/build_native_joint_component.py':sha256(BUILDER.read_bytes()).hexdigest()}
+        for relative in files:
+            target=self.old_source/relative;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(REPO/relative,target)
+        # Semantically identical historical source with a distinct physical pin.
+        changed=self.old_source/'src/cognitive_kernel/formation_reference_decision.py'
+        with changed.open('ab') as stream:stream.write(b'\n# historical source fixture, arithmetic unchanged\n')
+        interfaces={name:sha256((self.old_source/name).read_bytes()).hexdigest() for name in _interface_pins()}
+        old_source=dict(builder_file_sha256=sha256((self.old_source/'scripts/mfm/build_native_joint_component.py').read_bytes()).hexdigest(),interface_pins=interfaces,reviewed_joint_file_sha256=interfaces['src/cognitive_kernel/formation_joint_learning.py'])
+        old_plan=deepcopy(self.plan);old_plan['source']=old_source;old_plan=seal({k:v for k,v in old_plan.items() if k!='record_sha256'})
+        self.package=self.root/'package';self.package.mkdir()
+        (self.package/'build-plan.json').write_bytes(canonical_json_bytes(old_plan))
+        roster={name:dict(bytes=(self.old_source/name).stat().st_size,file_sha256=sha256((self.old_source/name).read_bytes()).hexdigest()) for name in files}
+        (self.package/'files.json').write_bytes(canonical_json_bytes(roster))
+        with tarfile.open(self.package/'source.tar.xz','w:xz') as archive:
+            for name in sorted(files):archive.add(self.old_source/name,arcname=name,recursive=False)
+        self.complete_parent=self.root/'complete-parent';self.complete_parent.mkdir()
+        child="""import json,sys
+from pathlib import Path
+root=Path(sys.argv[1]);sys.path[:0]=[str(root/'src'),str(root)]
+from scripts.mfm import build_native_joint_component as b
+from cognitive_kernel.formation_joint_learning import FormationJointLearning
+import torch
+torch.set_num_threads(1)
+plan=b.read_json_bytes(Path(sys.argv[2]).read_bytes());cfg=b.SpecialistConfig(**plan['expected_parent']['config'])
+source=b.source_signature(plan['source']);model=FormationJointLearning(cfg)
+with torch.no_grad():
+ for index,tensor in enumerate(model.state_dict().values()):tensor.fill_((index+1)/97)
+out=Path(sys.argv[3]);provenance=dict(kind='zero-joint-update-seed',language_parent_cursor=plan['expected_parent']['cursor'],joint_updates=0,new_reference_heads_trained=False,new_copy_heads_trained=False,training_authorized=False,full_MFM_qualified=False)
+m=model.export_component(out/'specialist.safetensors',out/'config.json',out/'component.json',component_id='historical-complete-tiny',provenance=provenance,provenance_sha256=b.canonical_sha256(provenance),source_pins=source,source_pins_sha256=b.canonical_sha256(source),evidence_scope='untrained_mechanics')
+b._write_new(out/'result.json',b._seal(dict(schema='mfm-native-joint-component-build-result-v1',joint_manifest_file_sha256=b._digest(out/'component.json'),joint_weight_file_sha256=m['weight_file_sha256'],reloaded_tensor_count=len(model.state_dict()),original_language_cursor=plan['expected_parent']['cursor'],source_before=source,source_after=source,joint_updates=0,optimizer_created=False,Gemma_or_features_loaded=False,training_authorized=False,full_MFM_qualified=False)))
+"""
+        child_result=subprocess.run([sys.executable,'-I','-B','-c',child,str(self.old_source),str(self.package/'build-plan.json'),str(self.complete_parent)],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+        self.assertEqual(child_result.returncode,0,child_result.stdout.decode('utf-8'))
+        def descriptor(root,name):
+            p=root/name;return dict(path=name,bytes=p.stat().st_size,file_sha256=sha256(p.read_bytes()).hexdigest())
+        state=load_file(str(self.complete_parent/'specialist.safetensors'));self.original_state={k:v.clone() for k,v in state.items()}
+        manifest=json.loads((self.complete_parent/'component.json').read_bytes())
+        self.migration_plan=seal(dict(schema='mfm-native-joint-source-migration-plan-v1',purpose='tiny-mechanics-fixture',component_id='migrated-complete-tiny',parent_kernel=dict(ref='tiny-genuine-fixture',numeric_id=1,version=1,source_revision='3'*40),
+            parent={key:descriptor(self.complete_parent,name) for key,name in [('weights','specialist.safetensors'),('config','config.json'),('manifest','component.json'),('result','result.json')]},
+            parent_source={key:descriptor(self.package,name) for key,name in [('capsule','source.tar.xz'),('files','files.json'),('build_plan','build-plan.json')]},
+            expected_parent=dict(config=self.plan['expected_parent']['config'],cursor=self.plan['expected_parent']['cursor'],tensor_count=len(state),parameter_count=sum(x.numel() for x in state.values()),provenance_sha256=manifest['provenance_sha256'],source_pins_sha256=manifest['source_pins_sha256']),
+            source=self.plan['source'],runtime=self.plan['runtime'],joint_updates=0,training_authorized=False,full_MFM_qualified=False))
+
+    def migrate(self,plan=None,output=None):
+        plan=plan or self.migration_plan
+        self.assertTrue(callable(getattr(self.builder,'migrate_component',None)), 'explicit complete-state source migration is missing')
+        return self.builder.migrate_component(plan,expected_plan_sha256=plan['record_sha256'],parent_root=self.complete_parent,source_package_root=self.package,output_dir=output or self.root/'migrated',fixture_only=True)
+
+    def test_complete_state_cold_migration_preserves_every_tensor_and_rng(self):
+        from cognitive_kernel.formation_joint_learning import FormationJointLearning
+        parent_manifest=json.loads((self.complete_parent/'component.json').read_bytes());cfg=SpecialistConfig(**self.plan['expected_parent']['config'])
+        with self.assertRaises(ValueError):
+            FormationJointLearning(cfg).load_component(self.complete_parent/'specialist.safetensors',self.complete_parent/'config.json',self.complete_parent/'component.json',weight_sha256=parent_manifest['weight_file_sha256'],config_sha256=parent_manifest['config_file_sha256'],manifest_sha256=sha256((self.complete_parent/'component.json').read_bytes()).hexdigest(),expected_provenance_sha256=parent_manifest['provenance_sha256'],expected_source_pins=parent_manifest['source_pins'],expected_evidence_scope='untrained_mechanics')
+        rng=torch.get_rng_state().clone();result=self.migrate();self.assertTrue(torch.equal(rng,torch.get_rng_state()))
+        loaded=load_file(str(self.root/'migrated/joint/specialist.safetensors'))
+        self.assertEqual(set(loaded),set(self.original_state))
+        for name,value in self.original_state.items():self.assertTrue(torch.equal(value,loaded[name]),name)
+        self.assertEqual(result['reloaded_tensor_count'],len(self.original_state));self.assertEqual(result['joint_updates'],0)
+        self.assertTrue(result['complete_parent_state_preserved']);self.assertFalse(result['optimizer_created'])
+        self.assertEqual(result['original_language_cursor'],{'epoch':1,'next_case':0,'step':1})
+        self.assertEqual(result['parent_before'],result['parent_after']);self.assertEqual(result['source_before'],result['source_after'])
+        self.assertTrue(result['old_cold_load']['isolated_process']);self.assertEqual(result['old_cold_load']['interface_pins'],parent_manifest['interface_pins'])
+
+    def test_migration_rejects_corrupt_parent_before_state_transfer(self):
+        p=self.complete_parent/'specialist.safetensors';raw=bytearray(p.read_bytes());raw[-1]^=1;p.write_bytes(raw)
+        with self.assertRaises(ValueError):self.migrate()
+        self.assertFalse((self.root/'migrated/joint').exists())
+
+    def test_migration_rejects_resealed_config_or_current_source(self):
+        for label in ('config','source'):
+            plan=deepcopy(self.migration_plan)
+            if label=='config':plan['expected_parent']['config']['width']=8.0
+            else:plan['source']['interface_pins'][next(iter(plan['source']['interface_pins']))]='0'*64
+            plan=seal({k:v for k,v in plan.items() if k!='record_sha256'})
+            with self.subTest(label=label),self.assertRaises(ValueError):self.migrate(plan,self.root/label)
+
+    def test_migration_rejects_changed_old_capsule_and_parent_output(self):
+        original=(self.package/'source.tar.xz').read_bytes();(self.package/'source.tar.xz').write_bytes(original+b'x')
+        with self.assertRaises(ValueError):self.migrate()
+        with self.assertRaises(ValueError):self.migrate(output=self.complete_parent/'forbidden')
+        self.assertFalse((self.complete_parent/'forbidden').exists())
+
+    def test_coherently_repinned_fp16_parent_fails_original_strict_cold_gate(self):
+        state={k:v.clone() for k,v in self.original_state.items()};state[next(iter(state))]=state[next(iter(state))].half()
+        weight=self.complete_parent/'specialist.safetensors';save_file(state,str(weight))
+        plan=deepcopy(self.migration_plan)
+        manifest=json.loads((self.complete_parent/'component.json').read_bytes());manifest['weight_file_sha256']=sha256(weight.read_bytes()).hexdigest();manifest['weight_bytes']=weight.stat().st_size
+        (self.complete_parent/'component.json').write_bytes(canonical_json_bytes(manifest))
+        result=json.loads((self.complete_parent/'result.json').read_bytes());result.pop('record_sha256');result['joint_weight_file_sha256']=manifest['weight_file_sha256'];result['joint_manifest_file_sha256']=sha256((self.complete_parent/'component.json').read_bytes()).hexdigest()
+        (self.complete_parent/'result.json').write_bytes(canonical_json_bytes(seal(result)))
+        for key in ('weights','manifest','result'):
+            d=plan['parent'][key];p=self.complete_parent/d['path'];d.update(bytes=p.stat().st_size,file_sha256=sha256(p.read_bytes()).hexdigest())
+        plan=seal({k:v for k,v in plan.items() if k!='record_sha256'})
+        with self.assertRaises(ValueError):self.migrate(plan)
+        failure=json.loads((self.root/'migrated/failure.json').read_bytes())
+        self.assertEqual(failure['failure_stage'],'isolated_original_cold_load')
+        self.assertFalse((self.root/'migrated/joint').exists())
+
+    def test_fixture_migration_cannot_grant_production_construction(self):
+        with self.assertRaises(ValueError):
+            self.builder.migrate_component(self.migration_plan,expected_plan_sha256=self.migration_plan['record_sha256'],parent_root=self.complete_parent,source_package_root=self.package,output_dir=self.root/'production')
+
+
 if __name__=='__main__':
     unittest.main()

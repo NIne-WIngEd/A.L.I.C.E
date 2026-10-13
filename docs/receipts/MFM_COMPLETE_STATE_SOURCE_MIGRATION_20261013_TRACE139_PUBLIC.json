@@ -1,0 +1,63 @@
+{
+  "actual_provider_boundary": {
+    "CreateDataset_invoked": false,
+    "SaveKernel_invoked": false,
+    "body_response_record_missing": true,
+    "failure_type": "ValueError",
+    "first_upload_reference_received": true,
+    "original_failure_FILE_sha256": "b14dc6184ecdb3ba0fc0fe01c2e96c71e83a85333a5595f2009527ecc102b4e2",
+    "specific_failed_guard_unverified": true
+  },
+  "code_payload_bytes": 1258581,
+  "code_payload_files": 6,
+  "complete_production_expectation": {
+    "Torch_family": "2.11",
+    "device": "cpu",
+    "language_epochs": 20,
+    "language_step": 45760,
+    "parameters": 278395424,
+    "parent_kernel_numeric_id": 138478151,
+    "parent_version": 1,
+    "tensors": 138,
+    "threads": 1
+  },
+  "controls": {
+    "actual_isolated_current_capture_import": true,
+    "caller_RNG_and_source_parent_brackets": true,
+    "genuine_tiny_tensors_preserved": 48,
+    "original_cold_load_distinct_PID": true,
+    "owner_tests_reused": 18,
+    "strict_old_and_current_load": true
+  },
+  "current_interfaces": 102,
+  "current_physical_sources": 103,
+  "full138_migration_executed": false,
+  "full_MFM_qualified": false,
+  "joint_updates": 0,
+  "next": "Diagnose the original upload boundary, execute the same reviewed CPU migration and preserve complete state; continue grounded broader foundation material and production feature/capacity construction.",
+  "observed_utc": "2026-10-13T21:03:37.855354+00:00",
+  "optimizer_created": false,
+  "original_interfaces": 100,
+  "packet_FILE_sha256": "1f9f60affcc5022df20b3d02f10c341d6f9a8118a483bc7b0dbc6acfad2bf465",
+  "privacy": "PUBLIC_METHOD_ONLY",
+  "production_tensors_on_PC": false,
+  "provider_preparation": {
+    "GPU": false,
+    "TPU": false,
+    "automatic_retry": false,
+    "code_only_dataset": true,
+    "custom_total_timeout": false,
+    "internet": false,
+    "private": true
+  },
+  "record_sha256": "bc77adf68c5dbbb7aa39ed71a139bff1345615d7703594e4b3bba6b36de51313",
+  "review_manifest_FILE_sha256": "37e1857a90a74b6739235723e317d83f4d666f8925ddd62ceeec4f5c3dbcab06",
+  "reviewed_original_evidence_files": 47,
+  "schema": "mfm-complete-state-source-lineage-migration-construction-public-v1",
+  "source_FILEs": {
+    "scripts/mfm/build_native_joint_component.py": "d8838330c1a9dcd3612fa4207515bf97b81c61a2b266cbb9e3578115731856d7",
+    "tests/governance/test_mfm_native_joint_component_build.py": "d27e27465a89144ae273c6acbf9aa6477d681b3a48654fdebef106e5703dbd66"
+  },
+  "stress_draft": "parked",
+  "trace_id": "fbm-mfm-20261013-complete-state-source-lineage-migration-construction-139"
+}

@@ -17,3 +17,22 @@ A separate metadata-only constructor forecast gives269,922,304 reference and278,
 The actual chain preserves115 lexical tensors, creates the complete122-tensor reference intermediate, and exports/strictly reloads138 joint tensors. Its278,395,424 parameters include seven fresh reference and sixteen fresh copy tensors. Complete producer-side reload identity and RNG restoration passed; root did not independently replay the full weights on the PC. The joint safetensors is1,113,595,976 bytes with FILE SHA-256 `c3900ff29e162279de88c2456987e774fb8397530d994aaf7569e4c6a5f6a556`. No optimizer, source-model features or joint updates ran, so those heads remain untrained. Root's original create-response projection omitted status and was correctly refused; the existing dataset's genuine READY/private/version readback admitted it without a second create. Original failed projection remains preserved.
 
 Next build is complete actual joint source representations and independently authored, authorized full-role teaching material, followed by the new joint optimizer/program and actual generated consumer learning. The new source-feature path has found real preflight/output-boundary and actual Gemma native-field gaps under review; none affects this distinct completed CPU builder. The retained full-source capacity question, broader foundation material, native media and governed outcome loop remain unfinished. Actual large S5/new-component Drive backups are separate pending custody. No premature full-system stress run or full-MFM completion is claimed.
+
+The current explicit source-migration mode preserves that complete native seed
+while advancing its interface closure from100 to102 files. It cold-loads the
+original parent with the untouched original strict loader in a separate isolated
+interpreter, transfers every named tensor strictly, then exports and strictly
+reloads the current component. Full byte signatures, original provenance,
+S5E20/step45760, fresh-head status, caller RNG and source/parent brackets survive.
+The main model and loss architecture remain unchanged; no optimizer is created.
+
+[TRACE139](receipts/MFM_COMPLETE_STATE_SOURCE_MIGRATION_20261013_TRACE139_PUBLIC.json)
+binds the final builder,18 retained owner controls, actual isolated103-file
+source import and one genuine48-tensor old/current migration. The six code-only
+payloads total1,258,581 bytes and target private offline Kaggle CPU with the
+original138478151/v1 as sole notebook parent. Actual full execution requires
+Torch2.11/one thread and all138 finiteFP32 tensors. Root's submission received
+the first upload reference but stopped before a body response and dataset
+creation; the exact failed guard is under diagnosis. The reviewed packet is
+ready, but full138-state migration has not run. No production tensor was placed
+on the PC and no completed language epoch is being replayed.

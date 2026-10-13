@@ -14,7 +14,9 @@ import os
 from pathlib import Path, PurePosixPath
 import platform
 import stat
+import subprocess
 import sys
+import tarfile
 import tempfile
 from time import perf_counter
 
@@ -455,17 +457,234 @@ def build_component(plan, *, expected_plan_sha256, parent_root, output_dir, fixt
     return result
 
 
+MIGRATION_SCHEMA='mfm-native-joint-source-migration-plan-v1'
+NATIVE_PARENT_FILES={
+    'weights':'c3900ff29e162279de88c2456987e774fb8397530d994aaf7569e4c6a5f6a556',
+    'manifest':'f5b4ee06c797693436434f0fdc93c9a0b3a8eabcd49af9eef3e42afc2fac9a9c',
+    'config':'022f027b588563d839c7bbcf5526b78970e719e00281dee50b86770b5f414193',
+    'result':'5afae35e60a3ee521b451d18f69e0a0fc15853724663e7878c8c2f31ac21f875',
+}
+NATIVE_SOURCE_FILES={
+    'capsule':'a7cc9fc28624ba4f0fd7d6eab1bca27b45c0b7345866944bd43932ae78fa2323',
+    'files':'bc995ef25a8a1118ce2e9ca403368edba11fdce7c344bb151d87df04736a255b',
+    'build_plan':'f58ba135bef9ff919fa81597f74199700ff9d1f9961597aa7ab15365fca0dfca',
+}
+
+# Executed only in a separate isolated interpreter. All local imports originate
+# from the extracted original package, never the currently loaded model modules.
+_COLD_LOAD = r'''
+import json,sys
+from pathlib import Path
+request=json.loads(Path(sys.argv[1]).read_bytes())
+root=Path(request['source_root']).resolve()
+sys.path[:0]=[str(root/'src'),str(root)]
+from scripts.mfm import build_native_joint_component as b
+import torch
+torch.set_num_threads(1)
+plan=request['plan'];parent=Path(request['parent_root'])
+old_plan=b.read_json_bytes(Path(request['old_plan']).read_bytes())
+before=b.source_signature(old_plan['source'])
+paths={};identities={}
+for key,desc in plan['parent'].items():
+ paths[key],identities[key]=b._file(parent,desc)
+manifest=b.read_json_bytes(paths['manifest'].read_bytes())
+cfg=b.SpecialistConfig(**plan['expected_parent']['config']);cfg.validate()
+model=b.joint.FormationJointLearning(cfg).cpu()
+model.load_component(paths['weights'],paths['config'],paths['manifest'],weight_sha256=plan['parent']['weights']['file_sha256'],config_sha256=plan['parent']['config']['file_sha256'],manifest_sha256=plan['parent']['manifest']['file_sha256'],expected_provenance_sha256=plan['expected_parent']['provenance_sha256'],expected_source_pins=manifest['source_pins'],expected_evidence_scope='untrained_mechanics')
+signatures=b.state_signatures(model.state_dict())
+b._need(len(signatures)==plan['expected_parent']['tensor_count'] and sum(v.numel() for v in model.state_dict().values())==plan['expected_parent']['parameter_count'],'complete historical state count differs')
+b._need(b.canonical_sha256(manifest['source_pins'])==plan['expected_parent']['source_pins_sha256'],'external historical source pin differs')
+after=b.source_signature(old_plan['source'])
+b._need(before==after and all(b._file(parent,desc)[1]==identities[key] for key,desc in plan['parent'].items()),'historical parent or source changed during cold load')
+b._write_new(Path(request['report']),b._seal(dict(schema='mfm-native-joint-original-cold-load-v1',isolated_process=True,pid=__import__('os').getpid(),python_executable=sys.executable,torch=torch.__version__,interface_pins=b.joint._interface_pins(),source_before=before,source_after=after,parent_before=identities,parent_after=identities,tensors=signatures,tensor_count=len(signatures),joint_updates=0,optimizer_created=False,source_model_loaded=False)))
+'''
+
+
+def validate_migration_plan(plan,expected,*,fixture_only=False):
+    _record(plan,MIGRATION_SCHEMA)
+    _need(plan['record_sha256']==_pin(expected) and set(plan)=={'schema','purpose','component_id',
+        'parent_kernel','parent','parent_source','expected_parent','source','runtime','joint_updates',
+        'training_authorized','full_MFM_qualified','record_sha256'},'externally pinned migration plan differs')
+    _need(type(plan['joint_updates']) is int and plan['joint_updates']==0 and
+        plan['training_authorized'] is False and plan['full_MFM_qualified'] is False,
+        'source migration cannot update weights or grant rights')
+    _need(type(plan['parent']) is dict and set(plan['parent'])==set(NATIVE_PARENT_FILES) and
+        type(plan['parent_source']) is dict and set(plan['parent_source'])==set(NATIVE_SOURCE_FILES),
+        'complete original component and source package required')
+    expected_parent=plan['expected_parent']
+    _need(type(expected_parent) is dict and set(expected_parent)=={'config','cursor','tensor_count',
+        'parameter_count','provenance_sha256','source_pins_sha256'},'complete migration expectations required')
+    cfg=SpecialistConfig(**expected_parent['config']);cfg.validate()
+    _need(_same(cfg.record(),expected_parent['config']),'exact typed parent config required')
+    _cursor(expected_parent['cursor'])
+    for name in ('tensor_count','parameter_count'):
+        _need(type(expected_parent[name]) is int and expected_parent[name]>0,'positive complete state counts required')
+    _pin(expected_parent['provenance_sha256']);_pin(expected_parent['source_pins_sha256'])
+    runtime=plan['runtime']
+    _need(type(runtime) is dict and set(runtime)=={'device','threads','torch_version_family','safetensors_required'} and runtime['device']=='cpu' and type(runtime['threads']) is int and runtime['threads']==1 and runtime['safetensors_required'] is True and runtime['torch_version_family']=='.'.join(torch.__version__.split('.')[:2]),'explicit actual CPU runtime required')
+    if fixture_only:
+        _need(plan['purpose']=='tiny-mechanics-fixture','fixture purpose differs')
+    else:
+        _need(plan['purpose']=='full-size-native-joint-source-migration' and _same(cfg.record(),S5_CONFIG) and
+            _same(expected_parent['cursor'],S5_CURSOR) and expected_parent['tensor_count']==138 and expected_parent['parameter_count']==278395424 and
+            _same(plan['parent_kernel'],dict(ref='mkrayanyan/rayan-mfm-native-joint-build-20261013',numeric_id=138478151,version=1,source_revision='273576d68d077f177593ac90004b9bcf4450df97f71874c3c155c1db9ee20966')) and
+            all(plan['parent'][k]['file_sha256']==v for k,v in NATIVE_PARENT_FILES.items()) and
+            all(plan['parent_source'][k]['file_sha256']==v for k,v in NATIVE_SOURCE_FILES.items()) and
+            type(plan['parent']['weights']['bytes']) is int and plan['parent']['weights']['bytes']==1113595976 and runtime['torch_version_family']=='2.11',
+            'production migration requires exact complete original138 state and package003')
+    return cfg
+
+
+def _migration_parent(plan,root):
+    paths={};signature={}
+    for key,desc in plan['parent'].items():paths[key],signature[key]=_file(root,desc)
+    manifest=read_json_bytes(paths['manifest'].read_bytes());config=read_json_bytes(paths['config'].read_bytes())
+    result=_record(read_json_bytes(paths['result'].read_bytes()),'mfm-native-joint-component-build-result-v1')
+    expected=plan['expected_parent'];provenance=manifest['provenance']
+    _need(_same(config,expected['config']) and manifest['config_file_sha256']==plan['parent']['config']['file_sha256'] and
+        manifest['weight_file_sha256']==plan['parent']['weights']['file_sha256'] and manifest['provenance_sha256']==expected['provenance_sha256'] and
+        canonical_sha256(provenance)==expected['provenance_sha256'] and canonical_sha256(manifest['source_pins'])==expected['source_pins_sha256'],
+        'externally bound original component/config/provenance differs')
+    _need(result['joint_manifest_file_sha256']==plan['parent']['manifest']['file_sha256'] and
+        result['joint_weight_file_sha256']==plan['parent']['weights']['file_sha256'] and
+        type(result['reloaded_tensor_count']) is int and result['reloaded_tensor_count']==expected['tensor_count'] and
+        _same(_cursor(result['original_language_cursor']),expected['cursor']) and
+        _same(_cursor(provenance['language_parent_cursor']),expected['cursor']) and
+        _same(result['source_before'],result['source_after']) and _same(result['source_before'],manifest['source_pins']),
+        'original complete build result/cursor/source join differs')
+    for value in (result,provenance):
+        _need(type(value.get('joint_updates')) is int and value['joint_updates']==0 and value.get('training_authorized') is False and value.get('full_MFM_qualified') is False,'original zero-update unqualified lineage required')
+    _need(result['optimizer_created'] is False and result['Gemma_or_features_loaded'] is False and
+        provenance['new_reference_heads_trained'] is False and provenance['new_copy_heads_trained'] is False,
+        'original head/training status differs')
+    return paths,signature,manifest,result
+
+
+def _migration_source_package(plan,root):
+    paths={};signature={}
+    for key,desc in plan['parent_source'].items():paths[key],signature[key]=_file(root,desc)
+    files=read_json_bytes(paths['files'].read_bytes());old_plan=_record(read_json_bytes(paths['build_plan'].read_bytes()),SCHEMA)
+    _need(type(files) is dict and files,'whole physical original source roster required')
+    for name,desc in files.items():
+        relative=PurePosixPath(name)
+        _need(type(name) is str and relative.as_posix()==name and not relative.is_absolute() and
+            not any(p in ('..','.','') for p in relative.parts) and '\\' not in name and ':' not in name and
+            relative.parts[0] in ('src','scripts') and type(desc) is dict and set(desc)=={'bytes','file_sha256'} and
+            type(desc['bytes']) is int and desc['bytes']>=0,'ordinary original capsule member required')
+        _pin(desc['file_sha256'])
+    expected={**old_plan['source']['interface_pins'],'scripts/mfm/build_native_joint_component.py':old_plan['source']['builder_file_sha256']}
+    _need(all(name in files and files[name]['file_sha256']==pin for name,pin in expected.items()),'original reviewed closure missing from capsule')
+    return paths,signature,files,old_plan
+
+
+def _check_extracted(root,files):
+    actual={p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file()}
+    _need(actual==set(files),'complete extracted original source roster differs')
+    for name,desc in files.items():_file(root,dict(path=name,**desc))
+
+
+def _extract_original_source(capsule,files,output):
+    output.mkdir(mode=0o700,exist_ok=False)
+    with tarfile.open(capsule,'r:xz') as archive:
+        members=archive.getmembers();names=[m.name for m in members]
+        _need(len(names)==len(set(names)) and set(names)==set(files),'exact original capsule member roster differs')
+        for member in members:
+            expected=files[member.name]
+            _need(member.isfile() and member.size==expected['bytes'],'ordinary original capsule body required')
+            source=archive.extractfile(member);_need(source is not None,'original capsule body missing')
+            with source:body=source.read()
+            _need(sha256(body).hexdigest()==expected['file_sha256'],'original capsule body hash differs')
+            target=output.joinpath(*PurePosixPath(member.name).parts);target.parent.mkdir(mode=0o700,parents=True,exist_ok=True)
+            with target.open('xb') as stream:stream.write(body)
+    _check_extracted(output,files)
+
+
+def migrate_component(plan,*,expected_plan_sha256,parent_root,source_package_root,output_dir,fixture_only=False):
+    """Explicit whole-state lineage transition; both strict component gates remain."""
+    output=Path(output_dir)
+    _need(not any(output.resolve().is_relative_to(Path(root).resolve()) for root in (parent_root,source_package_root)),
+        'migration output cannot modify readonly parent/source package')
+    output.mkdir(mode=0o700,parents=False,exist_ok=False)
+    stage='migration_plan';started=perf_counter();cpu_rng=torch.get_rng_state().clone();threads=torch.get_num_threads()
+    _write_new(output/'intent.json',_seal(dict(schema='mfm-native-joint-source-migration-intent-v1',expected_plan_sha256=expected_plan_sha256,joint_updates=0,automatic_retry=False)))
+    try:
+        cfg=validate_migration_plan(plan,expected_plan_sha256,fixture_only=fixture_only)
+        torch.set_num_threads(1);stage='current_source_preflight';before_source=source_signature(plan['source'])
+        stage='complete_parent_preflight';paths,before_parent,parent_manifest,parent_result=_migration_parent(plan,parent_root)
+        stage='original_source_package';old_paths,before_package,files,old_plan=_migration_source_package(plan,source_package_root)
+        _need(_same(old_plan['source']['interface_pins'],parent_manifest['interface_pins']),'original package and parent interface closure differ')
+        original_root=output/'original-source';_extract_original_source(old_paths['capsule'],files,original_root)
+        stage='isolated_original_cold_load';request=output/'cold-load-request.json';report=output/'old-cold-load.json'
+        _write_new(request,dict(source_root=str(original_root.resolve()),parent_root=str(Path(parent_root).resolve()),old_plan=str(old_paths['build_plan'].resolve()),plan=plan,report=str(report.resolve())))
+        env=dict(os.environ);env.pop('PYTHONPATH',None);env.pop('KMP_DUPLICATE_LIB_OK',None);env['PYTHONNOUSERSITE']='1'
+        with (output/'old-cold-load.log').open('xb') as log:
+            executed=subprocess.run([sys.executable,'-I','-B','-c',_COLD_LOAD,str(request.resolve())],cwd=original_root,env=env,stdout=log,stderr=subprocess.STDOUT,check=False)
+        _write_new(output/'cold-load-execution.json',_seal(dict(returncode=executed.returncode,bootstrap_sha256=sha256(_COLD_LOAD.encode()).hexdigest(),isolated_process=True,custom_timeout=False,automatic_retry=False)))
+        _need(executed.returncode==0,'original strict cold load refused; original log retained')
+        cold=_record(read_json_bytes(report.read_bytes()),'mfm-native-joint-original-cold-load-v1')
+        _need(cold['isolated_process'] is True and cold['pid']!=os.getpid() and _same(cold['interface_pins'],parent_manifest['interface_pins']) and
+            cold['parent_before']==before_parent and cold['parent_after']==before_parent and cold['source_before']==cold['source_after'],
+            'isolated original load identity/bracket differs')
+        _check_extracted(original_root,files)
+        stage='complete_current_state_transfer';state=load_file(str(paths['weights']),device='cpu');signatures=state_signatures(state)
+        _need(signatures==cold['tensors'],'original loaded tensor bytes differ from independent cold load')
+        model=joint.FormationJointLearning(cfg).cpu();current=model.state_dict()
+        _need(set(state)==set(current) and all(state[k].shape==current[k].shape and current[k].dtype==torch.float32 for k in state),'complete current tensor key/shape/dtype differs')
+        _need(sum(v.numel() for v in state.values())==plan['expected_parent']['parameter_count'],'complete current parameter count differs')
+        model.load_state_dict(state,strict=True)
+        _need(state_signatures(model.state_dict())==signatures,'strict whole-state migration changed tensors')
+        del state,current
+        stage='current_component_export';jointdir=output/'joint';jointdir.mkdir()
+        provenance=dict(kind='zero-update-whole-joint-source-lineage-migration',parent_kernel=plan['parent_kernel'],
+            parent_files=plan['parent'],parent_source_package=plan['parent_source'],original_provenance=deepcopy(parent_manifest['provenance']),
+            original_component_id=parent_manifest['component_id'],original_evidence_scope=parent_manifest['evidence_scope'],
+            language_parent_cursor=deepcopy(plan['expected_parent']['cursor']),original_source_pins=deepcopy(parent_manifest['source_pins']),
+            original_interface_pins=deepcopy(parent_manifest['interface_pins']),cold_load_file_sha256=_digest(report),
+            complete_parent_state_preserved=True,joint_updates=0,new_reference_heads_trained=False,new_copy_heads_trained=False,
+            optimizer_created=False,training_authorized=False,full_MFM_qualified=False)
+        manifest=model.export_component(jointdir/'specialist.safetensors',jointdir/'config.json',jointdir/'component.json',component_id=plan['component_id'],
+            provenance=provenance,provenance_sha256=canonical_sha256(provenance),source_pins=before_source,source_pins_sha256=canonical_sha256(before_source),evidence_scope=parent_manifest['evidence_scope'])
+        del model
+        stage='current_strict_reload';reloaded=joint.FormationJointLearning(cfg).cpu()
+        reloaded.load_component(jointdir/'specialist.safetensors',jointdir/'config.json',jointdir/'component.json',weight_sha256=manifest['weight_file_sha256'],config_sha256=manifest['config_file_sha256'],manifest_sha256=_digest(jointdir/'component.json'),expected_provenance_sha256=canonical_sha256(provenance),expected_source_pins=before_source,expected_evidence_scope=parent_manifest['evidence_scope'])
+        loaded=state_signatures(reloaded.state_dict());_need(loaded==signatures,'current strict reload changed complete original tensors');del reloaded
+        _write_new(jointdir/'state-signatures.json',_seal(dict(tensors=loaded)))
+        stage='closing_immutability';_,after_parent,_,_=_migration_parent(plan,parent_root);_,after_package,_,_=_migration_source_package(plan,source_package_root)
+        after_source=source_signature(plan['source']);_check_extracted(original_root,files)
+        _need(before_parent==after_parent and before_package==after_package and before_source==after_source,'parent or old/current source changed during migration')
+        result=dict(schema='mfm-native-joint-source-migration-result-v1',status='complete-joint-source-lineage-migrated-reloaded-unqualified',
+            plan_sha256=expected_plan_sha256,parent_before=before_parent,parent_after=after_parent,source_before=before_source,source_after=after_source,
+            parent_source_before=before_package,parent_source_after=after_package,old_cold_load=cold,complete_parent_state_preserved=True,
+            reloaded_tensor_count=len(loaded),joint_weight_file_sha256=manifest['weight_file_sha256'],joint_manifest_file_sha256=_digest(jointdir/'component.json'),
+            original_language_cursor=deepcopy(plan['expected_parent']['cursor']),joint_updates=0,optimizer_created=False,Gemma_or_features_loaded=False,
+            training_authorized=False,full_MFM_qualified=False,fixture_only=fixture_only,seconds=perf_counter()-started)
+    except Exception as exc:
+        _write_new(output/'failure.json',_seal(dict(schema='mfm-native-joint-source-migration-failure-v1',failure_stage=stage,error_type=type(exc).__name__,error=str(exc),plan_sha256=expected_plan_sha256,joint_updates=0,automatic_retry=False)))
+        raise
+    finally:
+        torch.set_rng_state(cpu_rng);torch.set_num_threads(threads)
+    _save_new(output/'rng-states.safetensors',{'caller_before':cpu_rng,'caller_restored':torch.get_rng_state().clone()})
+    result['cpu_rng_restored']=torch.equal(cpu_rng,torch.get_rng_state());_write_new(output/'result.json',_seal(result));return result
+
+
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--plan',required=True,type=Path)
     parser.add_argument('--plan-file-sha256',required=True)
     parser.add_argument('--parent-root',required=True,type=Path)
     parser.add_argument('--output-dir',required=True,type=Path)
+    parser.add_argument('--source-package-root',type=Path)
     args=parser.parse_args(argv)
     _need(_digest(args.plan)==_pin(args.plan_file_sha256),'actual externally pinned plan FILE differs')
     plan=read_json_bytes(args.plan.read_bytes())
-    result=build_component(plan,expected_plan_sha256=plan['record_sha256'],parent_root=args.parent_root,
-                           output_dir=args.output_dir)
+    if plan.get('schema')==MIGRATION_SCHEMA:
+        _need(args.source_package_root is not None,'explicit original source package required')
+        result=migrate_component(plan,expected_plan_sha256=plan['record_sha256'],parent_root=args.parent_root,
+            source_package_root=args.source_package_root,output_dir=args.output_dir)
+        print(json.dumps(dict(status=result['status'],joint_weight_file_sha256=result['joint_weight_file_sha256'],
+            reloaded_tensor_count=result['reloaded_tensor_count'],joint_updates=0)));return
+    _need(args.source_package_root is None,'original source package only belongs to explicit migration mode')
+    result=build_component(plan,expected_plan_sha256=plan['record_sha256'],parent_root=args.parent_root,output_dir=args.output_dir)
     print(json.dumps(dict(status=result['status'],joint_weight_file_sha256=result['joint_weight_file_sha256'],
         inherited_lexical_tensor_count=result['inherited_lexical_tensor_count'],
         inherited_reference_tensor_count=result['inherited_reference_tensor_count'],
