@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "272cb2916f779b27ae0eabda9fcba6120e2ffba8",
+      "commit": "32897684dee407cdf30d522a4cc1a58ddb0912bc",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -372,7 +372,7 @@
         {
           "path": "scripts/mfm/train_public_conditional_foundation.py",
           "purpose": "complete E20 conditional foundation and zero-update final/seed observation; actual exported runtime closure is separate from checkout imports",
-          "blob_sha": "fdfff6cfa2df1dabed1e78efb0de9875e724a82d"
+          "blob_sha": "476fc4abfc0b0f446fd3e9b84b6a7b69a8d916dc"
         },
         {
           "path": "src/cognitive_kernel/formation_reference_specialist.py",
@@ -677,7 +677,7 @@
         {
           "path": "docs/MFM_COMPLETED_FOUNDATION_OBSERVATION_2026-10-12.md",
           "purpose": "direct zero-update final/seed source-only observation and independently continuing missing native capability construction",
-          "blob_sha": "43c9b9291e76d80cde83839f137dd621c76d253f"
+          "blob_sha": "fe7474850a7d18f8e300345b4cc2b1b4607a3f55"
         },
         {
           "path": "docs/receipts/MFM_COMPLETED_FOUNDATION_OBSERVATION_20261012_TRACE121_PUBLIC.json",
@@ -686,18 +686,78 @@
         },
         {
           "path": "tests/governance/test_mfm_public_completed_observation.py",
-          "purpose": "full frozen cohort, exact parent/control bytes and longest-source actual prefix parity mechanics",
-          "blob_sha": "425823714ab276662980bc09d909bc5076d3b7c5"
+          "purpose": "canonical full-prefix FP32 observation, whole frozen cohort, exact checkpoint bytes and retained cache-failure boundaries",
+          "blob_sha": "430b12b3ce450e998151f2d6b347cf027de55e66"
+        },
+        {
+          "path": "docs/MFM_COMPLETED_LANGUAGE_FOUNDATION_OBSERVATION_METHOD_2026-10-13.md",
+          "purpose": "researched explicit reference method, actual complete v3 reload/generation and unfinished semantic/full-MFM qualification",
+          "blob_sha": "71f766fa43924d58d9d1f39bde28dfbdbc09aabe"
+        },
+        {
+          "path": "docs/receipts/MFM_CANONICAL_REFERENCE_OBSERVATION_20261013_TRACE124_PUBLIC.json",
+          "purpose": "TRACE124 unchanged fitting functions,32 source controls, strict327-file closure and actual package admission",
+          "blob_sha": "92fd5a2bffd4169c5394c0a758b7c37e9f8cb582"
+        },
+        {
+          "path": "docs/receipts/MFM_S1_WHOLE_DRIVE_CUSTODY_20261013_TRACE125_PUBLIC.json",
+          "purpose": "TRACE125 all55 original native actions,27 whole restores and final catalog; storage custody only",
+          "blob_sha": "1ec76db3cd9789fe2eecd17370c9017c414126c7"
+        },
+        {
+          "path": "docs/receipts/MFM_COMPLETED_REFERENCE_OBSERVATION_20261013_TRACE126_PUBLIC.json",
+          "purpose": "TRACE126 genuine private v3 COMPLETE and1012 exact original rows; source contrasts descriptive and semantic review separate",
+          "blob_sha": "13b901e867caefa48f009d7e2f55ff44a2d17e1e"
+        },
+        {
+          "path": "docs/receipts/PROJECT_EXACT_TWO_ARCHIVE_RELEASE_20261013_TRACE127_PUBLIC.json",
+          "purpose": "TRACE127 exact obsolete shared archive release after usable whole Drive backup and current identity/use checks; scope only",
+          "blob_sha": "81ace2948936fa3333e99bce9cadf1341f159acc"
         },
         {
           "path": "docs/MFM_NATIVE_REFERENCE_PRODUCER_2026-10-13.md",
           "purpose": "concrete native generated-reference producer, independent grounding and unfinished original-copy/full-formation roadmap",
-          "blob_sha": "fa3e1b97406ba9fc120c36f7c221505ec0177541"
+          "blob_sha": "cffea59098a528c24894667e3aafee3b94ea3f65"
         },
         {
           "path": "docs/receipts/MFM_NATIVE_REFERENCE_PRODUCER_20261013_TRACE122_PUBLIC.json",
           "purpose": "TRACE122 root37 and independent4 mechanics, retained original failures and failed observation runtime closure; no learned reference/full MFM claim",
           "blob_sha": "236c8dcccca3b5f8182fd7494180793ebb9fe6d3"
+        },
+        {
+          "path": "src/cognitive_kernel/formation_original_copy_specialist.py",
+          "purpose": "native source/start/conditional UTF8 end head, complete FP32 parent migration and exact whole-tuple supervision",
+          "blob_sha": "01e66b8038bf49888305b19eb7025b61917470bf"
+        },
+        {
+          "path": "src/cognitive_kernel/formation_original_copy_decision.py",
+          "purpose": "same own generated mixed-wire reference/copy queries, exact original byte resolution and real compiler/grounding",
+          "blob_sha": "21f180833b11e75db77df73d57747ec13f2d96dd"
+        },
+        {
+          "path": "scripts/mfm/formation_original_copy_target_alignment.py",
+          "purpose": "complete reference/copy marker roster, authored ordinal and exact declaration supervision admission",
+          "blob_sha": "5ddb78899ed0320e063ec936d157285b1087a53a"
+        },
+        {
+          "path": "tests/governance/test_mfm_original_copy_specialist.py",
+          "purpose": "17 owned assembly/source-head/whole-tuple/migration controls; untrained mechanics only",
+          "blob_sha": "bef30182b3fa9c8e28e52ef007993b73f39e863c"
+        },
+        {
+          "path": "tests/governance/test_mfm_original_copy_decision.py",
+          "purpose": "actual mixed-wire consumer and original grounding with retained teacher/provenance refusals",
+          "blob_sha": "d80149c8fe533c8b2cfe6954b849e65160689315"
+        },
+        {
+          "path": "docs/MFM_NATIVE_ORIGINAL_COPY_PRODUCER_2026-10-13.md",
+          "purpose": "native copy construction, independently caught omitted reference labels and pending full-role material/learning",
+          "blob_sha": "5ec82ea3860fc952b8e6649a75810dbe7298c196"
+        },
+        {
+          "path": "docs/receipts/MFM_NATIVE_ORIGINAL_COPY_PRODUCER_20261013_TRACE123_PUBLIC.json",
+          "purpose": "TRACE123 composed17 and48 final-pin controls and independent correction review; no learned copy or full MFM claim",
+          "blob_sha": "e652cbcddda48be6d2cf87dfbe0a8b1c458457fa"
         },
         {
           "path": "docs/superpowers/specs/2026-10-12-mfm-native-reference-producer-design.md",
@@ -927,7 +987,7 @@
         {
           "path": "docs/MFM_DEVELOPMENT_CONTINUATION_2026-10-09.md",
           "purpose": "unchanged E20 continuation, source interventions, caller reference selection, original-byte copy alignment and full governed formation roadmap",
-          "blob_sha": "0216030748a3e6fb2f025353703e3898f71093ee"
+          "blob_sha": "f07cdeb4722efac2ee91ba788f30b6361eb47772"
         },
         {
           "path": "tests/governance/test_mfm_public_conditional_foundation.py",
@@ -1373,7 +1433,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "60c1bab01775c4ce73e1f265b75801073b1092af",
+      "commit": "a930b5ddd09c7d1859691866f528647ff0803241",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1453,7 +1513,17 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "fde89a2ffc58daeb9106ad79c1c358819d83dd99"
+          "blob_sha": "730fc6c86529744703a7319d034fd4e63b2193ef"
+        },
+        {
+          "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
+          "purpose": "reusable actual original-copy construction and omitted whole-wire reference-supervision diagnosis",
+          "blob_sha": "a3fa1ffe212d60163671e863ee8f307a758ae28b"
+        },
+        {
+          "path": "docs/fable-builder/MFM_REFERENCE_ROUTE_AND_DRIVE_CUSTODY_CAPTURE_2026-10-13.md",
+          "purpose": "original reference observation,55-action custody and exact shared archive release methods; procedure only",
+          "blob_sha": "6cff292a4198563077de7e876367f93d2fc4bd78"
         }
       ]
     }
