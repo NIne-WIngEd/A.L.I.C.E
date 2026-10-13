@@ -27,15 +27,20 @@ def _seal(row): return {**deepcopy(row),'record_sha256':canonical_sha256(row)}
 def original_copy_decision_view(example,complete_pair,frozen_input,*,pair_sha256,frozen_input_sha256,inventory,
                                 local_uncertainty_refs=()):
     copies._inventory(inventory)
-    need(frozen_input['joint']['record_sha256']==inventory['joint_alignment_sha256'], 'copy actual original joint pin differs')
-    references._pinned(frozen_input['joint'],inventory['joint_alignment_sha256'])
+    _,joint=reference_alignment.source_parts(frozen_input)
+    need(joint['record_sha256']==inventory['joint_alignment_sha256'], 'copy actual original joint pin differs')
+    references._pinned(joint,inventory['joint_alignment_sha256'])
     ref=reference_alignment.reference_decision_view(example,complete_pair,frozen_input,pair_sha256=pair_sha256,
         frozen_input_sha256=frozen_input_sha256,inventory=inventory['reference_inventory'],
         local_uncertainty_refs=local_uncertainty_refs)
-    declarations=complete_pair.get('literal_declarations')
-    # This existing pure geometry function is shared by the original J4/P1 and
-    # private J5/P2 source. It does not invoke either profile's admission reader.
-    literals=original.literal_rows(complete_pair['geometry'],complete_pair['tokens'],frozen_input,declarations)
+    if frozen_input['schema']==reference_alignment.j6_target.paired.INPUT:
+        declarations=reference_alignment.j6_choices(complete_pair,frozen_input)['literal_declarations']
+        literals=reference_alignment.j6_target.literal_rows(
+            complete_pair['geometry'],complete_pair['tokens'],frozen_input,declarations)
+    else:
+        declarations=complete_pair.get('literal_declarations')
+        # The original J4/P1 and private J5/P2 pure geometry remains unchanged.
+        literals=original.literal_rows(complete_pair['geometry'],complete_pair['tokens'],frozen_input,declarations)
     need(complete_pair.get('literal_segments')==literals,'original complete literal declarations/geometry differ')
     decision=deepcopy(ref['decision']);decision['schema']=copies.SCHEMA
     grouped={}

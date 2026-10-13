@@ -37,8 +37,9 @@ def _copy_binding(value):
     for name in ('joint_alignment_sha256','copy_inventory_sha256'):
         if require_sha256(value[name], name) != value[name]:
             raise ValueError('copy pins must be canonical')
-    if value['joint_schema'] not in ('mfm-joint-caller-input-alignment-v4','mfm-joint-caller-input-alignment-v5'):
-        raise ValueError('copy binding requires the actual J4 or J5 original joint schema')
+    if value['joint_schema'] not in ('mfm-joint-caller-input-alignment-v4','mfm-joint-caller-input-alignment-v5',
+                                   'mfm-joint-caller-input-alignment-v6'):
+        raise ValueError('copy binding requires the actual J4, J5 or J6 original joint schema')
     return deepcopy(value)
 
 

@@ -1,0 +1,108 @@
+{
+  "S5_lexical_epochs": 20,
+  "actual_canonical_native_target_labels": [
+    359,
+    575,
+    310,
+    367,
+    658,
+    341
+  ],
+  "actual_mixed_wire_native_geometry_observed_in_this_capture": false,
+  "actual_six_case_corpus_admitted": false,
+  "authored_reference_choices": [
+    6,
+    10,
+    5,
+    8,
+    13,
+    6
+  ],
+  "complete_138_state_lineage_migrated": false,
+  "complete_source_lengths": [
+    22475,
+    28814,
+    38564,
+    42784,
+    52466,
+    52488
+  ],
+  "completed_owner_controls_reused": {
+    "feature": 23,
+    "reference_copy": 20
+  },
+  "connected_train_worlds": 1,
+  "direct_J6_learner_constructed_in_this_capture": false,
+  "evidence_receipt_FILEs": {
+    "work/mfm-first-party-full-source-successor-plan-20261013/j6-material-native-pair-binding-001/actual-001/receipt.json": "7cc8d8706c924e34ba99306367bbd3a4a1694c5b9231bcf27a0259cfca0e45ef",
+    "work/mfm-first-party-full-source-successor-plan-20261013/j6-material15-001/actual-001/receipt.json": "919ba7951107d4258d5d0f6e15f7c7e68b74086a480c3d32c435a345fd215705",
+    "work/mfm-first-party-full-source-successor-plan-20261013/j6-material15-001/readback-001/receipt.json": "102863e33d5fabb71e88bcdd1c0948403443b4212cf0eff9057c28236a3eef4e",
+    "work/mfm-first-party-full-source-successor-plan-20261013/j6-native-target-geometry-observation-001/actual-001/receipt.json": "243c72a17ddde6338859111428e91162a4f1b98e274e21e336cd43273c2dc2a9",
+    "work/mfm-j6-connected-consumer-feature-review-20261013/REVIEW_MANIFEST_001.json": "124548e743f49765719e4d89417ed4359336f70efa106e884af6537a1ebd0d19",
+    "work/mfm-j6-model-consumer-20261013/REVIEW_MANIFEST_001.json": "bf3e2b48b7447c19950da3fbfd5a5f1f6b2c9d6bdb4b367e40a43114f995a421",
+    "work/mfm-j6-paired-successor-review-20261013/REVIEW_MANIFEST_001.json": "c858d5cae40f417351870e3e162175759026dad165a53af3097e9f508cdb1b13",
+    "work/mfm-j6-source-feature-export-20261013/REVIEW_MANIFEST_001.json": "f21ad37d403bc2a3ba73e486821672abcce9c9c9f8f02e750e8a3736b35eac9e"
+  },
+  "full_MFM_qualified": false,
+  "independent_gold": false,
+  "metadata_FileRefs_per_cut": 15,
+  "native_pair_material_rebinding_retains_observed_geometry": true,
+  "new_production_fit_or_capacity_proved": false,
+  "new_source_rights_created": false,
+  "next": "Observe actual lowered mixed-wire queries and connect direct J6 joint learning; preserve complete model state during source-lineage migration, admit real material and construct production features/capacity before fit.",
+  "observed_utc": "2026-10-13T18:59:47.149748+00:00",
+  "privacy": "PUBLIC_METHOD_ONLY",
+  "raw_author_target_separate_from_source": true,
+  "record_sha256": "68e2f0048aea19ef8e28a7ffdca9bf522c4d245c7f442a88257d211e8d3f460a",
+  "reference_copy_consumer": {
+    "actual_initial_and_revision_reconstruction": true,
+    "arithmetic_and_old_align_functions_unchanged": true,
+    "coherently_resealed_wrong_whole_tuple_refused": true
+  },
+  "retained_failures": [
+    "Nested source changed under unchanged external FILE",
+    "Dimension evidence incorrectly defaulted to first copy source",
+    "Full-world and cut-prefix-world identity comparison",
+    "Mechanical native-pair lineage lacked actual material-world identity"
+  ],
+  "root_fresh_verification": {
+    "evidence_receipts_pinned": 8,
+    "independent_review_files_pinned": 94,
+    "source_files_parsed_and_pinned": 9
+  },
+  "schema": "mfm-complete-j6-material-and-consumer-construction-public-v1",
+  "source_FILEs": {
+    "scripts/mfm/export_joint_source_features.py": "d0b475350085ad62fc678352b42aea9fb496124b7969db9181387b312066a8fb",
+    "scripts/mfm/formation_joint_target_alignment_v6.py": "49cab32fec7ad1a463a672ba743744340bbe42812fb80fc0ba290dc61b808337",
+    "scripts/mfm/formation_original_copy_target_alignment.py": "8f209fc5ac4c12662c9ce2d3e720a3103dd1c5452c10a59742d8dcd005e79d71",
+    "scripts/mfm/formation_paired_teaching_v6.py": "a61c429517ceb121fcbb18dd9c4983e8fbda7735245b4f1fb752d22931999bf6",
+    "scripts/mfm/formation_reference_target_alignment.py": "c226dda2a74f29d701fbd21e42e6e734091cc8fc1e681b51cf4e17393f37bc7f",
+    "src/cognitive_kernel/formation_original_copy_specialist.py": "8e7049bb117911f0d973f76932f08c31729eee348b23323ed5f1fdf50478c2c7",
+    "src/cognitive_kernel/formation_reference_decision.py": "706a633aa88b695198b1b49db93ad60dcbfb0a5255af0946e9823b7772aecb3e",
+    "tests/governance/test_mfm_joint_source_features.py": "11015923781a6fd6749619903949b3eb9b9ce44a6b63307f5b3f7cdf12a9d561",
+    "tests/governance/test_mfm_paired_teaching_v6.py": "be561f3889e3ac8b96dae1ca15bee8781e91a3e98c8f88dbbb285716b9f09325"
+  },
+  "source_features": {
+    "default_fixture_consumption_refused": true,
+    "fixture_source_positions": 22475,
+    "fixture_width": 4,
+    "native_fields": [
+      "input_ids",
+      "attention_mask",
+      "mm_token_type_ids"
+    ],
+    "production_Gemma_forward_observed": false,
+    "profile": "j6-source-only"
+  },
+  "source_first_external_FILE_join_before_author": true,
+  "stress_draft": "parked",
+  "trace_id": "fbm-mfm-20261013-complete-j6-material-and-existing-consumer-construction-137",
+  "whole_copy_segments": [
+    1,
+    1,
+    1,
+    1,
+    2,
+    1
+  ]
+}

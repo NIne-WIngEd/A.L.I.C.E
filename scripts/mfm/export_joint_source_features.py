@@ -1,6 +1,6 @@
 """Frozen complete text source states for the native joint formation decoder.
 
-This consumes an already frozen, target-free J4/P1 or J5/P2 source packet. It
+This consumes an already frozen, target-free J4/P1, J5/P2 or J6 source packet. It
 does not acquire corpus material, admit rights, create targets, or fit a model.
 """
 from __future__ import annotations
@@ -27,6 +27,9 @@ CASE_KEYS = frozenset({'case_id', 'profile', 'caller', 'meaning', 'source_kwargs
                        'frozen_batch', 'frozen_alignment'})
 TEXT_FIELDS = frozenset({'input_ids', 'attention_mask', 'token_type_ids',
                          'position_ids', 'mm_token_type_ids'})
+J6_CASE_KEYS = frozenset({'case_id', 'profile', 'source_file', 'source_file_sha256',
+                         'source_record_sha256', 'j5_file_sha256',
+                         'proposed_max_source_tokens'})
 
 
 def _need(ok, message):
@@ -146,6 +149,8 @@ def _base_binding(base, weight_path, weight_sha, config_path, config_sha,
 
 
 def _preflight_case(case, processor, j5_source):
+    if type(case) is dict and case.get('profile') == 'j6-source-only':
+        return _preflight_j6(case, processor, j5_source)
     _need(type(case) is dict and set(case) == CASE_KEYS, 'target-free source case shape differs')
     name = case['case_id']
     _need(type(name) is str and require_identifier(name, 'case_id') == name,
@@ -178,6 +183,58 @@ def _preflight_case(case, processor, j5_source):
     _need(actual['teacher_accessed'] is False and actual['native_locator_alignment'] is False,
           'unsupported source profile')
     return module, batch, actual, plain
+
+
+def _preflight_j6(case, processor, j5_source):
+    """Read the externally pinned complete observation; never retokenize it."""
+    from scripts.mfm import formation_joint_input_v6 as j6
+
+    _need(type(case) is dict and set(case) == J6_CASE_KEYS and
+          case['profile'] == 'j6-source-only', 'target-free J6 source case differs')
+    _need(type(case['case_id']) is str and
+          require_identifier(case['case_id'], 'case_id') == case['case_id'],
+          'noncanonical J6 case ID')
+    _need(type(case['source_file']) is str and bool(case['source_file']),
+          'physical J6 source path required')
+    for key in ('source_file_sha256', 'source_record_sha256', 'j5_file_sha256'):
+        require_sha256(case[key], key)
+    raw = Path(case['source_file']).read_bytes()
+    _need(sha256(raw).hexdigest() == case['source_file_sha256'],
+          'physical J6 source FILE differs')
+    def unique(pairs):
+        row = {}
+        for key, value in pairs:
+            _need(key not in row, 'duplicate J6 source JSON key')
+            row[key] = value
+        return row
+    frozen = json.loads(raw.decode('utf-8'), object_pairs_hook=unique)
+    _need(type(frozen) is dict and frozen.get('record_sha256') ==
+          case['source_record_sha256'], 'external J6 source record differs')
+    j6.validate_frozen_source(j5_source, frozen,
+        j5_file_sha256=case['j5_file_sha256'],
+        proposed_max_source_tokens=case['proposed_max_source_tokens'])
+    alignment = frozen['alignment']
+    if processor is not None:
+        _need(_same(source.processor_binding(processor), alignment['processor_binding']),
+              'actual J6 processor binding differs')
+    batch = {key: torch.tensor(frozen['native_batch'][key], dtype=torch.int64)
+             for key in j6.NATIVE_FIELDS}
+    return j6, batch, alignment, _batch_plain(batch)
+
+
+def _j6_binding(case, alignment):
+    return {key: case[key] for key in ('source_file_sha256', 'source_record_sha256',
+            'j5_file_sha256', 'proposed_max_source_tokens')} | {
+        'source_identity': alignment['source_identity'],
+        'construction_only': True, 'capacity_admitted': False,
+        'training_authorized': False, 'current_service_authenticated': False}
+
+
+def _bracket_j6_files(cases):
+    for case in cases:
+        if case['profile'] == 'j6-source-only':
+            _need(_digest(case['source_file']) == case['source_file_sha256'],
+                  'physical J6 source changed during representation')
 
 
 def _tensor_check(tensors, row, width):
@@ -261,6 +318,8 @@ def _export_bank(root, *, cases, processor, base, j5_source, base_weight_path,
                 'alignment_sha256': alignment['record_sha256'], 'cache': alignment['cache'],
                 'frozen_batch': plain, 'code': code, 'base': binding,
                 'target_visible_to_backbone': False, 'whole_source': True}
+        if case['profile'] == 'j6-source-only':
+            core['j6_source'] = _j6_binding(case, alignment)
         _tensor_check(tensors, core, binding['hidden_width'])
         save_file(tensors, str(path))
         with path.open('r+b') as stream:
@@ -273,6 +332,7 @@ def _export_bank(root, *, cases, processor, base, j5_source, base_weight_path,
                                 {**core, 'features_file_sha256': _digest(path)})
         receipts.append({'case_id': case['case_id'],
                          'receipt_sha256': receipt['record_sha256']})
+    _bracket_j6_files(cases)
     roster = _write_record(root / 'roster.json',
                            {'schema': SCHEMA, 'base': binding, 'cases': receipts,
                             'target_visible_to_backbone': False,
@@ -362,6 +422,10 @@ def export_prepared_bank(root, *, prepared_base_dir, cases, j5_source,
                 row['source_kwargs']['max_source_tokens'] == 32768))
               for row in cases),
           'retained private J5 complete source budget differs')
+    # Refuse changed physical J6 observations before any prepared weight loader.
+    j6_preflight = {index: _preflight_j6(row, None, j5_source)
+                    for index, row in enumerate(cases)
+                    if row.get('profile') == 'j6-source-only'}
     first = _verified_prepared(None, receipt_path, prepared,
                                expected_prepared_receipt_file_sha256,
                                expected_prepared_receipt_sha256,
@@ -377,7 +441,16 @@ def export_prepared_bank(root, *, prepared_base_dir, cases, j5_source,
           'prepared clone source weight/config recipe differs')
     processor = AutoProcessor.from_pretrained(str(prepared), local_files_only=True,
                                               trust_remote_code=False)
-    preflight = [_preflight_case(row, processor, j5_source) for row in cases]
+    preflight = []
+    for index, row in enumerate(cases):
+        if index in j6_preflight:
+            observed = j6_preflight[index]
+            _need(_same(source.processor_binding(processor), observed[2]['processor_binding']),
+                  'actual J6 processor binding differs')
+            preflight.append(observed)
+        else:
+            preflight.append(_preflight_case(row, processor, j5_source))
+    _bracket_j6_files(cases)
     names = [row['case_id'] for row in cases]
     _need(len(set(names)) == len(names) and
           canonical_sha256(cases) == expected_cases_sha256,
@@ -414,12 +487,14 @@ def export_prepared_bank(root, *, prepared_base_dir, cases, j5_source,
                        expected_prepared_receipt_sha256,
                        expected_parent_source_receipt_sha256)
     _need(not root.exists(), 'immutable feature output appeared during export')
+    _bracket_j6_files(cases)
     staging.rename(root)
     return roster
 
 
 def read_case(root, *, roster_sha256, case_id, expected_alignment_sha256,
-              expected_cache, j5_source=None, allow_fixture=False):
+              expected_cache, j5_source=None, allow_fixture=False,
+              expected_j6_source=None):
     """Revalidate immutable source and complete representation at consumption."""
     require_identifier(case_id, 'case_id')
     require_sha256(expected_alignment_sha256, 'source alignment digest')
@@ -444,12 +519,24 @@ def read_case(root, *, roster_sha256, case_id, expected_alignment_sha256,
           'feature case files differ')
     receipt = _read_record(directory / 'receipt.json', CASE_SCHEMA,
                            matches[0]['receipt_sha256'])
-    module, _ = _source_api(receipt['profile'], j5_source if receipt['profile'] == 'j5-p2' else None)
+    if receipt['profile'] == 'j6-source-only':
+        module, _, alignment, plain = _preflight_j6(expected_j6_source, None, j5_source)
+        _need(expected_j6_source['case_id'] == case_id and
+              _same(receipt['j6_source'], _j6_binding(expected_j6_source, alignment)) and
+              alignment['record_sha256'] == expected_alignment_sha256 and
+              _same(alignment['cache'], expected_cache) and
+              _same(receipt['frozen_batch'], plain) and
+              _same(receipt['code']['processor_binding'], alignment['processor_binding']),
+              'complete physical J6 feature source binding differs')
+        live_binding = alignment['code_binding']
+    else:
+        _need(expected_j6_source is None, 'J6 source cannot relabel an older feature profile')
+        module, _ = _source_api(receipt['profile'], j5_source if receipt['profile'] == 'j5-p2' else None)
+        live_binding = (module.joint_code_binding_v4() if receipt['profile'] == 'j4-p1'
+                        else module.joint_code_binding_v5())
     _need(_digest(module.__file__) == receipt['code']['source_module_sha256'] and
           _digest(__file__) == receipt['code']['exporter_sha256'] and
-          _same(receipt['code']['source_code_binding'],
-                module.joint_code_binding_v4() if receipt['profile'] == 'j4-p1'
-                else module.joint_code_binding_v5()),
+          _same(receipt['code']['source_code_binding'], live_binding),
           'live original source interface differs')
     _need(receipt['case_id'] == case_id and _same(receipt['base'], roster['base']) and
           receipt['alignment_sha256'] == expected_alignment_sha256 and
@@ -460,4 +547,6 @@ def read_case(root, *, roster_sha256, case_id, expected_alignment_sha256,
           'independent source/feature binding differs')
     tensors = load_file(str(directory / 'features.safetensors'), device='cpu')
     _tensor_check(tensors, receipt, roster['base']['hidden_width'])
+    if expected_j6_source is not None:
+        _bracket_j6_files([expected_j6_source])
     return receipt, tensors

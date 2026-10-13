@@ -11,17 +11,59 @@ from cognitive_kernel import formation_decision_v16 as local, formation_learning
 from cognitive_kernel import formation_reference_decision as references
 from . import formation_joint_target_alignment as original, formation_target_alignment as geometry_api
 from . import formation_source_alignment as source, formation_paired_teaching as paired
+from . import formation_joint_target_alignment_v6 as j6_target
 
 VIEW_SCHEMA = 'mfm-formation-reference-target-view-v1'
 ALIGNMENT_SCHEMA = 'mfm-formation-reference-decision-token-alignment-v1'
 PROFILES = {
     'mfm-paired-supplied-input-v1': ('mfm-joint-caller-input-alignment-v4', 'mfm-paired-supplied-joint-target-geometry-v1'),
     'mfm-paired-supplied-j5-input-v1': ('mfm-joint-caller-input-alignment-v5', 'mfm-paired-supplied-j5-joint-target-geometry-v1'),
+    j6_target.paired.INPUT: ('mfm-joint-caller-input-alignment-v6', j6_target.PAIR),
 }
 
 
 def _seal(row):
     return {**deepcopy(row), 'record_sha256': canonical_sha256(row)}
+
+
+def source_parts(frozen_input):
+    """Select actual source locations; full original/material admission is upstream."""
+    if frozen_input.get('schema') != j6_target.paired.INPUT:
+        return frozen_input['caller'], frozen_input['joint']
+    need = references._require
+    saved = frozen_input['source']
+    references._pinned(saved, saved['record_sha256'])
+    need(saved.get('schema') == 'mfm-full-source-text-construction-freeze-v6' and
+         sha256(canonical_json_bytes(saved) + b'\n').hexdigest() == frozen_input['source_file_sha256'],
+         'original nested J6 source FILE differs')
+    caller, joint = saved['caller'], saved['alignment']
+    references._pinned(caller, caller['record_sha256'])
+    references._pinned(joint, joint['record_sha256'])
+    need(joint.get('schema') == 'mfm-joint-caller-input-alignment-v6' and
+         canonical_sha256(frozen_input['source_cache']) == canonical_sha256(joint['cache']) and
+         canonical_sha256(frozen_input['processor_binding']) == canonical_sha256(joint['processor_binding']) and
+         canonical_sha256(frozen_input['native_batch']) == canonical_sha256(saved['native_batch']) and
+         canonical_sha256(saved['native_batch']) == canonical_sha256({key: [joint[key]]
+             for key in ('input_ids', 'attention_mask', 'mm_token_type_ids')}),
+         'original nested J6 native/cache/processor join differs')
+    return caller, joint
+
+
+def j6_choices(complete_pair, frozen_input):
+    """Bind the exact original authored choice bytes before metadata lowering."""
+    need = references._require
+    raw = bytes.fromhex(complete_pair['original_choice_hex'])
+    choice = j6_target.paired.pinned(raw, complete_pair['choice_file_sha256'], j6_target.CHOICES)
+    need(canonical_sha256(choice) == canonical_sha256(complete_pair['choice_packet']) and
+         choice['input_freeze_sha256'] == frozen_input['record_sha256'] and
+         choice['target_record_sha256'] == complete_pair['target_record_sha256'] and
+         choice['author_provenance_file_sha256'] == complete_pair['author_provenance_file_sha256'] and
+         choice['whole_literal_inventory_complete'] is True and
+         complete_pair['source_file_sha256'] == frozen_input['source_file_sha256'] and
+         canonical_sha256(complete_pair['source_cache']) == canonical_sha256(frozen_input['source_cache']) and
+         canonical_sha256(complete_pair['native_batch']) == canonical_sha256(frozen_input['native_batch']),
+         'original J6 choice FILE/source/ancestry join differs')
+    return choice
 
 
 def reference_decision_view(example, complete_pair, frozen_input, *, pair_sha256, frozen_input_sha256,
@@ -35,15 +77,17 @@ def reference_decision_view(example, complete_pair, frozen_input, *, pair_sha256
     references._pinned(frozen_input, frozen_input_sha256); references._pinned(complete_pair, pair_sha256)
     references._inventory(inventory)
     profile = PROFILES.get(frozen_input.get('schema'))
-    need(profile is not None and frozen_input['joint']['schema'] == profile[0] == inventory['source_profile'] and
+    need(profile is not None, 'original frozen-input profile differs')
+    caller, joint = source_parts(frozen_input)
+    need(joint['schema'] == profile[0] == inventory['source_profile'] and
          complete_pair.get('schema') == profile[1], 'original frozen-input/pair/joint profile differs')
     need(complete_pair['input_freeze_sha256'] == frozen_input_sha256 and
-         frozen_input['caller']['record_sha256'] == inventory['binding']['caller_sha256'] and
-         frozen_input['joint']['candidate_inventory_sha256'] == inventory['binding']['candidate_inventory_sha256'] and
-         frozen_input['joint']['cache'] == {k: inventory['binding'][k] for k in ('processed_view_sha256', 'provenance_sha256')} and
-         complete_pair['processor_binding'] == frozen_input['joint']['processor_binding'] == inventory['processor_binding'],
+         caller['record_sha256'] == inventory['binding']['caller_sha256'] and
+         joint['candidate_inventory_sha256'] == inventory['binding']['candidate_inventory_sha256'] and
+         joint['cache'] == {k: inventory['binding'][k] for k in ('processed_view_sha256', 'provenance_sha256')} and
+         complete_pair['processor_binding'] == joint['processor_binding'] == inventory['processor_binding'],
          'original pair caller/processed-view/provenance/processor binding differs')
-    caller_context, opened, _ = references.caller_api.caller_input_from_record(frozen_input['caller'])
+    caller_context, opened, _ = references.caller_api.caller_input_from_record(caller)
     need(example.context.record() == caller_context.record() and example.opened_sources == opened,
          'complete target example differs from frozen caller')
     record = learning.supervised_output_record_v16(example)
@@ -59,7 +103,11 @@ def reference_decision_view(example, complete_pair, frozen_input, *, pair_sha256
     need(rows == rebuilt and inputs[1:] == labels[:-1] == [r['token_id'] for r in rows] and
          len(inputs) == len(labels) == len(rows) + 1 and inputs[0] == wrapper['bos_token_id'] and
          labels[-1] == wrapper['eos_token_id'], 'complete original target shift differs')
-    normative = original.field_rows(geometry, frozen_input, complete_pair['annotations'])
+    if frozen_input['schema'] == j6_target.paired.INPUT:
+        choice = j6_choices(complete_pair, frozen_input)
+        normative = j6_target.field_rows(geometry, frozen_input, choice['field_annotations'])
+    else:
+        normative = original.field_rows(geometry, frozen_input, complete_pair['annotations'])
     need(complete_pair['fields'] == normative, 'complete original field/explicit ordinal annotations differ')
     decision = local.decision_record(example, local_uncertainty_refs=local_uncertainty_refs)
     decision['schema'] = references.SCHEMA

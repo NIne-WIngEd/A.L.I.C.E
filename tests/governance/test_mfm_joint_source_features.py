@@ -12,7 +12,7 @@ from unittest.mock import Mock, patch
 
 import torch
 
-from cognitive_kernel.canonical import canonical_sha256
+from cognitive_kernel.canonical import canonical_json_bytes, canonical_sha256
 from scripts.mfm import formation_joint_input_v4 as J, formation_source_alignment as S
 from scripts.mfm.export_joint_source_features import export_bank, read_case
 from scripts.mfm import export_joint_source_features as features
@@ -594,6 +594,104 @@ class PreparedLoadPathTests(unittest.TestCase):
             self.assertEqual(feature['base']['prepared_base']['receipt_sha256'], row['receipt_sha256'])
             self.assertEqual(tensors['states'].shape,
                              (1, len(alignment['input_ids']), 3840))
+
+
+class J6SourceFeatureTests(NativeTextFieldTests):
+    """Actual saved geometry through a tiny frozen backbone, no capacity claim."""
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        from scripts.mfm import formation_joint_input_v6 as j6
+        cls.j6 = j6
+        name = 'scripts.mfm.formation_joint_input_v5'
+        path = Path(__file__).resolve().parents[3] / 'mfm-joint-original-inventory-roundtrip-design-20261011/construction-001/formation_joint_input_v5.py'
+        spec = importlib.util.spec_from_file_location(name, path)
+        cls.j5 = importlib.util.module_from_spec(spec)
+        sys.modules[name] = cls.j5
+        spec.loader.exec_module(cls.j5)
+        cls.j5_sha = sha256(path.read_bytes()).hexdigest()
+        original = fixture.CompleteSemanticTests()
+        bundle = original.bundle
+        kw = original.arguments(cls.processor)
+        batch, alignment = j6.joint_source_batch_with_alignment_v6(
+            cls.j5, cls.processor, bundle['caller'], bundle['meaning'],
+            caller_sha256=kw['caller_sha256'], meaning_sha256=kw['meaning_sha256'],
+            render_policy=cls.j5.normative_joint_render_policy_v5(),
+            processor_binding=kw['processor_binding'], source_identity=kw['source_identity'],
+            proposed_max_source_tokens=200000, j5_file_sha256=cls.j5_sha)
+        cls.frozen = j6.freeze_source(cls.j5, bundle['caller'], bundle['meaning'],
+            alignment, {k: v.tolist() for k, v in batch.items()},
+            j5_file_sha256=cls.j5_sha, proposed_max_source_tokens=200000,
+            cut_id='fixture-cut', expected_cut_sha256=bundle['meaning']['episode_snapshot']['historical_prefix_proof']['cut']['record_sha256'])
+
+    def setUp(self):
+        super().setUp()
+        self.source_path = self.root / 'source.json'
+        self.source_path.write_bytes(canonical_json_bytes(self.frozen) + b'\n')
+        self.j6_case = dict(case_id='j6-source', profile='j6-source-only',
+            source_file=str(self.source_path), source_file_sha256=sha256(self.source_path.read_bytes()).hexdigest(),
+            source_record_sha256=self.frozen['record_sha256'], j5_file_sha256=self.j5_sha,
+            proposed_max_source_tokens=200000)
+
+    def export_j6(self):
+        return export_bank(self.root / 'j6-bank', cases=[self.j6_case],
+            processor=self.processor, base=self.base, j5_source=self.j5,
+            base_weight_path=self.weight, base_weight_sha256=sha256(self.weight.read_bytes()).hexdigest(),
+            base_config_path=self.config, base_config_sha256=sha256(self.config.read_bytes()).hexdigest(),
+            runtime={'torch_version': torch.__version__, 'transformers_version': 'fixture'},
+            fixture_small_width=True)
+
+    def read_j6(self, roster, **extra):
+        return read_case(self.root / 'j6-bank', roster_sha256=roster['record_sha256'],
+            case_id='j6-source', expected_alignment_sha256=self.frozen['alignment']['record_sha256'],
+            expected_cache=self.frozen['alignment']['cache'], j5_source=self.j5,
+            expected_j6_source=self.j6_case, **extra)
+
+    def test_j6_complete_native_backbone_and_physical_readback(self):
+        roster = self.export_j6()
+        row, tensors = self.read_j6(roster, allow_fixture=True)
+        self.assertEqual(set(tensors), {'states', *self.j6.NATIVE_FIELDS})
+        self.assertEqual(set(self.base.model.native_inputs), {'mm_token_type_ids'})
+        for key in self.j6.NATIVE_FIELDS:
+            self.assertTrue(torch.equal(tensors[key], torch.tensor(self.frozen['native_batch'][key])))
+        self.assertTrue(torch.equal(tensors['states'], self.base.model.embedding(tensors['input_ids'])))
+        self.assertFalse(row['j6_source']['capacity_admitted'])
+        self.assertEqual(row['j6_source']['source_file_sha256'], self.j6_case['source_file_sha256'])
+        with self.assertRaisesRegex(ValueError, 'fixture representation'):
+            self.read_j6(roster)
+        self.source_path.write_bytes(self.source_path.read_bytes() + b' ')
+        with self.assertRaisesRegex(ValueError, 'physical J6 source'):
+            self.read_j6(roster, allow_fixture=True)
+
+    def test_j6_changed_original_refuses_before_backbone(self):
+        self.source_path.write_bytes(self.source_path.read_bytes() + b' ')
+        with self.assertRaisesRegex(ValueError, 'physical J6 source'):
+            self.export_j6()
+        self.assertEqual(self.base.model.calls, 0)
+        self.assertFalse((self.root / 'j6-bank').exists())
+
+    def test_j6_target_operand_and_wrong_processor_refuse_before_backbone(self):
+        self.j6_case['target'] = {'answer': 'not a source operand'}
+        with self.assertRaisesRegex(ValueError, 'target-free J6'):
+            self.export_j6()
+        del self.j6_case['target']
+        with patch.object(features.source, 'processor_binding', return_value={}):
+            with self.assertRaisesRegex(ValueError, 'actual J6 processor binding'):
+                self.export_j6()
+        self.assertEqual(self.base.model.calls, 0)
+        self.assertFalse((self.root / 'j6-bank').exists())
+
+    def test_j6_observation_change_during_forward_prevents_bank_publication(self):
+        original = self.base.model.forward
+        def mutate(**kwargs):
+            result = original(**kwargs)
+            self.source_path.write_bytes(self.source_path.read_bytes() + b' ')
+            return result
+        with patch.object(self.base.model, 'forward', side_effect=mutate):
+            with self.assertRaisesRegex(ValueError, 'physical J6 source changed'):
+                self.export_j6()
+        self.assertEqual(self.base.model.calls, 1)
+        self.assertFalse((self.root / 'j6-bank' / 'roster.json').exists())
 
 
 if __name__ == '__main__':

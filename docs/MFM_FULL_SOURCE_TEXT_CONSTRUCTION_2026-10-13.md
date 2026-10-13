@@ -32,3 +32,11 @@ unauthored and whole copy alternatives remain incomplete. A valid shape,
 matching source span or uniquely available candidate does not supply the
 author's decision. The separately versioned J6 paired target/geometry is
 under construction; these drafts have not entered fitting.
+
+The later [complete material and consumer checkpoint](MFM_COMPLETE_TEXT_JOINT_MATERIAL_2026-10-13.md)
+supersedes this incomplete-authoring snapshot for construction status. All six
+current targets and explicit reference/copy choices are now authored, observed
+through the actual native target processor, and bound to fifteen-FileRef material.
+J6 source-only feature and existing reference/copy consumer joins are reviewed.
+Direct J6 joint learning and production admission/features/capacity remain pending;
+the older snapshot and its original unknown labels are preserved as history.

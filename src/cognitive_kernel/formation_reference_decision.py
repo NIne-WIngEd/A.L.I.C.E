@@ -14,7 +14,8 @@ from scripts.mfm import formation_field_responsibility as fields
 
 SCHEMA = 'mfm-formation-decision-v1.6-caller-references-v1'
 BINDING_FIELDS = {'caller_sha256', 'candidate_inventory_sha256', 'processed_view_sha256', 'provenance_sha256'}
-JOINT_SCHEMAS = {'mfm-joint-caller-input-alignment-v4', 'mfm-joint-caller-input-alignment-v5'}
+JOINT_SCHEMAS = {'mfm-joint-caller-input-alignment-v4', 'mfm-joint-caller-input-alignment-v5',
+                 'mfm-joint-caller-input-alignment-v6'}
 CANDIDATE_FIELDS = {'slot', 'ref_id', 'kind', 'origin', 'namespace', 'eligible_paths',
                     'meaning_token_indices', 'index_token_indices', 'independent_observation'}
 
@@ -58,7 +59,7 @@ def _inventory(inventory):
 def bind_reference_inventory(caller, joint_alignment, *, caller_sha256, joint_alignment_sha256, expected_binding):
     """Bind already supplied joint metadata to the actual input-only caller roster.
 
-    Whole J4/J5 source/feature admission remains with its original reader; this
+    Whole J4/J5/J6 source/feature admission remains with its original reader; this
     metadata join does not authenticate a service or manufacture processed data.
     """
     _binding(expected_binding); _pinned(caller, caller_sha256); _pinned(joint_alignment, joint_alignment_sha256)
