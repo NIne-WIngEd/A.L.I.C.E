@@ -49,3 +49,16 @@ full-world/prefix-world and placeholder-lineage failures. Fifteen source FileRef
 and authored controls do not grant rights, prove independence or train a model.
 The next procedure is direct J6 joint learning with complete138-state lineage
 migration and real admitted production inputs; no head reset or epoch replay.
+
+TRACE138 connects actual native mixed-wire geometry to the existing direct
+learner. Observe the real query positions and whole-copy literals separately
+from saved-alignment replay in source controls. Derive complete proof/delivery
+rosters from the original bundle before trusting a resealed material manifest;
+retain the original omitted-roster acceptance and verify the same mutations
+refuse while the genuine complete input passes. Preserve all three native source
+fields and the real connected world/cut/variant mass. Complete annotations are
+distinct from positive role coverage: the current six cuts have seven of ten
+positive dimensions and do not supply admitted rights, separate development,
+production features, capacity or learned joint behavior. Continue whole-state
+source migration and broader grounded material without resetting heads or
+extending the completed twenty lexical epochs.
