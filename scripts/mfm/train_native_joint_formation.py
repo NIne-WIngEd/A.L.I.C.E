@@ -30,10 +30,12 @@ from scripts.mfm import formation_source_alignment as source
 
 
 PROGRAM_SCHEMA = 'mfm-native-joint-fit-program-v1'
+J6_PROGRAM_SCHEMA = 'mfm-native-joint-j6-fit-program-v2'
 RECIPE_SCHEMA = 'mfm-native-joint-fit-recipe-v1'
 CHECKPOINT_SCHEMA = 'mfm-native-joint-owned-checkpoint-v1'
 PAIR_AUTHORING_SCHEMA = 'mfm-native-joint-pair-authoring-v1'
 P2_SUCCESSOR_AUTHORING_SCHEMA = 'mfm-native-joint-p2-successor-authoring-v1'
+J6_SUCCESSOR_AUTHORING_SCHEMA = 'mfm-native-joint-j6-model-author-conversion-v1'
 
 
 def _need(condition, message):
@@ -174,6 +176,105 @@ def lower_original_case(*, profile, frozen, accepted, pair, expected, processor,
             'authored_copy_tuples': deepcopy(view['authored_copy_tuples'])}
 
 
+def lower_j6_original_case(*, frozen, accepted, pair, source_descriptor,
+                           migration_reader, j5_source, processor,
+                           max_target_tokens, material15_file_sha256):
+    """Lower one complete J6 original through the existing copy consumer."""
+    from scripts.mfm import formation_joint_input_v6 as j6
+    from scripts.mfm import formation_paired_teaching_v6 as j6_paired
+    from scripts.mfm import formation_joint_target_alignment_v6 as j6_target
+
+    require_sha256(material15_file_sha256, 'physical J6 material15 FILE')
+    _need(type(max_target_tokens) is int and max_target_tokens > 0 and
+          type(source_descriptor) is dict and
+          type(frozen) is dict and type(accepted) is dict and type(pair) is dict,
+          'complete J6 original lowering operands required')
+    _need(type(pair.get('max_target_tokens')) is int and
+          max_target_tokens == pair['max_target_tokens'],
+          'J6 original and mixed-wire target budget must be identical')
+    _need(source_descriptor['profile'] == 'j6-source-only' and
+          source_descriptor['case_id'] == frozen['split_row']['case_id'] and
+          source_descriptor['source_file_sha256'] == frozen['source_file_sha256'] and
+          source_descriptor['source_record_sha256'] == frozen['source']['record_sha256'] and
+          source_descriptor['j5_file_sha256'] == _file_sha256(j5_source.__file__) and
+          source_descriptor['proposed_max_source_tokens'] ==
+              frozen['proposed_max_source_tokens'],
+          'material-derived J6 source descriptor differs')
+    j6_paired.validate_input(j5_source, j6, frozen,
+        expected_input_sha256=frozen['record_sha256'],
+        expected_source_file_sha256=source_descriptor['source_file_sha256'],
+        migration_reader=migration_reader)
+    _need(frozen['split_row']['split'] == 'train' and
+          frozen['training_authorized'] is False and
+          frozen['current_service_authenticated'] is False and
+          frozen['capacity_admitted'] is False and
+          accepted['training_authorized'] is False and
+          accepted['authenticated_service'] is False and
+          accepted['independent_gold'] is False,
+          'J6 construction records cannot claim authority or capacity')
+    example, _ = j6_paired.require_complete_labels(frozen, accepted)
+    j6_target.validate_pair(pair, frozen, accepted,
+        expected_pair_sha256=pair['record_sha256'])
+    actual_processor = source.processor_binding(processor)
+    _need(canonical_sha256(actual_processor) ==
+          canonical_sha256(frozen['processor_binding']) and
+          canonical_sha256(pair['processor_binding']) ==
+          canonical_sha256(actual_processor),
+          'J6 actual processor/source/target binding differs')
+    source_freeze = frozen['source']
+    joint = source_freeze['alignment']
+    caller = source_freeze['caller']
+    _need(joint['record_sha256'] == frozen['source']['alignment']['record_sha256'] and
+          canonical_sha256(frozen['source_cache']) ==
+              canonical_sha256(joint['cache']) and
+          canonical_sha256(frozen['native_batch']) ==
+              canonical_sha256(source_freeze['native_batch']) and
+          frozen['world_sha256'] == source_freeze['world_sha256'] and
+          frozen['cut_sha256'] == source_freeze['cut_sha256'],
+          'whole J6 source/native/world/cut differs')
+    world_id = frozen['split_row']['lineage']['world']
+    require_identifier(world_id, 'J6 connected world ID')
+    binding = {'caller_sha256': caller['record_sha256'],
+               'candidate_inventory_sha256': joint['candidate_inventory_sha256'],
+               **joint['cache']}
+    inventory = copies.bind_original_copy_inventory(caller, joint,
+        caller_sha256=caller['record_sha256'],
+        joint_alignment_sha256=joint['record_sha256'],
+        expected_binding=binding)
+    view = mixed.original_copy_decision_view(example, pair, frozen,
+        pair_sha256=pair['record_sha256'],
+        frozen_input_sha256=frozen['record_sha256'], inventory=inventory)
+    _need(len(view['authored_ordinals']) == len(view['reference_leaves']) and
+          len(view['authored_copy_tuples']['rows']) == len(view['copy_leaves']) and
+          all(type(row['alternatives']) is list and row['alternatives']
+              for row in view['authored_copy_tuples']['rows']),
+          'complete J6 authored ordinal/copy alternatives required')
+    alignment = mixed.align_original_copy_decision_target(processor, view,
+        view_sha256=view['record_sha256'],
+        max_target_tokens=max_target_tokens)
+    _need(canonical_sha256(source.processor_binding(processor)) ==
+          canonical_sha256(actual_processor),
+          'J6 target processor changed during mixed-wire lowering')
+    return {'profile': 'j6-firstparty-successor',
+            'case_id': frozen['split_row']['case_id'],
+            'split_row': deepcopy(frozen['split_row']),
+            'original_frozen_sha256': frozen['record_sha256'],
+            'original_target_file_sha256': accepted['original_target_file_sha256'],
+            'original_pair_sha256': pair['record_sha256'],
+            'world_sha256': frozen['world_sha256'],
+            'mass_world_id': world_id, 'cut_sha256': frozen['cut_sha256'],
+            'material15_file_sha256': material15_file_sha256,
+            'source_file_sha256': frozen['source_file_sha256'],
+            'source_alignment_sha256': joint['record_sha256'],
+            'source_cache': deepcopy(joint['cache']),
+            'source_projection': deepcopy(frozen['native_batch']),
+            'source_descriptor': deepcopy(source_descriptor),
+            'inventory': inventory, 'target_view': view,
+            'alignment': alignment, 'decision': deepcopy(view['decision']),
+            'authored_ordinals': deepcopy(view['authored_ordinals']),
+            'authored_copy_tuples': deepcopy(view['authored_copy_tuples'])}
+
+
 def join_frozen_source(lowered, *, feature_root, feature_roster_sha256,
                        j5_source=None, allow_fixture=False):
     """Read back the entire saved native batch and detached source states."""
@@ -182,10 +283,13 @@ def join_frozen_source(lowered, *, feature_root, feature_roster_sha256,
         roster_sha256=feature_roster_sha256, case_id=lowered['case_id'],
         expected_alignment_sha256=lowered['source_alignment_sha256'],
         expected_cache=lowered['source_cache'], j5_source=j5_source,
-        allow_fixture=allow_fixture)
-    _need(receipt['profile'] == lowered['profile'] and
-          canonical_sha256({key: receipt['frozen_batch'][key]
-                            for key in ('input_ids', 'attention_mask')}) ==
+        allow_fixture=allow_fixture,
+        expected_j6_source=lowered.get('source_descriptor'))
+    j6 = lowered['profile'] == 'j6-firstparty-successor'
+    fields = ('input_ids', 'attention_mask', 'mm_token_type_ids') if j6 else (
+        'input_ids', 'attention_mask')
+    _need(receipt['profile'] == ('j6-source-only' if j6 else lowered['profile']) and
+          canonical_sha256({key: receipt['frozen_batch'][key] for key in fields}) ==
           canonical_sha256(lowered['source_projection']) and
           torch.equal(tensors['attention_mask'], torch.tensor(
               lowered['inventory']['source_geometry']['attention_mask']).unsqueeze(0)),
@@ -253,20 +357,26 @@ def preflight_admitted_cases(*, admission_manifest_path, admission_manifest_sha2
         _need(case_id in admitted_by_id and case_id not in seen and
               case_id == frozen['split_row']['case_id'] and
               lowered['original_frozen_sha256'] == frozen['record_sha256'] and
-              lowered['original_target_file_sha256'] == accepted['target_file_sha256'] and
+              lowered['original_target_file_sha256'] == accepted[
+                  'original_target_file_sha256' if lowered['profile'] ==
+                  'j6-firstparty-successor' else 'target_file_sha256'] and
               frozen['split_row']['split'] == 'train',
               'admitted train case and original lowerer differ')
         seen.add(case_id)
-        _need(lowered['profile'] in ('j4-p1', 'j5-p2'),
+        _need(lowered['profile'] in ('j4-p1', 'j5-p2',
+                                      'j6-firstparty-successor'),
               'unknown original source profile')
-        context, opened, _ = j4_input.caller_api.caller_input_from_record(
-            frozen['caller'])
+        caller = (frozen['source']['caller'] if lowered['profile'] ==
+                  'j6-firstparty-successor' else frozen['caller'])
+        context, opened, _ = j4_input.caller_api.caller_input_from_record(caller)
         expected_sources = sorted(sha256(raw).hexdigest() for _, raw in opened)
         admitted = admitted_by_id[case_id]
         _need(expected_sources == sorted(ref.sha256 for ref in admitted.source_payloads)
-              and admitted.target_payload.sha256 == accepted['target_file_sha256'],
+              and admitted.target_payload.sha256 == lowered['original_target_file_sha256'],
               'independently admitted physical source/target bytes differ')
         _need(joined['feature_receipt']['case_id'] == case_id and
+              (lowered['profile'] != 'j6-firstparty-successor' or
+               joined['feature_receipt']['profile'] == 'j6-source-only') and
               joined['feature_receipt']['base']['fixture_small_width'] is False and
               joined['feature_receipt']['target_visible_to_backbone'] is False,
               'production frozen source bank/target isolation differs')
@@ -283,15 +393,17 @@ def preflight_admitted_cases(*, admission_manifest_path, admission_manifest_sha2
             'case_id': case_id,
             'author_id': admitted_row['author_id'],
             'original_frozen_sha256': frozen['record_sha256'],
-            'original_target_file_sha256': accepted['target_file_sha256'],
+            'original_target_file_sha256': lowered['original_target_file_sha256'],
             'original_pair_sha256': pair['record_sha256'],
             'source_alignment_sha256': lowered['source_alignment_sha256'],
             'source_file_sha256s': expected_sources,
             'target_provenance_output_sha256':
                 admitted_row['target_provenance']['output']['sha256'],
-            'annotations_sha256': canonical_sha256(pair['annotations']),
+            'annotations_sha256': canonical_sha256(pair['annotations']) if
+                lowered['profile'] != 'j6-firstparty-successor' else None,
             'literal_declarations_sha256':
-                canonical_sha256(pair['literal_declarations']),
+                canonical_sha256(pair['literal_declarations']) if
+                lowered['profile'] != 'j6-firstparty-successor' else None,
             'authored_ordinals_sha256':
                 canonical_sha256(lowered['authored_ordinals']),
             'authored_copy_tuples_sha256':
@@ -301,10 +413,50 @@ def preflight_admitted_cases(*, admission_manifest_path, admission_manifest_sha2
             'variant_key': lowered['variant_key']}
         if lowered['profile'] == 'j5-p2':
             expected_conversion['original_geometry_profile'] = 'j5-p2'
+        if lowered['profile'] == 'j6-firstparty-successor':
+            _need(manifest['schema'] == 'mfm-v16-owner-teacher-corpus-v3' and
+                  admitted_row['target_origin'] == 'owner-authorized-model-author' and
+                  admitted_row['target_provenance']['input']['sha256'] ==
+                      accepted['projected_view_file_sha256'] and
+                  admitted_row['target_provenance']['output']['sha256'] ==
+                      accepted['raw_author_draft_file_sha256'] and
+                  admitted_row['author_id'] == accepted['author_id'] and
+                  admitted_row['target_provenance']['producer_version'] ==
+                      accepted['author_producer_version'] and
+                  frozen['source_file_sha256'] ==
+                      lowered['source_file_sha256'] and
+                  canonical_sha256(frozen['native_batch']) ==
+                      canonical_sha256(joined['feature_receipt']['frozen_batch']),
+                  'J6 model-author provenance/source-native admission differs')
+            expected_conversion.update({
+                'schema': J6_SUCCESSOR_AUTHORING_SCHEMA,
+                'material15_file_sha256': lowered['material15_file_sha256'],
+                'source_file_sha256': lowered['source_file_sha256'],
+                'source_record_sha256': frozen['source']['record_sha256'],
+                'source_native_sha256': canonical_sha256(frozen['native_batch']),
+                'target_provenance_input_sha256':
+                    admitted_row['target_provenance']['input']['sha256'],
+                'raw_author_draft_file_sha256':
+                    accepted['raw_author_draft_file_sha256'],
+                'support_file_sha256': accepted['support_file_sha256'],
+                'annotation_file_sha256': accepted['annotation_file_sha256'],
+                'choice_file_sha256': pair['choice_file_sha256'],
+                'choice_record_sha256': pair['choice_packet']['record_sha256'],
+                'connected_world_id': lowered['mass_world_id']})
+            expected_conversion['annotations_sha256'] = canonical_sha256(
+                pair['choice_packet']['field_annotations'])
+            expected_conversion['literal_declarations_sha256'] = canonical_sha256(
+                pair['choice_packet']['literal_declarations'])
         _need(canonical_sha256(conversion) ==
               canonical_sha256(expected_conversion),
               'admitted physical author conversion does not bind complete pair/choices')
     _need(seen == set(admitted_by_id), 'incomplete admitted train roster')
+    j6_worlds = {row['joined']['lowered']['mass_world_id'] for row in cases
+                 if row['joined']['lowered']['profile'] == 'j6-firstparty-successor'}
+    _need(not j6_worlds or
+          (len(j6_worlds) == 1 and all(row['joined']['lowered']['profile'] ==
+              'j6-firstparty-successor' for row in cases)),
+          'J6 admitted originals must share one connected train world')
     gradient_paths = tuple(path for row in admission.train
                            for path in (*(ref.path for ref in row.source_payloads),
                                         row.target_payload.path))
@@ -353,6 +505,221 @@ def _record_ref(root, ref):
     return _json_file(target, ref['sha256'])
 
 
+def _material_bytes(root, ref):
+    """Read one exact source-material FileRef within the physical root."""
+    _need(type(ref) is dict and set(ref) in (
+              {'path', 'sha256'},
+              {'path', 'bytes', 'file_sha256', 'record_sha256'}) and
+          type(ref.get('path')) is str and
+          ref['path'] and '\\' not in ref['path'] and
+          not Path(ref['path']).is_absolute() and
+          all(part not in ('', '.', '..') for part in ref['path'].split('/')),
+          'J6 material FileRef path differs')
+    pin = ref.get('file_sha256', ref.get('sha256'))
+    require_sha256(pin, 'J6 material FILE')
+    root = Path(root).resolve(strict=True)
+    path = (root / ref['path']).resolve(strict=True)
+    _need(path.is_relative_to(root) and path.is_file(),
+          'J6 material FileRef leaves physical root')
+    raw = path.read_bytes()
+    _need(sha256(raw).hexdigest() == pin and
+          ('bytes' not in ref or type(ref['bytes']) is int and
+           ref['bytes'] == len(raw)), 'J6 material physical FILE differs')
+    return path, raw
+
+
+def _material_json(root, ref):
+    path, raw = _material_bytes(root, ref)
+    def unique(pairs):
+        row = {}
+        for key, value in pairs:
+            _need(key not in row, 'duplicate J6 material JSON key')
+            row[key] = value
+        return row
+    record = json.loads(raw.decode('utf-8'), object_pairs_hook=unique)
+    _need(type(record) is dict and
+          raw in (canonical_json_bytes(record), canonical_json_bytes(record) + b'\n') and
+          ('record_sha256' not in ref or
+           record.get('record_sha256') == ref['record_sha256']),
+          'J6 material JSON/record identity differs')
+    return path, record
+
+
+def read_j6_material15(material_root, manifest_ref, *, j5_source):
+    """Read source and all original material refs; never open author labels."""
+    from scripts.mfm import formation_joint_input_v6 as j6
+    from scripts.mfm import formation_paired_teaching_v6 as j6_paired
+
+    root = Path(material_root).resolve(strict=True)
+    _, case = _material_json(root, manifest_ref)
+    _need(case.get('schema') == 'mfm-j6-material15-source-manifest-v1' and
+          case.get('record_sha256') == canonical_sha256({k: v for k, v in
+              case.items() if k != 'record_sha256'}) and
+          case.get('training_authorized') is False and
+          case.get('capacity_admitted') is False and
+          case.get('author_material_opened') is False,
+          'complete J6 source material seal/status differs')
+    roles = ('world', 'cut', 'request', 'verification_boundary',
+             'delivery_boundary', 'view', 'verification_receipt', 'bundle',
+             'caller', 'meaning', 'joint', 'batch', 'expected',
+             'split_roster', 'code_expectations')
+    _need(type(case.get('metadata')) is dict and
+          set(case['metadata']) == set(roles),
+          'complete fifteen J6 metadata roles required')
+    data = {role: _material_json(root, case['metadata'][role])[1]
+            for role in roles}
+    for role in roles[10:]:
+        _need(data[role].get('record_sha256') == canonical_sha256({k: v for k, v in
+              data[role].items() if k != 'record_sha256'}),
+              'current J6 metadata seal differs')
+    bundle = data['bundle']
+    _need(canonical_sha256(data['cut']) == canonical_sha256(
+              data['view']['historical_prefix_proof']['cut']) and
+          data['world']['world_id'] == data['cut']['world_id'] and
+          canonical_sha256(bundle['cut']) == canonical_sha256(data['cut']) ==
+              canonical_sha256(data['request']['cut']) ==
+              canonical_sha256(data['view']['cut']) and
+          bundle['replay_sha256'] == data['view']['replay_sha256'] and
+          bundle['input_request_sha256'] == data['request']['record_sha256'] and
+          data['request']['read_boundary'] == data['delivery_boundary'] and
+          bundle['delivery_read_receipt']['boundary_sha256'] ==
+              data['delivery_boundary']['record_sha256'] and
+          data['verification_receipt']['boundary_sha256'] ==
+              data['verification_boundary']['record_sha256'] and
+          data['verification_receipt']['cut_sha256'] == data['cut']['record_sha256'] and
+          data['verification_receipt']['world_sha256'] ==
+              data['world']['world_sha256'] and
+          data['verification_receipt']['replay_sha256'] ==
+              data['view']['replay_sha256'] and
+          canonical_sha256(bundle['verification_receipt']) ==
+              canonical_sha256(data['verification_receipt']) and
+          canonical_sha256(bundle['verification_recheck_reads']) ==
+              canonical_sha256(data['verification_receipt']['reads']),
+          'J6 causal cut/request/view/boundary joins differ')
+    original_proof = bundle['original_artifact_pins']
+    original_delivery = bundle['delivery_read_receipt']['reads']
+    verification_reads = data['verification_receipt']['reads']
+    _need(type(original_proof) is list and type(original_delivery) is list and
+          type(verification_reads) is list and
+          type(case.get('verification_artifact_ids')) is list and
+          type(case.get('ordered_proof_delivery_union')) is list and
+          type(case.get('delivery')) is list and
+          canonical_sha256(case['verification_artifact_ids']) ==
+              canonical_sha256([row['artifact_id'] for row in original_proof]) and
+          canonical_sha256([row['artifact'] for row in verification_reads]) ==
+              canonical_sha256(original_proof),
+          'J6 proof verification roster differs')
+    expected_union = list(original_proof)
+    by_id = {row['artifact_id']: row for row in original_proof}
+    _need(len(by_id) == len(original_proof), 'J6 proof artifact duplicated')
+    for call in original_delivery:
+        artifact = call['artifact']
+        aid = artifact['artifact_id']
+        if aid in by_id:
+            _need(canonical_sha256(by_id[aid]) == canonical_sha256(artifact),
+                  'J6 delivery/proof artifact identity differs')
+        else:
+            expected_union.append(artifact)
+            by_id[aid] = artifact
+    _need(len(case['ordered_proof_delivery_union']) == len(expected_union) and
+          canonical_sha256([row['artifact'] for row in
+              case['ordered_proof_delivery_union']]) ==
+              canonical_sha256(expected_union),
+          'J6 proof/delivery ordered union differs')
+    _need(len(case['delivery']) == len(original_delivery) and
+          canonical_sha256([{key: row[key] for key in ('artifact', 'family', 'key')}
+              for row in case['delivery']]) ==
+          canonical_sha256([{key: call[key] for key in ('artifact', 'family', 'key')}
+              for call in original_delivery]),
+          'J6 delivery call roster differs')
+    proof = {}
+    for row in case['ordered_proof_delivery_union']:
+        artifact, ref = row['artifact'], row['original']
+        aid = artifact['artifact_id']
+        _need(aid not in proof, 'J6 proof artifact duplicated')
+        _, raw = _material_bytes(root, ref)
+        _need(type(artifact['bytes']) is int and len(raw) == artifact['bytes'] and
+              sha256(raw).hexdigest() == artifact['file_sha256'],
+              'J6 proof original body differs')
+        proof[aid] = ref
+    for call in verification_reads:
+        artifact = call['artifact']
+        _need(artifact['artifact_id'] in proof and
+              type(call['body_bytes']) is int and
+              call['body_bytes'] == artifact['bytes'] and
+              call['body_sha256'] == artifact['file_sha256'] and
+              call['pre_boundary_sha256'] ==
+                  data['verification_boundary']['record_sha256'] and
+              call['post_boundary_sha256'] ==
+                  data['verification_boundary']['record_sha256'],
+              'J6 proof verification body/boundary differs')
+    for row, call in zip(case['delivery'], original_delivery):
+        artifact, ref = row['artifact'], row['original']
+        _need(canonical_sha256(proof[artifact['artifact_id']]) ==
+              canonical_sha256(ref),
+              'J6 delivery/proof original identity differs')
+        _, raw = _material_bytes(root, ref)
+        _need(type(call['body_bytes']) is int and
+              len(raw) == artifact['bytes'] == call['body_bytes'] and
+              sha256(raw).hexdigest() == artifact['file_sha256'] ==
+                  call['body_sha256'] and
+              call['pre_boundary_sha256'] ==
+                  data['delivery_boundary']['record_sha256'] and
+              call['post_boundary_sha256'] ==
+                  data['delivery_boundary']['record_sha256'],
+              'J6 delivery original body/boundary differs')
+    source_path, frozen = _material_json(root, case['source_freeze'])
+    _need(data['caller'] == frozen['caller'] and
+          data['meaning'] == frozen['meaning'] and
+          data['bundle']['caller'] == frozen['caller'] and
+          data['bundle']['meaning'] == frozen['meaning'] and
+          data['joint'] == frozen['alignment'] and
+          data['batch']['fields'] == frozen['native_batch'] and
+          data['expected']['source_file_sha256'] ==
+              case['source_freeze']['file_sha256'] and
+          canonical_sha256(data['expected']['source_cache']) ==
+              canonical_sha256(frozen['alignment']['cache']) and
+          canonical_sha256(data['expected']['processor_binding']) ==
+              canonical_sha256(frozen['alignment']['processor_binding']) and
+          data['expected']['source_tokens'] ==
+              frozen['alignment']['source_tokens'] and
+          data['expected']['proposed_max_source_tokens'] ==
+              frozen['proposed_max_source_tokens'],
+          'J6 fifteen metadata/source joins differ')
+    code = data['code_expectations']
+    _need(code['current_j6_source_file_sha256'] == _file_sha256(j6.__file__) and
+          code['paired_source_file_sha256'] == _file_sha256(j6_paired.__file__) and
+          code['original_j5_source_file_sha256'] == _file_sha256(j5_source.__file__) and
+          case['source_migration_receipt_file_sha256'] ==
+              j6_paired.SOURCE_MIGRATION_FILE,
+          'actual J6/J5 source interface differs')
+    j6.validate_frozen_source(j5_source, frozen,
+        j5_file_sha256=_file_sha256(j5_source.__file__),
+        proposed_max_source_tokens=frozen['proposed_max_source_tokens'])
+    split = case['split_identity']
+    roster = data['split_roster']
+    _need(split['case_id'] == case['case_id'] and
+          split['cut_id'] == case['cut_id'] == frozen['cut_id'] and
+          split['cut_sha256'] == frozen['cut_sha256'] and
+          split['prefix_world_sha256'] == frozen['world_sha256'] and
+          split['source_file_sha256'] == case['source_freeze']['file_sha256'] and
+          split['source_record_sha256'] == frozen['record_sha256'] and
+          split['world_id'] == roster['world_id'] and
+          split['split'] == 'train' and
+          roster['one_train_ancestry_component'] is True and
+          roster['development_cases'] == [] and
+          any(row['case_id'] == case['case_id'] and
+              row['cut_id'] == case['cut_id'] for row in roster['cases']),
+          'J6 connected train world/cut/source identity differs')
+    descriptor = {'case_id': case['case_id'], 'profile': 'j6-source-only',
+        'source_file': str(source_path),
+        'source_file_sha256': case['source_freeze']['file_sha256'],
+        'source_record_sha256': frozen['record_sha256'],
+        'j5_file_sha256': _file_sha256(j5_source.__file__),
+        'proposed_max_source_tokens': frozen['proposed_max_source_tokens']}
+    return case, descriptor
+
+
 def _expected_original(frozen, *, j5_source=None):
     joint = frozen['joint']
     binding = (j4_input.joint_code_binding_v4() if j5_source is None else
@@ -371,9 +738,14 @@ def _case_masses(rows):
     worlds = {}
     for row in rows:
         lower = row['joined']['lowered']
-        world, cut, variant = (lower['world_sha256'], lower['cut_sha256'],
+        world, cut, variant = (lower.get('mass_world_id', lower['world_sha256']),
+                               lower['cut_sha256'],
                                lower['variant_key'])
-        require_sha256(world, 'admitted original world proof')
+        if 'mass_world_id' in lower:
+            require_identifier(world, 'admitted connected world ID')
+            require_sha256(lower['world_sha256'], 'original prefix world proof')
+        else:
+            require_sha256(world, 'admitted original world proof')
         require_sha256(cut, 'admitted original cut proof')
         _need(type(variant) is str and
               require_identifier(variant, 'authored variant key') == variant,
@@ -411,7 +783,8 @@ def _fit_update(model, processor, all_rows, window, optimizer, *, device,
             joined = join_frozen_source(descriptor['lowered'],
                 feature_root=feature_root,
                 feature_roster_sha256=feature_roster_sha256,
-                j5_source=j5_source,
+                j5_source=j5_source if descriptor['lowered']['profile'] != 'j4-p1'
+                    else None,
                 allow_fixture=False)
             _need(canonical_sha256(joined['feature_receipt']) ==
                   canonical_sha256(descriptor['feature_receipt']),
@@ -766,14 +1139,18 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
           prepared not in output.parents,
           'joint fit output must be outside immutable material/source roots')
     program = _json_file(program_path, program_file_sha256)
+    j6_program = program.get('schema') == J6_PROGRAM_SCHEMA
     _need(set(program) in ({'schema', 'cases'},
-                           {'schema', 'cases', 'private_original_modules'}) and
-          program['schema'] == PROGRAM_SCHEMA and
+                           {'schema', 'cases', 'private_original_modules'},
+                           {'schema', 'cases', 'private_original_modules',
+                            'source_migration'}) and
+          program['schema'] in (PROGRAM_SCHEMA, J6_PROGRAM_SCHEMA) and
           type(program['cases']) is list and program['cases'],
           'complete original training program differs')
+    common_case_keys = {'case_id', 'profile', 'frozen', 'accepted', 'pair',
+                        'max_target_tokens', 'variant_key'}
     _need(all(type(row) is dict and set(row) ==
-              {'case_id', 'profile', 'frozen', 'accepted', 'pair',
-               'max_target_tokens', 'variant_key'} and
+              (common_case_keys | {'material15'} if j6_program else common_case_keys) and
               type(row['case_id']) is str and
               require_identifier(row['case_id'], 'case_id') == row['case_id'] and
               type(row['variant_key']) is str and
@@ -782,16 +1159,50 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
               type(row['max_target_tokens']) is int and
               row['max_target_tokens'] > 0 for row in program['cases']),
           'original train case FileRef program differs')
-    _need(all(row['profile'] in ('j4-p1', 'j5-p2-successor')
+    _need(all(row['profile'] == 'j6-firstparty-successor'
+              for row in program['cases']) if j6_program else
+          all(row['profile'] in ('j4-p1', 'j5-p2-successor')
               for row in program['cases']),
           'supplied P2 is not independently admitted successor material')
-    uses_j5 = any(row['profile'] == 'j5-p2-successor'
+    _need(not j6_program or (len(program['cases']) == 6 and
+          len({row['case_id'] for row in program['cases']}) == 6),
+          'complete six-cut J6 program required')
+    uses_j5 = any(row['profile'] in ('j5-p2-successor', 'j6-firstparty-successor')
                   for row in program['cases'])
     _need(('private_original_modules' in program) == uses_j5,
           'J5 successor requires exact original module FILE roster')
+    _need(('source_migration' in program) == j6_program,
+          'J6 requires one pinned six-cut source migration FILE')
     private = (_private_original_modules(program['private_original_modules'])
                if uses_j5 else None)
     j5_source = None if private is None else private['source']
+    migration_raw = None
+    if j6_program:
+        from scripts.mfm import formation_paired_teaching_v6 as j6_paired
+        _, migration_raw = _material_bytes(material_root,
+            program['source_migration'])
+        _need(sha256(migration_raw).hexdigest() ==
+              j6_paired.SOURCE_MIGRATION_FILE,
+              'J6 actual six-cut source migration differs')
+        # Historical false construction flags cannot substitute for a new
+        # physically admitted owner-authorized model-author corpus.
+        admitted_early = admit_formation_corpus(admission_manifest_path,
+            expected_sha256=admission_manifest_sha256, teacher_training=True,
+            owner_authorization_ref=owner_authorization_ref)
+        admission_raw = Path(admission_manifest_path).read_bytes()
+        _need(sha256(admission_raw).hexdigest() == admission_manifest_sha256,
+              'J6 admitted corpus changed after source-rights verification')
+        admitted_record = json.loads(admission_raw.decode('utf-8'))
+        train_rows = [item for item in admitted_record['cases']
+                      if item['split'] == 'train']
+        _need(admitted_record['schema'] ==
+              'mfm-v16-owner-teacher-corpus-v3' and
+              [item['case_id'] for item in train_rows] ==
+              [item['case_id'] for item in program['cases']] ==
+              [item.case_id for item in admitted_early.train] and
+              all(item['target_origin'] == 'owner-authorized-model-author'
+                  for item in train_rows),
+              'J6 requires exact admitted v3 model-author train originals')
     recipe = _json_file(recipe_path, recipe_file_sha256)
     _recipe(recipe, program_sha256=program_file_sha256,
             admission_sha256=admission_manifest_sha256,
@@ -799,6 +1210,12 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
             seed_manifest_sha256=seed_manifest_sha256)
     _need(recipe['case_order'] == [row['case_id'] for row in program['cases']],
           'actual case order differs from immutable fit recipe')
+    # Corpus authority precedes processor and any feature tensor/model load.
+    # Constructed J6 records are fixed false and never grant this admission.
+    if not j6_program:
+        admit_formation_corpus(admission_manifest_path,
+            expected_sha256=admission_manifest_sha256, teacher_training=True,
+            owner_authorization_ref=owner_authorization_ref)
     roster = features._read_record(feature_root / 'roster.json',
                                    features.SCHEMA, feature_roster_sha256)
     first = features._verified_prepared(None, receipt_path, prepared,
@@ -825,24 +1242,52 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
     active_interfaces = joint_source._interface_pins()
     feature_exporter_sha256 = _file_sha256(features.__file__)
     cases = []
+    j6_materials = []
     for row in program['cases']:
-        frozen = _record_ref(material_root, row['frozen'])
-        accepted = _record_ref(material_root, row['accepted'])
-        pair = _record_ref(material_root, row['pair'])
-        original_profile = ('j4-p1' if row['profile'] == 'j4-p1' else 'j5-p2')
-        expected = _expected_original(frozen,
-            j5_source=j5_source if original_profile == 'j5-p2' else None)
-        lowered = lower_original_case(profile=original_profile, frozen=frozen,
-            accepted=accepted, pair=pair, expected=expected,
-            processor=processor, max_target_tokens=row['max_target_tokens'],
-            private_paired=private['paired'] if original_profile == 'j5-p2' else None,
-            private_target=private['target'] if original_profile == 'j5-p2' else None)
+        if j6_program:
+            material15, source_descriptor = read_j6_material15(material_root,
+                row['material15'], j5_source=j5_source)
+            j6_materials.append(material15)
+            _need(material15['case_id'] == row['case_id'] and
+                  material15['split_identity']['variant_key'] == row['variant_key'],
+                  'J6 physical material/case/variant differs')
+            frozen = _material_json(material_root, row['frozen'])[1]
+            _need(frozen['source_file_sha256'] ==
+                  source_descriptor['source_file_sha256'] and
+                  frozen['source']['record_sha256'] ==
+                  source_descriptor['source_record_sha256'] and
+                  frozen['split_row']['lineage']['world'] ==
+                  material15['split_identity']['world_id'] and
+                  frozen['cut_sha256'] ==
+                  material15['split_identity']['cut_sha256'],
+                  'J6 material15/source/paired real-world join differs')
+            accepted = _material_json(material_root, row['accepted'])[1]
+            pair = _material_json(material_root, row['pair'])[1]
+            lowered = lower_j6_original_case(frozen=frozen,
+                accepted=accepted, pair=pair,
+                source_descriptor=source_descriptor,
+                migration_reader=lambda: migration_raw,
+                j5_source=j5_source, processor=processor,
+                max_target_tokens=row['max_target_tokens'],
+                material15_file_sha256=row['material15']['sha256'])
+        else:
+            frozen = _record_ref(material_root, row['frozen'])
+            accepted = _record_ref(material_root, row['accepted'])
+            pair = _record_ref(material_root, row['pair'])
+            original_profile = ('j4-p1' if row['profile'] == 'j4-p1' else 'j5-p2')
+            expected = _expected_original(frozen,
+                j5_source=j5_source if original_profile == 'j5-p2' else None)
+            lowered = lower_original_case(profile=original_profile, frozen=frozen,
+                accepted=accepted, pair=pair, expected=expected,
+                processor=processor, max_target_tokens=row['max_target_tokens'],
+                private_paired=private['paired'] if original_profile == 'j5-p2' else None,
+                private_target=private['target'] if original_profile == 'j5-p2' else None)
         lowered['variant_key'] = row['variant_key']
         _need(lowered['case_id'] == row['case_id'],
               'original case ID differs from frozen roster')
         joined = join_frozen_source(lowered, feature_root=feature_root,
             feature_roster_sha256=feature_roster_sha256,
-            j5_source=j5_source if original_profile == 'j5-p2' else None,
+            j5_source=j5_source if lowered['profile'] != 'j4-p1' else None,
             allow_fixture=False)
         _need(canonical_sha256(joined['feature_receipt']['code']['processor_binding']) ==
               canonical_sha256(source.processor_binding(processor)),
@@ -855,6 +1300,17 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
         cases.append({'frozen': frozen, 'accepted': accepted,
                       'pair': pair, 'joined': descriptor})
         del joined
+    if j6_program:
+        _need(len({item['metadata']['split_roster']['file_sha256']
+                   for item in j6_materials}) == 1 and
+              len({item['metadata']['code_expectations']['file_sha256']
+                   for item in j6_materials}) == 1 and
+              len({item['split_identity']['world_id']
+                   for item in j6_materials}) == 1 and
+              len({item['split_identity']['cut_sha256']
+                   for item in j6_materials}) == 6 and
+              [item['case_id'] for item in j6_materials] == recipe['case_order'],
+              'J6 six-cut complete material train ancestry/roster differs')
     admission, audit = preflight_admitted_cases(
         admission_manifest_path=admission_manifest_path,
         admission_manifest_sha256=admission_manifest_sha256,
@@ -862,6 +1318,11 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
     features._verified_prepared(first, receipt_path, prepared,
         prepared_receipt_file_sha256, prepared_receipt_sha256,
         parent_source_receipt_sha256)
+    if j6_program:
+        _, current_migration = _material_bytes(material_root,
+            program['source_migration'])
+        _need(current_migration == migration_raw,
+              'J6 six-cut source migration changed during owned fit')
     config = _json_file(seed_config_path, seed_config_sha256)
     model = FormationJointLearning(SpecialistConfig(**config))
     _need(model.config.base_hidden_size == roster['base']['hidden_width'] and
@@ -930,6 +1391,11 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
     features._verified_prepared(first, receipt_path, prepared,
         prepared_receipt_file_sha256, prepared_receipt_sha256,
         parent_source_receipt_sha256)
+    if j6_program:
+        _, current_migration = _material_bytes(material_root,
+            program['source_migration'])
+        _need(current_migration == migration_raw,
+              'J6 six-cut source migration changed during owned fit')
     _need(canonical_sha256(_json_file(program_path, program_file_sha256)) ==
           canonical_sha256(program) and
           _file_sha256(seed_weight_path) == seed_weight_sha256 and
@@ -937,11 +1403,20 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
           _file_sha256(seed_manifest_path) == seed_manifest_sha256,
           'original program or zero-update seed changed during owned fit')
     for authored, original_case in zip(program['cases'], cases):
-        _need(all(canonical_sha256(_record_ref(material_root, authored[key])) ==
+        reader = (_material_json if j6_program else
+                  lambda root, ref: (None, _record_ref(root, ref)))
+        _need(all(canonical_sha256(reader(material_root, authored[key])[1]) ==
                   canonical_sha256(original_case[value])
                   for key, value in (('frozen', 'frozen'),
                                      ('accepted', 'accepted'), ('pair', 'pair'))),
               'physical original frozen/target/pair packet changed during fit')
+        if j6_program:
+            material15, descriptor = read_j6_material15(material_root,
+                authored['material15'], j5_source=j5_source)
+            _need(material15['case_id'] == original_case['joined']['lowered']['case_id'] and
+                  canonical_sha256(descriptor) == canonical_sha256(
+                      original_case['joined']['lowered']['source_descriptor']),
+                  'physical J6 fifteen-ref material changed during fit')
     final_admission = admit_formation_corpus(admission_manifest_path,
         expected_sha256=admission_manifest_sha256, teacher_training=True,
         owner_authorization_ref=owner_authorization_ref)
@@ -965,7 +1440,8 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
             case_id=lowered['case_id'],
             expected_alignment_sha256=lowered['source_alignment_sha256'],
             expected_cache=lowered['source_cache'],
-            j5_source=j5_source if lowered['profile'] == 'j5-p2' else None,
+            j5_source=j5_source if lowered['profile'] != 'j4-p1' else None,
+            expected_j6_source=lowered.get('source_descriptor'),
             allow_fixture=False)
         _need(canonical_sha256(receipt) ==
               canonical_sha256(row['joined']['feature_receipt']),
@@ -1011,15 +1487,19 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
     reloaded.to(device).eval()
     first_source = join_frozen_source(first_lower, feature_root=feature_root,
         feature_roster_sha256=feature_roster_sha256,
-        j5_source=j5_source if first_lower['profile'] == 'j5-p2' else None,
+        j5_source=j5_source if first_lower['profile'] != 'j4-p1' else None,
         allow_fixture=False)
     consumer = reloaded.generate_original_copy_decision(
         processor=processor,
         base_states=first_source['source_states'].to(device).detach(),
         source_mask=first_source['source_mask'].to(device).detach(),
-        caller=first_case['frozen']['caller'],
-        caller_sha256=first_case['frozen']['caller']['record_sha256'],
-        joint_alignment=first_case['frozen']['joint'],
+        caller=(first_case['frozen']['source']['caller'] if j6_program else
+                first_case['frozen']['caller']),
+        caller_sha256=(first_case['frozen']['source']['caller']['record_sha256']
+                       if j6_program else
+                       first_case['frozen']['caller']['record_sha256']),
+        joint_alignment=(first_case['frozen']['source']['alignment'] if j6_program
+                         else first_case['frozen']['joint']),
         joint_alignment_sha256=first_lower['source_alignment_sha256'],
         expected_binding=copies.copy_binding(first_lower['inventory']),
         artifact_sha256=_file_sha256(component_paths[0]),

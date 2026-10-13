@@ -48,9 +48,12 @@ eight evidence receipts and94 independent-review files without rerunning the
 completed suites. The earlier incomplete draft snapshot in TRACE136 remains
 historical; its unknown labels were not converted to negative supervision.
 
-The next mainline construction is actual native geometry for the lowered mixed
-decision wire and explicit J6 material/feature dispatch in the direct joint
-learner. Before production fitting, complete138-state source-lineage migration
+The subsequent [TRACE138](receipts/MFM_J6_DIRECT_LEARNER_AND_MIXED_WIRE_20261013_TRACE138_PUBLIC.json)
+observes the real lowered mixed-wire geometry and connects explicit J6
+material/feature dispatch to the direct joint learner. Complete labels still
+cover only seven of ten positive dimensions; full foundation coverage requires
+broader grounded material and a separate diagnostic development ancestry.
+Before production fitting, complete138-state source-lineage migration
 must preserve every trained lexical and fresh reference/copy tensor and typed
 configuration. Real owner-authorized corpus/source admission, production frozen
 features, the longest-case forward/backward/Adam capacity result and separate

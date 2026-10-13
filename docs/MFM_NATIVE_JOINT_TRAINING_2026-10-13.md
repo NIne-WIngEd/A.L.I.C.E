@@ -11,3 +11,35 @@ Independent original-path review found a real restart defect: shape-correct rand
 [TRACE133](receipts/MFM_NATIVE_JOINT_TRAINING_20261013_TRACE133_PUBLIC.json) binds the final source/tests, root's eight final CPU controls and independent original-path review. Root's controls passed in156.967 seconds on Python3.13/Torch2.7.1. Independent verification preserves bit-exact whole model/AdamW/random-state continuation at a checkpoint inside the case roster, zero mutation on invalid random state and named-order refusal, and a separately scoped one-bank lifetime witness. The lifetime witness uses patched I/O and a scalar loss; genuine tiny neural update/restart evidence is separate. CUDA, full-size fitting, actual12B features and real J5 successor-positive material remain unproved.
 
 The production path exports the whole trained component as `unqualified_training`, reloads it strictly and invokes actual mixed-wire generation, compilation and grounding, retaining raw invalid results. That consumer path is constructed and reviewed; it has not assessed a real newly fitted component. Complete first-party source geometry, genuine authorized teaching material, frozen source features and measured longest-case capacity are the next build inputs. Native media and the accepted-memory → judgment/action → observed-outcome → revision path remain required for full MFM. The full-system stress draft remains parked.
+
+The explicit J6 successor now connects the six complete chronological cuts to
+this same learner. It reads the physical fifteen-record material and derives
+the complete proof, delivery and ordered original union from the opened bundle,
+then joins the separate complete author target, reference choices and whole-copy
+alternatives. Independent review preserved a genuine omission defect: resealing
+a manifest after removing delivery or proof rows previously passed. The final
+reader rejects both original omissions after sixteen metadata reads; the genuine
+initial case still opens eighty-one physical records. Exact ordered calls,
+physical bodies and causal boundaries govern completeness, rather than a
+nonempty-list or fixed-count rule.
+
+The actual pinned native processor has separately observed all six lowered
+decision wires:325/545/299/347/587/333 labels including EOS. Their forty-eight
+reference and seven whole-copy queries fit the unchanged8,192-token decoder
+budget and reconstruct the authored decisions through the existing compiler
+and grounder. Saved alignment replay in learner controls is distinct from that
+actual processor observation. All three source-native fields are preserved and
+physically joined on preflight and actual bank consumption. The connected world,
+cut and variant mass rules, owned loss, AdamW and checkpoint cursor remain.
+
+[TRACE138](receipts/MFM_J6_DIRECT_LEARNER_AND_MIXED_WIRE_20261013_TRACE138_PUBLIC.json)
+records the final direct learner, real native geometry, corrected original-path
+omission checks and six focused root controls. The v2 program is an explicit
+six-cut construction profile. Its complete labels cover seven of ten positive
+formation dimensions; episode, relationship and workspace positives and several
+full-role constructs remain absent. It supplies neither separated development
+ancestry nor an admitted production corpus. The next construction preserves the
+complete138-state seed under the current interface closure, expands grounded
+foundation material, and produces actual source features and capacity evidence
+before fitting. Twenty lexical epochs remain complete; no joint updates or
+full-MFM qualification are claimed here.

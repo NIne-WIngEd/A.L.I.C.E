@@ -1,0 +1,80 @@
+{
+  "S5_lexical_epochs": 20,
+  "actual_native_mixed_labels": [
+    325,
+    545,
+    299,
+    347,
+    587,
+    333
+  ],
+  "complete_138_state_migration_executed": false,
+  "complete_original_material": {
+    "derived_bundle_rosters": true,
+    "genuine_physical_reads": 81,
+    "ordered_physical_body_and_boundary_joins": true,
+    "original_omission_mutations_refused": true
+  },
+  "connected_train_worlds": 1,
+  "construction_cuts": 6,
+  "decoder_budget": 8192,
+  "evidence_receipt_FILEs": {
+    "independent_material_closure": "89491e73f142826e21ec25ab07e8a3b75fa9742190d1f646a206f56e1f3f2562",
+    "native_manifest": "5daa2a2e3f76ab312f50e448b2f75aa06c4c6ca418e2ce1badc646ad92f3b952",
+    "native_mixed_wire": "76eb3ad4480f316f9b66ac4bc99d1e2fbbe9c1d169a80848315441c8b18c48c1",
+    "root_final_six_controls": "e82286a79d318278ff959317bba6ee67b6a65611693d99fd0e8cd6b7f9be40cb"
+  },
+  "fresh_file_readback": {
+    "independent_review": 19,
+    "native": 54
+  },
+  "full_MFM_qualified": false,
+  "independent_gold": false,
+  "joint_updates": 0,
+  "missing_full_role_constructs": [
+    "assistant-self",
+    "procedural-skill",
+    "behavior-pattern",
+    "decision-rationale",
+    "revocation"
+  ],
+  "missing_positive_dimensions": [
+    "episode",
+    "relationship",
+    "workspace"
+  ],
+  "native_observation": {
+    "actual_processor_executed": true,
+    "original_compiler_grounder_reconstruction": true,
+    "source_and_target_geometry_retained": true,
+    "source_only_native_fields": [
+      "input_ids",
+      "attention_mask",
+      "mm_token_type_ids"
+    ]
+  },
+  "next": "Preserve complete138-state source lineage, expand grounded foundation material and separate diagnostic development, then admit production inputs and construct frozen features/capacity for joint fitting.",
+  "observed_utc": "2026-10-13T20:25:05.875310+00:00",
+  "positive_dimensions": 7,
+  "privacy": "PUBLIC_METHOD_ONLY",
+  "production_corpus_admitted": false,
+  "production_features_or_capacity_proved": false,
+  "record_sha256": "5d01157d4bbdbe5a62e4e69165bd08fcf3b48111cd637dce784f835d81107773",
+  "reference_queries": 48,
+  "root_controls": {
+    "actual_processor_call_in_controls": false,
+    "corpus_admission_mocked_in_conversion": true,
+    "passed": true,
+    "saved_native_alignment_replay": true,
+    "tests": 6
+  },
+  "schema": "mfm-j6-direct-learner-and-native-mixed-wire-public-v1",
+  "six_cut_profile_is_explicit_construction_scope": true,
+  "source_FILEs": {
+    "scripts/mfm/train_native_joint_formation.py": "5e3273afe19037b2a0c82c92005430abf8629db468b3f9ed58117cb6c6a14f14",
+    "tests/governance/test_mfm_native_joint_training.py": "40c4c236c0df5de44edf222ff36d17cea8882916cf55fb2ce00eef2b9fba9feb"
+  },
+  "stress_draft": "parked",
+  "trace_id": "fbm-mfm-20261013-j6-direct-learner-and-native-mixed-wire-138",
+  "whole_copy_queries": 7
+}
