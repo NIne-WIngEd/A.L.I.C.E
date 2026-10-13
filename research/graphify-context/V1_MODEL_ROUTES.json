@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "ddc0e4f92ba0211fc724cf849711ce84d21cd88c",
+      "commit": "4cd9bbb7052818f89894d21d8a5c5c2efa4ad6c2",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -382,12 +382,12 @@
         {
           "path": "src/cognitive_kernel/formation_reference_decision.py",
           "purpose": "exact caller/global-role binding and real predicted-identity resolution through original compiler plus explicit grounding",
-          "blob_sha": "096c94a9a1b74abdddb406cdfaa5d8bc0341ae3a"
+          "blob_sha": "b02e2c400d01da66166aa9d3af3907ed34b927c8"
         },
         {
           "path": "scripts/mfm/formation_reference_target_alignment.py",
           "purpose": "distinct complete original-pair reference view, explicit ordinal teaching and exact actual generated whole-wire geometry",
-          "blob_sha": "e8930c5545a4f1ef78d203a09c93500dfb5efa47"
+          "blob_sha": "3d772195be859c24b24896075dc38dd04d949d73"
         },
         {
           "path": "tests/governance/test_mfm_reference_specialist.py",
@@ -777,12 +777,12 @@
         {
           "path": "scripts/mfm/export_joint_source_features.py",
           "purpose": "complete native text fields and detached BF16 frozen backbone source states, physical clone/bank and whole original profile bindings; no targets or answer head",
-          "blob_sha": "0f85c80bbe07655b34241a61b958035bd460e412"
+          "blob_sha": "6a7380173a2c10ed05be8d6d2ba2e47c5a4c7d11"
         },
         {
           "path": "tests/governance/test_mfm_joint_source_features.py",
           "purpose": "whole native field forward/save/readback and original budget/path/preload/tensor controls with explicit fixture/host limits",
-          "blob_sha": "34cb6173fdea9c44e485934ede9f187f0ad95c6e"
+          "blob_sha": "9b0bd96948c6b7ef1fd6037138c1b2246eba4729"
         },
         {
           "path": "docs/MFM_NATIVE_JOINT_TRAINING_2026-10-13.md",
@@ -807,7 +807,7 @@
         {
           "path": "docs/MFM_FULL_SOURCE_TEXT_CONSTRUCTION_2026-10-13.md",
           "purpose": "actual complete six-cut default census and separate full-source J6 geometry construction; unchanged J5 refusals, no host capacity or rights inferred",
-          "blob_sha": "a9523d672beb172ec3c299af03df3d0c890e484b"
+          "blob_sha": "7a64dc4001ab948a2a45a887aeb63f06a0e1d2a2"
         },
         {
           "path": "docs/receipts/MFM_FULL_SOURCE_CENSUS_20261013_TRACE134_PUBLIC.json",
@@ -823,6 +823,31 @@
           "path": "docs/receipts/MFM_MODEL_AUTHOR_CONSTRUCTION_20261013_TRACE136_PUBLIC.json",
           "purpose": "TRACE136 proof-safe current-cut author views and explicit stochastic model-author provenance; raw output retained, unqualified route controls only",
           "blob_sha": "42fc63d4dcab8c840186d60d8e65c4887af45a52"
+        },
+        {
+          "path": "docs/MFM_COMPLETE_TEXT_JOINT_MATERIAL_2026-10-13.md",
+          "purpose": "complete six-cut authored targets, actual canonical native geometry, material15 readback and reviewed J6 feature/reference/copy joins; direct learner, mixed-wire geometry, rights/production features/capacity remain separate",
+          "blob_sha": "54bc51a164abf6aac4af9a0bf5e69076de56aea5"
+        },
+        {
+          "path": "docs/receipts/MFM_COMPLETE_J6_MATERIAL_AND_CONSUMERS_20261013_TRACE137_PUBLIC.json",
+          "purpose": "TRACE137 nine source pins, six actual source/target/material joins, retained failures and finite independent review; no production fit or learned capability claim",
+          "blob_sha": "bed82c478f2adf95c1a49b8d984cb8b23863195a"
+        },
+        {
+          "path": "scripts/mfm/formation_paired_teaching_v6.py",
+          "purpose": "source-first full J6 external FILE join and separately authored original decision, annotations and explicit reference/copy packet; genuine material lineage retained",
+          "blob_sha": "3527dfeace9a50b82c54190ebd38259a4fe40c96"
+        },
+        {
+          "path": "scripts/mfm/formation_joint_target_alignment_v6.py",
+          "purpose": "distinct complete original target native alignment and exact whole pair validation; canonical original target geometry separate from mixed reference/copy wire",
+          "blob_sha": "8fa054715419a549b97f06541e3442b9ebb453ae"
+        },
+        {
+          "path": "tests/governance/test_mfm_paired_teaching_v6.py",
+          "purpose": "original source-before-author, explicit choice and strict complete native paired geometry controls; fixture bindings are not actual Gemma observations",
+          "blob_sha": "41dced509c774124fe67810fdd0339145aeb80e1"
         },
         {
           "path": "src/cognitive_kernel/formation_dataset_admission.py",
@@ -867,7 +892,7 @@
         {
           "path": "src/cognitive_kernel/formation_original_copy_specialist.py",
           "purpose": "native source/start/conditional UTF8 end head, complete FP32 parent migration and exact whole-tuple supervision",
-          "blob_sha": "01e66b8038bf49888305b19eb7025b61917470bf"
+          "blob_sha": "3d4d3f4db08c9590693d0841f9fea6c1b629e4e3"
         },
         {
           "path": "src/cognitive_kernel/formation_original_copy_decision.py",
@@ -877,7 +902,7 @@
         {
           "path": "scripts/mfm/formation_original_copy_target_alignment.py",
           "purpose": "complete reference/copy marker roster, authored ordinal and exact declaration supervision admission",
-          "blob_sha": "5ddb78899ed0320e063ec936d157285b1087a53a"
+          "blob_sha": "61779a10448dee7462cec04a00a1b3af3cd08880"
         },
         {
           "path": "tests/governance/test_mfm_original_copy_specialist.py",
@@ -1573,7 +1598,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "cc438d5ad9f4c133f4e44808e350495783386c39",
+      "commit": "0d09c07d9035ac41229aa6f9c0ba6c67a3097d32",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1653,7 +1678,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "0a9bd7709aab67bc9f8e8a76456804d09db5b2ef"
+          "blob_sha": "b974363462e4e551fef3313e7a47982b3bccdf49"
         },
         {
           "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
@@ -1668,7 +1693,7 @@
         {
           "path": "docs/fable-builder/MFM_JOINT_LEARNING_AND_FIXED_REVIEW_CAPTURE_2026-10-13.md",
           "purpose": "complete original review/custody and actual joint objective/full-component construction with coherent canonical binding diagnosis; procedure only",
-          "blob_sha": "4a98fe8133ea46b023e0fd49bc369ff8dfc7d8ba"
+          "blob_sha": "010709926edf8db1c4da90b48f5355d1896ae547"
         }
       ]
     }
