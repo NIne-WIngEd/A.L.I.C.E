@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "32897684dee407cdf30d522a4cc1a58ddb0912bc",
+      "commit": "1b2cdc15a79e31462bb0a80094201bbb5a5935b6",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -715,6 +715,56 @@
           "blob_sha": "81ace2948936fa3333e99bce9cadf1341f159acc"
         },
         {
+          "path": "docs/MFM_FIXED_FOUNDATION_REVIEW_2026-10-13.md",
+          "purpose": "complete150-calibration/862-audit original review under unchanged policy, post-finalization mapping and durable Drive originals; descriptive only",
+          "blob_sha": "9d74a64e4b1b75b25e839f65a7ddf1f113d6974c"
+        },
+        {
+          "path": "docs/receipts/MFM_FIXED_FOUNDATION_REVIEW_20261013_TRACE128_PUBLIC.json",
+          "purpose": "TRACE128 exact fixed review, corrected mandatory whole-custody check and three complete Drive readbacks; no independent gold or full-MFM claim",
+          "blob_sha": "957f95f055d52affee73db0ff2f8080091b50fce"
+        },
+        {
+          "path": "docs/MFM_NATIVE_JOINT_LEARNING_2026-10-13.md",
+          "purpose": "actual one-decoder lexical/reference/whole-copy objective, strict complete-state reload and full material/migration dependencies",
+          "blob_sha": "2da5f4c146ceaac3591c0bdf3b18be3c0f6124a4"
+        },
+        {
+          "path": "docs/receipts/MFM_NATIVE_JOINT_LEARNING_20261013_TRACE129_PUBLIC.json",
+          "purpose": "TRACE129 final12 source controls and independent original type/provenance/input refusals; untrained mechanics",
+          "blob_sha": "ca0909ec6587752b355cfcdcadcb4c68e3cb9d05"
+        },
+        {
+          "path": "src/cognitive_kernel/formation_joint_learning.py",
+          "purpose": "owned joint objective and complete finiteFP32 export/reload with canonical actual target/processor/provenance and physical consumer source closure",
+          "blob_sha": "9e401d5668f653e3e1f64bcfd2243757616553df"
+        },
+        {
+          "path": "tests/governance/test_mfm_joint_learning.py",
+          "purpose": "actual one-decoder gradients, complete whole-state generated consumer and refusal-before-decode/load controls; tiny untrained fixtures",
+          "blob_sha": "9310ff1f3e724ebac1eb79c3e4f05ba4fe1b4119"
+        },
+        {
+          "path": "docs/MFM_FULL_SIZE_NATIVE_COMPONENT_BUILD_2026-10-13.md",
+          "purpose": "genuine S5 lexical-to-reference-to-complete-joint assembly and full-state reload; source/packet admission separate from runtime",
+          "blob_sha": "ef5321334c29f7e5c9ba8788f07ebb1246cdf524"
+        },
+        {
+          "path": "docs/receipts/MFM_FULL_SIZE_NATIVE_COMPONENT_BUILD_20261013_TRACE130_PUBLIC.json",
+          "purpose": "TRACE130 original S5 binding,12 tiny builder and9 package controls plus metadata-only shape forecasts; not full-size result",
+          "blob_sha": "b83ba967cd4d3ae10140f59ba453c405aea935e9"
+        },
+        {
+          "path": "scripts/mfm/build_native_joint_component.py",
+          "purpose": "direct two strict parent migrations, preserved fresh heads, actual whole export/reload and immutable parent/source/RNG brackets; zero updates",
+          "blob_sha": "c8580e4204d91ba8a70e0e5874b81b17a522a077"
+        },
+        {
+          "path": "tests/governance/test_mfm_native_joint_component_build.py",
+          "purpose": "genuine tiny migration chain and coherent metadata/readonly/import/state refusal controls",
+          "blob_sha": "2ed5d05c4819b9cde9ae473aba3c3114873f16ba"
+        },
+        {
           "path": "docs/MFM_NATIVE_REFERENCE_PRODUCER_2026-10-13.md",
           "purpose": "concrete native generated-reference producer, independent grounding and unfinished original-copy/full-formation roadmap",
           "blob_sha": "cffea59098a528c24894667e3aafee3b94ea3f65"
@@ -987,7 +1037,7 @@
         {
           "path": "docs/MFM_DEVELOPMENT_CONTINUATION_2026-10-09.md",
           "purpose": "unchanged E20 continuation, source interventions, caller reference selection, original-byte copy alignment and full governed formation roadmap",
-          "blob_sha": "f07cdeb4722efac2ee91ba788f30b6361eb47772"
+          "blob_sha": "7bbdc87f042b335b8ac0b3d9a496e8e93c14af40"
         },
         {
           "path": "tests/governance/test_mfm_public_conditional_foundation.py",
@@ -1433,7 +1483,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "a930b5ddd09c7d1859691866f528647ff0803241",
+      "commit": "d4801375eddb583fc48fddde23eeed7fa65635d4",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1513,7 +1563,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "730fc6c86529744703a7319d034fd4e63b2193ef"
+          "blob_sha": "53344fbf71abc7e76c5277c9ea23413517c96898"
         },
         {
           "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
@@ -1524,6 +1574,11 @@
           "path": "docs/fable-builder/MFM_REFERENCE_ROUTE_AND_DRIVE_CUSTODY_CAPTURE_2026-10-13.md",
           "purpose": "original reference observation,55-action custody and exact shared archive release methods; procedure only",
           "blob_sha": "6cff292a4198563077de7e876367f93d2fc4bd78"
+        },
+        {
+          "path": "docs/fable-builder/MFM_JOINT_LEARNING_AND_FIXED_REVIEW_CAPTURE_2026-10-13.md",
+          "purpose": "complete original review/custody and actual joint objective/full-component construction with coherent canonical binding diagnosis; procedure only",
+          "blob_sha": "b66a95568e0c6a96690d4a0c0eec42aa440a744c"
         }
       ]
     }
