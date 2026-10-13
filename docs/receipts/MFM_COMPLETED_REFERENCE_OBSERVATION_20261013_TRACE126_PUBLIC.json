@@ -1,0 +1,115 @@
+{
+  "actual_full_shape_final_and_seed_reload": true,
+  "actual_runtime": {
+    "accelerator": "Tesla T4",
+    "device": "cuda:0",
+    "execution_seconds": 1580.542932511,
+    "observation_including_reload_seconds": 1463.8631221589999,
+    "torch": "2.11.0+cu128"
+  },
+  "automatic_semantic_score": false,
+  "base_answer_head_reused": false,
+  "cache_qualification": "not-attempted",
+  "cache_used": false,
+  "condition_mapping_downloaded": false,
+  "decode_method": "full-prefix-reference-only-FP32-greedy-v1",
+  "durable_Drive_custody_of_new_observation": false,
+  "exposure": "Prior known audit exposure and new root first-row schema inspection explicitly retained; fresh calibration reviewer receives only calibration150.",
+  "fixed_cohort": {
+    "audit_each_condition": 431,
+    "calibration_each_condition": 75,
+    "original_contrasts": 183,
+    "pair_associations_each_condition": 4271,
+    "raw_rows": 1012,
+    "sources_each_condition": 506
+  },
+  "full_MFM_qualified": false,
+  "kernel": {
+    "numeric_id": 138375666,
+    "private": true,
+    "source_FILE_sha256": "dfe0ca4da6cf7639bb0d06c8e23d6a5080d7cba566e895ae117cba5a0f93f977",
+    "status": "COMPLETE",
+    "version": 3
+  },
+  "new_reference_copy_parameters_trained": false,
+  "next": "Actual complete admitted joint lexical/reference/original-copy material and learning; parked full-system stress remains parked.",
+  "opaque_conditions": [
+    {
+      "actual_full_shape_reload": true,
+      "audit_sources": 431,
+      "calibration_sources": 75,
+      "capped_outputs": 506,
+      "condition": "condition-696f6c1879c04a2c98cf391bb3caf94a",
+      "decode_errors": 0,
+      "decoder_steps": 64768,
+      "empty_outputs": 0,
+      "eos_outputs": 0,
+      "generation_seconds": 1095.799387572,
+      "load_seconds": 6.2813252309999825,
+      "memory": {
+        "cuda_peak_allocated_bytes": 1113595904,
+        "cuda_peak_reserved_bytes": 1138753536,
+        "cuda_total_bytes": 15636037632,
+        "host_peak_rss_bytes": 5052411904
+      },
+      "pair_associations": 4271,
+      "semantic_score": null,
+      "sources": 506
+    },
+    {
+      "actual_full_shape_reload": true,
+      "audit_sources": 431,
+      "calibration_sources": 75,
+      "capped_outputs": 0,
+      "condition": "condition-a03eed362ce344f5b61f6fcb310512c5",
+      "decode_errors": 0,
+      "decoder_steps": 16595,
+      "empty_outputs": 0,
+      "eos_outputs": 506,
+      "generation_seconds": 280.227687842,
+      "load_seconds": 5.8068196819999685,
+      "memory": {
+        "cuda_peak_allocated_bytes": 1109626368,
+        "cuda_peak_reserved_bytes": 1136656384,
+        "cuda_total_bytes": 15636037632,
+        "host_peak_rss_bytes": 5586669568
+      },
+      "pair_associations": 4271,
+      "semantic_score": null,
+      "sources": 506
+    }
+  ],
+  "optimizer_created": false,
+  "optimizer_updates": 0,
+  "original_failures_preserved": [
+    "v1 incomplete runtime closure",
+    "v2 experimental-cache numerical admission",
+    "package003 stale producer constants caught before provider launch"
+  ],
+  "original_output_pins": {
+    "execution": "ebc12614712edce1103112a3cb81598fa509a6d1c2ffe3e9dc969111fb87b048",
+    "protocol": "40333a70878726f08d7b683135fd8a27185ad33c2807c57cd514816212fe638d",
+    "raw": "6573522926127e28553916c567fbc6e2868047f784c0a2270072c9ddfe83bc24",
+    "runtime": "32045594f2f78b81f3839ec88be1b51fe380cdaf152d11c4519b18ac3643b307"
+  },
+  "original_verified_receipt_FILE_sha256": "d39772e5f94f5574b4486d02aef1a57b8f16ad07bd1f5407697bf0bfc88072bc",
+  "paired_source_raw_change": {
+    "condition-696f6c1879c04a2c98cf391bb3caf94a": {
+      "fixed_contrast_edges": 183,
+      "raw_token_sequence_changed": 106,
+      "semantic_effect_not_adjudicated": true
+    },
+    "condition-a03eed362ce344f5b61f6fcb310512c5": {
+      "fixed_contrast_edges": 183,
+      "raw_token_sequence_changed": 180,
+      "semantic_effect_not_adjudicated": true
+    }
+  },
+  "privacy": "PUBLIC_AGGREGATE_ONLY",
+  "record_sha256": "ae67f180b995bee84e839d69dcf977bd9391cd15dbc033d74e55950ca9f0b7e8",
+  "reviewer_identity_concealment_established": false,
+  "root_complete_original_join_verified": true,
+  "schema": "mfm-completed-reference-observation-public-v1",
+  "semantic_adjudication": "calibration-only manual review pending",
+  "trace_id": "fbm-mfm-20261013-complete-original-reference-observation-126"
+}

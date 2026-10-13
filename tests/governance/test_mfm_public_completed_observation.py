@@ -65,6 +65,98 @@ class CompletedObservationTests(unittest.TestCase):
         self.assertFalse(hasattr(args, 'epochs'))
         self.assertEqual(args.component_dir, self.root/'component-dir')
 
+    def test_full_reference_produces_every_actual_prefix_without_cache_or_teacher(self):
+        # Catches skipping full prefixes, choosing a cached token or using reduced precision.
+        self.model.train()
+        modes = [m.training for m in self.model.modules()]
+        rng = torch.random.get_rng_state().clone()
+        with torch.no_grad():
+            self.model.output_bias.fill_(-1e6)
+            self.model.output_bias[2] = 1e6
+        original = self.view.next_token_logits
+        prefixes = []
+        def actual_full_prefix(**payload):
+            self.assertTrue(torch.is_inference_mode_enabled())
+            self.assertFalse(torch.is_autocast_enabled('cpu'))
+            self.assertFalse(torch.is_grad_enabled())
+            prefixes.append(payload['input_ids'].tolist()[0])
+            return original(**payload)
+        with patch('cognitive_kernel.formation_incremental_decoder.CachedFormationDecoder',
+                   side_effect=AssertionError('experimental cache used')), \
+             patch.object(producer.reader, 'payload', side_effect=AssertionError('teacher opened')), \
+             patch.object(self.view, 'forward', side_effect=AssertionError('teacher forward opened')), \
+             patch('torch.optim.AdamW', side_effect=AssertionError('optimizer created')), \
+             patch.object(self.view, 'next_token_logits', side_effect=actual_full_prefix):
+            report = producer.observe_public_development(self.view, self.prepared, Tokenizer(),
+                self.minimal_plan(), output_dir=self.root, condition='opaque-reference', weight_sha256='b'*64)
+        row = json.loads((self.root/report['raw_file']).read_text())
+        self.assertEqual(prefixes, [[2]*length for length in range(1,129)])
+        self.assertEqual(row['raw_token_ids'], [2]*128)
+        self.assertEqual(row['decoder_steps'], 128)
+        self.assertTrue(row['cap_exhausted'])
+        self.assertEqual(row['schema'], 'mfm-public-completed-source-observation-v2')
+        self.assertEqual(report['schema'], 'mfm-public-completed-observation-condition-v2')
+        for record in (row, report):
+            self.assertEqual(record['decode_method'], 'full-prefix-reference-only-FP32-greedy-v1')
+            self.assertFalse(record['cache_used'])
+            self.assertEqual(record['cache_qualification'], 'not-attempted')
+            self.assertNotIn('parity', record)
+            self.assertNotIn('cache_method', record)
+            self.assertNotIn('compared_greedy_prefixes', record)
+        self.assertEqual(report['reference_produced_decoder_steps'],128)
+        self.assertEqual([m.training for m in self.model.modules()], modes)
+        self.assertTrue(torch.equal(torch.random.get_rng_state(), rng))
+
+    def test_reference_trajectory_matches_independent_original_producer_loop(self):
+        # Independent actual greedy loop; no cache or target constructs expected tokens.
+        torch.manual_seed(37)
+        self.model.eval()
+        plan = self.minimal_plan()
+        source = plan['sources'][plan['source_order'][0]]
+        _, tensors = producer.reader.features.read_source(self.prepared.feature_bank, source,
+            self.prepared.export['record_sha256'], self.prepared.census['base_hidden_size'])
+        prefix, expected, ended = [2], [], False
+        with torch.inference_mode(), torch.autocast('cpu',enabled=False):
+            for _ in range(128):
+                logits = self.view.next_token_logits(base_states=tensors['states'],
+                    source_mask=tensors['attention_mask'],input_ids=torch.tensor([prefix]))
+                token = int(logits[0].argmax())
+                if token == 1:
+                    ended = True
+                    break
+                expected.append(token)
+                prefix.append(token)
+        with patch('cognitive_kernel.formation_incremental_decoder.CachedFormationDecoder',
+                   side_effect=AssertionError('experimental cache used')):
+            report = producer.observe_public_development(self.view,self.prepared,Tokenizer(),plan,
+                output_dir=self.root,condition='opaque-independent',weight_sha256='b'*64)
+        row=json.loads((self.root/report['raw_file']).read_text())
+        self.assertEqual(row['raw_token_ids'],expected)
+        self.assertEqual(row['eos_observed'],ended)
+        self.assertEqual(row['decoder_steps'],len(expected)+int(ended))
+        self.assertEqual(row['raw_output_text'],''.join(f'<{token}>' for token in expected))
+
+    def test_non_fp32_producer_stops_and_retains_new_method_failure(self):
+        modes=[m.training for m in self.model.modules()]
+        rng=torch.random.get_rng_state().clone()
+        actual=self.view.next_token_logits
+        def wrong_dtype(**payload):
+            return actual(**payload).double()
+        with patch.object(self.view,'next_token_logits',side_effect=wrong_dtype):
+            with self.assertRaisesRegex(ValueError,'finite FP32'):
+                producer.observe_public_development(self.view,self.prepared,Tokenizer(),self.minimal_plan(),
+                    output_dir=self.root,condition='opaque-dtype',weight_sha256='e'*64)
+        failure=json.loads((self.root/'observation-failure-opaque-dtype.json').read_text())
+        self.assertEqual(failure['schema'],'mfm-public-completed-observation-failure-v2')
+        self.assertEqual(failure['decode_method'],'full-prefix-reference-only-FP32-greedy-v1')
+        self.assertEqual(failure['active_prefix_tokens'],1)
+        self.assertEqual(failure['completed_sources'],0)
+        self.assertFalse(failure['cache_used'])
+        self.assertFalse(failure['automatic_retry'])
+        self.assertNotIn('parity',failure)
+        self.assertEqual([m.training for m in self.model.modules()],modes)
+        self.assertTrue(torch.equal(torch.random.get_rng_state(),rng))
+
     def test_real_source_only_generation_retains_eos_empty_and_cap(self):
         self.assertTrue(hasattr(producer, 'observe_public_development'), 'missing full-roster observation consumer')
         self.model.train()
@@ -86,7 +178,9 @@ class CompletedObservationTests(unittest.TestCase):
         self.assertEqual(row['decoder_steps'], 1)
         self.assertEqual(row['raw_output_text'], '')
         self.assertEqual(row['case_ids'], ['d'])
-        self.assertGreater(row['parity']['compared_greedy_prefixes'], 0)
+        self.assertEqual(row['decode_method'],'full-prefix-reference-only-FP32-greedy-v1')
+        self.assertFalse(row['cache_used'])
+        self.assertEqual(report['reference_produced_decoder_steps'],1)
         original_raw = (self.root/report['raw_file']).read_bytes()
         with self.assertRaisesRegex(ValueError,'overwritten'):
             producer.observe_public_development(self.view,self.prepared,Tokenizer(),self.minimal_plan(),
@@ -107,9 +201,8 @@ class CompletedObservationTests(unittest.TestCase):
         self.assertFalse(row['eos_observed'])
         self.assertTrue(row['cap_exhausted'])
         self.assertEqual(row['decoder_steps'], 128)
-        self.assertEqual(row['parity']['compared_greedy_prefixes'], 128)
-        self.assertTrue(row['parity']['longest_source_full_actual_prefix_check'])
-        self.assertEqual(report['longest_source_reference_check']['compared_greedy_prefixes'],128)
+        self.assertEqual(report['reference_produced_decoder_steps'],128)
+        self.assertEqual(report['longest_source_generation']['reference_produced_decoder_steps'],128)
 
     def test_exception_retains_partial_file_and_restores_mode_rng(self):
         self.assertTrue(hasattr(producer, 'observe_public_development'), 'missing completed observation operation')
@@ -118,9 +211,9 @@ class CompletedObservationTests(unittest.TestCase):
         rng = torch.random.get_rng_state().clone()
         def corrupt(**kwargs):
             torch.rand(2)
-            return torch.zeros(1, 16)
+            raise RuntimeError('synthetic original producer failure')
         with patch.object(self.view, 'next_token_logits', side_effect=corrupt):
-            with self.assertRaisesRegex(ValueError, 'parity|reference'):
+            with self.assertRaisesRegex(RuntimeError, 'original producer failure'):
                 producer.observe_public_development(self.view, self.prepared, Tokenizer(),
                     self.minimal_plan(), output_dir=self.root, condition='opaque-c', weight_sha256='d'*64)
         self.assertEqual([m.training for m in self.model.modules()], modes)
@@ -129,7 +222,9 @@ class CompletedObservationTests(unittest.TestCase):
         self.assertEqual(len(failures), 1)
         error = json.loads(failures[0].read_text())
         self.assertEqual(error['completed_sources'], 0)
-        self.assertIn('parity', error['error'])
+        self.assertIn('original producer failure', error['error'])
+        self.assertEqual(error['decode_method'],'full-prefix-reference-only-FP32-greedy-v1')
+        self.assertFalse(error['automatic_retry'])
         self.assertTrue(list(self.root.glob('raw-*.jsonl')))
 
     def test_source_fanout_decodes_each_exact_input_once_without_group_collapse(self):
@@ -155,33 +250,35 @@ class CompletedObservationTests(unittest.TestCase):
         self.assertEqual([r['case_ids'] for r in rows], [['d','fixture-reference'],['fixture-second']])
         self.assertEqual(report['pair_associations'], 3)
 
-    def test_nonfinite_reference_failure_is_preserved_without_json_nan_or_inf(self):
+    def test_nonfinite_producer_failure_is_preserved_without_json_nan_or_inf(self):
         with patch.object(self.view, 'next_token_logits', return_value=torch.full((1,16),float('inf'))):
-            with self.assertRaisesRegex(ValueError,'parity'):
+            with self.assertRaisesRegex(ValueError,'finite FP32'):
                 producer.observe_public_development(self.view,self.prepared,Tokenizer(),self.minimal_plan(),
                     output_dir=self.root,condition='opaque-nonfinite',weight_sha256='f'*64)
         failure=json.loads((self.root/'observation-failure-opaque-nonfinite.json').read_text())
-        self.assertFalse(failure['parity']['reference_finite'])
-        self.assertIsNone(failure['parity']['max_abs_difference'])
+        self.assertFalse(failure['producer_logit_validation']['finite'])
+        self.assertEqual(failure['reference_produced_decoder_steps'],0)
+        self.assertNotIn('parity',failure)
 
-    def test_longest_source_detects_reference_mismatch_after_first32(self):
+    def test_original_producer_validation_applies_after_first32(self):
         with torch.no_grad():
             self.model.output_bias.fill_(-1e6)
             self.model.output_bias[2]=1e6
         actual=self.view.next_token_logits
-        def late_mismatch(**data):
+        def late_nonfinite(**data):
             logits=actual(**data)
             if data['input_ids'].shape[1]==41:
                 logits=logits.clone()
-                logits[0,3]=2e6
+                logits[0,3]=float('nan')
             return logits
-        with patch.object(self.view,'next_token_logits',side_effect=late_mismatch):
-            with self.assertRaisesRegex(ValueError,'parity'):
+        with patch.object(self.view,'next_token_logits',side_effect=late_nonfinite):
+            with self.assertRaisesRegex(ValueError,'finite FP32'):
                 producer.observe_public_development(self.view,self.prepared,Tokenizer(),self.minimal_plan(),
                     output_dir=self.root,condition='opaque-late',weight_sha256='f'*64)
         failure=json.loads((self.root/'observation-failure-opaque-late.json').read_text())
-        self.assertEqual(failure['parity']['compared_greedy_prefixes'],41)
-        self.assertEqual(len(failure['parity']['failed_prefix_ids']),41)
+        self.assertEqual(failure['active_prefix_tokens'],41)
+        self.assertEqual(failure['reference_produced_decoder_steps'],40)
+        self.assertFalse(failure['producer_logit_validation']['finite'])
 
     def test_decode_rejects_unbound_task_and_bf16(self):
         self.assertTrue(hasattr(producer, 'observe_public_development'), 'missing completed observation operation')

@@ -33,6 +33,7 @@ CURRICULUM_SCHEMA = 'mfm-public-conditional-foundation-curriculum-v1'
 SEED_SCHEMA = 'mfm-public-conditional-foundation-seed-v1'
 CHECKPOINT_SCHEMA = 'mfm-public-conditional-foundation-checkpoint-v1'
 COMPONENT_SCHEMA = 'mfm-public-conditional-foundation-component-v1'
+OBSERVATION_METHOD = 'full-prefix-reference-only-FP32-greedy-v1'
 OBJECTIVE = 'sequence-mean-including-eos/reference-mean/semantic-group-mean-v1'
 SAMPLER = 'python-local-random-seed-plus-epoch/encoded-train-order-v1'
 
@@ -1010,12 +1011,11 @@ def _load_observation_weights(view, path, expected_sha256):
 def observe_public_development(view, prepared, tokenizer, plan, *, output_dir, condition, weight_sha256) -> dict:
     """Save every raw source-only output and expose only calibration text.
 
-    Incremental/reference mismatch stops, retains diagnostic evidence and never
-    silently falls back. Check first32 prefixes per source and every actual
-    prefix through EOS/cap for the longest frozen source in each condition.
+    The existing full-prefix specialist is the sole FP32 greedy producer at
+    every actual prefix through EOS/cap. No experimental cache is used or
+    qualified; prior failed cache-admission evidence belongs to its original run.
     """
     import torch
-    from cognitive_kernel.formation_incremental_decoder import CachedFormationDecoder
     if getattr(view, 'task', None) != TASK or not hasattr(view, 'specialist'):
         raise ValueError('completed observation requires explicit public task binding')
     if any(p.dtype != torch.float32 for p in view.parameters()):
@@ -1033,18 +1033,15 @@ def observe_public_development(view, prepared, tokenizer, plan, *, output_dir, c
         raise ValueError('observation completed or partial evidence cannot be overwritten')
     device = next(view.parameters()).device
     modes = [(module, module.training) for module in view.specialist.modules()]
-    started, completed, associations, steps, ended_count, compared = perf_counter(), 0, 0, 0, 0, 0
-    active, parity, longest_check = None, None, None
+    started, completed, associations, steps, ended_count, produced = perf_counter(), 0, 0, 0, 0, 0
+    active, active_prefix_tokens, producer_validation, longest_generation = None, None, None, None
     try:
         view.eval()
         with raw_path.open('xb') as raw, calibration_path.open('xb') as calibration, \
                 torch.random.fork_rng(devices=list(range(torch.cuda.device_count()))), \
                 torch.inference_mode(), torch.autocast(device.type, enabled=False):
             for key in plan['source_order']:
-                reference_budget = cap if key == longest_source else min(32, cap)
-                active, parity = key, {'compared_greedy_prefixes': 0, 'max_abs_difference': 0.,
-                    'atol': 1e-4, 'rtol': 1e-4, 'argmaxes_equal': True,
-                    'reference_budget': reference_budget, 'longest_source_full_actual_prefix_check': key == longest_source}
+                active, active_prefix_tokens, producer_validation = key, None, None
                 source = plan['sources'][key]
                 receipt, tensors = reader.features.read_source(prepared.feature_bank, source,
                     prepared.export['record_sha256'], prepared.census['base_hidden_size'])
@@ -1053,29 +1050,17 @@ def observe_public_development(view, prepared, tokenizer, plan, *, output_dir, c
                 states = tensors['states'].detach().to(device)
                 mask = tensors['attention_mask'].detach().to(device)
                 # Target tensors and decoder_inputs are intentionally not constructed.
-                decoder = CachedFormationDecoder(view, base_states=states, source_mask=mask)
                 prefix, ids, eos, case_steps = [2], [], False, 0
                 case_started = perf_counter()
                 for index in range(cap):
-                    logits = decoder.step(prefix[-1])
-                    if logits.dtype != torch.float32 or not torch.isfinite(logits).all():
+                    active_prefix_tokens = len(prefix)
+                    logits = view.next_token_logits(base_states=states, source_mask=mask,
+                        input_ids=torch.tensor([prefix], dtype=torch.long, device=device))
+                    producer_validation = {'dtype': str(logits.dtype), 'finite': bool(torch.isfinite(logits).all())}
+                    if logits.dtype != torch.float32 or not producer_validation['finite']:
                         raise ValueError('observation generated logits must be finite FP32')
                     token = int(logits[0].argmax().item())
-                    if index < reference_budget:
-                        reference = view.next_token_logits(base_states=states, source_mask=mask,
-                            input_ids=torch.tensor([prefix], dtype=torch.long, device=device))
-                        finite = bool(torch.isfinite(reference).all())
-                        difference = float((reference-logits).abs().max().cpu()) if finite else None
-                        equal = bool(reference.dtype == torch.float32 and finite and
-                            torch.allclose(reference, logits, atol=1e-4, rtol=1e-4) and
-                            int(reference[0].argmax().item()) == token)
-                        parity.update(compared_greedy_prefixes=index+1,
-                            max_abs_difference=max(parity['max_abs_difference'], difference) if finite else None,
-                            argmaxes_equal=equal, reference_finite=finite)
-                        if not equal:
-                            parity.update(reference_argmax=int(reference[0].argmax().item()), cached_argmax=token,
-                                          failed_prefix_ids=list(prefix))
-                            raise ValueError('observation actual FP32 cache/reference parity differs')
+                    produced += 1
                     case_steps += 1
                     if token == 1:
                         eos = True
@@ -1087,13 +1072,14 @@ def observe_public_development(view, prepared, tokenizer, plan, *, output_dir, c
                     raw_text = tokenizer.decode(ids, skip_special_tokens=False, clean_up_tokenization_spaces=False)
                 except Exception as exc:
                     decode_error = type(exc).__name__ + ': ' + str(exc)
-                row = {'schema': 'mfm-public-completed-source-observation-v1', 'condition': condition,
+                row = {'schema': 'mfm-public-completed-source-observation-v2', 'condition': condition,
                     'observation_id': canonical_sha256({'source_key': key, 'condition': condition}),
                     'source_key': key, 'source_receipt_sha256': receipt['record_sha256'],
                     'semantic_input_sha256s': plan['source_groups'][key], 'case_ids': source['case_ids'],
                     'raw_token_ids': ids, 'raw_output_text': raw_text, 'tokenizer_decode_error': decode_error,
                     'eos_observed': eos, 'cap_exhausted': not eos, 'decoder_steps': case_steps,
-                    'parity': parity, 'seconds': perf_counter()-case_started,
+                    'decode_method': OBSERVATION_METHOD, 'cache_used': False, 'cache_qualification': 'not-attempted',
+                    'seconds': perf_counter()-case_started,
                     'semantic_verdict': 'not-adjudicated', 'malformed_or_special_tokens_repaired': False}
                 raw.write(canonical_json_bytes(row)+b'\n')
                 raw.flush()
@@ -1108,18 +1094,19 @@ def observe_public_development(view, prepared, tokenizer, plan, *, output_dir, c
                     calibration.flush()
                 completed += 1
                 if key == longest_source:
-                    longest_check = {'source_key': key, 'source_tokens': len(source['source_ids']),
-                        'actual_decoder_steps': case_steps, 'compared_greedy_prefixes': parity['compared_greedy_prefixes'],
-                        'eos_observed': eos, 'cap_exhausted': not eos, 'argmaxes_equal': True}
+                    longest_generation = {'source_key': key, 'source_tokens': len(source['source_ids']),
+                        'actual_decoder_steps': case_steps, 'reference_produced_decoder_steps': case_steps,
+                        'eos_observed': eos, 'cap_exhausted': not eos}
                 associations += len(source['case_ids'])
                 steps += case_steps
                 ended_count += int(eos)
-                compared += parity['compared_greedy_prefixes']
-                del decoder, tensors, states, mask, logits
+                del tensors, states, mask, logits
     except BaseException as exc:
         shared._write_new(root/f'observation-failure-{condition}.json', {
-            'schema': 'mfm-public-completed-observation-failure-v1', 'condition': condition,
-            'completed_sources': completed, 'active_source_key': active, 'parity': parity,
+            'schema': 'mfm-public-completed-observation-failure-v2', 'condition': condition,
+            'completed_sources': completed, 'active_source_key': active, 'active_prefix_tokens': active_prefix_tokens,
+            'producer_logit_validation': producer_validation, 'reference_produced_decoder_steps': produced,
+            'decode_method': OBSERVATION_METHOD, 'cache_used': False, 'cache_qualification': 'not-attempted',
             'raw_file': raw_path.name, 'raw_file_sha256': shared._digest(raw_path) if raw_path.exists() else None,
             'error': type(exc).__name__ + ': ' + str(exc), 'automatic_retry': False})
         raise
@@ -1128,13 +1115,13 @@ def observe_public_development(view, prepared, tokenizer, plan, *, output_dir, c
             module.training = mode
     seconds = perf_counter()-started
     return shared._write_new(root/f'observation-{condition}.json', {
-        'schema': 'mfm-public-completed-observation-condition-v1', 'condition': condition,
+        'schema': 'mfm-public-completed-observation-condition-v2', 'condition': condition,
         'weight_sha256': weight_sha256, 'source_order_sha256': canonical_sha256(plan['source_order']),
         'sources': completed, 'pair_associations': associations, 'decoder_steps': steps,
         'eos_outputs': ended_count, 'cap_exhausted_outputs': completed-ended_count,
-        'compared_greedy_prefixes': compared,
-        'cache_method': 'FP32-first32-per-source-and-full-longest-actual-prefix-reference-checked',
-        'longest_source_reference_check': longest_check,
+        'reference_produced_decoder_steps': produced,
+        'decode_method': OBSERVATION_METHOD, 'cache_used': False, 'cache_qualification': 'not-attempted',
+        'longest_source_generation': longest_generation,
         'raw_file': raw_path.name, 'raw_file_sha256': shared._digest(raw_path),
         'calibration_file': calibration_path.name, 'calibration_file_sha256': shared._digest(calibration_path),
         'seconds': seconds, 'decoder_steps_per_second': steps/seconds, 'memory': _memory(device),
@@ -1297,8 +1284,9 @@ def run_completed_observation(args) -> dict:
             shared._write_new(root/'condition-mapping.json', {'schema': 'mfm-public-completed-observation-opaque-mapping-v1',
                 'conditions': {condition: {'role': role, 'weight_sha256': getattr(args, role+'_weight_sha256')}
                                for condition, role in mapping.items()}, 'successful_blinding_established': False})
-            shared._write_new(root/'protocol.json', {'schema': 'mfm-public-completed-observation-protocol-v1',
+            shared._write_new(root/'protocol.json', {'schema': 'mfm-public-completed-observation-protocol-v2',
                 'bindings': plan['bindings'], 'decode': plan['decode'], 'counts': plan['counts'],
+                'decode_method': OBSERVATION_METHOD, 'cache_used': False, 'cache_qualification': 'not-attempted',
                 'partitions': plan['partition_rows'], 'contrasts': plan['controls'], 'exposure': plan['exposure'],
                 'component_sha256': records['component']['record_sha256'],
                 'history_sha256': records['history']['record_sha256'], 'history_verification': records['history_verification'],
@@ -1336,7 +1324,8 @@ def run_completed_observation(args) -> dict:
                         for block in iter(lambda: source.read(8*1024*1024), b''):
                             stream.write(block)
             return shared._write_new(root/'observation.json', {
-                'schema': 'mfm-public-completed-observation-run-v1', 'status': 'complete-raw-development-observation-unqualified',
+                'schema': 'mfm-public-completed-observation-run-v2', 'status': 'complete-raw-development-observation-unqualified',
+                'decode_method': OBSERVATION_METHOD, 'cache_used': False, 'cache_qualification': 'not-attempted',
                 'condition_reports': reports, 'counts_per_condition': plan['counts'],
                 'raw_file': raw_path.name, 'raw_file_sha256': shared._digest(raw_path),
                 'protocol_file_sha256': shared._digest(root/'protocol.json'),

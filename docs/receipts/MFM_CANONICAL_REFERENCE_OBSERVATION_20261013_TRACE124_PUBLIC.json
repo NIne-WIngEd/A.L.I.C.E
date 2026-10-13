@@ -1,0 +1,61 @@
+{
+  "Kaggle": {
+    "custom_timeout_seconds": null,
+    "initial_status": "RUNNING",
+    "kernel_id": "mkrayanyan/rayan-mfm-foundation-observation-20261012",
+    "numeric_id": 138375666,
+    "paid_compute": false,
+    "source_contract_readback_verified": true,
+    "version": 3
+  },
+  "PC_tensor_downloads": 0,
+  "actual_full_reference_GPU_performance_measured": false,
+  "bootstrap_FILE_sha256": "a45ca20589b4193a72588852dce4733b6762d9e3ef069b9c2ebd1aed32ca313a",
+  "cache_qualification": "not-attempted",
+  "cache_used": false,
+  "conditions": 2,
+  "full_MFM_qualified": false,
+  "independent_package_review": {
+    "actual_embedded_admission_and_extraction_pass": true,
+    "bytes": 6951332,
+    "files": 14,
+    "isolated_owned_import_counts": [
+      77,
+      77,
+      78
+    ],
+    "native_arguments": 28,
+    "report_FILE_sha256": "39c9183116bf2949f62402d9b57d04db5545a1530a316027c4fa56a97c4c913f",
+    "tamper_negative_controls": 5,
+    "verification_FILE_sha256": "153c624030fd34d761ccc3c72b51e857e44f63fa303030f068afb52f49a743d3",
+    "whole_original_source_files": 327
+  },
+  "kernel_main_FILE_sha256": "dfe0ca4da6cf7639bb0d06c8e23d6a5080d7cba566e895ae117cba5a0f93f977",
+  "manifest_FILE_sha256": "f49526bfd87dfbadcd859bf88486251f69dfba2cdc7a85be6b7ade4f62ccaa87",
+  "method": "full-prefix-reference-only-FP32-greedy-v1",
+  "optimizer_updates": 0,
+  "original_failures_preserved": [
+    "v1 older runtime closure refused import",
+    "v2 experimental-cache strict numeric predicate refused after8sources",
+    "package003 stale bootstrap producer binding refused before any launch",
+    "source test-runner child import setup failure"
+  ],
+  "original_partition_and_exposure_unchanged": true,
+  "pair_associations_per_condition": 4271,
+  "paired_generation_complete": false,
+  "previous_cache_cause_unresolved": true,
+  "privacy": "PUBLIC_METHOD_ONLY",
+  "producer_FILE_sha256": "7848c5f2b12db7d08fc1ff41df5680d9b7d25b4101e6dad54e6eb4c558e0c7d5",
+  "record_sha256": "11aca8388003acbcf14fcd1c1ccae72f56d447db61e53dff8e3ef10429efd4fb",
+  "schema": "mfm-canonical-reference-observation-source-public-v1",
+  "semantic_score_created": false,
+  "silent_fallback": false,
+  "source_controls": {
+    "original_fitting_functions_AST_identical": 25,
+    "passed": 32,
+    "skips": 0,
+    "source_control_FILE_sha256": "1a8f39601e3131d857ae52a6e1ff941701c48306fd29752f5e325574748231b9"
+  },
+  "source_order_per_condition": 506,
+  "trace_id": "fbm-mfm-20261013-canonical-full-reference-observation-and-package-binding-124"
+}
