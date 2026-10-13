@@ -1,0 +1,34 @@
+{
+  "Gemma_answer_head_used": false,
+  "actual_Gemma_12B_feature_execution": false,
+  "complete_native_text_fields_preserved": true,
+  "complete_preflight_before_weight_load": true,
+  "formation_targets_in_source_extraction": false,
+  "frozen_backbone_only": true,
+  "full_MFM_qualified": false,
+  "historical_J5_source_tokens": 38564,
+  "independent_native_field_review_FILE_sha256": "b1c94d9467082888e38bf4ecbb0b5e5e4d2efa10e02ecf941420a584db7ef40b",
+  "mm_token_type_ids_text_zero_only": true,
+  "native_media_claimed": false,
+  "new_joint_updates": 0,
+  "next": "Complete real joint material lowering, source-feature and target assembly, new owned optimizer/checkpoint/restart, then actual full fitting and generated consumer learning.",
+  "observed_utc": "2026-10-13T14:51:32.970866+00:00",
+  "physical_output_guard_before_allocation": true,
+  "privacy": "PUBLIC_AGGREGATE_ONLY",
+  "production_PC_payload": false,
+  "record_sha256": "81181c6a00394775a3064561197d728b8dd494f2c9ff729627c57b30ebe6f40a",
+  "root_final_focus": {
+    "controls": 3,
+    "original_result_FILE_sha256": "7b999db719b6b5d6f1c3c4912c5820b6bce6f632c625720ee95bdb1606414a7c",
+    "seconds": 188.21679439989384,
+    "successful": true
+  },
+  "schema": "mfm-native-joint-source-feature-public-v1",
+  "source_FILEs": {
+    "scripts/mfm/export_joint_source_features.py": "86b8aaea3035e42088c3c548611d16d005807efad7f115bf20ad6411e654eed2",
+    "tests/governance/test_mfm_joint_source_features.py": "3fed0c6a2c3fe9c479df247569b12daaed3627be2ac48592159b7599f9345b15"
+  },
+  "stress_draft": "parked",
+  "trace_id": "fbm-mfm-20261013-native-joint-source-feature-construction-132",
+  "unchanged_J5_profile_limit": 32768
+}
