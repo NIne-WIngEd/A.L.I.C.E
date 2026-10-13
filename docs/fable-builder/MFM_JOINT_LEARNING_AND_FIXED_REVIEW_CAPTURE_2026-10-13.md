@@ -17,3 +17,24 @@ TRACE133 adds the direct original-material joint learner, explicit globally weig
 TRACE134 adds actual complete six-cut offline source census:22,475/28,814/38,564/42,784/52,466/52,488 tokens and every native field. Root verified all physical bodies/values/seals. Four exceed unchanged J5; a separate J6 construction enables later full input/capacity/material work. Census is neither a source freeze nor a capacity/rights/learning pass.
 
 TRACE135 adds actual complete J6 default/offset geometry and immutable six-cut freezes, with strict saved-native and real Mapping-container contracts. Both numeric alias and first-correction BatchFeature regression remain before exact corrected rechecks. Whole six final source rebinding preserves all semantics/native values and changes only code/cache/seals; it is not another processor run. Existing feature/material/reference/copy/learner consumers still require explicit J6 interfaces, and their code changes require compatible complete138-state seed migration. Full material, capacity and fitting remain separate.
+
+TRACE136 adds source-grounded first-party author construction. The original
+author view exposed proof-only custody companions through copied snapshots;
+an exclusive successor reuses the existing proof descriptor and preserves
+authorized current delivery and complete source geometry. All six views and
+eight draft assertions were revalidated without claiming a new model call.
+The reviewed draft snapshot retains41 unknown adjudications,48 unauthored
+references and incomplete whole-copy choices. These are authoring work,
+never automatic negative labels or inferred choices.
+
+The actual stochastic model-author origin now has explicit intake/corpus-v3
+support in the existing assembler/admission. It retains separate raw
+input/output/converter/target FILEs, producer identity/version, literal false
+service-authentication/gold flags, existing rights, empty reviews and common
+stochastic producer split exclusion. Old origin rules remain intact.
+Twenty-one root assembly/signed-admission controls and finite independent
+original API→reader→handoff review pass. This produces a truthful material
+route; it admits neither the actual incomplete six cases nor full-role
+coverage or learning. The next work remains actual complete formation
+targets, J6 paired/native geometry and the model's existing feature/learner
+consumers.
