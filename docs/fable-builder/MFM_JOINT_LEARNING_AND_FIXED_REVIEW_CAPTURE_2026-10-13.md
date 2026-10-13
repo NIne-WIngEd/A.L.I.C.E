@@ -62,3 +62,12 @@ positive dimensions and do not supply admitted rights, separate development,
 production features, capacity or learned joint behavior. Continue whole-state
 source migration and broader grounded material without resetting heads or
 extending the completed twenty lexical epochs.
+
+TRACE139 records the explicit complete-state source migration. Preserve the
+original strict loader in a distinct process, then transfer, export and strictly
+reload every tensor under the compatible current closure. Keep the original
+cursor, provenance, untrained-head status and whole source/parent/RNG brackets.
+Actual103-file import and a genuine48-tensor control establish packet mechanics;
+the intended138-tensor CPU result remains separate. A successful first upload
+reference followed by a missing body response creates neither a dataset nor a
+model job. Retain that original boundary and diagnose it before continuation.
