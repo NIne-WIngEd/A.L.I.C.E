@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "d3db5632e9b2da938bc3fd8d0dbc0fccdcbb5efc",
+      "commit": "2b0e8e936b357fe71eaf5b09dbe3302e49f474f6",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -387,7 +387,7 @@
         {
           "path": "scripts/mfm/formation_reference_target_alignment.py",
           "purpose": "distinct complete original-pair reference view, explicit ordinal teaching and exact actual generated whole-wire geometry",
-          "blob_sha": "3d772195be859c24b24896075dc38dd04d949d73"
+          "blob_sha": "a584c32ff14ad89c222460cd3052a9d5ff0e43f5"
         },
         {
           "path": "tests/governance/test_mfm_reference_specialist.py",
@@ -727,7 +727,7 @@
         {
           "path": "docs/MFM_NATIVE_JOINT_LEARNING_2026-10-13.md",
           "purpose": "actual one-decoder lexical/reference/whole-copy objective, strict complete-state reload and full material/migration dependencies",
-          "blob_sha": "42b9f1f8f2963f9d8ac4dbdadff376bde4bcde00"
+          "blob_sha": "38ccba7e1910a49a9f990044640c8c0b61ff03c8"
         },
         {
           "path": "docs/receipts/MFM_NATIVE_JOINT_LEARNING_20261013_TRACE129_PUBLIC.json",
@@ -780,6 +780,41 @@
           "blob_sha": "a13aef230afcf6dfb6fd8cbe616296f0268b8982"
         },
         {
+          "path": "docs/MFM_BROADER_JOINT_CONSTRUCTION_2026-10-15.md",
+          "purpose": "current nine-case construction, complete104-interface inherited state, explicit frozen-bank consumer, config diagnosis and source export continuation; joint learning and full MFM remain pending",
+          "blob_sha": "4782d27cf85fcf2215fd16a8a907a6f16a03095d"
+        },
+        {
+          "path": "docs/receipts/MFM_ACTUAL_BROADER_STATE_BINDING_20261015_TRACE143_PUBLIC.json",
+          "purpose": "TRACE143 actual full138-tensor104-interface migration preserves the complete epoch20 parent and whole weight FILE; no joint updates",
+          "blob_sha": "48297ab230df5a047c040d4e1c83d490f9309582"
+        },
+        {
+          "path": "docs/MFM_EXPLICIT_CPU_SOURCE_EXECUTION_2026-10-15.md",
+          "purpose": "explicit whole native source CPU flash execution policy, measured kernel evidence and unchanged source fields; mechanism controls are separate from production capacity",
+          "blob_sha": "821d8bc69b68e3c1127f4b929f93eb361394ec33"
+        },
+        {
+          "path": "docs/receipts/MFM_FROZEN_BANK_CONSUMER_20261015_TRACE146_PUBLIC.json",
+          "purpose": "TRACE146 authenticated seven-asset consumer profile avoids a second base-weight file while retaining original producer ancestry and fresh physical admission",
+          "blob_sha": "82284243803d02b987c259916dbcfba8d937b20a"
+        },
+        {
+          "path": "docs/receipts/MFM_LOADED_SOURCE_CONFIG_IDENTITY_20261015_TRACE147_PUBLIC.json",
+          "purpose": "TRACE147 actual pre-forward config failure, complete independent typed expectation, live text aliases and stored producer proof; final controls and original failures remain separately scoped",
+          "blob_sha": "a079521d54be7345f4b840787f2b3894cf01f101"
+        },
+        {
+          "path": "docs/receipts/MFM_REVIEWED_SOURCE_SUCCESSOR_DISPATCH_20261015_TRACE148_PUBLIC.json",
+          "purpose": "TRACE148 one immutable nine-source successor dispatch and actual initial prelude, preserved failures, exclusive evidence placement and verified logical-member Drive recovery; full source and learning still pending",
+          "blob_sha": "ee694caa2a8195115ff19db74ae464dc76b7cb58"
+        },
+        {
+          "path": "tests/governance/test_mfm_source_config_identity.py",
+          "purpose": "genuine pinned meta config, complete-field and live-alias negatives, stored proof before heavy calls and explicit integration portability controls",
+          "blob_sha": "82dfcb5f1230b7647c716bca846dca2c6f511960"
+        },
+        {
           "path": "docs/receipts/MFM_ACTUAL_NATIVE_JOINT_COMPLETION_20261013_TRACE131_PUBLIC.json",
           "purpose": "TRACE131 actual full-size private offline CPU completion; complete115-to122-to138 state preserved and strict full reload, zero joint updates and large Drive custody pending",
           "blob_sha": "a75316e367c3de5261e939b3ac9373ff15831de4"
@@ -797,12 +832,12 @@
         {
           "path": "scripts/mfm/export_joint_source_features.py",
           "purpose": "complete native text fields and detached BF16 frozen backbone source states, physical clone/bank and whole original profile bindings; no targets or answer head",
-          "blob_sha": "6a7380173a2c10ed05be8d6d2ba2e47c5a4c7d11"
+          "blob_sha": "99216bd3c6327fc8585b09f6a927c356d98449a7"
         },
         {
           "path": "tests/governance/test_mfm_joint_source_features.py",
           "purpose": "whole native field forward/save/readback and original budget/path/preload/tensor controls with explicit fixture/host limits",
-          "blob_sha": "9b0bd96948c6b7ef1fd6037138c1b2246eba4729"
+          "blob_sha": "3dcd66361526933cd4447174e0c7b79356e99e79"
         },
         {
           "path": "docs/MFM_NATIVE_JOINT_TRAINING_2026-10-13.md",
@@ -817,7 +852,7 @@
         {
           "path": "scripts/mfm/train_native_joint_formation.py",
           "purpose": "direct complete lexical/reference/copy fit over independently admitted material, new named AdamW, one-bank consumption, complete boundary cursor/state restart and raw generated consumer; no default production schedule",
-          "blob_sha": "e6d443d137ecd94f6c2c531c7f3cc74af300c0c7"
+          "blob_sha": "9348150bbe9e14d1a50a1fba930f1050cb8566bd"
         },
         {
           "path": "tests/governance/test_mfm_native_joint_training.py",
@@ -927,7 +962,7 @@
         {
           "path": "scripts/mfm/formation_original_copy_target_alignment.py",
           "purpose": "complete reference/copy marker roster, authored ordinal and exact declaration supervision admission",
-          "blob_sha": "61779a10448dee7462cec04a00a1b3af3cd08880"
+          "blob_sha": "b73864155d0937bd0c0c52aeb2cc88ae9c30d0bd"
         },
         {
           "path": "tests/governance/test_mfm_original_copy_specialist.py",
@@ -1623,7 +1658,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "d1677cd4c8eeedee892160c8fc6591f5899fc41c",
+      "commit": "8dd52ce2ca01c433f9f957374d68bcc2c1fc9730",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -1703,7 +1738,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "b43189512e02ba914e11aaa50ce8e7d55b64f34a"
+          "blob_sha": "10fd7ded24e210a308e3ee5551ac7bb813f1bb41"
         },
         {
           "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
@@ -1718,7 +1753,7 @@
         {
           "path": "docs/fable-builder/MFM_JOINT_LEARNING_AND_FIXED_REVIEW_CAPTURE_2026-10-13.md",
           "purpose": "complete original review/custody and actual joint objective/full-component construction with coherent canonical binding diagnosis; procedure only",
-          "blob_sha": "555201e17070208f9591a796998ba4b83cb9c38d"
+          "blob_sha": "f7ed6d5ea3231c22be744ec765f8aa5b6e7822e6"
         }
       ]
     }
