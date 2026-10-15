@@ -1,5 +1,13 @@
 # Native joint lexical, reference and original-copy learning
 
+The [15 October construction](MFM_BROADER_JOINT_CONSTRUCTION_2026-10-15.md)
+and [TRACE142](receipts/MFM_BROADER_JOINT_CONSTRUCTION_20261015_TRACE142_PUBLIC.json)
+record the later nine-case chronological integration and admitted physical
+teaching corpus. Original six-case sources and owned numerical mathematics
+remain unchanged. Exact author/conversion checks now precede heavy loading;
+production features and joint learning remain pending. Source migration job
+138871002 targets the current104-interface closure with no language replay.
+
 [TRACE141](receipts/MFM_ACTUAL_COMPLETE_STATE_SOURCE_MIGRATION_20261013_TRACE141_PUBLIC.json)
 records the later actual complete-state source migration, after the construction
 steps described below. Private offline CPU job138564470 strictly cold-loaded the

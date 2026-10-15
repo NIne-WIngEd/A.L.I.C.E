@@ -12,6 +12,7 @@ from cognitive_kernel import formation_reference_decision as references
 from . import formation_joint_target_alignment as original, formation_target_alignment as geometry_api
 from . import formation_source_alignment as source, formation_paired_teaching as paired
 from . import formation_joint_target_alignment_v6 as j6_target
+from . import formation_broader_target_alignment as broader_target
 
 VIEW_SCHEMA = 'mfm-formation-reference-target-view-v1'
 ALIGNMENT_SCHEMA = 'mfm-formation-reference-decision-token-alignment-v1'
@@ -19,6 +20,7 @@ PROFILES = {
     'mfm-paired-supplied-input-v1': ('mfm-joint-caller-input-alignment-v4', 'mfm-paired-supplied-joint-target-geometry-v1'),
     'mfm-paired-supplied-j5-input-v1': ('mfm-joint-caller-input-alignment-v5', 'mfm-paired-supplied-j5-joint-target-geometry-v1'),
     j6_target.paired.INPUT: ('mfm-joint-caller-input-alignment-v6', j6_target.PAIR),
+    broader_target.paired.INPUT: ('mfm-joint-caller-input-alignment-v6', broader_target.PAIR),
 }
 
 
@@ -28,7 +30,7 @@ def _seal(row):
 
 def source_parts(frozen_input):
     """Select actual source locations; full original/material admission is upstream."""
-    if frozen_input.get('schema') != j6_target.paired.INPUT:
+    if frozen_input.get('schema') not in (j6_target.paired.INPUT, broader_target.paired.INPUT):
         return frozen_input['caller'], frozen_input['joint']
     need = references._require
     saved = frozen_input['source']
@@ -63,6 +65,22 @@ def j6_choices(complete_pair, frozen_input):
          canonical_sha256(complete_pair['source_cache']) == canonical_sha256(frozen_input['source_cache']) and
          canonical_sha256(complete_pair['native_batch']) == canonical_sha256(frozen_input['native_batch']),
          'original J6 choice FILE/source/ancestry join differs')
+    return choice
+
+
+def broader_choices(complete_pair,frozen_input):
+    need=references._require
+    choice=broader_target.paired.pinned(bytes.fromhex(complete_pair['original_choice_hex']),
+      complete_pair['choice_file_sha256'],broader_target.CHOICES)
+    need(choice==complete_pair['choice_packet'] and
+      choice['input_freeze_sha256']==frozen_input['record_sha256'] and
+      choice['target_record_sha256']==complete_pair['target_record_sha256'] and
+      choice['author_provenance_file_sha256']==complete_pair['author_provenance_file_sha256'] and
+      choice['whole_literal_inventory_complete'] is True and
+      complete_pair['source_file_sha256']==frozen_input['source_file_sha256'] and
+      complete_pair['source_cache']==frozen_input['source_cache'] and
+      complete_pair['native_batch']==frozen_input['native_batch'],
+      'broader original complete choice/source binding differs')
     return choice
 
 
@@ -103,8 +121,9 @@ def reference_decision_view(example, complete_pair, frozen_input, *, pair_sha256
     need(rows == rebuilt and inputs[1:] == labels[:-1] == [r['token_id'] for r in rows] and
          len(inputs) == len(labels) == len(rows) + 1 and inputs[0] == wrapper['bos_token_id'] and
          labels[-1] == wrapper['eos_token_id'], 'complete original target shift differs')
-    if frozen_input['schema'] == j6_target.paired.INPUT:
-        choice = j6_choices(complete_pair, frozen_input)
+    if frozen_input['schema'] in (j6_target.paired.INPUT,broader_target.paired.INPUT):
+        choice = (broader_choices if frozen_input['schema']==broader_target.paired.INPUT else
+                  j6_choices)(complete_pair, frozen_input)
         normative = j6_target.field_rows(geometry, frozen_input, choice['field_annotations'])
     else:
         normative = original.field_rows(geometry, frozen_input, complete_pair['annotations'])

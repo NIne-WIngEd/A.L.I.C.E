@@ -31,6 +31,11 @@ from scripts.mfm import formation_source_alignment as source
 
 PROGRAM_SCHEMA = 'mfm-native-joint-fit-program-v1'
 J6_PROGRAM_SCHEMA = 'mfm-native-joint-j6-fit-program-v2'
+BROADER_PROGRAM_SCHEMA = 'mfm-native-joint-broader-fit-program-v3'
+FULL_SOURCE_PROFILES = ('j6-firstparty-successor','broader-firstparty-successor')
+SOURCE_FEATURE_PROFILES = {'j6-firstparty-successor':'j6-source-only',
+                           'broader-firstparty-successor':'broader-source-only'}
+BROADER_SUCCESSOR_AUTHORING_SCHEMA = 'mfm-native-joint-broader-model-author-conversion-v1'
 RECIPE_SCHEMA = 'mfm-native-joint-fit-recipe-v1'
 CHECKPOINT_SCHEMA = 'mfm-native-joint-owned-checkpoint-v1'
 PAIR_AUTHORING_SCHEMA = 'mfm-native-joint-pair-authoring-v1'
@@ -215,12 +220,47 @@ def lower_j6_original_case(*, frozen, accepted, pair, source_descriptor,
     example, _ = j6_paired.require_complete_labels(frozen, accepted)
     j6_target.validate_pair(pair, frozen, accepted,
         expected_pair_sha256=pair['record_sha256'])
+    return _lower_full_source_case(frozen,accepted,pair,source_descriptor,processor,
+        max_target_tokens,material15_file_sha256,profile='j6-firstparty-successor',example=example)
+
+
+def _lower_full_source_case(frozen,accepted,pair,source_descriptor,processor,
+                            max_target_tokens,material15_file_sha256,*,profile,example):
     actual_processor = source.processor_binding(processor)
     _need(canonical_sha256(actual_processor) ==
           canonical_sha256(frozen['processor_binding']) and
           canonical_sha256(pair['processor_binding']) ==
           canonical_sha256(actual_processor),
           'J6 actual processor/source/target binding differs')
+    inventory,view,joint,world_id=_full_source_view(frozen,example,pair)
+    alignment = mixed.align_original_copy_decision_target(processor, view,
+        view_sha256=view['record_sha256'],
+        max_target_tokens=max_target_tokens)
+    _need(canonical_sha256(source.processor_binding(processor)) ==
+          canonical_sha256(actual_processor),
+          'J6 target processor changed during mixed-wire lowering')
+    return {'profile': profile,
+            'case_id': frozen['split_row']['case_id'],
+            'split_row': deepcopy(frozen['split_row']),
+            'original_frozen_sha256': frozen['record_sha256'],
+            'original_target_file_sha256': accepted['original_target_file_sha256'],
+            'original_pair_sha256': pair['record_sha256'],
+            'world_sha256': frozen['world_sha256'],
+            'mass_world_id': world_id, 'cut_sha256': frozen['cut_sha256'],
+            'material15_file_sha256': material15_file_sha256,
+            'source_file_sha256': frozen['source_file_sha256'],
+            'source_alignment_sha256': joint['record_sha256'],
+            'source_cache': deepcopy(joint['cache']),
+            'source_projection': deepcopy(frozen['native_batch']),
+            'source_descriptor': deepcopy(source_descriptor),
+            'inventory': inventory, 'target_view': view,
+            'alignment': alignment, 'decision': deepcopy(view['decision']),
+            'authored_ordinals': deepcopy(view['authored_ordinals']),
+            'authored_copy_tuples': deepcopy(view['authored_copy_tuples'])}
+
+
+def _full_source_view(frozen,example,pair):
+    """Pure shared caller/reference/whole-copy lowering, before learned loads."""
     source_freeze = frozen['source']
     joint = source_freeze['alignment']
     caller = source_freeze['caller']
@@ -249,30 +289,37 @@ def lower_j6_original_case(*, frozen, accepted, pair, source_descriptor,
           all(type(row['alternatives']) is list and row['alternatives']
               for row in view['authored_copy_tuples']['rows']),
           'complete J6 authored ordinal/copy alternatives required')
-    alignment = mixed.align_original_copy_decision_target(processor, view,
-        view_sha256=view['record_sha256'],
-        max_target_tokens=max_target_tokens)
-    _need(canonical_sha256(source.processor_binding(processor)) ==
-          canonical_sha256(actual_processor),
-          'J6 target processor changed during mixed-wire lowering')
-    return {'profile': 'j6-firstparty-successor',
-            'case_id': frozen['split_row']['case_id'],
-            'split_row': deepcopy(frozen['split_row']),
-            'original_frozen_sha256': frozen['record_sha256'],
-            'original_target_file_sha256': accepted['original_target_file_sha256'],
-            'original_pair_sha256': pair['record_sha256'],
-            'world_sha256': frozen['world_sha256'],
-            'mass_world_id': world_id, 'cut_sha256': frozen['cut_sha256'],
-            'material15_file_sha256': material15_file_sha256,
-            'source_file_sha256': frozen['source_file_sha256'],
-            'source_alignment_sha256': joint['record_sha256'],
-            'source_cache': deepcopy(joint['cache']),
-            'source_projection': deepcopy(frozen['native_batch']),
-            'source_descriptor': deepcopy(source_descriptor),
-            'inventory': inventory, 'target_view': view,
-            'alignment': alignment, 'decision': deepcopy(view['decision']),
-            'authored_ordinals': deepcopy(view['authored_ordinals']),
-            'authored_copy_tuples': deepcopy(view['authored_copy_tuples'])}
+    return inventory,view,joint,world_id
+
+
+def lower_broader_original_case(*,frozen,accepted,pair,source_descriptor,
+        observation_reader,native_reader,j5_source,processor,max_target_tokens,
+        material15_file_sha256):
+    """Validate the distinct observed profile, then reuse the original math."""
+    from scripts.mfm import formation_broader_paired_teaching as broad
+    from scripts.mfm import formation_broader_target_alignment as target
+    from scripts.mfm import formation_joint_input_v6 as j6
+    require_sha256(material15_file_sha256,'broader physical material15 FILE')
+    _need(source_descriptor['profile']=='broader-source-only' and
+      source_descriptor['case_id']==frozen['split_row']['case_id'] and
+      source_descriptor['source_record_sha256']==frozen['source']['record_sha256'] and
+      source_descriptor['observation_file_sha256']==frozen['source_observation_file_sha256'] and
+      source_descriptor['observation_record_sha256']==frozen['source_observation_record_sha256'] and
+      source_descriptor['whole_world_file_sha256']==frozen['whole_world_file_sha256'] and
+      source_descriptor['whole_world_sha256']==frozen['whole_world_sha256'] and
+      type(max_target_tokens) is int and max_target_tokens==pair['max_target_tokens'] and
+      frozen['split_row']['split']=='train','broader physical source/material/target budget differs')
+    broad.validate_input(j5_source,j6,frozen,expected_input_sha256=frozen['record_sha256'],
+      expected_source_file_sha256=source_descriptor['source_file_sha256'],
+      observation_reader=observation_reader,native_reader=native_reader)
+    example,_=broad.require_complete_labels(frozen,accepted)
+    target.validate_pair(pair,frozen,accepted,expected_pair_sha256=pair['record_sha256'])
+    lowered=_lower_full_source_case(frozen,accepted,pair,source_descriptor,processor,
+      max_target_tokens,material15_file_sha256,profile='broader-firstparty-successor',example=example)
+    lowered.update(source_observation_file_sha256=frozen['source_observation_file_sha256'],
+      source_observation_record_sha256=frozen['source_observation_record_sha256'],
+      whole_world_sha256=frozen['whole_world_sha256'],whole_world_file_sha256=frozen['whole_world_file_sha256'])
+    return lowered
 
 
 def join_frozen_source(lowered, *, feature_root, feature_roster_sha256,
@@ -285,10 +332,10 @@ def join_frozen_source(lowered, *, feature_root, feature_roster_sha256,
         expected_cache=lowered['source_cache'], j5_source=j5_source,
         allow_fixture=allow_fixture,
         expected_j6_source=lowered.get('source_descriptor'))
-    j6 = lowered['profile'] == 'j6-firstparty-successor'
+    j6 = lowered['profile'] in FULL_SOURCE_PROFILES
     fields = ('input_ids', 'attention_mask', 'mm_token_type_ids') if j6 else (
         'input_ids', 'attention_mask')
-    _need(receipt['profile'] == ('j6-source-only' if j6 else lowered['profile']) and
+    _need(receipt['profile'] == (SOURCE_FEATURE_PROFILES[lowered['profile']] if j6 else lowered['profile']) and
           canonical_sha256({key: receipt['frozen_batch'][key] for key in fields}) ==
           canonical_sha256(lowered['source_projection']) and
           torch.equal(tensors['attention_mask'], torch.tensor(
@@ -318,7 +365,28 @@ def joint_operands(joined, *, processor, device):
         expected_view_sha256=row['target_view']['record_sha256'])
 
 
-def preflight_admitted_cases(*, admission_manifest_path, admission_manifest_sha256,
+def preflight_admitted_cases(*,admission_manifest_path,admission_manifest_sha256,
+                             owner_authorization_ref,cases):
+    """Exact author admission plus independent real frozen feature checks."""
+    admission,audit=preflight_admitted_author_cases(admission_manifest_path=admission_manifest_path,
+      admission_manifest_sha256=admission_manifest_sha256,
+      owner_authorization_ref=owner_authorization_ref,cases=cases)
+    for row in cases:
+        frozen=row['frozen'];joined=row['joined'];lowered=joined['lowered'];case_id=lowered['case_id']
+        _need(joined['feature_receipt']['case_id'] == case_id and
+              (lowered['profile'] not in FULL_SOURCE_PROFILES or
+               joined['feature_receipt']['profile'] == SOURCE_FEATURE_PROFILES[lowered['profile']]) and
+              joined['feature_receipt']['base']['fixture_small_width'] is False and
+              joined['feature_receipt']['target_visible_to_backbone'] is False,
+              'production frozen source bank/target isolation differs')
+        if lowered['profile'] in FULL_SOURCE_PROFILES:
+            _need(canonical_sha256(frozen['native_batch'])==
+                  canonical_sha256(joined['feature_receipt']['frozen_batch']),
+                  'real frozen native source bank differs from admitted author source')
+    return admission,audit
+
+
+def preflight_admitted_author_cases(*, admission_manifest_path, admission_manifest_sha256,
                              owner_authorization_ref, cases):
     """Join every train original to independently admitted physical originals.
 
@@ -358,33 +426,29 @@ def preflight_admitted_cases(*, admission_manifest_path, admission_manifest_sha2
               case_id == frozen['split_row']['case_id'] and
               lowered['original_frozen_sha256'] == frozen['record_sha256'] and
               lowered['original_target_file_sha256'] == accepted[
-                  'original_target_file_sha256' if lowered['profile'] ==
-                  'j6-firstparty-successor' else 'target_file_sha256'] and
+                  'original_target_file_sha256' if lowered['profile'] in
+                  FULL_SOURCE_PROFILES else 'target_file_sha256'] and
               frozen['split_row']['split'] == 'train',
               'admitted train case and original lowerer differ')
         seen.add(case_id)
         _need(lowered['profile'] in ('j4-p1', 'j5-p2',
-                                      'j6-firstparty-successor'),
+                                      'j6-firstparty-successor','broader-firstparty-successor'),
               'unknown original source profile')
-        caller = (frozen['source']['caller'] if lowered['profile'] ==
-                  'j6-firstparty-successor' else frozen['caller'])
+        caller = (frozen['source']['caller'] if lowered['profile'] in
+                  FULL_SOURCE_PROFILES else frozen['caller'])
         context, opened, _ = j4_input.caller_api.caller_input_from_record(caller)
         expected_sources = sorted(sha256(raw).hexdigest() for _, raw in opened)
         admitted = admitted_by_id[case_id]
         _need(expected_sources == sorted(ref.sha256 for ref in admitted.source_payloads)
               and admitted.target_payload.sha256 == lowered['original_target_file_sha256'],
               'independently admitted physical source/target bytes differ')
-        _need(joined['feature_receipt']['case_id'] == case_id and
-              (lowered['profile'] != 'j6-firstparty-successor' or
-               joined['feature_receipt']['profile'] == 'j6-source-only') and
-              joined['feature_receipt']['base']['fixture_small_width'] is False and
-              joined['feature_receipt']['target_visible_to_backbone'] is False,
-              'production frozen source bank/target isolation differs')
         admitted_row = source_rows[case_id]
         _need(type(admitted_row) is dict and
               admitted_row['author_id'] == admitted_row['target_provenance']['producer_id'] and
               admitted_row['host_family'] == context.base.scope.host_instance_id,
               'admitted original host/author and conversion producer differ')
+        if lowered['profile'] in FULL_SOURCE_PROFILES:
+            _validate_model_author_originals(accepted,lowered['profile'])
         conversion_ref = admitted_row['target_provenance']['conversion']
         conversion = _record_ref(admission.root, conversion_ref)
         expected_conversion = {
@@ -400,10 +464,10 @@ def preflight_admitted_cases(*, admission_manifest_path, admission_manifest_sha2
             'target_provenance_output_sha256':
                 admitted_row['target_provenance']['output']['sha256'],
             'annotations_sha256': canonical_sha256(pair['annotations']) if
-                lowered['profile'] != 'j6-firstparty-successor' else None,
+                lowered['profile'] not in FULL_SOURCE_PROFILES else None,
             'literal_declarations_sha256':
                 canonical_sha256(pair['literal_declarations']) if
-                lowered['profile'] != 'j6-firstparty-successor' else None,
+                lowered['profile'] not in FULL_SOURCE_PROFILES else None,
             'authored_ordinals_sha256':
                 canonical_sha256(lowered['authored_ordinals']),
             'authored_copy_tuples_sha256':
@@ -413,7 +477,7 @@ def preflight_admitted_cases(*, admission_manifest_path, admission_manifest_sha2
             'variant_key': lowered['variant_key']}
         if lowered['profile'] == 'j5-p2':
             expected_conversion['original_geometry_profile'] = 'j5-p2'
-        if lowered['profile'] == 'j6-firstparty-successor':
+        if lowered['profile'] in FULL_SOURCE_PROFILES:
             _need(manifest['schema'] == 'mfm-v16-owner-teacher-corpus-v3' and
                   admitted_row['target_origin'] == 'owner-authorized-model-author' and
                   admitted_row['target_provenance']['input']['sha256'] ==
@@ -424,12 +488,10 @@ def preflight_admitted_cases(*, admission_manifest_path, admission_manifest_sha2
                   admitted_row['target_provenance']['producer_version'] ==
                       accepted['author_producer_version'] and
                   frozen['source_file_sha256'] ==
-                      lowered['source_file_sha256'] and
-                  canonical_sha256(frozen['native_batch']) ==
-                      canonical_sha256(joined['feature_receipt']['frozen_batch']),
+                      lowered['source_file_sha256'],
                   'J6 model-author provenance/source-native admission differs')
             expected_conversion.update({
-                'schema': J6_SUCCESSOR_AUTHORING_SCHEMA,
+                'schema': (BROADER_SUCCESSOR_AUTHORING_SCHEMA if lowered['profile']=='broader-firstparty-successor' else J6_SUCCESSOR_AUTHORING_SCHEMA),
                 'material15_file_sha256': lowered['material15_file_sha256'],
                 'source_file_sha256': lowered['source_file_sha256'],
                 'source_record_sha256': frozen['source']['record_sha256'],
@@ -447,25 +509,73 @@ def preflight_admitted_cases(*, admission_manifest_path, admission_manifest_sha2
                 pair['choice_packet']['field_annotations'])
             expected_conversion['literal_declarations_sha256'] = canonical_sha256(
                 pair['choice_packet']['literal_declarations'])
+        if lowered['profile']=='broader-firstparty-successor':
+            expected_conversion.update(source_observation_file_sha256=lowered['source_observation_file_sha256'],
+              source_observation_record_sha256=lowered['source_observation_record_sha256'],
+              whole_world_sha256=lowered['whole_world_sha256'],whole_world_file_sha256=lowered['whole_world_file_sha256'],
+              native_target_observation_file_sha256=accepted['native_geometry_file_sha256'])
         _need(canonical_sha256(conversion) ==
               canonical_sha256(expected_conversion),
               'admitted physical author conversion does not bind complete pair/choices')
     _need(seen == set(admitted_by_id), 'incomplete admitted train roster')
     j6_worlds = {row['joined']['lowered']['mass_world_id'] for row in cases
-                 if row['joined']['lowered']['profile'] == 'j6-firstparty-successor'}
+                 if row['joined']['lowered']['profile'] in FULL_SOURCE_PROFILES}
     _need(not j6_worlds or
-          (len(j6_worlds) == 1 and all(row['joined']['lowered']['profile'] ==
-              'j6-firstparty-successor' for row in cases)),
+          (len(j6_worlds) == 1 and all(row['joined']['lowered']['profile'] in
+              FULL_SOURCE_PROFILES for row in cases)),
           'J6 admitted originals must share one connected train world')
-    gradient_paths = tuple(path for row in admission.train
-                           for path in (*(ref.path for ref in row.source_payloads),
-                                        row.target_payload.path))
-    development_paths = tuple(path for row in admission.development
-                              for path in (*(ref.path for ref in row.source_payloads),
-                                           row.target_payload.path))
-    audit = admission.audit_handoff(gradient_paths=gradient_paths,
-                                    development_paths=development_paths)
+    audit = _audit_admitted_payloads(admission)
     return admission, audit
+
+
+def _validate_model_author_originals(accepted,profile):
+    """Bind training provenance to embedded original bytes, never declarations."""
+    from scripts.mfm import formation_paired_teaching_v6 as original
+    _need(profile in FULL_SOURCE_PROFILES,'physical model-author profile differs')
+    draft_raw=bytes.fromhex(accepted['raw_author_draft_hex'])
+    support_raw=bytes.fromhex(accepted['raw_support_hex'])
+    annotation_raw=bytes.fromhex(accepted['raw_annotation_hex'])
+    _need(sha256(draft_raw).hexdigest()==accepted['raw_author_draft_file_sha256'] and
+          sha256(support_raw).hexdigest()==accepted['support_file_sha256'] and
+          sha256(annotation_raw).hexdigest()==accepted['annotation_file_sha256'],
+          'physical model-author draft/support/annotation FILE differs')
+    draft=original.original_json(draft_raw)
+    support=original.original_json(support_raw)
+    annotation=original.original_json(annotation_raw)
+    view_pin=accepted['projected_view_file_sha256']
+    if profile=='broader-firstparty-successor':
+        descriptors=accepted['original_material_descriptors']
+        raws=accepted['original_material_hex']
+        _need(draft_raw==bytes.fromhex(raws['case']) and
+              support_raw==bytes.fromhex(raws['support']) and
+              all(sha256(bytes.fromhex(raws[key])).hexdigest()==descriptors[key]['file_sha256']
+                  for key in ('case','support','source_view')) and
+              accepted['raw_author_draft_file_sha256']==descriptors['case']['file_sha256'] and
+              accepted['support_file_sha256']==descriptors['support']['file_sha256'] and
+              view_pin==descriptors['source_view']['file_sha256'] and
+              draft['lineage']['current_source_view_file_sha256']==view_pin and
+              support['source_view_file_sha256']==view_pin and
+              accepted['author_id']==draft['lineage']['target_author'] and
+              accepted['author_producer_version']==draft['lineage']['producer_family'],
+              'physical model-author broader input/output/support/producer differs')
+    else:
+        _need(draft['lineage']['current_cut_view_file_sha256']==view_pin and
+              support['current_cut_view_file_sha256']==view_pin and
+              annotation['view_file_sha256']==view_pin and
+              annotation['draft_file_sha256']==accepted['raw_author_draft_file_sha256'] and
+              accepted['author_id']==draft['status']['author_id'] and
+              accepted['author_producer_version']==draft['status']['producer_version'],
+              'physical model-author J6 input/output/support/producer differs')
+
+
+def _audit_admitted_payloads(admission):
+    """Audit each physical original once; chronological case mass is separate."""
+    def paths(cases):
+        return tuple(dict.fromkeys(path for row in cases
+            for path in (*(ref.path for ref in row.source_payloads),
+                         row.target_payload.path)))
+    return admission.audit_handoff(gradient_paths=paths(admission.train),
+                                    development_paths=paths(admission.development))
 
 
 def _file_sha256(path):
@@ -545,14 +655,136 @@ def _material_json(root, ref):
     return path, record
 
 
-def read_j6_material15(material_root, manifest_ref, *, j5_source):
+def read_j6_material15(material_root,manifest_ref,*,j5_source):
+    return _read_full_source_material15(material_root,manifest_ref,j5_source=j5_source,broader=False)
+
+
+def read_broader_material15(material_root,manifest_ref,*,j5_source):
+    return _read_full_source_material15(material_root,manifest_ref,j5_source=j5_source,broader=True)
+
+
+def validate_broader_material_roster(root,connected,program_cases,materials,actual_cases):
+    """Join every material/native prefix to the exact connected whole world/cut."""
+    from scripts.mfm import formation_broader_paired_teaching as broad
+    result=broad.validate_connected_roster(root,connected,
+      expected_roster_sha256=connected['record_sha256'],program_cases=program_cases)
+    _need(len(materials)==len(actual_cases)==9,'broader complete nine material/source joins required')
+    for index,(roster,material,actual) in enumerate(zip(connected['cases'],materials,actual_cases,strict=True)):
+        _,world=_material_json(root,material['metadata']['world'])
+        _,cut=_material_json(root,material['metadata']['cut'])
+        _,expected_world=broad.read_json_ref(root,connected['legacy_world' if index<6 else 'successor_world'])
+        _,expected_cut=broad.read_json_ref(root,roster['cut'])
+        _,view=_material_json(root,material['metadata']['view'])
+        frozen=actual['frozen'];source=frozen['source']
+        proof=source['meaning']['episode_snapshot']['historical_prefix_proof']
+        _need(world==expected_world and cut==expected_cut and
+          source['meaning']['task_snapshot']['historical_prefix_proof']==proof and
+          view['historical_prefix_proof']==proof and proof['cut']==cut and
+          source['cut_sha256']==cut['record_sha256']==material['split_identity']['cut_sha256'] and
+          material['case_id']==roster['case_id']==frozen['split_row']['case_id'] and
+          actual['joined']['lowered']['profile']==roster['profile'] and
+          material['split_identity']['world_id']==result['world_id'],
+          'broader material/native source differs from exact connected original world/cut')
+        rows=world['branches'][0]['records'][:cut['sequence']]
+        prefix={k:deepcopy(v) for k,v in world.items() if k not in ('branches','world_sha256')}
+        prefix['branches']=[{'branch_id':cut['branch_id'],'parent_cut':None,'records':rows}]
+        prefix=broad.world_replay.C.seal(prefix,'world_sha256')
+        _need(proof['world']==prefix and source['world_sha256']==prefix['world_sha256'],
+          'broader material source proof is not its exact selected original prefix')
+        if index>=6:
+            _need(frozen['whole_world_sha256']==world['world_sha256'],
+                  'broader paired whole-world ancestry differs')
+    for subset in (materials[:6],materials[6:]):
+        _need(len({m['metadata']['split_roster']['file_sha256'] for m in subset})==1 and
+              len({m['metadata']['code_expectations']['file_sha256'] for m in subset})==1,
+              'broader legacy/new metadata subsets require their exact separate rosters/code expectations')
+    return result
+
+
+def _bracket_broader_program(root,program,connected,observation_raw):
+    _,current=_material_json(root,program['connected_roster'])
+    _,raw=_material_bytes(root,program['source_observation'])
+    _need(current==connected and raw==observation_raw,
+          'broader exact connected roster/observation changed during owned fit')
+
+
+def preflight_broader_author_metadata(*,material_root,program,connected_record,
+        j5_source,migration_raw,observation_raw,
+        admission_manifest_path,admission_manifest_sha256,owner_authorization_ref):
+    """Validate exact nine-case native author conversion before heavy readers.
+
+    No feature receipt is synthesized or read; real feature checks remain
+    in their original post-load path. No processor, states, tokenizer, model
+    or weights are loaded. Existing corpus authority is rechecked.
+    """
+    from scripts.mfm import formation_joint_input_v6 as j6
+    from scripts.mfm import formation_paired_teaching_v6 as legacy
+    from scripts.mfm import formation_joint_target_alignment_v6 as legacy_target
+    from scripts.mfm import formation_broader_paired_teaching as broad
+    from scripts.mfm import formation_broader_target_alignment as broad_target
+    root=Path(material_root).resolve(strict=True)
+    cases=[];materials=[]
+    for row in program['cases']:
+        newer=row['profile']=='broader-firstparty-successor'
+        reader=read_broader_material15 if newer else read_j6_material15
+        material,descriptor=reader(root,row['material15'],j5_source=j5_source)
+        materials.append(material)
+        frozen=_material_json(root,row['frozen'])[1]
+        _need(material['case_id']==row['case_id']==frozen['split_row']['case_id'] and
+          material['split_identity']['variant_key']==row['variant_key'] and
+          frozen['source_file_sha256']==descriptor['source_file_sha256'] and
+          frozen['source']['record_sha256']==descriptor['source_record_sha256'] and
+          frozen['cut_sha256']==material['split_identity']['cut_sha256'] and
+          frozen['split_row']['lineage']['world']==material['split_identity']['world_id'],
+          'broader early physical source/material/case/variant differs')
+        if newer:
+            _need(descriptor['observation_file_sha256']==sha256(observation_raw).hexdigest(),
+                  'broader early exact program observation differs')
+            native_root=Path(descriptor['observation_file']).parent
+            broad.validate_input(j5_source,j6,frozen,expected_input_sha256=frozen['record_sha256'],
+              expected_source_file_sha256=descriptor['source_file_sha256'],
+              observation_reader=lambda:observation_raw,native_reader=lambda r:(native_root/r['path']).read_bytes())
+        else:
+            legacy.validate_input(j5_source,j6,frozen,expected_input_sha256=frozen['record_sha256'],
+              expected_source_file_sha256=descriptor['source_file_sha256'],migration_reader=lambda:migration_raw)
+        # No teacher FileRef is opened until full source/material admission.
+        accepted=_material_json(root,row['accepted'])[1];pair=_material_json(root,row['pair'])[1]
+        example,_=(broad if newer else legacy).require_complete_labels(frozen,accepted)
+        (broad_target if newer else legacy_target).validate_pair(pair,frozen,accepted,
+          expected_pair_sha256=pair['record_sha256'])
+        _need(type(row['max_target_tokens']) is int and row['max_target_tokens']==pair['max_target_tokens'],
+              'broader early original target budget differs')
+        inventory,view,joint,world_id=_full_source_view(frozen,example,pair)
+        lowered={'profile':row['profile'],'case_id':row['case_id'],'variant_key':row['variant_key'],
+          'original_frozen_sha256':frozen['record_sha256'],'original_target_file_sha256':accepted['original_target_file_sha256'],
+          'original_pair_sha256':pair['record_sha256'],'world_sha256':frozen['world_sha256'],
+          'cut_sha256':frozen['cut_sha256'],'mass_world_id':world_id,
+          'material15_file_sha256':row['material15'].get('sha256',row['material15'].get('file_sha256')),
+          'source_file_sha256':frozen['source_file_sha256'],'source_alignment_sha256':joint['record_sha256'],
+          'source_cache':deepcopy(joint['cache']),'source_descriptor':descriptor,
+          'authored_ordinals':view['authored_ordinals'],'authored_copy_tuples':view['authored_copy_tuples']}
+        if newer:
+            lowered.update(source_observation_file_sha256=frozen['source_observation_file_sha256'],
+              source_observation_record_sha256=frozen['source_observation_record_sha256'],
+              whole_world_sha256=frozen['whole_world_sha256'],whole_world_file_sha256=frozen['whole_world_file_sha256'])
+        cases.append({'frozen':frozen,'accepted':accepted,'pair':pair,
+          'joined':{'lowered':lowered}})
+    validate_broader_material_roster(root,connected_record,program['cases'],materials,cases)
+    preflight_admitted_author_cases(admission_manifest_path=admission_manifest_path,
+      admission_manifest_sha256=admission_manifest_sha256,
+      owner_authorization_ref=owner_authorization_ref,cases=cases)
+    return cases,materials
+
+
+def _read_full_source_material15(material_root, manifest_ref, *, j5_source,broader):
     """Read source and all original material refs; never open author labels."""
     from scripts.mfm import formation_joint_input_v6 as j6
     from scripts.mfm import formation_paired_teaching_v6 as j6_paired
 
     root = Path(material_root).resolve(strict=True)
     _, case = _material_json(root, manifest_ref)
-    _need(case.get('schema') == 'mfm-j6-material15-source-manifest-v1' and
+    _need(case.get('schema') == ('mfm-broader-material15-source-manifest-v1' if broader else
+                                'mfm-j6-material15-source-manifest-v1') and
           case.get('record_sha256') == canonical_sha256({k: v for k, v in
               case.items() if k != 'record_sha256'}) and
           case.get('training_authorized') is False and
@@ -687,12 +919,41 @@ def read_j6_material15(material_root, manifest_ref, *, j5_source):
               frozen['proposed_max_source_tokens'],
           'J6 fifteen metadata/source joins differ')
     code = data['code_expectations']
-    _need(code['current_j6_source_file_sha256'] == _file_sha256(j6.__file__) and
-          code['paired_source_file_sha256'] == _file_sha256(j6_paired.__file__) and
-          code['original_j5_source_file_sha256'] == _file_sha256(j5_source.__file__) and
-          case['source_migration_receipt_file_sha256'] ==
-              j6_paired.SOURCE_MIGRATION_FILE,
-          'actual J6/J5 source interface differs')
+    observation_path=observation_record=None
+    if broader:
+        from scripts.mfm import formation_broader_paired_teaching as broad
+        from scripts.mfm import formation_broader_target_alignment as broad_target
+        observation_path,observation_raw=_material_bytes(root,case['source_observation'])
+        observation_pin=sha256(observation_raw).hexdigest()
+        observation_record=broad.observation(observation_raw,observation_pin)
+        entries=[r for r in observation_record['source_files'] if r['cut_id']==case['cut_id']]
+        _need(len(entries)==1 and entries[0]['file_sha256']==case['source_freeze']['file_sha256'] and
+              entries[0]['record_sha256']==frozen['record_sha256'] and
+              entries[0]['source_tokens']==frozen['alignment']['source_tokens'] and
+              observation_record['proposed_max_source_tokens']==frozen['proposed_max_source_tokens'],
+              'broader exact observation/source roster differs')
+        def native_reader(ref):
+            path=(observation_path.parent/ref['path']).resolve(strict=True)
+            _need(path.is_relative_to(observation_path.parent) and '\\' not in ref['path'] and
+                  not Path(ref['path']).is_absolute() and all(p not in ('','.','..') for p in ref['path'].split('/')),
+                  'broader observed native path differs')
+            return path.read_bytes()
+        broad._native_originals(frozen,entries[0],native_reader)
+        world_path,world_raw=_material_bytes(root,case['metadata']['world'])
+        broad.whole_world_prefix(world_raw,sha256(world_raw).hexdigest(),frozen)
+        _need(code['current_j6_source_file_sha256']==_file_sha256(j6.__file__) and
+              code['paired_source_file_sha256']==_file_sha256(broad.__file__) and
+              code['target_geometry_file_sha256']==_file_sha256(broad_target.__file__) and
+              code['original_j5_source_file_sha256']==_file_sha256(j5_source.__file__) and
+              code['source_observation_file_sha256']==observation_pin,
+              'broader actual source/target/observation code interface differs')
+    else:
+        _need(code['current_j6_source_file_sha256'] == _file_sha256(j6.__file__) and
+              code['paired_source_file_sha256'] == _file_sha256(j6_paired.__file__) and
+              code['original_j5_source_file_sha256'] == _file_sha256(j5_source.__file__) and
+              case['source_migration_receipt_file_sha256'] ==
+                  j6_paired.SOURCE_MIGRATION_FILE,
+              'actual J6/J5 source interface differs')
     j6.validate_frozen_source(j5_source, frozen,
         j5_file_sha256=_file_sha256(j5_source.__file__),
         proposed_max_source_tokens=frozen['proposed_max_source_tokens'])
@@ -711,12 +972,17 @@ def read_j6_material15(material_root, manifest_ref, *, j5_source):
           any(row['case_id'] == case['case_id'] and
               row['cut_id'] == case['cut_id'] for row in roster['cases']),
           'J6 connected train world/cut/source identity differs')
-    descriptor = {'case_id': case['case_id'], 'profile': 'j6-source-only',
+    descriptor = {'case_id': case['case_id'], 'profile': 'broader-source-only' if broader else 'j6-source-only',
         'source_file': str(source_path),
         'source_file_sha256': case['source_freeze']['file_sha256'],
         'source_record_sha256': frozen['record_sha256'],
         'j5_file_sha256': _file_sha256(j5_source.__file__),
         'proposed_max_source_tokens': frozen['proposed_max_source_tokens']}
+    if broader:
+        descriptor.update(observation_file=str(observation_path),
+          observation_file_sha256=observation_pin,observation_record_sha256=observation_record['record_sha256'],
+          whole_world_file=str(world_path),whole_world_file_sha256=sha256(world_raw).hexdigest(),
+          whole_world_sha256=data['world']['world_sha256'])
     return case, descriptor
 
 
@@ -1140,17 +1406,26 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
           'joint fit output must be outside immutable material/source roots')
     program = _json_file(program_path, program_file_sha256)
     j6_program = program.get('schema') == J6_PROGRAM_SCHEMA
+    broader_program=program.get('schema')==BROADER_PROGRAM_SCHEMA
+    full_program=j6_program or broader_program
+    _need(not broader_program or set(program)=={'schema','cases','private_original_modules',
+      'source_migration','source_observation','connected_roster'},
+      'broader nine-case program requires exact source observation/connected roster')
+    _need(not j6_program or set(program)=={'schema','cases','private_original_modules','source_migration'},
+      'original six-case program schema differs')
     _need(set(program) in ({'schema', 'cases'},
                            {'schema', 'cases', 'private_original_modules'},
                            {'schema', 'cases', 'private_original_modules',
-                            'source_migration'}) and
-          program['schema'] in (PROGRAM_SCHEMA, J6_PROGRAM_SCHEMA) and
+                            'source_migration'},
+                           {'schema','cases','private_original_modules','source_migration',
+                            'source_observation','connected_roster'}) and
+          program['schema'] in (PROGRAM_SCHEMA, J6_PROGRAM_SCHEMA,BROADER_PROGRAM_SCHEMA) and
           type(program['cases']) is list and program['cases'],
           'complete original training program differs')
     common_case_keys = {'case_id', 'profile', 'frozen', 'accepted', 'pair',
                         'max_target_tokens', 'variant_key'}
     _need(all(type(row) is dict and set(row) ==
-              (common_case_keys | {'material15'} if j6_program else common_case_keys) and
+              (common_case_keys | {'material15'} if full_program else common_case_keys) and
               type(row['case_id']) is str and
               require_identifier(row['case_id'], 'case_id') == row['case_id'] and
               type(row['variant_key']) is str and
@@ -1159,7 +1434,9 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
               type(row['max_target_tokens']) is int and
               row['max_target_tokens'] > 0 for row in program['cases']),
           'original train case FileRef program differs')
-    _need(all(row['profile'] == 'j6-firstparty-successor'
+    _need(all(row['profile'] in FULL_SOURCE_PROFILES
+              for row in program['cases']) if broader_program else
+          all(row['profile'] == 'j6-firstparty-successor'
               for row in program['cases']) if j6_program else
           all(row['profile'] in ('j4-p1', 'j5-p2-successor')
               for row in program['cases']),
@@ -1167,23 +1444,31 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
     _need(not j6_program or (len(program['cases']) == 6 and
           len({row['case_id'] for row in program['cases']}) == 6),
           'complete six-cut J6 program required')
-    uses_j5 = any(row['profile'] in ('j5-p2-successor', 'j6-firstparty-successor')
+    uses_j5 = any(row['profile'] in ('j5-p2-successor', *FULL_SOURCE_PROFILES)
                   for row in program['cases'])
     _need(('private_original_modules' in program) == uses_j5,
           'J5 successor requires exact original module FILE roster')
-    _need(('source_migration' in program) == j6_program,
+    _need(('source_migration' in program) == full_program,
           'J6 requires one pinned six-cut source migration FILE')
     private = (_private_original_modules(program['private_original_modules'])
                if uses_j5 else None)
     j5_source = None if private is None else private['source']
     migration_raw = None
-    if j6_program:
+    if full_program:
         from scripts.mfm import formation_paired_teaching_v6 as j6_paired
         _, migration_raw = _material_bytes(material_root,
             program['source_migration'])
         _need(sha256(migration_raw).hexdigest() ==
               j6_paired.SOURCE_MIGRATION_FILE,
               'J6 actual six-cut source migration differs')
+        connected=observation_raw=None
+        if broader_program:
+            from scripts.mfm import formation_broader_paired_teaching as broad
+            _,connected_record=_material_json(material_root,program['connected_roster'])
+            connected=broad.validate_connected_roster(material_root,connected_record,
+              expected_roster_sha256=connected_record['record_sha256'],program_cases=program['cases'])
+            _,observation_raw=_material_bytes(material_root,program['source_observation'])
+            observation_record=broad.observation(observation_raw,sha256(observation_raw).hexdigest())
         # Historical false construction flags cannot substitute for a new
         # physically admitted owner-authorized model-author corpus.
         admitted_early = admit_formation_corpus(admission_manifest_path,
@@ -1212,10 +1497,17 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
           'actual case order differs from immutable fit recipe')
     # Corpus authority precedes processor and any feature tensor/model load.
     # Constructed J6 records are fixed false and never grant this admission.
-    if not j6_program:
+    if not full_program:
         admit_formation_corpus(admission_manifest_path,
             expected_sha256=admission_manifest_sha256, teacher_training=True,
             owner_authorization_ref=owner_authorization_ref)
+    if broader_program:
+        # Exact source/author/native conversion is a metadata boundary. False
+        # lineage must refuse before tokenizer, tensor, prepared or seed load.
+        preflight_broader_author_metadata(material_root=material_root,program=program,
+          connected_record=connected_record,j5_source=j5_source,migration_raw=migration_raw,
+          observation_raw=observation_raw,admission_manifest_path=admission_manifest_path,
+          admission_manifest_sha256=admission_manifest_sha256,owner_authorization_ref=owner_authorization_ref)
     roster = features._read_record(feature_root / 'roster.json',
                                    features.SCHEMA, feature_roster_sha256)
     first = features._verified_prepared(None, receipt_path, prepared,
@@ -1244,8 +1536,10 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
     cases = []
     j6_materials = []
     for row in program['cases']:
-        if j6_program:
-            material15, source_descriptor = read_j6_material15(material_root,
+        if full_program:
+            is_broader=row['profile']=='broader-firstparty-successor'
+            material_reader=read_broader_material15 if is_broader else read_j6_material15
+            material15, source_descriptor = material_reader(material_root,
                 row['material15'], j5_source=j5_source)
             j6_materials.append(material15)
             _need(material15['case_id'] == row['case_id'] and
@@ -1263,13 +1557,20 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
                   'J6 material15/source/paired real-world join differs')
             accepted = _material_json(material_root, row['accepted'])[1]
             pair = _material_json(material_root, row['pair'])[1]
-            lowered = lower_j6_original_case(frozen=frozen,
-                accepted=accepted, pair=pair,
-                source_descriptor=source_descriptor,
-                migration_reader=lambda: migration_raw,
-                j5_source=j5_source, processor=processor,
-                max_target_tokens=row['max_target_tokens'],
-                material15_file_sha256=row['material15']['sha256'])
+            if is_broader:
+                _need(source_descriptor['observation_file_sha256']==sha256(observation_raw).hexdigest(),
+                      'broader material observation differs from exact program source receipt')
+                native_root=Path(source_descriptor['observation_file']).parent
+                lowered=lower_broader_original_case(frozen=frozen,accepted=accepted,pair=pair,
+                  source_descriptor=source_descriptor,observation_reader=lambda:observation_raw,
+                  native_reader=lambda ref:(native_root/ref['path']).read_bytes(),
+                  j5_source=j5_source,processor=processor,max_target_tokens=row['max_target_tokens'],
+                  material15_file_sha256=row['material15'].get('sha256',row['material15'].get('file_sha256')))
+            else:
+                lowered = lower_j6_original_case(frozen=frozen,accepted=accepted,pair=pair,
+                  source_descriptor=source_descriptor,migration_reader=lambda:migration_raw,
+                  j5_source=j5_source,processor=processor,max_target_tokens=row['max_target_tokens'],
+                  material15_file_sha256=row['material15'].get('sha256',row['material15'].get('file_sha256')))
         else:
             frozen = _record_ref(material_root, row['frozen'])
             accepted = _record_ref(material_root, row['accepted'])
@@ -1311,6 +1612,8 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
                    for item in j6_materials}) == 6 and
               [item['case_id'] for item in j6_materials] == recipe['case_order'],
               'J6 six-cut complete material train ancestry/roster differs')
+    if broader_program:
+        validate_broader_material_roster(material_root,connected_record,program['cases'],j6_materials,cases)
     admission, audit = preflight_admitted_cases(
         admission_manifest_path=admission_manifest_path,
         admission_manifest_sha256=admission_manifest_sha256,
@@ -1318,9 +1621,11 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
     features._verified_prepared(first, receipt_path, prepared,
         prepared_receipt_file_sha256, prepared_receipt_sha256,
         parent_source_receipt_sha256)
-    if j6_program:
+    if full_program:
         _, current_migration = _material_bytes(material_root,
             program['source_migration'])
+        if broader_program:
+            _bracket_broader_program(material_root,program,connected_record,observation_raw)
         _need(current_migration == migration_raw,
               'J6 six-cut source migration changed during owned fit')
     config = _json_file(seed_config_path, seed_config_sha256)
@@ -1391,9 +1696,11 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
     features._verified_prepared(first, receipt_path, prepared,
         prepared_receipt_file_sha256, prepared_receipt_sha256,
         parent_source_receipt_sha256)
-    if j6_program:
+    if full_program:
         _, current_migration = _material_bytes(material_root,
             program['source_migration'])
+        if broader_program:
+            _bracket_broader_program(material_root,program,connected_record,observation_raw)
         _need(current_migration == migration_raw,
               'J6 six-cut source migration changed during owned fit')
     _need(canonical_sha256(_json_file(program_path, program_file_sha256)) ==
@@ -1403,15 +1710,16 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
           _file_sha256(seed_manifest_path) == seed_manifest_sha256,
           'original program or zero-update seed changed during owned fit')
     for authored, original_case in zip(program['cases'], cases):
-        reader = (_material_json if j6_program else
+        reader = (_material_json if full_program else
                   lambda root, ref: (None, _record_ref(root, ref)))
         _need(all(canonical_sha256(reader(material_root, authored[key])[1]) ==
                   canonical_sha256(original_case[value])
                   for key, value in (('frozen', 'frozen'),
                                      ('accepted', 'accepted'), ('pair', 'pair'))),
               'physical original frozen/target/pair packet changed during fit')
-        if j6_program:
-            material15, descriptor = read_j6_material15(material_root,
+        if full_program:
+            material_reader=read_broader_material15 if authored['profile']=='broader-firstparty-successor' else read_j6_material15
+            material15, descriptor = material_reader(material_root,
                 authored['material15'], j5_source=j5_source)
             _need(material15['case_id'] == original_case['joined']['lowered']['case_id'] and
                   canonical_sha256(descriptor) == canonical_sha256(
@@ -1493,12 +1801,12 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
         processor=processor,
         base_states=first_source['source_states'].to(device).detach(),
         source_mask=first_source['source_mask'].to(device).detach(),
-        caller=(first_case['frozen']['source']['caller'] if j6_program else
+        caller=(first_case['frozen']['source']['caller'] if full_program else
                 first_case['frozen']['caller']),
         caller_sha256=(first_case['frozen']['source']['caller']['record_sha256']
-                       if j6_program else
+                       if full_program else
                        first_case['frozen']['caller']['record_sha256']),
-        joint_alignment=(first_case['frozen']['source']['alignment'] if j6_program
+        joint_alignment=(first_case['frozen']['source']['alignment'] if full_program
                          else first_case['frozen']['joint']),
         joint_alignment_sha256=first_lower['source_alignment_sha256'],
         expected_binding=copies.copy_binding(first_lower['inventory']),

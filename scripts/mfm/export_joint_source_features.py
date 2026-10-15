@@ -30,6 +30,10 @@ TEXT_FIELDS = frozenset({'input_ids', 'attention_mask', 'token_type_ids',
 J6_CASE_KEYS = frozenset({'case_id', 'profile', 'source_file', 'source_file_sha256',
                          'source_record_sha256', 'j5_file_sha256',
                          'proposed_max_source_tokens'})
+BROAD_CASE_KEYS = J6_CASE_KEYS | {'observation_file', 'observation_file_sha256',
+                                'observation_record_sha256','whole_world_file',
+                                'whole_world_file_sha256','whole_world_sha256'}
+FULL_SOURCE_PROFILES = ('j6-source-only', 'broader-source-only')
 
 
 def _need(ok, message):
@@ -149,6 +153,8 @@ def _base_binding(base, weight_path, weight_sha, config_path, config_sha,
 
 
 def _preflight_case(case, processor, j5_source):
+    if type(case) is dict and case.get('profile') == 'broader-source-only':
+        return _preflight_broader(case, processor, j5_source)
     if type(case) is dict and case.get('profile') == 'j6-source-only':
         return _preflight_j6(case, processor, j5_source)
     _need(type(case) is dict and set(case) == CASE_KEYS, 'target-free source case shape differs')
@@ -223,18 +229,77 @@ def _preflight_j6(case, processor, j5_source):
 
 
 def _j6_binding(case, alignment):
-    return {key: case[key] for key in ('source_file_sha256', 'source_record_sha256',
+    result = {key: case[key] for key in ('source_file_sha256', 'source_record_sha256',
             'j5_file_sha256', 'proposed_max_source_tokens')} | {
         'source_identity': alignment['source_identity'],
         'construction_only': True, 'capacity_admitted': False,
         'training_authorized': False, 'current_service_authenticated': False}
+    if case['profile'] == 'broader-source-only':
+        result.update({key:case[key] for key in ('observation_file_sha256',
+          'observation_record_sha256','whole_world_file_sha256','whole_world_sha256')})
+    return result
+
+
+def _preflight_broader(case, processor, j5_source):
+    """Consume the physical complete new observation, without a tokenizer."""
+    from scripts.mfm import formation_joint_input_v6 as j6
+    from scripts.mfm import formation_broader_paired_teaching as broad
+    _need(type(case) is dict and set(case)==BROAD_CASE_KEYS and
+          case['profile']=='broader-source-only','target-free broader source descriptor differs')
+    require_identifier(case['case_id'],'broader case ID')
+    observation_path=Path(case['observation_file']).resolve(strict=True)
+    obs=broad.observation(observation_path.read_bytes(),case['observation_file_sha256'])
+    _need(obs['record_sha256']==case['observation_record_sha256'] and
+          case['j5_file_sha256']==broad.legacy.SOURCE_J5_FILE and
+          case['proposed_max_source_tokens']==obs['proposed_max_source_tokens'],
+          'broader physical observation descriptor differs')
+    source_path=Path(case['source_file']).resolve(strict=True)
+    raw=source_path.read_bytes();frozen=broad.pinned(raw,case['source_file_sha256'],j6.FROZEN)
+    _need(raw==canonical_json_bytes(frozen)+b'\n' and
+          frozen['record_sha256']==case['source_record_sha256'] and
+          case['case_id']=='j6-reading-room-'+frozen['cut_id'],
+          'broader physical complete source descriptor differs')
+    root=observation_path.parent
+    def native_reader(ref):
+        name=ref['path'];path=(root/name).resolve(strict=True)
+        _need(type(name) is str and '\\' not in name and
+              not Path(name).is_absolute() and all(x not in ('','.','..') for x in name.split('/')) and
+              path.is_relative_to(root),'broader native physical path differs')
+        return path.read_bytes()
+    broad.input_core(j5_source,j6,frozen,case['source_file_sha256'],obs,
+                     case['observation_file_sha256'],native_reader,
+                     Path(case['whole_world_file']).read_bytes(),case['whole_world_file_sha256'])
+    _need(frozen['meaning']['episode_snapshot']['historical_prefix_proof']['world']['world_id']==
+          json.loads(Path(case['whole_world_file']).read_bytes())['world_id'] and
+          json.loads(Path(case['whole_world_file']).read_bytes())['world_sha256']==case['whole_world_sha256'],
+          'broader complete whole-world descriptor differs')
+    alignment=frozen['alignment']
+    if processor is not None:
+        _need(_same(source.processor_binding(processor),alignment['processor_binding']),
+              'actual broader processor binding differs')
+    batch={key:torch.tensor(frozen['native_batch'][key],dtype=torch.int64) for key in j6.NATIVE_FIELDS}
+    return j6,batch,alignment,_batch_plain(batch)
+
+
+def _preflight_full_source(case,processor,j5_source):
+    return (_preflight_broader if case['profile']=='broader-source-only' else
+            _preflight_j6)(case,processor,j5_source)
 
 
 def _bracket_j6_files(cases):
     for case in cases:
-        if case['profile'] == 'j6-source-only':
+        if case['profile'] in FULL_SOURCE_PROFILES:
             _need(_digest(case['source_file']) == case['source_file_sha256'],
                   'physical J6 source changed during representation')
+            if case['profile']=='broader-source-only':
+                from scripts.mfm import formation_broader_paired_teaching as broad
+                path=Path(case['observation_file']);obs=broad.observation(path.read_bytes(),case['observation_file_sha256'])
+                _need(_digest(case['whole_world_file'])==case['whole_world_file_sha256'],
+                      'broader exact whole-world FILE changed during representation')
+                entry=next(r for r in obs['source_files'] if 'j6-reading-room-'+r['cut_id']==case['case_id'])
+                for key in ('default_native','offset_native'):
+                    _need(_digest(path.parent/entry[key]['path'])==entry[key]['file_sha256'],
+                          'broader complete native originals changed during representation')
 
 
 def _tensor_check(tensors, row, width):
@@ -318,8 +383,9 @@ def _export_bank(root, *, cases, processor, base, j5_source, base_weight_path,
                 'alignment_sha256': alignment['record_sha256'], 'cache': alignment['cache'],
                 'frozen_batch': plain, 'code': code, 'base': binding,
                 'target_visible_to_backbone': False, 'whole_source': True}
-        if case['profile'] == 'j6-source-only':
-            core['j6_source'] = _j6_binding(case, alignment)
+        if case['profile'] in FULL_SOURCE_PROFILES:
+            core['broader_source' if case['profile']=='broader-source-only' else
+                 'j6_source'] = _j6_binding(case, alignment)
         _tensor_check(tensors, core, binding['hidden_width'])
         save_file(tensors, str(path))
         with path.open('r+b') as stream:
@@ -423,9 +489,9 @@ def export_prepared_bank(root, *, prepared_base_dir, cases, j5_source,
               for row in cases),
           'retained private J5 complete source budget differs')
     # Refuse changed physical J6 observations before any prepared weight loader.
-    j6_preflight = {index: _preflight_j6(row, None, j5_source)
+    j6_preflight = {index: _preflight_full_source(row, None, j5_source)
                     for index, row in enumerate(cases)
-                    if row.get('profile') == 'j6-source-only'}
+                    if row.get('profile') in FULL_SOURCE_PROFILES}
     first = _verified_prepared(None, receipt_path, prepared,
                                expected_prepared_receipt_file_sha256,
                                expected_prepared_receipt_sha256,
@@ -519,10 +585,12 @@ def read_case(root, *, roster_sha256, case_id, expected_alignment_sha256,
           'feature case files differ')
     receipt = _read_record(directory / 'receipt.json', CASE_SCHEMA,
                            matches[0]['receipt_sha256'])
-    if receipt['profile'] == 'j6-source-only':
-        module, _, alignment, plain = _preflight_j6(expected_j6_source, None, j5_source)
+    if receipt['profile'] in FULL_SOURCE_PROFILES:
+        module, _, alignment, plain = _preflight_full_source(expected_j6_source, None, j5_source)
         _need(expected_j6_source['case_id'] == case_id and
-              _same(receipt['j6_source'], _j6_binding(expected_j6_source, alignment)) and
+              expected_j6_source['profile']==receipt['profile'] and
+              _same(receipt['broader_source' if receipt['profile']=='broader-source-only' else
+                            'j6_source'], _j6_binding(expected_j6_source, alignment)) and
               alignment['record_sha256'] == expected_alignment_sha256 and
               _same(alignment['cache'], expected_cache) and
               _same(receipt['frozen_batch'], plain) and
