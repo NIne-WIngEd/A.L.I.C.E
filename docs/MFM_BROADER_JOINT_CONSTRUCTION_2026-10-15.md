@@ -1,5 +1,14 @@
 # Broader chronological formation construction
 
+[TRACE143](receipts/MFM_ACTUAL_BROADER_STATE_BINDING_20261015_TRACE143_PUBLIC.json)
+records the later completed private CPU job138871002. Original100-interface
+cold load and current104-interface strict export/reload agree on all138 tensors;
+the whole weight FILE, configuration and epoch20/update45760 cursor are
+unchanged. All source, parent, original package and CPU RNG brackets pass.
+Actual execution took96.489 seconds. Root rehashed fifteen metadata FILEs
+(316,306 bytes) without downloading a tensor. The compatible seed is ready;
+production source features and reference/copy learning remain pending.
+
 [TRACE142](receipts/MFM_BROADER_JOINT_CONSTRUCTION_20261015_TRACE142_PUBLIC.json)
 pins the production sources and scoped evidence. Root checked 198 unique
 physical files. The complete nine-case join passed in 451.066 seconds before
@@ -64,10 +73,10 @@ offline CPU job uses the original complete 138-tensor parent. It preserves
 S5's epoch20/update45760 cursor and the untrained reference/copy heads. It has
 no optimizer, Gemma forward, feature generation or training update.
 
-Exact production execution status and verification are recorded in the linked
-public receipt once available; preparation and a passing tiny preservation
-control alone do not prove the full-size result. Production tensors remain off
-the PC. The earlier completed 102-interface component remains immutable.
+Exact production execution and verification are recorded in TRACE143 above.
+Preparation and tiny controls remain separately scoped evidence. Production
+tensors remain off the PC. The earlier completed 102-interface component
+remains immutable.
 
 ## Remaining construction
 
