@@ -1023,6 +1023,7 @@ The documents below define how it is being built.
 
 ### Core direction
 
+- [FBM roles and objectives: construction, continuing maintenance and transfer](docs/fable-builder/FBM_ROLES_AND_OBJECTIVES.md)
 - [Technical README](docs/TECHNICAL_README.md)
 - [A.L.I.C.E. Constitution](docs/ALICE_CONSTITUTION.md)
 - [Architecture](docs/ARCHITECTURE.md)
