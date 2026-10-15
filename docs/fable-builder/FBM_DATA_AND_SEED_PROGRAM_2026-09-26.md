@@ -19,6 +19,14 @@ select a new backend or qualify complete builder cases.
 **Status:** proposed build contract; no FBM weights or consumer qualification claimed. 2026-09-26.  
 **Inputs reviewed:** `fable-builder-model@6a787d72`, `alice-eipm-v1-n0-full-envelope-foundation-build-v1@4270bfa2`, A.L.I.C.E. `main@75db33c5`, `research/frontier-watch@2b9a9311`, `research/mfm-foundation-20260923@efbc6b3a`, and Fable Sleight `main@63bc85f`.
 
+## Consolidated objectives — October 15, 2026
+
+Use [FBM roles and objectives](FBM_ROLES_AND_OBJECTIVES.md) for the complete
+construction and post-build responsibility register. The A/B/C data, operation
+transfer and assembled-instance gates below remain applicable. Continuing
+backbone maintenance additionally needs independent diagnosis, repair, regression
+and recovery evidence; a procedure notebook alone meets none of those claims.
+
 ## Decision
 
 FBM is the **host-neutral builder of a connected personal foundation**, not merely a personality-substrate generator. Its first-release target includes source interpretation, the identity/personality role, MFM, host, relationship, assistant-self, governed memory and Experience Ledger interfaces, native judgment, and the conversation handoff. The five personal roles do not imply exactly five weight files. A consumer does not need to bring hand-labeled gold examples or a separate source-person corpus.

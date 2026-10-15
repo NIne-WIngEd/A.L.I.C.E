@@ -1,5 +1,12 @@
 # Fable Builder Model Workstream
 
+**Role register — October 15, 2026:** [FBM roles and objectives](FBM_ROLES_AND_OBJECTIVES.md)
+consolidates construction, full-backbone assembly, continuing personal development,
+data-flow diagnosis, governed repair/replacement and cross-host transfer. Read it
+for responsibilities, required evidence and authority limits. Continuing backbone
+maintenance is assigned to FBM; a separate handler remains an optional specialist.
+This direction adds no qualified model or runtime and does not change PE/MFM builds.
+
 **V1 lineage update (2026-09-29 owner-local):** The owner selected a common,
 locally cloned, Apache-licensed pretrained base plus distinct user-specific
 learned components. See
