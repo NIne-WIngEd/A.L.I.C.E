@@ -88,3 +88,17 @@ are unchanged. Preserve original provider selector and metadata-origin failures,
 use exact native metadata routes, and retrieve only receipts locally. This is
 complete-state construction with zero updates; reference/copy learning, broader
 material admission, production features and full qualification remain pending.
+
+TRACE142 extends the existing learner to nine chronological cases while keeping
+the original six source/native definitions intact. Distinguish the complete
+world from each selected prefix, retain every record's physical chain proof,
+and keep raw teacher authorship separate from native-choice authorship. Bind
+declared author hashes to original embedded bytes before corpus conversion.
+Audit each shared physical payload once without changing case membership or
+learning mass. The real nine-case metadata join, additive final author guard
+and opted-in original integration checks have separately scoped evidence.
+Private originals are deliberately selected; missing selected originals fail.
+Physical teaching admission and preserved-state construction still supply no
+production source features, learned formation, independent gold or memory-write
+authority. Preserve every inherited tensor under the final compatible closure,
+then construct full source features and perform actual owned joint learning.
