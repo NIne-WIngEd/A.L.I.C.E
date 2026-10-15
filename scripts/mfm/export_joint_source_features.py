@@ -42,6 +42,17 @@ CPU_FLASH_OPERATOR = 'aten::_scaled_dot_product_flash_attention_for_cpu'
 MATH_ATTENTION_OPERATOR = 'aten::_scaled_dot_product_attention_math'
 CPU_POLICY_SCHEMA = 'mfm-source-cpu-sdpa-flash-execution-policy-v1'
 CPU_FORWARD_SCHEMA = 'mfm-source-cpu-sdpa-flash-forward-v1'
+CONFIG_IDENTITY_SCHEMA = 'mfm-loaded-source-config-identity-v1'
+CONFIG_IDENTITY_CLASSES = {
+    'config_class': 'transformers.models.gemma4_unified.configuration_gemma4_unified.Gemma4UnifiedConfig',
+    'model_class': 'transformers.models.gemma4_unified.modeling_gemma4_unified.Gemma4UnifiedForConditionalGeneration',
+    'backbone_class': 'transformers.models.gemma4_unified.modeling_gemma4_unified.Gemma4UnifiedModel',
+    'text_model_class': 'transformers.models.gemma4_unified.modeling_gemma4_unified.Gemma4UnifiedTextModel'}
+CONFIG_IDENTITY_SOURCES = {
+    'configuration_utils': '02826ac9e987487b645135d8f1d747f60a7e567d1b8f72327de8514d02b6f15d',
+    'modeling_utils': '38c2bd02ed7af229f54e2f02dae65663be7af29ed2c9498bd1c460cf60fbb62d',
+    'gemma4_config': 'f484527a992041a950b86d433430739fdc0f6000c03af9d87ed8b122b4715119',
+    'gemma4_model': 'ae181490a16d2f36cd8f74d4d268757a5388dafc421be0ccc5dbefeff3ba9e57'}
 
 
 def _need(ok, message):
@@ -228,8 +239,121 @@ def _batch_plain(batch):
     return values
 
 
+def _loaded_config_identity(base, config_path, *, config_sha256, requested_attention=None):
+    """Bind the actual typed model to a complete independently derived config."""
+    from copy import deepcopy
+    from inspect import getfile
+    from transformers.configuration_utils import PreTrainedConfig
+    from transformers.modeling_utils import _get_dtype
+    from transformers.models.gemma4_unified.configuration_gemma4_unified import Gemma4UnifiedConfig
+    from transformers.models.gemma4_unified.modeling_gemma4_unified import (
+        Gemma4UnifiedForConditionalGeneration, Gemma4UnifiedModel, Gemma4UnifiedTextModel)
+
+    config_path = Path(config_path)
+    require_sha256(config_sha256, 'physical source config FILE')
+    raw = config_path.read_bytes()
+    _need(sha256(raw).hexdigest() == config_sha256, 'physical source config FILE differs')
+    physical = json.loads(raw.decode('utf-8'))
+    _need(type(physical) is dict and physical.get('model_type') == 'gemma4_unified' and
+          physical.get('architectures') == ['Gemma4UnifiedForConditionalGeneration'],
+          'physical Gemma4 source architecture differs')
+    config = getattr(base, 'config', None)
+    _need(type(base) is Gemma4UnifiedForConditionalGeneration and
+          type(config) is Gemma4UnifiedConfig and
+          type(getattr(base, 'model', None)) is Gemma4UnifiedModel and
+          type(getattr(base.model, 'language_model', None)) is Gemma4UnifiedTextModel and
+          base.model.config is config and config.model_type == 'gemma4_unified',
+          'actual Gemma4 model/config/backbone class differs')
+    # Stock text model, layers, attention, MLP and rotary modules all retain
+    # this same object. Root serialization cannot detect a detached live config.
+    _need(all(module.config is config.text_config
+              for module in base.model.language_model.modules() if hasattr(module, 'config')),
+          'live Gemma4 text config alias differs')
+    source_files = {
+        'configuration_utils': _digest(getfile(PreTrainedConfig)),
+        'modeling_utils': _digest(getfile(_get_dtype)),
+        'gemma4_config': _digest(getfile(Gemma4UnifiedConfig)),
+        'gemma4_model': _digest(getfile(Gemma4UnifiedForConditionalGeneration))}
+    _need(source_files == CONFIG_IDENTITY_SOURCES and version('transformers') == '5.17.0',
+          'pinned Gemma4 config normalization source differs')
+    # Match the supplied producer path. Never borrow a locator or field from the
+    # loaded object; these hashes describe this producer context, not every host.
+    expected = Gemma4UnifiedConfig.from_dict(deepcopy(physical),
+        name_or_path=str(config_path.parent))
+    # The exact pinned explicit-dtype branch changes only this new config and
+    # its subconfigs. No checkpoint paths/state dict or automatic dtype is used.
+    expected, dtype = _get_dtype(torch.bfloat16, None, expected, None, None, True)
+    _need(dtype is torch.bfloat16 and config.name_or_path == str(config_path.parent) and
+          all(type(getattr(config, key, None)) is type(getattr(expected, key, None))
+              for key in expected.sub_configs),
+          'loaded Gemma4 config origin or typed subconfig differs')
+    expected_full = json.loads(expected.to_json_string(use_diff=False))
+    loaded_full = json.loads(config.to_json_string(use_diff=False))
+    _need(_same(expected_full, loaded_full),
+          'loaded full typed source config differs from independent expectation')
+    observed_attention = {'root': config._attn_implementation,
+                          'text': config.text_config._attn_implementation}
+    _need(requested_attention in (None, 'sdpa') and
+          (requested_attention is None or
+           observed_attention == {'root': 'sdpa', 'text': 'sdpa'}),
+          'loaded source config attention intent differs')
+    classes = {'config_class': type(config), 'model_class': type(base),
+               'backbone_class': type(base.model),
+               'text_model_class': type(base.model.language_model)}
+    return _sealed({'schema': CONFIG_IDENTITY_SCHEMA,
+        'physical_config_sha256': config_sha256,
+        'expected_full_config_sha256': canonical_sha256(expected_full),
+        'loaded_full_config_sha256': canonical_sha256(loaded_full),
+        **{key: value.__module__ + '.' + value.__qualname__ for key, value in classes.items()},
+        'derivation': {'dtype': 'bfloat16', 'reference': 'fixed-Gemma4UnifiedConfig.from_dict',
+            'dtype_resolution': 'transformers.modeling_utils._get_dtype-explicit-bfloat16',
+            'path_context': 'supplied-producer-prepared-directory',
+            'transformers_version': version('transformers'), 'source_files': source_files},
+        'requested_attention': requested_attention, 'observed_attention': observed_attention})
+
+
+def _validate_config_identity(roster, receipt):
+    """Validate stored producer proof without consulting consumer runtime/path."""
+    base = roster.get('base'); case_base = receipt.get('base')
+    _need(type(base) is dict and type(case_base) is dict, 'config identity base metadata differs')
+    policy = roster.get('execution_policy')
+    required = policy is not None and base.get('fixture_small_width') is False
+    if not required:
+        _need('config_identity' not in base and 'config_identity' not in case_base,
+              'config identity requires explicit production CPU policy')
+        return
+    record = base.get('config_identity')
+    _need(type(record) is dict and set(record) == {'schema', 'physical_config_sha256',
+          'expected_full_config_sha256', 'loaded_full_config_sha256', *CONFIG_IDENTITY_CLASSES,
+          'derivation', 'requested_attention', 'observed_attention', 'record_sha256'} and
+          record.get('record_sha256') == canonical_sha256({k:v for k,v in record.items()
+              if k != 'record_sha256'}) and _same(record, case_base.get('config_identity')),
+          'sealed producer config identity differs')
+    for field in ('physical_config_sha256', 'expected_full_config_sha256', 'loaded_full_config_sha256'):
+        require_sha256(record[field], 'producer config identity digest')
+    _need(record['schema'] == CONFIG_IDENTITY_SCHEMA and
+          record['physical_config_sha256'] == base.get('config_file_sha256') and
+          record['expected_full_config_sha256'] == record['loaded_full_config_sha256'] and
+          all(record[key] == value for key, value in CONFIG_IDENTITY_CLASSES.items()),
+          'producer config identity raw/full/class binding differs')
+    derivation = record['derivation']
+    _need(type(derivation) is dict and set(derivation) == {'dtype', 'reference',
+          'dtype_resolution', 'path_context', 'transformers_version', 'source_files'} and
+          derivation['dtype'] == 'bfloat16' and
+          derivation['reference'] == 'fixed-Gemma4UnifiedConfig.from_dict' and
+          derivation['dtype_resolution'] == 'transformers.modeling_utils._get_dtype-explicit-bfloat16' and
+          derivation['path_context'] == 'supplied-producer-prepared-directory' and
+          derivation['transformers_version'] == '5.17.0' and
+          derivation['transformers_version'] == base.get('runtime', {}).get('transformers_version') and
+          _same(derivation['source_files'], CONFIG_IDENTITY_SOURCES) and
+          type(policy) is dict and policy.get('attention_implementation') == 'sdpa' and
+          record['requested_attention'] == 'sdpa' and
+          record['observed_attention'] == {'root': 'sdpa', 'text': 'sdpa'},
+          'producer config identity derivation/attention binding differs')
+
+
 def _base_binding(base, weight_path, weight_sha, config_path, config_sha,
-                  runtime, fixture_small_width):
+                  runtime, fixture_small_width, execution_policy=None):
     for value in (weight_sha, config_sha):
         require_sha256(value, 'frozen base FILE')
     _need(_digest(weight_path) == weight_sha and _digest(config_path) == config_sha,
@@ -244,21 +368,26 @@ def _base_binding(base, weight_path, weight_sha, config_path, config_sha,
     width = getattr(getattr(base.config, 'text_config', None), 'hidden_size', None)
     _need(type(width) is int and width > 0 and (fixture_small_width or width == 3840),
           'actual source hidden width differs')
+    identity = None
     if not fixture_small_width:
-        _need(callable(getattr(base.config, 'to_json_string', None)) and
-              _same(json.loads(Path(config_path).read_bytes().decode('utf-8')),
-                    json.loads(base.config.to_json_string(use_diff=True))),
-              'loaded base config differs from physical config')
+        _need(execution_policy is None or (execution_policy.get('profile') == CPU_FLASH_PROFILE and
+              execution_policy.get('attention_implementation') == 'sdpa'),
+              'explicit loaded source config policy differs')
+        identity = _loaded_config_identity(base, config_path, config_sha256=config_sha,
+            requested_attention=None if execution_policy is None else 'sdpa')
     _need(not base.training and not base.model.training and
           all(not p.requires_grad and p.dtype == torch.bfloat16 for p in base.parameters()),
           'source base must be frozen BF16 and eval')
     devices = {p.device for p in base.parameters()}
     _need(len(devices) == 1, 'source base placement differs')
-    return {'weight_file_sha256': weight_sha, 'config_file_sha256': config_sha,
+    binding = {'weight_file_sha256': weight_sha, 'config_file_sha256': config_sha,
             'hidden_width': width, 'runtime': runtime,
             'representation': 'base.model.last_hidden_state',
             'backbone_device': str(next(iter(devices))),
             'fixture_small_width': fixture_small_width}
+    if execution_policy is not None and not fixture_small_width:
+        binding['config_identity'] = identity
+    return binding
 
 
 def _preflight_case(case, processor, j5_source):
@@ -459,7 +588,7 @@ def _export_bank(root, *, cases, processor, base, j5_source, base_weight_path,
               'retained private J5 complete source budget differs')
     binding = {**_base_binding(base, base_weight_path, base_weight_sha256,
                                base_config_path, base_config_sha256, runtime,
-                               fixture_small_width),
+                               fixture_small_width, execution_policy=execution_policy),
                'prepared_base': prepared_binding}
     prepared = ([_preflight_case(row, processor, j5_source) for row in cases]
                 if preflight is None else preflight)
@@ -716,6 +845,7 @@ def read_case(root, *, roster_sha256, case_id, expected_alignment_sha256,
     receipt = _read_record(directory / 'receipt.json', CASE_SCHEMA,
                            matches[0]['receipt_sha256'])
     _validate_execution_records(roster,receipt)
+    _validate_config_identity(roster,receipt)
     if receipt['profile'] in FULL_SOURCE_PROFILES:
         module, _, alignment, plain = _preflight_full_source(expected_j6_source, None, j5_source)
         _need(expected_j6_source['case_id'] == case_id and

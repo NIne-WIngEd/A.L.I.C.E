@@ -568,14 +568,16 @@ class PreparedLoadPathTests(unittest.TestCase):
                    'parent_source_receipt_sha256': 'd' * 64,
                    'snapshot_path': str(prepared.resolve()), 'files': files}
             loaded = TinyBase(3840).eval().requires_grad_(False)
-            loaded.config.to_json_string = lambda use_diff: json.dumps(config_record)
             runtime = ModuleType('transformers')
             runtime.AutoProcessor = SimpleNamespace(from_pretrained=Mock(return_value=processor))
             runtime.AutoModelForMultimodalLM = SimpleNamespace(from_pretrained=Mock(return_value=loaded))
             with patch.object(shared, '_prepared_base', return_value=row) as verify, \
                  patch.object(shared, 'SOURCE_WEIGHT_SHA256',
                               next(x['sha256'] for x in files if x['path'] == 'model.safetensors')), \
+                 patch.object(features, '_loaded_config_identity', return_value={}) as config_identity, \
                  patch.dict(sys.modules, {'transformers': runtime}):
+                # This synthetic loader proves plumbing and tensor readback.
+                # Genuine typed Gemma4 config custody has separate meta controls.
                 roster = features.export_prepared_bank(
                     root / 'bank', prepared_base_dir=prepared, cases=[case],
                     j5_source=None, prepared_receipt_path=receipt,
@@ -584,6 +586,9 @@ class PreparedLoadPathTests(unittest.TestCase):
                     expected_parent_source_receipt_sha256=row['parent_source_receipt_sha256'],
                     expected_cases_sha256=canonical_sha256([case]),
                     device='cpu')
+            config_identity.assert_called_once_with(loaded, prepared / 'config.json',
+                config_sha256=next(x['sha256'] for x in files if x['path'] == 'config.json'),
+                requested_attention=None)
             self.assertEqual(verify.call_count, 3)
             self.assertEqual(loaded.model.calls, 1)
             feature, tensors = read_case(
