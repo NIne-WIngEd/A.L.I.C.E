@@ -1,5 +1,7 @@
 # Broader chronological formation construction
 
+[TRACE146](receipts/MFM_FROZEN_BANK_CONSUMER_20261015_TRACE146_PUBLIC.json) adds the reviewed explicit processor-metadata role for consuming the frozen bank. It retains producer full-clone ancestry, fresh admission, exact processor binding and strict resume custody while avoiding an unnecessary base-weight file on the training host. Fifteen focused/default checks passed with one recorded platform skip; the actual seven-asset processor matches Magnolia under the existing pinned environment. The nine-source bank and owned joint learning remain pending.
+
 [TRACE145](receipts/MFM_DEDICATED_SOURCE_RUNTIME_20261015_TRACE145_PUBLIC.json) records the successful allocated-node processor/source validation and the new nine-source export job577599. Its initial source prelude and CPU kernel checks passed; the complete bank and learned formation remain pending. [TRACE144](MFM_EXPLICIT_CPU_SOURCE_EXECUTION_2026-10-15.md) explains the reviewed execution mechanism.
 
 [TRACE143](receipts/MFM_ACTUAL_BROADER_STATE_BINDING_20261015_TRACE143_PUBLIC.json)

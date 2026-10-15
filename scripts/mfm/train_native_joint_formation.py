@@ -37,6 +37,9 @@ SOURCE_FEATURE_PROFILES = {'j6-firstparty-successor':'j6-source-only',
                            'broader-firstparty-successor':'broader-source-only'}
 BROADER_SUCCESSOR_AUTHORING_SCHEMA = 'mfm-native-joint-broader-model-author-conversion-v1'
 RECIPE_SCHEMA = 'mfm-native-joint-fit-recipe-v1'
+METADATA_RECIPE_SCHEMA = 'mfm-native-joint-fit-recipe-v2'
+METADATA_CONSUMER_PROFILE = 'frozen-bank-tokenizer-metadata-v1'
+METADATA_VERIFIER_FILE_SHA256 = '7848c5f2b12db7d08fc1ff41df5680d9b7d25b4101e6dad54e6eb4c558e0c7d5'
 CHECKPOINT_SCHEMA = 'mfm-native-joint-owned-checkpoint-v1'
 PAIR_AUTHORING_SCHEMA = 'mfm-native-joint-pair-authoring-v1'
 P2_SUCCESSOR_AUTHORING_SCHEMA = 'mfm-native-joint-p2-successor-authoring-v1'
@@ -1316,8 +1319,138 @@ def _restore_checkpoint(directory, *, model, optimizer, recipe_sha256,
     return record
 
 
+def _consumer_recipe(record, profile):
+    """Keep the relocated processor role explicit in immutable fit/resume input."""
+    _need(type(record) is dict and profile in (None, METADATA_CONSUMER_PROFILE),
+          'explicit prepared consumer profile differs')
+    if profile is None:
+        _need(record.get('schema') == RECIPE_SCHEMA and
+              'prepared_consumer' not in record,
+              'complete-clone default requires original recipe v1')
+        return None
+    custody = record.get('prepared_consumer')
+    _need(record.get('schema') == METADATA_RECIPE_SCHEMA and
+          type(custody) is dict and set(custody) == {
+              'profile', 'metadata_verifier_file_sha256', 'asset_roster_sha256'} and
+          custody['profile'] == profile and
+          custody['metadata_verifier_file_sha256'] == METADATA_VERIFIER_FILE_SHA256,
+          'explicit metadata consumer recipe or verifier differs')
+    require_sha256(custody['asset_roster_sha256'], 'processor asset roster')
+    return custody
+
+
+def _verified_fit_prepared(prepared, receipt_path, root,
+                          expected_receipt_file_sha256, expected_receipt_sha256,
+                          expected_parent_source_sha256, *, roster, recipe,
+                          prepared_consumer_profile=None, prior_metadata=None):
+    """Verify the selected consumer custody without relabelling producer proof."""
+    from scripts.mfm import export_joint_source_features as features
+    from scripts.mfm import train_v1_formation_specialist as shared
+
+    custody = _consumer_recipe(recipe, prepared_consumer_profile)
+    if custody is None:
+        _need(prior_metadata is None, 'complete-clone default cannot inherit metadata custody')
+        return features._verified_prepared(prepared, receipt_path, root,
+            expected_receipt_file_sha256, expected_receipt_sha256,
+            expected_parent_source_sha256), None
+    verifier_path = Path(__file__).with_name('train_public_conditional_foundation.py')
+    _need(_file_sha256(verifier_path) == custody['metadata_verifier_file_sha256'],
+          'published tokenizer metadata verifier FILE differs')
+    from scripts.mfm import train_public_conditional_foundation as public
+
+    receipt_path = Path(receipt_path)
+    public._safe_root(receipt_path.parent)
+    receipt_path = public._safe_child(receipt_path.parent, receipt_path.name)
+    for value in (expected_receipt_file_sha256, expected_receipt_sha256,
+                  expected_parent_source_sha256):
+        require_sha256(value, 'metadata original clone pin')
+    _need(_file_sha256(receipt_path) == expected_receipt_file_sha256,
+          'metadata original receipt physical FILE differs')
+    row = json.loads(receipt_path.read_bytes())
+    _need(type(row) is dict and row.get('schema') == shared.CLONE_SCHEMA and
+          row.get('role') == 'mfm' and row.get('qualification') in (None, 'unqualified') and
+          row.get('receipt_sha256') == expected_receipt_sha256 and
+          canonical_sha256({k: v for k, v in row.items() if k != 'receipt_sha256'}) ==
+              expected_receipt_sha256 and
+          row.get('parent_source_receipt_sha256') == expected_parent_source_sha256 and
+          type(row.get('snapshot_path')) is str and bool(row['snapshot_path']),
+          'metadata original MFM receipt or source ancestry differs')
+    files = row.get('files')
+    names = {*public.METADATA_NAMES, 'model.safetensors'}
+    _need(type(files) is list and len(files) == len(names) and
+          all(type(item) is dict and set(item) == {'path', 'size', 'sha256'} and
+              type(item['path']) is str and item['path'] in names and
+              type(item['size']) is int and item['size'] > 0 for item in files) and
+          {item['path'] for item in files} == names,
+          'metadata original complete prepared FILE roster differs')
+    for item in files:
+        require_sha256(item['sha256'], 'original prepared FILE')
+    by_name = {item['path']: item for item in files}
+    base = roster.get('base') if type(roster) is dict else None
+    binding = {'receipt_sha256': expected_receipt_sha256,
+        'receipt_file_sha256': expected_receipt_file_sha256,
+        'parent_source_receipt_sha256': expected_parent_source_sha256,
+        'source_weight_sha256': shared.SOURCE_WEIGHT_SHA256,
+        'foundation_commit': shared.FOUNDATION_COMMIT,
+        'foundation_verifier_sha256': shared.FOUNDATION_VERIFIER_SHA256,
+        'foundation_inventory_sha256': shared.FOUNDATION_INVENTORY_SHA256,
+        'prepared_files': files, 'prepared_schema': row['schema']}
+    _need(by_name['model.safetensors']['sha256'] == shared.SOURCE_WEIGHT_SHA256 and
+          type(base) is dict and base.get('fixture_small_width') is False and
+          base.get('hidden_width') == 3840 and
+          base.get('representation') == 'base.model.last_hidden_state' and
+          base.get('weight_file_sha256') == by_name['model.safetensors']['sha256'] and
+          base.get('config_file_sha256') == by_name['config.json']['sha256'] and
+          canonical_sha256(base.get('prepared_base')) == canonical_sha256(binding),
+          'frozen bank producer and metadata clone ancestry differ')
+    metadata = public.verify_tokenizer_metadata(root, receipt_path,
+        expected_receipt_sha256,
+        {'prepared_clone_receipt_sha256': expected_receipt_sha256,
+         'prepared_base_weight_sha256': shared.SOURCE_WEIGHT_SHA256})
+    _need(metadata['asset_roster_sha256'] == custody['asset_roster_sha256'],
+          'consumer processor asset roster differs from immutable recipe')
+    evidence = {'schema': 'mfm-native-joint-tokenizer-metadata-custody-v1',
+        'profile': prepared_consumer_profile,
+        'metadata_verifier_file_sha256': custody['metadata_verifier_file_sha256'],
+        'receipt_file_sha256': expected_receipt_file_sha256,
+        'receipt_sha256': expected_receipt_sha256,
+        'parent_source_receipt_sha256': expected_parent_source_sha256,
+        'feature_roster_sha256': recipe['feature_roster_sha256'],
+        'producer_prepared_base_sha256': canonical_sha256(binding),
+        'asset_roster_sha256': metadata['asset_roster_sha256'],
+        'assets': metadata['assets'], 'base_weights_opened': False,
+        'complete_clone_weight_verification_performed_here': False,
+        'meaning': metadata['meaning']}
+    evidence['record_sha256'] = canonical_sha256(evidence)
+    _need((prepared is None) == (prior_metadata is None) and
+          (prepared is None or
+           (canonical_sha256(row) == canonical_sha256(prepared) and
+            canonical_sha256(evidence) == canonical_sha256(prior_metadata))),
+          'consumer metadata custody changed across owned-fit boundary')
+    return row, evidence
+
+
+def _bind_processor_custody(metadata, processor):
+    """Preserve sealed metadata and seal its complete actual processor binding."""
+    _need(type(metadata) is dict and
+          metadata.get('schema') == 'mfm-native-joint-tokenizer-metadata-custody-v1' and
+          metadata.get('profile') == METADATA_CONSUMER_PROFILE and
+          metadata.get('base_weights_opened') is False and
+          metadata.get('complete_clone_weight_verification_performed_here') is False and
+          metadata.get('record_sha256') == canonical_sha256(
+              {k: v for k, v in metadata.items() if k != 'record_sha256'}),
+          'verified inner processor metadata evidence differs')
+    record = {'schema': 'mfm-native-joint-processor-custody-v1',
+              'metadata': deepcopy(metadata),
+              'processor_binding': deepcopy(source.processor_binding(processor))}
+    record['record_sha256'] = canonical_sha256(record)
+    return record
+
+
 def _recipe(record, *, program_sha256, admission_sha256,
-            feature_roster_sha256, seed_manifest_sha256):
+            feature_roster_sha256, seed_manifest_sha256,
+            prepared_consumer_profile=None):
+    custody = _consumer_recipe(record, prepared_consumer_profile)
     _need(type(record) is dict and set(record) == {
         'schema', 'program_sha256', 'admission_sha256',
         'feature_roster_sha256', 'seed_manifest_sha256', 'case_order',
@@ -1325,8 +1458,9 @@ def _recipe(record, *, program_sha256, admission_sha256,
         'learning_rate', 'weight_decay', 'adam_betas', 'adam_eps',
         'device', 'seed', 'checkpoint_every_updates', 'precision',
         'term_weights', 'mass_policy', 'update_policy', 'runtime',
-        'trainer_file_sha256', 'generation_max_new_tokens'} and
-        record['schema'] == RECIPE_SCHEMA and
+        'trainer_file_sha256', 'generation_max_new_tokens'} |
+        ({'prepared_consumer'} if custody is not None else set()) and
+        record['schema'] == (METADATA_RECIPE_SCHEMA if custody is not None else RECIPE_SCHEMA) and
         (record['program_sha256'], record['admission_sha256'],
          record['feature_roster_sha256'], record['seed_manifest_sha256']) ==
         (program_sha256, admission_sha256,
@@ -1379,12 +1513,14 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
                            seed_manifest_sha256, seed_provenance_sha256,
                            seed_source_pins, recipe_path, recipe_file_sha256,
                            output_dir, resume_checkpoint=None,
-                           resume_checkpoint_file_sha256=None):
+                           resume_checkpoint_file_sha256=None,
+                           prepared_consumer_profile=None):
     """Fit the new joint stage from exact original FileRefs and frozen source.
 
-    No candidate is qualified here. The current supplied P2 corpus still fails
-    its own false authority/incomplete/overflow guards; J5 requires a separate
-    physically admitted author-conversion successor packet.
+    No candidate is qualified here. Paired construction records never grant
+    training authority; every supplied program requires fresh physical corpus
+    admission, exact author/source joins and a production frozen feature bank.
+    An explicit processor metadata role preserves the original producer custody.
     """
     from transformers import AutoProcessor
     from cognitive_kernel.formation_v1_specialist import SpecialistConfig
@@ -1395,6 +1531,11 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
 
     material_root = Path(material_root).resolve(strict=True)
     feature_root = Path(feature_root).resolve(strict=True)
+    if prepared_consumer_profile is not None:
+        for original in (Path(prepared_base_dir), Path(prepared_receipt_path)):
+            _need(not any(p.is_symlink() or getattr(p, 'is_junction', lambda: False)()
+                          for p in (original, *original.parents)),
+                  'metadata consumer original path links are forbidden')
     prepared = Path(prepared_base_dir).resolve(strict=True)
     receipt_path = Path(prepared_receipt_path).resolve(strict=True)
     output = Path(output_dir).resolve(strict=False)
@@ -1492,7 +1633,8 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
     _recipe(recipe, program_sha256=program_file_sha256,
             admission_sha256=admission_manifest_sha256,
             feature_roster_sha256=feature_roster_sha256,
-            seed_manifest_sha256=seed_manifest_sha256)
+            seed_manifest_sha256=seed_manifest_sha256,
+            prepared_consumer_profile=prepared_consumer_profile)
     _need(recipe['case_order'] == [row['case_id'] for row in program['cases']],
           'actual case order differs from immutable fit recipe')
     # Corpus authority precedes processor and any feature tensor/model load.
@@ -1510,9 +1652,10 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
           admission_manifest_sha256=admission_manifest_sha256,owner_authorization_ref=owner_authorization_ref)
     roster = features._read_record(feature_root / 'roster.json',
                                    features.SCHEMA, feature_roster_sha256)
-    first = features._verified_prepared(None, receipt_path, prepared,
+    first, consumer_metadata = _verified_fit_prepared(None, receipt_path, prepared,
         prepared_receipt_file_sha256, prepared_receipt_sha256,
-        parent_source_receipt_sha256)
+        parent_source_receipt_sha256, roster=roster, recipe=recipe,
+        prepared_consumer_profile=prepared_consumer_profile)
     files = {entry['path']: entry for entry in first['files']}
     _need(first['schema'] == shared.CLONE_SCHEMA and
           files['model.safetensors']['sha256'] == shared.SOURCE_WEIGHT_SHA256 and
@@ -1618,9 +1761,11 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
         admission_manifest_path=admission_manifest_path,
         admission_manifest_sha256=admission_manifest_sha256,
         owner_authorization_ref=owner_authorization_ref, cases=cases)
-    features._verified_prepared(first, receipt_path, prepared,
+    _verified_fit_prepared(first, receipt_path, prepared,
         prepared_receipt_file_sha256, prepared_receipt_sha256,
-        parent_source_receipt_sha256)
+        parent_source_receipt_sha256, roster=roster, recipe=recipe,
+        prepared_consumer_profile=prepared_consumer_profile,
+        prior_metadata=consumer_metadata)
     if full_program:
         _, current_migration = _material_bytes(material_root,
             program['source_migration'])
@@ -1693,9 +1838,11 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
                 admission_sha256=admission_manifest_sha256,
                 feature_roster_sha256=feature_roster_sha256,
                 history=history)
-    features._verified_prepared(first, receipt_path, prepared,
+    _verified_fit_prepared(first, receipt_path, prepared,
         prepared_receipt_file_sha256, prepared_receipt_sha256,
-        parent_source_receipt_sha256)
+        parent_source_receipt_sha256, roster=roster, recipe=recipe,
+        prepared_consumer_profile=prepared_consumer_profile,
+        prior_metadata=consumer_metadata)
     if full_program:
         _, current_migration = _material_bytes(material_root,
             program['source_migration'])
@@ -1774,6 +1921,10 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
         'native_joint_trainer_runtime': deepcopy(recipe['runtime']),
         'native_joint_private_original_modules':
             deepcopy(program.get('private_original_modules', {}))}
+    if consumer_metadata is not None:
+        custody = _bind_processor_custody(consumer_metadata, processor)
+        provenance['processor_custody'] = custody
+        trained_source_pins['native_joint_processor_custody'] = custody
     component_paths = tuple(output / name for name in
         ('component.safetensors', 'config.json', 'component.json'))
     model.export_component(*component_paths,
