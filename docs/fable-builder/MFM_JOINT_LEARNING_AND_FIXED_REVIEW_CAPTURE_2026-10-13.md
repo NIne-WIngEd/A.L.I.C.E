@@ -122,3 +122,5 @@ establish construction mechanics; width4 fixture resources are mocked and no
 production feature or memory result is claimed. Keep the104-interface inherited
 state unchanged and continue the dedicated longest-first actual nine-source
 export before owned joint learning. This remains procedure-only evidence.
+
+TRACE145 verifies the dedicated source runtime on an actual allocated node: exact processor, original native files, real corpus rights, imports and loopback isolation precede model execution. Keep the old mutable runtime/lock and clone permissions unchanged. Derive output and writer-temporary storage from the complete tensor geometry. Actual tiny CPU kernel calls and successful staging are distinct from full-source completion; require every case, final clone bracket and sealed bank before owned learning. Preserve the submitted job and original failures without automatic replay.
