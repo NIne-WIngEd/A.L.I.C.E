@@ -8,8 +8,11 @@ from __future__ import annotations
 from hashlib import sha256
 import json
 import os
+import platform
 from pathlib import Path
 from importlib.metadata import version
+from math import isfinite
+from time import perf_counter,process_time
 from types import SimpleNamespace
 from uuid import uuid4
 
@@ -34,11 +37,117 @@ BROAD_CASE_KEYS = J6_CASE_KEYS | {'observation_file', 'observation_file_sha256',
                                 'observation_record_sha256','whole_world_file',
                                 'whole_world_file_sha256','whole_world_sha256'}
 FULL_SOURCE_PROFILES = ('j6-source-only', 'broader-source-only')
+CPU_FLASH_PROFILE = 'cpu-sdpa-flash-v1'
+CPU_FLASH_OPERATOR = 'aten::_scaled_dot_product_flash_attention_for_cpu'
+MATH_ATTENTION_OPERATOR = 'aten::_scaled_dot_product_attention_math'
+CPU_POLICY_SCHEMA = 'mfm-source-cpu-sdpa-flash-execution-policy-v1'
+CPU_FORWARD_SCHEMA = 'mfm-source-cpu-sdpa-flash-forward-v1'
 
 
 def _need(ok, message):
     if not ok:
         raise ValueError(message)
+
+
+def _process_peak_rss_bytes():
+    # Linux ru_maxrss is a process-lifetime high-water mark in KiB, including
+    # model loading. It is not a reset per-forward allocation measurement.
+    _need(platform.system()=='Linux','CPU flash resource measurement requires Linux')
+    import resource
+    return int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)*1024
+
+
+def _check_execution_profile(profile,device):
+    if profile is None:return None
+    _need(profile==CPU_FLASH_PROFILE and torch.device(device).type=='cpu' and
+          torch.__version__.split('+')[0]=='2.7.1',
+          'explicit CPU flash profile/device/PyTorch2.7.1 required')
+    _process_peak_rss_bytes()
+    return profile
+
+
+def _cpu_flash_forward(base,batch,policy):
+    """Observe the actual whole native text forward; forbid silent fallback."""
+    from torch.nn.attention import sdpa_kernel,SDPBackend
+    config=base.config.text_config
+    _need(policy['profile']==CPU_FLASH_PROFILE and
+          config._attn_implementation=='sdpa' and
+          type(config.num_hidden_layers) is int and config.num_hidden_layers>0 and
+          config.num_hidden_layers==policy['text_attention_layers'] and
+          torch.get_num_threads()==policy['cpu_threads'] and
+          set(batch)=={'input_ids','attention_mask','mm_token_type_ids'} and
+          all(value.device.type=='cpu' for value in batch.values()),
+          'CPU flash loaded SDPA/text layers/native inputs differ')
+    start=perf_counter();cpu_start=process_time()
+    with torch.inference_mode(),sdpa_kernel(SDPBackend.FLASH_ATTENTION), \
+         torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU]) as prof:
+        states=base.model(**batch,use_cache=False,return_dict=True).last_hidden_state
+    elapsed=perf_counter()-start;cpu_elapsed=process_time()-cpu_start
+    events={event.key:event for event in prof.key_averages()}
+    flash=events.get(CPU_FLASH_OPERATOR);math=events.get(MATH_ATTENTION_OPERATOR)
+    count=0 if flash is None else flash.count
+    math_count=0 if math is None else math.count
+    _need(count==policy['text_attention_layers'] and math_count==0,
+          'CPU flash complete text-layer operators required; eager/math/partial execution refused')
+    return states,{'cpu_flash_operator_count':count,'math_operator_count':math_count,
+        'cpu_flash_operator_time_us':float(flash.cpu_time_total),
+        'wall_seconds':elapsed,'cpu_seconds':cpu_elapsed}
+
+
+def _make_execution_policy(base):
+    config=base.config.text_config
+    _need(config._attn_implementation=='sdpa' and type(config.num_hidden_layers) is int and
+          config.num_hidden_layers>0,'CPU flash loaded text attention configuration differs')
+    return _sealed({'schema':CPU_POLICY_SCHEMA,'profile':CPU_FLASH_PROFILE,'device':'cpu',
+        'attention_implementation':'sdpa','backend':'FLASH_ATTENTION',
+        'torch_version':str(torch.__version__),'transformers_version':version('transformers'),
+        'python_version':platform.python_version(),'platform':platform.system(),
+        'cpu_threads':torch.get_num_threads(),'text_attention_layers':config.num_hidden_layers,
+        'peak_rss_measurement':'linux-getrusage-self-process-lifetime-high-water-bytes',
+        'whole_source_single_forward':True})
+
+
+def _validate_execution_records(roster,receipt):
+    if 'execution_policy' not in roster and 'execution' not in receipt:return
+    policy=roster.get('execution_policy');observed=receipt.get('execution')
+    _need(type(policy) is dict and set(policy)=={'schema','profile','device',
+          'attention_implementation','backend','torch_version','transformers_version',
+          'python_version','platform','cpu_threads','text_attention_layers',
+          'peak_rss_measurement','whole_source_single_forward','record_sha256'} and
+          policy.get('record_sha256')==canonical_sha256({k:v for k,v in policy.items()
+              if k!='record_sha256'}),'CPU flash sealed execution policy differs')
+    _need(policy['schema']==CPU_POLICY_SCHEMA and policy['profile']==CPU_FLASH_PROFILE and
+          policy['device']=='cpu' and policy['attention_implementation']=='sdpa' and
+          policy['backend']=='FLASH_ATTENTION' and policy['platform']=='Linux' and
+          type(policy['torch_version']) is str and policy['torch_version'].split('+')[0]=='2.7.1' and
+          policy['torch_version']==roster['base']['runtime']['torch_version'] and
+          policy['transformers_version']==roster['base']['runtime']['transformers_version'] and
+          roster['base']['backbone_device']=='cpu' and
+          type(policy['cpu_threads']) is int and policy['cpu_threads']>0 and
+          type(policy['text_attention_layers']) is int and policy['text_attention_layers']>0 and
+          type(policy['python_version']) is str and bool(policy['python_version']) and
+          policy['peak_rss_measurement']=='linux-getrusage-self-process-lifetime-high-water-bytes' and
+          policy['whole_source_single_forward'] is True,'CPU flash runtime/policy binding differs')
+    _need(type(observed) is dict and set(observed)=={'schema','policy_sha256',
+          'case_id','source_alignment_sha256','source_length',
+          'cpu_flash_operator_count','math_operator_count','cpu_flash_operator_time_us',
+          'wall_seconds','cpu_seconds','process_lifetime_peak_rss_before_bytes',
+          'process_lifetime_peak_rss_after_bytes'},'CPU flash per-case execution evidence missing')
+    _need(observed['schema']==CPU_FORWARD_SCHEMA and observed['policy_sha256']==policy['record_sha256'] and
+          observed['case_id']==receipt['case_id'] and
+          observed['source_alignment_sha256']==receipt['alignment_sha256'] and
+          type(observed['source_length']) is int and observed['source_length']>0 and
+          observed['source_length']==receipt['source_length'] and
+          type(observed['cpu_flash_operator_count']) is int and
+          observed['cpu_flash_operator_count']==policy['text_attention_layers'] and
+          type(observed['math_operator_count']) is int and observed['math_operator_count']==0 and
+          all(type(observed[key]) in (int,float) and isfinite(observed[key]) and observed[key]>=0
+              for key in ('cpu_flash_operator_time_us','wall_seconds','cpu_seconds')) and
+          observed['cpu_flash_operator_time_us']>0 and
+          all(type(observed[key]) is int and observed[key]>0 for key in
+              ('process_lifetime_peak_rss_before_bytes','process_lifetime_peak_rss_after_bytes')) and
+          observed['process_lifetime_peak_rss_after_bytes']>=observed['process_lifetime_peak_rss_before_bytes'],
+          'CPU flash per-case kernel/resource evidence differs')
 
 
 def _digest(path):
@@ -325,7 +434,8 @@ def _tensor_check(tensors, row, width):
 
 def _export_bank(root, *, cases, processor, base, j5_source, base_weight_path,
                  base_weight_sha256, base_config_path, base_config_sha256,
-                 runtime, fixture_small_width, prepared_binding, preflight=None):
+                 runtime, fixture_small_width, prepared_binding, preflight=None,
+                 execution_policy=None):
     """Create one immutable complete target-free feature roster on the host.
 
     Fixture width is an explicit mechanics-only exception; production is 3840.
@@ -364,9 +474,19 @@ def _export_bank(root, *, cases, processor, base, j5_source, base_weight_path,
     receipts = []
     device = next(base.parameters()).device
     for case, (module, batch, alignment, plain) in zip(cases, prepared):
-        with torch.inference_mode():
-            states = base.model(**{k: v.to(device) for k, v in batch.items()},
-                                use_cache=False, return_dict=True).last_hidden_state
+        execution=None
+        if execution_policy is None:
+            with torch.inference_mode():
+                states = base.model(**{k: v.to(device) for k, v in batch.items()},
+                                    use_cache=False, return_dict=True).last_hidden_state
+        else:
+            before_rss=_process_peak_rss_bytes()
+            states,observed=_cpu_flash_forward(base,{k:v.to(device) for k,v in batch.items()},execution_policy)
+            execution={'schema':CPU_FORWARD_SCHEMA,'policy_sha256':execution_policy['record_sha256'],
+                'case_id':case['case_id'],'source_alignment_sha256':alignment['record_sha256'],
+                'source_length':len(alignment['input_ids']),
+                **observed,'process_lifetime_peak_rss_before_bytes':before_rss,
+                'process_lifetime_peak_rss_after_bytes':_process_peak_rss_bytes()}
         _need(type(states) is torch.Tensor, 'base representation missing')
         tensors = {'states': states.detach().cpu().contiguous(),
                    **{key: value.detach().cpu().contiguous()
@@ -386,6 +506,9 @@ def _export_bank(root, *, cases, processor, base, j5_source, base_weight_path,
         if case['profile'] in FULL_SOURCE_PROFILES:
             core['broader_source' if case['profile']=='broader-source-only' else
                  'j6_source'] = _j6_binding(case, alignment)
+        if execution is not None:
+            core['execution']=execution
+            _validate_execution_records({'base':binding,'execution_policy':execution_policy},core)
         _tensor_check(tensors, core, binding['hidden_width'])
         save_file(tensors, str(path))
         with path.open('r+b') as stream:
@@ -399,10 +522,11 @@ def _export_bank(root, *, cases, processor, base, j5_source, base_weight_path,
         receipts.append({'case_id': case['case_id'],
                          'receipt_sha256': receipt['record_sha256']})
     _bracket_j6_files(cases)
-    roster = _write_record(root / 'roster.json',
-                           {'schema': SCHEMA, 'base': binding, 'cases': receipts,
-                            'target_visible_to_backbone': False,
-                            'source_profiles': [row['profile'] for row in cases]})
+    roster_core={'schema': SCHEMA, 'base': binding, 'cases': receipts,
+                 'target_visible_to_backbone': False,
+                 'source_profiles': [row['profile'] for row in cases]}
+    if execution_policy is not None:roster_core['execution_policy']=execution_policy
+    roster = _write_record(root / 'roster.json',roster_core)
     return roster
 
 
@@ -454,7 +578,7 @@ def export_prepared_bank(root, *, prepared_base_dir, cases, j5_source,
                          expected_prepared_receipt_sha256,
                          expected_parent_source_receipt_sha256,
                          expected_cases_sha256,
-                         device):
+                         device,execution_profile=None):
     """Host-side production entrypoint bound to one local prepared Gemma clone.
 
     Loading the processor and model from the same physically checked directory
@@ -473,6 +597,7 @@ def export_prepared_bank(root, *, prepared_base_dir, cases, j5_source,
           root != prepared and prepared not in root.parents and
           root != receipt_path and root not in receipt_path.parents,
           'new feature output must be outside prepared originals')
+    _check_execution_profile(execution_profile,device)
     for value in (expected_prepared_receipt_file_sha256,
                   expected_prepared_receipt_sha256,
                   expected_parent_source_receipt_sha256,
@@ -518,6 +643,9 @@ def export_prepared_bank(root, *, prepared_base_dir, cases, j5_source,
             preflight.append(_preflight_case(row, processor, j5_source))
     _bracket_j6_files(cases)
     names = [row['case_id'] for row in cases]
+    if execution_profile is not None:
+        _need(all(set(observed[1])=={'input_ids','attention_mask','mm_token_type_ids'}
+                  for observed in preflight),'CPU flash requires complete native3 text source fields')
     _need(len(set(names)) == len(names) and
           canonical_sha256(cases) == expected_cases_sha256,
           'complete frozen source roster changed during preflight')
@@ -525,11 +653,13 @@ def export_prepared_bank(root, *, prepared_base_dir, cases, j5_source,
                        expected_prepared_receipt_file_sha256,
                        expected_prepared_receipt_sha256,
                        expected_parent_source_receipt_sha256)
+    attention_kwargs={} if execution_profile is None else {'attn_implementation':'sdpa'}
     base = AutoModelForMultimodalLM.from_pretrained(
         str(prepared), trust_remote_code=False, local_files_only=True,
         use_safetensors=True, dtype=torch.bfloat16,
-        device_map={'': device}, low_cpu_mem_usage=True)
+        device_map={'': device}, low_cpu_mem_usage=True,**attention_kwargs)
     base.requires_grad_(False).eval()
+    execution_policy=None if execution_profile is None else _make_execution_policy(base)
     binding = {'receipt_sha256': first['receipt_sha256'],
                'receipt_file_sha256': expected_prepared_receipt_file_sha256,
                'parent_source_receipt_sha256': expected_parent_source_receipt_sha256,
@@ -547,7 +677,7 @@ def export_prepared_bank(root, *, prepared_base_dir, cases, j5_source,
                           runtime={'torch_version': torch.__version__,
                                    'transformers_version': version('transformers')},
                           fixture_small_width=False, prepared_binding=binding,
-                          preflight=preflight)
+                          preflight=preflight,execution_policy=execution_policy)
     _verified_prepared(first, receipt_path, prepared,
                        expected_prepared_receipt_file_sha256,
                        expected_prepared_receipt_sha256,
@@ -585,6 +715,7 @@ def read_case(root, *, roster_sha256, case_id, expected_alignment_sha256,
           'feature case files differ')
     receipt = _read_record(directory / 'receipt.json', CASE_SCHEMA,
                            matches[0]['receipt_sha256'])
+    _validate_execution_records(roster,receipt)
     if receipt['profile'] in FULL_SOURCE_PROFILES:
         module, _, alignment, plain = _preflight_full_source(expected_j6_source, None, j5_source)
         _need(expected_j6_source['case_id'] == case_id and
