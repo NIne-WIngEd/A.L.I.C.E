@@ -1,5 +1,7 @@
 # Broader chronological formation construction
 
+[TRACE145](receipts/MFM_DEDICATED_SOURCE_RUNTIME_20261015_TRACE145_PUBLIC.json) records the successful allocated-node processor/source validation and the new nine-source export job577599. Its initial source prelude and CPU kernel checks passed; the complete bank and learned formation remain pending. [TRACE144](MFM_EXPLICIT_CPU_SOURCE_EXECUTION_2026-10-15.md) explains the reviewed execution mechanism.
+
 [TRACE143](receipts/MFM_ACTUAL_BROADER_STATE_BINDING_20261015_TRACE143_PUBLIC.json)
 records the later completed private CPU job138871002. Original100-interface
 cold load and current104-interface strict export/reload agree on all138 tensors;
