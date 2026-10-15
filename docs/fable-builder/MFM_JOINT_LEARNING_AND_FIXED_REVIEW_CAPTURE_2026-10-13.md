@@ -110,3 +110,15 @@ metadata files are rehashed locally; no tensor is downloaded. Preserve the
 untrained-head and zero-update status. This releases compatible owned-state
 construction, while full source representation capacity and learned formation
 still require their own actual production results.
+
+TRACE144 adds an explicit CPU execution profile to the existing complete source
+exporter. Force loader SDPA and a FLASH-only context; observe one CPU flash
+operator per configured text layer and no math fallback on each whole forward.
+Bind policy and actual operator/resource evidence to case/source identity in
+the existing sealed records. Preserve native masks/positions/fields and strict
+source FILE pins. Validate producer evidence without requiring the consumer's
+runtime to match it. Eleven focused controls and independent packet review
+establish construction mechanics; width4 fixture resources are mocked and no
+production feature or memory result is claimed. Keep the104-interface inherited
+state unchanged and continue the dedicated longest-first actual nine-source
+export before owned joint learning. This remains procedure-only evidence.
