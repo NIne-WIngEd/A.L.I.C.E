@@ -61,3 +61,11 @@ def test_missing_pointer_cannot_be_counted_as_measured():
     facts[0]['facts'][0]['pointers']=['absent']
     with pytest.raises(ValueError,match='native pointer'):
         reviewed_region_fit(packet([.1,.9],[.9,.1],[.9,.1]),facts)
+
+
+@pytest.mark.parametrize('ids', [[], ['ab'], [('a', 'a')], [('a', '')], [('a', 'b'), ('a', 'b')]])
+def test_invalid_pointer_rows_are_still_refused(ids):
+    value = packet([.1, .9], [.9, .1], [.9, .1])
+    value['candidate_ids'] = ids
+    with pytest.raises(ValueError, match='unique pointer IDs'):
+        reviewed_region_fit(value, targets())

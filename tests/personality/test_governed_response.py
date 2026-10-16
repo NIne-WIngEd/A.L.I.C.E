@@ -33,6 +33,36 @@ class GovernedResponseTests(unittest.TestCase):
         return api.respond_with_governance(consumer, self.fixture.doc,
             self.fixture.produced, self.fixture.session, **options)
 
+    def test_live_governed_response_and_saved_json_have_identical_reviewed_regions(self):
+        import json
+        from scripts.eipm.gemma_n0.conditional_successor_report import reviewed_region_fit
+
+        response = self.respond(self.fixture.build(co_valid=True))
+        decision = response['decision']
+        self.assertIsInstance(decision['candidate_ids'], tuple)
+        self.assertIsInstance(decision['concept_ids'], tuple)
+        targets = []
+        for field, pointer_key, desired in (
+            ('co_valid_probabilities', 'candidate_ids', 1),
+            ('contraindications', 'candidate_ids', 0),
+            ('concept_applicability', 'concept_ids', 1),
+        ):
+            targets.append({'field': field, 'facts': [
+                {'pointers': [pointer], 'available': True, 'value': desired}
+                for pointer in decision[pointer_key][0]]})
+        before = canonical(response)
+        saved_result = reviewed_region_fit(json.loads(before)['decision'], targets)
+        live_result = reviewed_region_fit(decision, targets)
+        self.assertEqual(live_result, saved_result)
+        self.assertEqual(sum(live_result[row['field']]['comparisons'] for row in targets), 5)
+        for target in targets:
+            field = target['field']
+            values = decision['conditional_concepts'][field][0] if field == 'concept_applicability' else decision[field][0]
+            expected = sum((value >= .5) != bool(fact['value']) for value, fact in zip(values, target['facts']))
+            self.assertEqual(live_result[field]['errors'], expected)
+        self.assertFalse(live_result['qualification'])
+        self.assertEqual(canonical(response), before)
+
     def test_preferred_but_invalid_behavior_remains_unresolved_without_silent_reranking(self):
         # Reuse the original diagnostic's actual converged control. The short
         # sparse fixture does not establish all three target preconditions.

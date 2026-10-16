@@ -8,7 +8,7 @@ import tempfile
 import unittest
 
 
-WORKER = Path(__file__).resolve().parents[2] / 'scripts/eipm/gemma_n0/magnolia_cumulative_learning_20261013.py'
+WORKER = Path(__file__).resolve().parents[2] / 'scripts/eipm/gemma_n0/magnolia_cumulative_learning_20261015.py'
 
 
 class CumulativeWorkerGuardTests(unittest.TestCase):
@@ -39,19 +39,19 @@ class CumulativeWorkerGuardTests(unittest.TestCase):
     def test_actual_dispatch_refuses_changed_worker_and_each_public_helper(self):
         wrapper = WORKER.with_suffix('.sbatch')
         checks = [line for line in wrapper.read_text().splitlines() if line.startswith('[[') and 'sha256sum' in line]
-        self.assertEqual(len(checks), 7)
+        self.assertEqual(len(checks), 8)
         program = 'set -euo pipefail\n' + '\n'.join(checks) + '\nprintf PUBLIC_PINS_ACCEPTED'
         script_directory = WORKER.parent
-        helpers = ('governed_response.py', 'cumulative_successor.py', 'cumulative_bindings.py', 'connected_voice_references.py', 'n0_semantic_contrasts.py', 'conditional_successor_report.py')
+        helpers = ('governed_response.py', 'cumulative_successor.py', 'cumulative_bindings.py', 'connected_voice_references.py', 'n0_semantic_contrasts.py', 'conditional_successor_report.py', 'cumulative_recovery.py')
         with tempfile.TemporaryDirectory(prefix='cumulative-public-dispatch-') as temporary:
             root = Path(temporary)
             jobs = root/'jobs'
             jobs.mkdir()
-            worker = jobs/'rayan-cumulative-learning-r2-20261013.py'
+            worker = jobs/'rayan-cumulative-learning-r3-20261015.py'
             worker.write_bytes(WORKER.read_bytes())
             paths = [worker]
             for name in helpers:
-                path = jobs/('rayan-20261013-r2-'+name)
+                path = jobs/('rayan-20261015-r3-'+name)
                 path.write_bytes((script_directory/name).read_bytes())
                 paths.append(path)
             environment = dict(os.environ, AUDIT_HELPER=worker.as_posix(), COMPUTE_ROOT=root.as_posix())

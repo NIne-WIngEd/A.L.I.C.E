@@ -34,7 +34,12 @@ def reviewed_region_fit(packet: dict, targets: list[dict]) -> dict:
             continue
         key, values = fields[field]
         ids = packet.get(key)
-        if not isinstance(ids, list) or len(ids) != 1 or len(set(ids[0])) != len(ids[0]):
+        # The native codec preserves tuple pointer rows; a JSON round trip
+        # yields lists. Both describe the same ordered, source-bound pointers.
+        if (not isinstance(ids, (list, tuple)) or len(ids) != 1
+                or not isinstance(ids[0], (list, tuple))
+                or any(not isinstance(pointer, str) or not pointer for pointer in ids[0])
+                or len(set(ids[0])) != len(ids[0])):
             raise ValueError('report requires one row with unique pointer IDs')
         if not isinstance(values, list) or len(values) != 1 or len(values[0]) != len(ids[0]):
             raise ValueError('report requires a complete native output row')

@@ -1,11 +1,13 @@
 # Full Alice personality build state
 
-**Current snapshot:** see the [13 October cumulative learning continuation](PERSONALITY_BROADER_CURRICULUM_AND_CONTINUATION_2026-10-11.md#october-13-continuation).
-Owner feature jobs 577250/577252/577253 completed with 352 actual materialized
-cases. Compatible cumulative N1/N2 job 577303 is submitted; its actual batch
-binding, 394 planned updates and resulting behavior remain pending. FBM v15
-records the process. N0, broader curriculum coverage and the full personality
-remain unqualified. The following earlier snapshots preserve their history.
+**Current snapshot:** see the [15 October recovery and continuation](PERSONALITY_BROADER_CURRICULUM_AND_CONTINUATION_2026-10-11.md#october-15-recovery-and-continuation).
+Job 577303 failed at the live diagnostic-report interface before gradients.
+Owner readback 577712 recovered all 236 parent judgments and 394 target
+measurements. The report correction and source-bound reuse passed 33 tests
+and 8 subtests. Compatible cumulative N1/N2 job 577714 is submitted; its
+394 planned updates and resulting behavior remain pending. FBM v16 records
+the failure and continuation. N0, broader curriculum coverage and the full
+personality remain unqualified. Earlier snapshots below preserve their history.
 
 See [11 October completed results and broader curriculum](#11-october-completed-results-and-broader-curriculum).
 The initial connected N1/N2/N3 candidate is constructed and all 60 saved native

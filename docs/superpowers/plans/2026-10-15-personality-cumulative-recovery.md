@@ -1,0 +1,32 @@
+# Resume broader personality learning after report-interface failure
+
+**Goal:** Complete the already-authorized cumulative N1/N2 build from retained trained weights and the broader reviewed curriculum, then judge full behavior before choosing subsequent development.
+
+**Architecture:** Preserve the frozen Gemma feature stores, scientific core, native model, targets, recipes and original failures. Correct the diagnostic report's live-pointer contract, recover exact completed baseline measurements, and execute the remaining cumulative construction under the existing owner isolation.
+
+**Spec:** `docs/eipm/PERSONALITY_BROADER_CURRICULUM_AND_CONTINUATION_2026-10-11.md` and the October 13 cumulative plan. The full role remains the original EIPM role/voice/coverage contracts and the comic's continuing independent character.
+
+## Diagnosis, in required order
+
+1. **Evidence validity.** Original job 577303 exited 2 after 24:38:49, before any optimizer phase. Its reporter failed at line 38. Owner-isolated readback 577712 confirmed the exact exception and absence of new phase authorization/checkpoints; all 236 complete governed/native response seals and 394 descriptive case measurements survived. The empty conditional diagnostic output is preserved. A real optimized public consumer reproduces the failure on the live decision, while the exact same decision serialized to JSON passes. Initial local test collection from the wrong working directory never reached behavior; rerunning from the repository established the valid reproduction. The UTF-8 terminal setting similarly repaired only conversation-output encoding.
+2. **Claim and goal.** The diagnostic compares correctness against the original reviewed binary regions, separately from invariance. It must work on actual model outputs. This failure prevents learning; it neither proves a model defect nor supports personality/N0 qualification.
+3. **Responsible architecture.** Frozen source frames → retained native N1/N2/N3 → actual consumer → complete governed response → diagnostic report. `decision_to_mapping` preserves tuple candidate/concept pointers and converts tensors to lists. JSON encoding normalizes tuples to arrays; JSON decoding returns lists.
+4. **First departure.** `reviewed_region_fit` rejects every live tuple pointer row solely because it checks `isinstance(ids, list)`. Its old hand-authored tests used lists, missing the real producer-consumer boundary.
+5. **Responsibility to preserve.** The report measures explicitly available binary facts, unique exact pointers, finite probabilities and the existing 0.5 sign region. It must not alter judgments, manufacture gold, change thresholds, train on diagnostic data or turn stable wrong answers into passes.
+6. **Correction.** Accept the native tuple and serialized list representations with the same row/uniqueness checks. Add an optimized native-consumer→report test and retain wrong-answer/missing-pointer controls. Reuse sealed, hash-bound completed parent responses and all-objective measurements after checking their current document/session/checkpoint/batch bindings; do not recompute a day of unchanged baseline work. Run the original conditional baseline early, before costly learning, retaining its expected eight errors.
+7. **Research.** Python 3.11's [JSON conversion table](https://docs.python.org/3.11/library/json.html) and [dataclass conversion behavior](https://docs.python.org/3.11/library/dataclasses.html), checked against the actual pinned codec, explain the representation difference. Existing replay/counterfactual/calibration research in the October 13 plan remains applicable; no evidence justifies changing the architecture, learning rate or curriculum because of this reporting defect. The completed 24-hour baseline invalidates any assumption that the old whole-run training estimate bounds expanded reporting time. Keep stage checkpoints and use a declared allocation that covers remaining training plus full reporting; this is not a relaxed behavioral criterion.
+8. **Verification.** Require the same native response and its JSON round trip to produce identical measurements, retain all invalid/incorrect controls, verify reused baseline changes are refused, and test the actual new worker/wrapper bindings before launch. Live behavior and learning remain pending until the new run completes.
+
+## Execution
+
+- [x] Read Sol's original conversation, current branch/handoff, role and personal-development contracts, comic and prior failure lessons; preserve original job evidence.
+- [x] Recover complete parent measurements through owner-isolated readback 577712.
+- [x] Reproduce the report fault with an actual optimized native consumer.
+- [x] Correct and verify the report and exact completed-baseline reuse: 33 tests / 8 subtests; scoped fresh review READY.
+- [x] Stage and submit distinct owner job 577714; keep failed r2 files and measurements unchanged. One CPU / 120 GiB / 72h, original offline P2 route. The source partition permits this time allocation; sufficiency remains unmeasured.
+- [ ] Run 178 N1 / 216 N2 updates with original replay, auxiliary-state transfer and fresh admissions; record complete successor behavior and all original comparisons.
+- [x] Save diagnosis and measured limits in FBM v16 and the retained receipts; prepare the continuation for draft PR100 and the current handoff.
+
+## Broader development after this build
+
+Assess characteristic judgment across the complete new and retained curriculum: conditional meaning, values, relationships, emotional posture, disagreement, uncertainty, source links and expressive intent. Use actual outputs to distinguish fit/retention from independent fidelity. N3 must then receive fresh outcome-bound reviews; it cannot repair wrong N2 signs or ranks. Connect the complete governing packet to the existing conversation/action, Memory/MFM, host/relationship/self, Mission/Workspace and Experience interfaces. Their state and outcome changes must causally affect relevant judgment while preserving source-person history and unrelated behavior. Continue missing grounded curriculum families through compatible learned-state continuation. Provider replacement and inherited Gemma influence remain end-to-end obligations. None of the report, recovery or job-completion checks qualifies N0 or the full personality.
