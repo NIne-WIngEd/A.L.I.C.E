@@ -1,13 +1,18 @@
 # Full Alice personality build state
 
-**Current snapshot:** see the [15 October recovery and continuation](PERSONALITY_BROADER_CURRICULUM_AND_CONTINUATION_2026-10-11.md#october-15-recovery-and-continuation).
+**Current snapshot:** see the [15 October parallel candidate connection](PERSONALITY_BROADER_CURRICULUM_AND_CONTINUATION_2026-10-11.md#october-15-parallel-candidate-connection) and [recovery and continuation](PERSONALITY_BROADER_CURRICULUM_AND_CONTINUATION_2026-10-11.md#october-15-recovery-and-continuation).
 Job 577303 failed at the live diagnostic-report interface before gradients.
 Owner readback 577712 recovered all 236 parent judgments and 394 target
 measurements. The report correction and source-bound reuse passed 33 tests
 and 8 subtests. Compatible cumulative N1/N2 job 577714 is submitted; its
 394 planned updates and resulting behavior remain pending. FBM v16 records
-the failure and continuation. N0, broader curriculum coverage and the full
-personality remain unqualified. Earlier snapshots below preserve their history.
+the failure and continuation. Independent construction now compiles complete
+utterance/delivery, interpretation and action-proposal meaning before features,
+then preserves the complete governing result in a typed handoff. Twelve public
+tests and thirteen subtests pass; FBM v17 adds this method while preserving v16.
+Actual conversation/action connections and acoustic realization remain pending.
+N0, broader curriculum coverage and the full personality remain unqualified.
+Earlier snapshots below preserve their history.
 
 See [11 October completed results and broader curriculum](#11-october-completed-results-and-broader-curriculum).
 The initial connected N1/N2/N3 candidate is constructed and all 60 saved native

@@ -1,5 +1,13 @@
 # Full personality curriculum and cumulative development
 
+## October 15 parallel candidate connection
+
+The cumulative learning result does not block every remaining development task. The [typed candidate compiler and governed handoff](PERSONALITY_TYPED_CANDIDATE_HANDOFF_2026-10-15.md) implements the already identified interpretation/action/voice representation gap while job 577714 continues unchanged. Complete proposal kind and meaning now enter native candidate text before features; same spoken words with different delivery have distinct semantic inputs. The actual selected utterance retains its original words, qualitative intent and native learned controls. Interpretations and actions remain nonspoken proposals. The entire native or cumulative governing packet, including current teaching scope and calibration inapplicability, is preserved.
+
+Twelve public tests and thirteen subtests passed in 169.02 seconds. These verify actual public optimization, successor handoff and refusal of changed payloads, stale features and altered renderer reports. They do not qualify learned Alice judgment, semantic delivery compatibility, acoustic realization or action execution. FBM v17 captures this construction method and preserves v16; the trace has 38 rows with all 37 earlier rows unchanged. No scientific-core or current job pin changed.
+
+The next use is grounded typed teaching through fresh feature materialization and compatible cumulative weights, followed by the existing conversation/action and actual-outcome owners. Do not retrofit these meanings onto existing feature banks or label their proposed actions as Experience. The complete job 577714 results still determine the next learned N1/N2 decision and fresh N3 outcome reviews.
+
 ## October 15 recovery and continuation
 
 Job **577303 failed before any new optimizer step**, after completing all 236 parent governed responses and 394 available-target measurements. The actual diagnostic reporter rejected native tuple pointer rows, although it accepted the same response after JSON serialization. This is a report-interface defect, not a measured failure of newly learned weights. Original accounting and failure remain preserved. Owner-isolated readback **577712** verified every retained native/governed response seal, the original parent chain, complete counts and the absence of new phase authorizations/checkpoints. See the [readback](../../evaluation/eipm/gemma_n0/receipts/magnolia_577303_failed_cumulative_readback_20261015.json).
