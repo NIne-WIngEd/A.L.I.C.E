@@ -32,12 +32,17 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "2b0e8e936b357fe71eaf5b09dbe3302e49f474f6",
+      "commit": "4225ef91f2b84c0fd0e2f4e67d6c84946b4aee2c",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
           "purpose": "V1 source direction and qualification limits",
           "blob_sha": "ee76d7bf78bad07e3bed869bd39e4e28507dd08b"
+        },
+        {
+          "path": "docs/receipts/MFM_COMPLETED_NINE_SOURCE_BANK_20261017_TRACE149_PUBLIC.json",
+          "purpose": "completed actual nine-case target-free source bank, terminal and full-clone closure; custody and owned joint learning remain separate",
+          "blob_sha": "3518a4c0fa038f768ee10703aa66f5ba693a41fb"
         },
         {
           "path": "docs/MFM_V1_SPECIALIST_TRAINING_PATH_2026-09-30.md",
@@ -782,7 +787,7 @@
         {
           "path": "docs/MFM_BROADER_JOINT_CONSTRUCTION_2026-10-15.md",
           "purpose": "current nine-case construction, complete104-interface inherited state, explicit frozen-bank consumer, config diagnosis and source export continuation; joint learning and full MFM remain pending",
-          "blob_sha": "4782d27cf85fcf2215fd16a8a907a6f16a03095d"
+          "blob_sha": "f5dc055d30a67b488d55aac990c25dcd8253dc18"
         },
         {
           "path": "docs/receipts/MFM_ACTUAL_BROADER_STATE_BINDING_20261015_TRACE143_PUBLIC.json",
@@ -1658,8 +1663,13 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "8dd52ce2ca01c433f9f957374d68bcc2c1fc9730",
+      "commit": "326825c7e0a004452d769121250e6d29e1abdb3f",
       "files": [
+        {
+          "path": "docs/fable-builder/FBM_ROLES_AND_OBJECTIVES.md",
+          "purpose": "current full-foundation construction, continuing maintenance, governed repair and independent host transfer responsibilities",
+          "blob_sha": "95a17e6dd2374de0a20d4ec80bd20a3600a8d4e2"
+        },
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
           "purpose": "FBM ordered replay seed",
@@ -1738,7 +1748,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "10fd7ded24e210a308e3ee5551ac7bb813f1bb41"
+          "blob_sha": "cab7150426b250f22f9b7fbc5ea41dc62cd62d33"
         },
         {
           "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
@@ -1753,7 +1763,7 @@
         {
           "path": "docs/fable-builder/MFM_JOINT_LEARNING_AND_FIXED_REVIEW_CAPTURE_2026-10-13.md",
           "purpose": "complete original review/custody and actual joint objective/full-component construction with coherent canonical binding diagnosis; procedure only",
-          "blob_sha": "f7ed6d5ea3231c22be744ec765f8aa5b6e7822e6"
+          "blob_sha": "7d22892418acfef03b4bd19587dad4d5ad15081b"
         }
       ]
     }

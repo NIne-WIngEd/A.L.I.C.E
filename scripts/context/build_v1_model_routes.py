@@ -28,6 +28,7 @@ ROUTES = {
         "branch": "research/mfm-v1-licensed-base-20260930",
         "files": {
             "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md": "V1 source direction and qualification limits",
+            "docs/receipts/MFM_COMPLETED_NINE_SOURCE_BANK_20261017_TRACE149_PUBLIC.json": "completed actual nine-case target-free source bank, terminal and full-clone closure; custody and owned joint learning remain separate",
             "docs/MFM_V1_SPECIALIST_TRAINING_PATH_2026-09-30.md": "MFM specialist training path",
             "docs/MFM_V16_BUILD_CONTINUATION_2026-10-02.md": "MFM recovered corpus, compute decisions and remaining full-capability roadmap",
             "docs/MFM_COMPUTE_RECOVERY_RECEIPTS_2026-10-02.json": "actual failed export audit, full synthetic capacity, Kaggle isolation evidence and selected protected CPU route",
@@ -356,6 +357,7 @@ ROUTES = {
     "fbm": {
         "branch": "research/fbm-v1-licensed-base-20260930",
         "files": {
+            "docs/fable-builder/FBM_ROLES_AND_OBJECTIVES.md": "current full-foundation construction, continuing maintenance, governed repair and independent host transfer responsibilities",
             "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json": "FBM ordered replay seed",
             "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json": "FBM recovered teacher CPU evidence and frozen-feature build continuation",
             "docs/fable-builder/traces/FBM_TRACE_20261002_MFM_RECOVERY_AND_FROZEN_FEATURE_ROUTE.jsonl": "FBM artifact recovery, measured tests and compute-route procedure traces",
