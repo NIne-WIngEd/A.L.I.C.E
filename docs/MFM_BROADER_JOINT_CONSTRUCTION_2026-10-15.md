@@ -1,5 +1,7 @@
 # Broader chronological formation construction
 
+[TRACE149](receipts/MFM_COMPLETED_NINE_SOURCE_BANK_20261017_TRACE149_PUBLIC.json) records genuine Magnolia577604 COMPLETED0:0 after51h57m40s. All nine whole-source forwards completed:410,994 native positions,3840-wide BF16 states and3,166,300,800 feature-file bytes. Every case records48 CPU flash/0 math operators, unchanged original native arrays/alignment/processor, and accepted complete typed-config identity. The pinned producer saved/reloaded and exactly compared every tensor, then revalidated all eight clone files, bracketed the source originals and renamed the completed bank before writing the successful result. Independent review joins extracted originals to the raw capture and exact executed code. The preserved GPU-discovery code100 line in the CPU prelude does not change the successful terminal result. Durable bank custody and fresh consumer tensor/material admission remain pending; then the next construction is the owned joint lexical/reference/whole-copy fit. S5 stays complete at20epochs/45,760steps, joint updates remain zero, and the stress draft stays parked. This completes source export, not learned formation or full MFM.
+
 [TRACE148](receipts/MFM_REVIEWED_SOURCE_SUCCESSOR_DISPATCH_20261015_TRACE148_PUBLIC.json) records the single reviewed successor dispatch577604 through immutable image003 after the TRACE147 correction. Its initial observation at1m08s was RUNNING with actual source/rights, exact processor/imports and both tiny CPU kernel mechanisms passed. Production loaded-config validation, whole-source execution and the complete nine-source bank remain pending. The failed577599 originals, original inputs/order and separate learning boundary remain intact. The receipt also captures the independently verified logical-member storage method and separately scoped local packaging cleanup.
 
 [TRACE147](receipts/MFM_LOADED_SOURCE_CONFIG_IDENTITY_20261015_TRACE147_PUBLIC.json) records the failed actual export and reviewed complete typed-config correction. A fresh fixed-class expectation preserves every normalized field, verifies live text-config ownership and checks explicit SDPA separately. Nine final config controls, two corrected regressions and three independent root controls passed; ten earlier-draft passes remain separately scoped. Exact source pins and both reviews are retained. A separately reviewed cold load, complete nine-source bank and owned joint learning remain pending.
@@ -88,10 +90,10 @@ remains immutable.
 
 ## Remaining construction
 
-After source/admission review, construct the actual full-width, target-free
-source features through the existing prepared non-IT clone and verify the real
-resource path. Then train the owned joint lexical/reference/copy operation with
-its own resumable optimizer and declared recipe; inspect complete generated
+The full-width, target-free nine-source bank has completed through the prepared
+non-IT clone. Secure durable custody and verify fresh consumer-side whole tensors
+and physical teaching admission. Then train the owned joint lexical/reference/copy
+operation with its own resumable optimizer and declared recipe; inspect complete generated
 formation behavior before selecting further teaching or architectural work.
 Training fit and deterministic development remain separate from independent
 evidence. Do not replay S5 or adopt block encoding, offload or a new attention
