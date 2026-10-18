@@ -24,7 +24,7 @@
 - [x] Reproduce the report fault with an actual optimized native consumer.
 - [x] Correct and verify the report and exact completed-baseline reuse: 33 tests / 8 subtests; scoped fresh review READY.
 - [x] Stage and submit distinct owner job 577714; keep failed r2 files and measurements unchanged. One CPU / 120 GiB / 72h, original offline P2 route. The source partition permits this time allocation; sufficiency remains unmeasured.
-- [ ] Run 178 N1 / 216 N2 updates with original replay, auxiliary-state transfer and fresh admissions; record complete successor behavior and all original comparisons.
+- [x] Job 577714 completed 0:0 with 178 N1 / 216 N2 updates and complete successor measurements; the original diagnostic still reports 8/60 errors. Full-result diagnosis and native checkpoint readback are continuing in owner job 578457; execution completion is not behavioral repair.
 - [x] Save diagnosis and measured limits in FBM v16 and the retained receipts; prepare the continuation for draft PR100 and the current handoff.
 
 ## Broader development after this build

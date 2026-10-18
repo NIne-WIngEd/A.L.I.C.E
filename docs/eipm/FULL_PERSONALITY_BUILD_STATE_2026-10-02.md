@@ -1,5 +1,12 @@
 # Full Alice personality build state
 
+**October 18:** cumulative job **577714 completed 0:0**, reporting 178 N1 and
+216 N2 updates and complete successor measurements. Its original diagnostic
+still reports **8/60 wrong binary regions**. Full-result readback **578457** is
+running under the owner isolation. See the [result diagnosis](PERSONALITY_CUMULATIVE_RESULT_DIAGNOSIS_2026-10-18.md)
+for the broader learning decision and unresolved cause. N0, learned governing
+repair and the full personality remain unqualified. Snapshots below are historical.
+
 **Current snapshot:** see the [15 October parallel candidate connection](PERSONALITY_BROADER_CURRICULUM_AND_CONTINUATION_2026-10-11.md#october-15-parallel-candidate-connection) and [recovery and continuation](PERSONALITY_BROADER_CURRICULUM_AND_CONTINUATION_2026-10-11.md#october-15-recovery-and-continuation).
 Job 577303 failed at the live diagnostic-report interface before gradients.
 Owner readback 577712 recovered all 236 parent judgments and 394 target
