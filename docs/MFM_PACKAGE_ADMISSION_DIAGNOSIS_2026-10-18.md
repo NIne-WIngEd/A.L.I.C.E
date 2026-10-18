@@ -1,5 +1,7 @@
 # MFM package admission and failure-evidence preservation
 
+Current result: [TRACE152](receipts/MFM_FULL_ENTRY_AND_JOINT_DISPATCH_20261018_TRACE152_PUBLIC.json) records successful terminal full-nine CPU admission and one verified private Kaggle successor dispatch. Actual GPU execution, seed-weight loading and update checkpoints remain pending. The ordered TRACE151 diagnosis below is preserved at its original pre-completion scope.
+
 Verified scoped repair, 2026-10-18. The original construction failed before its first update. The successor writer, admission checks and revised console mirror have scoped independent verification. Cold package verification passed; complete actual-entry validation on Magnolia is submitted and pending. No successor execution or learned qualification is claimed.
 
 1. **Validate the evidence.** Recovered original receipts establish terminal ERROR, child exit 1 after 554.775 seconds, and zero returned updates. All 13 construction files were recovered; every one of the 11 files listed by the original execution manifest matches its size and hash. An independent audit verified all 862 submitted archive members and reproduced the original rejection with the actual strict trainer reader. The earlier nine-case metadata observer was useful within its scope, but reconstructed the program and incidentally removed its trailing newline. Its pass did not test the exact submitted program. Source-order and sealing controls also did not execute the full trainer entry.
