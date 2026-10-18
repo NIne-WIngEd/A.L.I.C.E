@@ -28,6 +28,7 @@ ROUTES = {
         "branch": "research/mfm-v1-licensed-base-20260930",
         "files": {
             "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md": "V1 source direction and qualification limits",
+            "docs/receipts/MFM_TWO_UPDATE_JOINT_CONSTRUCTION_DISPATCH_20261017_TRACE150_PUBLIC.json": "verified full-bank Drive custody, private Kaggle delivery and initial complete-nine joint construction dispatch; runtime capacity, completed updates and learned formation remain unproved",
             "docs/receipts/MFM_COMPLETED_NINE_SOURCE_BANK_20261017_TRACE149_PUBLIC.json": "completed actual nine-case target-free source bank, terminal and full-clone closure; custody and owned joint learning remain separate",
             "docs/MFM_V1_SPECIALIST_TRAINING_PATH_2026-09-30.md": "MFM specialist training path",
             "docs/MFM_V16_BUILD_CONTINUATION_2026-10-02.md": "MFM recovered corpus, compute decisions and remaining full-capability roadmap",
@@ -177,7 +178,7 @@ ROUTES = {
             "docs/MFM_BROADER_FOUNDATION_MATERIAL_2026-10-13.md": "three source-first chronological cases extending the original six, exact caller/registry grounding and source-use declarations; full native geometry and learning remain pending",
             "docs/receipts/MFM_BROADER_GROUNDED_FOUNDATION_20261013_TRACE140_PUBLIC.json": "TRACE140 nine-case material covers all ten dimensions and six critical kinds; actual source/codec/reference construction with separate diagnostic development, no learning or independent-gold claim",
             "docs/receipts/MFM_ACTUAL_COMPLETE_STATE_SOURCE_MIGRATION_20261013_TRACE141_PUBLIC.json": "TRACE141 actual offline CPU138-state source migration, isolated original loading, identical whole weight FILE and strict reload; zero updates, metadata-only PC custody, reference/copy learning still pending",
-            "docs/MFM_BROADER_JOINT_CONSTRUCTION_2026-10-15.md": "current nine-case construction, complete104-interface inherited state, explicit frozen-bank consumer, config diagnosis and source export continuation; joint learning and full MFM remain pending",
+            "docs/MFM_BROADER_JOINT_CONSTRUCTION_2026-10-15.md": "current complete-nine joint construction, preserved104-interface inherited state, completed frozen source bank and initial Kaggle dispatch; broader learning, native media and full MFM remain pending",
             "docs/receipts/MFM_ACTUAL_BROADER_STATE_BINDING_20261015_TRACE143_PUBLIC.json": "TRACE143 actual full138-tensor104-interface migration preserves the complete epoch20 parent and whole weight FILE; no joint updates",
             "docs/MFM_EXPLICIT_CPU_SOURCE_EXECUTION_2026-10-15.md": "explicit whole native source CPU flash execution policy, measured kernel evidence and unchanged source fields; mechanism controls are separate from production capacity",
             "docs/receipts/MFM_FROZEN_BANK_CONSUMER_20261015_TRACE146_PUBLIC.json": "TRACE146 authenticated seven-asset consumer profile avoids a second base-weight file while retaining original producer ancestry and fresh physical admission",

@@ -32,12 +32,17 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "4225ef91f2b84c0fd0e2f4e67d6c84946b4aee2c",
+      "commit": "1c0d34cc71c4a8d1c3d9a7aacfc909105c663c2d",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
           "purpose": "V1 source direction and qualification limits",
           "blob_sha": "ee76d7bf78bad07e3bed869bd39e4e28507dd08b"
+        },
+        {
+          "path": "docs/receipts/MFM_TWO_UPDATE_JOINT_CONSTRUCTION_DISPATCH_20261017_TRACE150_PUBLIC.json",
+          "purpose": "verified full-bank Drive custody, private Kaggle delivery and initial complete-nine joint construction dispatch; runtime capacity, completed updates and learned formation remain unproved",
+          "blob_sha": "d9473147d52d583ef242ba87ffb27c80ea0673fa"
         },
         {
           "path": "docs/receipts/MFM_COMPLETED_NINE_SOURCE_BANK_20261017_TRACE149_PUBLIC.json",
@@ -786,8 +791,8 @@
         },
         {
           "path": "docs/MFM_BROADER_JOINT_CONSTRUCTION_2026-10-15.md",
-          "purpose": "current nine-case construction, complete104-interface inherited state, explicit frozen-bank consumer, config diagnosis and source export continuation; joint learning and full MFM remain pending",
-          "blob_sha": "f5dc055d30a67b488d55aac990c25dcd8253dc18"
+          "purpose": "current complete-nine joint construction, preserved104-interface inherited state, completed frozen source bank and initial Kaggle dispatch; broader learning, native media and full MFM remain pending",
+          "blob_sha": "04ee825b73dec10c9c3144e896f40433391a5918"
         },
         {
           "path": "docs/receipts/MFM_ACTUAL_BROADER_STATE_BINDING_20261015_TRACE143_PUBLIC.json",
@@ -1663,7 +1668,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "326825c7e0a004452d769121250e6d29e1abdb3f",
+      "commit": "deba7c0e6ca5256d1db934beacafd231ae00485f",
       "files": [
         {
           "path": "docs/fable-builder/FBM_ROLES_AND_OBJECTIVES.md",
@@ -1748,7 +1753,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "cab7150426b250f22f9b7fbc5ea41dc62cd62d33"
+          "blob_sha": "29da633f2685c0581a8baff20ba9c100dfe6ee98"
         },
         {
           "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
@@ -1763,7 +1768,7 @@
         {
           "path": "docs/fable-builder/MFM_JOINT_LEARNING_AND_FIXED_REVIEW_CAPTURE_2026-10-13.md",
           "purpose": "complete original review/custody and actual joint objective/full-component construction with coherent canonical binding diagnosis; procedure only",
-          "blob_sha": "7d22892418acfef03b4bd19587dad4d5ad15081b"
+          "blob_sha": "4d4e5d85f7decf5ad6354028056a0806611b06e7"
         }
       ]
     }
