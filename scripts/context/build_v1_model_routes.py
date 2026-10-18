@@ -28,6 +28,8 @@ ROUTES = {
         "branch": "research/mfm-v1-licensed-base-20260930",
         "files": {
             "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md": "V1 source direction and qualification limits",
+            "docs/receipts/MFM_PACKAGE_ADMISSION_REPAIR_20261018_TRACE151_PUBLIC.json": "recovered pre-update packaging failure, canonical writer and exact cold-consumer validation, noninterfering logs; full actual entry job578459 pending before Kaggle restart",
+            "docs/MFM_PACKAGE_ADMISSION_DIAGNOSIS_2026-10-18.md": "ordered eight-step diagnosis of artifact serialization, a test that rewrote input, and console mirroring; exact nine-source trainer admission scope and limits",
             "docs/receipts/MFM_TWO_UPDATE_JOINT_CONSTRUCTION_DISPATCH_20261017_TRACE150_PUBLIC.json": "verified full-bank Drive custody, private Kaggle delivery and initial complete-nine joint construction dispatch; runtime capacity, completed updates and learned formation remain unproved",
             "docs/receipts/MFM_COMPLETED_NINE_SOURCE_BANK_20261017_TRACE149_PUBLIC.json": "completed actual nine-case target-free source bank, terminal and full-clone closure; custody and owned joint learning remain separate",
             "docs/MFM_V1_SPECIALIST_TRAINING_PATH_2026-09-30.md": "MFM specialist training path",
