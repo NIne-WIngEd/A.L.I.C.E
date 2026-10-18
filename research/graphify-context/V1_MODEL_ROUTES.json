@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "dfdc512d3016a46a38ce5b41f4cb39a55c657bc9",
+      "commit": "5545eccce75cf84c6a0b921ebd7ecbe18b63a839",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -40,14 +40,19 @@
           "blob_sha": "ee76d7bf78bad07e3bed869bd39e4e28507dd08b"
         },
         {
+          "path": "docs/receipts/MFM_FULL_ENTRY_AND_JOINT_DISPATCH_20261018_TRACE152_PUBLIC.json",
+          "purpose": "terminal successful unchanged full-nine CPU trainer admission and exact private Kaggle successor dispatch; GPU execution, joint checkpoints and learned formation remain pending",
+          "blob_sha": "54297f075195fe6531dff4e451bda99ba04e0f3e"
+        },
+        {
           "path": "docs/receipts/MFM_PACKAGE_ADMISSION_REPAIR_20261018_TRACE151_PUBLIC.json",
-          "purpose": "recovered pre-update packaging failure, canonical writer and exact cold-consumer validation, noninterfering logs; full actual entry job578459 pending before Kaggle restart",
+          "purpose": "historical pre-update packaging failure and repaired writer, cold-consumer validation and noninterfering logs; terminal admission and successor dispatch recorded in TRACE152",
           "blob_sha": "b337ee8a8a23bdb48ce398f93b415eb2a4969a19"
         },
         {
           "path": "docs/MFM_PACKAGE_ADMISSION_DIAGNOSIS_2026-10-18.md",
           "purpose": "ordered eight-step diagnosis of artifact serialization, a test that rewrote input, and console mirroring; exact nine-source trainer admission scope and limits",
-          "blob_sha": "74bba991b5d6f85bf90828eebe80ec180161e790"
+          "blob_sha": "90c5cdb6b576d8c846323265c291c6674992b18e"
         },
         {
           "path": "docs/receipts/MFM_TWO_UPDATE_JOINT_CONSTRUCTION_DISPATCH_20261017_TRACE150_PUBLIC.json",
@@ -802,7 +807,7 @@
         {
           "path": "docs/MFM_BROADER_JOINT_CONSTRUCTION_2026-10-15.md",
           "purpose": "current complete-nine joint construction, preserved104-interface inherited state, completed frozen source bank and initial Kaggle dispatch; broader learning, native media and full MFM remain pending",
-          "blob_sha": "04adeb2e58563dcd448eff969a816757cb2cbe28"
+          "blob_sha": "b78ce8b0901549c301990cbcf2e96bfc84f25732"
         },
         {
           "path": "docs/receipts/MFM_ACTUAL_BROADER_STATE_BINDING_20261015_TRACE143_PUBLIC.json",
@@ -1678,7 +1683,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "368e58268df4d9f8d64e1b018d528f2aab651aa0",
+      "commit": "11df090d63871995cbd9856a42509f5e60c1dc30",
       "files": [
         {
           "path": "docs/fable-builder/FBM_ROLES_AND_OBJECTIVES.md",
@@ -1763,7 +1768,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "8b8f207dfcfa12ce0255cb8eeeca0e857f39674c"
+          "blob_sha": "9f2dce233783a7cffad1153b2fde00629004475d"
         },
         {
           "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
@@ -1778,7 +1783,7 @@
         {
           "path": "docs/fable-builder/MFM_JOINT_LEARNING_AND_FIXED_REVIEW_CAPTURE_2026-10-13.md",
           "purpose": "complete original review/custody and actual joint objective/full-component construction with coherent canonical binding diagnosis; procedure only",
-          "blob_sha": "b4b68fe8c3a1e16d267822bc83b3559e8675f756"
+          "blob_sha": "810f637c8c40671b726a48b5972838ff1ef17b4b"
         }
       ]
     }
