@@ -1,5 +1,7 @@
 # Broader chronological formation construction
 
+[TRACE150](receipts/MFM_TWO_UPDATE_JOINT_CONSTRUCTION_DISPATCH_20261017_TRACE150_PUBLIC.json) records verified durable custody of all 19 original bank files and private delivery/readback of 20 payloads. Cold-package review closes all 104 seed interfaces, and original metadata-only lowering admits all nine complete cases. Job 139356508 version 1 was submitted once; its exact private offline source, inputs and requested image were read back with status RUNNING. It requests two complete nine-case owned lexical/reference/whole-copy updates: the first initializes Adam moments and the second observes the same operation with moments resident, with a checkpoint after each. Consumer whole-body admission, actual allocation, completed updates, measured capacity and learned behavior are not established by dispatch. S5 stays complete at 20 epochs/45,760 steps and the stress draft stays parked.
+
 [TRACE149](receipts/MFM_COMPLETED_NINE_SOURCE_BANK_20261017_TRACE149_PUBLIC.json) records genuine Magnolia577604 COMPLETED0:0 after51h57m40s. All nine whole-source forwards completed:410,994 native positions,3840-wide BF16 states and3,166,300,800 feature-file bytes. Every case records48 CPU flash/0 math operators, unchanged original native arrays/alignment/processor, and accepted complete typed-config identity. The pinned producer saved/reloaded and exactly compared every tensor, then revalidated all eight clone files, bracketed the source originals and renamed the completed bank before writing the successful result. Independent review joins extracted originals to the raw capture and exact executed code. The preserved GPU-discovery code100 line in the CPU prelude does not change the successful terminal result. Durable bank custody and fresh consumer tensor/material admission remain pending; then the next construction is the owned joint lexical/reference/whole-copy fit. S5 stays complete at20epochs/45,760steps, joint updates remain zero, and the stress draft stays parked. This completes source export, not learned formation or full MFM.
 
 [TRACE148](receipts/MFM_REVIEWED_SOURCE_SUCCESSOR_DISPATCH_20261015_TRACE148_PUBLIC.json) records the single reviewed successor dispatch577604 through immutable image003 after the TRACE147 correction. Its initial observation at1m08s was RUNNING with actual source/rights, exact processor/imports and both tiny CPU kernel mechanisms passed. Production loaded-config validation, whole-source execution and the complete nine-source bank remain pending. The failed577599 originals, original inputs/order and separate learning boundary remain intact. The receipt also captures the independently verified logical-member storage method and separately scoped local packaging cleanup.
@@ -90,11 +92,17 @@ remains immutable.
 
 ## Remaining construction
 
-The full-width, target-free nine-source bank has completed through the prepared
-non-IT clone. Secure durable custody and verify fresh consumer-side whole tensors
-and physical teaching admission. Then train the owned joint lexical/reference/copy
-operation with its own resumable optimizer and declared recipe; inspect complete generated
-formation behavior before selecting further teaching or architectural work.
+The complete target-free source bank now has durable custody and verified private
+delivery metadata. The initial two-update construction has been dispatched; require
+actual consumer whole-body and teaching admission, allocation, complete-nine backward,
+Adam, checkpoint and terminal evidence. Compare the first update with the second
+moment-bearing update using actual timings, CUDA peaks and bounded operator captures.
+Preserve original failures and all outputs if the observation is incomplete. Inspect raw
+native generation across all nine complete cases before selecting further teaching or
+architectural work. The built-in first-case generation is insufficient. Checkpoint 1 may
+continue to update 2 under this immutable recipe; exhausted checkpoint 2 cannot be
+extended by changing its budget. Choose any longer fit or continuation contract from
+the actual evidence.
 Training fit and deterministic development remain separate from independent
 evidence. Do not replay S5 or adopt block encoding, offload or a new attention
 backend merely because a complete source is longer.
