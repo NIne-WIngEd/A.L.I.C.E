@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "57119a89f7326637d98a2e91d92899515fe55386",
+      "commit": "a5eb0d54ad2df3ddf1d9b52233a9f45d7dc44e99",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -40,8 +40,13 @@
           "blob_sha": "ee76d7bf78bad07e3bed869bd39e4e28507dd08b"
         },
         {
+          "path": "docs/receipts/MFM_LEARNING_DIAGNOSIS_AND_FORMATION_CONTINUATION_20261020_TRACE155_PUBLIC.json",
+          "purpose": "completed27case/54probe diagnosis and verified Drive originals; exact optimizer-preserving continuation reviewed and dispatched, new full-size updates and all-nine native behavior pending",
+          "blob_sha": "64975a6f091d0e3c6f922bab9a93e269997d0bf8"
+        },
+        {
           "path": "docs/receipts/MFM_COMPLETE_ASSESSMENT_AND_LEARNING_DIAGNOSIS_20261020_TRACE154_PUBLIC.json",
-          "purpose": "all eighteen original native outputs fail complete-decision alignment; verified checkpoint and assessment-original Drive custody; read-only three-state numerical diagnosis dispatched, full MFM unfinished",
+          "purpose": "historical complete matched-generation failure and verified checkpoint/assessment custody; numerical diagnostic dispatch superseded by its completed results",
           "blob_sha": "498f09bf8298c04e080f99c494543c923ef904cc"
         },
         {
@@ -51,8 +56,8 @@
         },
         {
           "path": "docs/MFM_JOINT_GENERATION_DIAGNOSIS_2026-10-19.md",
-          "purpose": "ordered diagnosis of complete matched native failure; original mixed labels, early divergence and three-state teacher/incremental comparison before further fitting",
-          "blob_sha": "b2ebbf969e464870ef81a200ba487dad894822e0"
+          "purpose": "completed27case/54probe numerical diagnosis, unfinished formation-task transfer and explicit optimizer-preserving continuation; all-nine native behavior and full MFM remain unfinished",
+          "blob_sha": "5aba9f854b0becf962a900d3cddf5dda13473b50"
         },
         {
           "path": "docs/receipts/MFM_FULL_ENTRY_AND_JOINT_DISPATCH_20261018_TRACE152_PUBLIC.json",
@@ -821,8 +826,8 @@
         },
         {
           "path": "docs/MFM_BROADER_JOINT_CONSTRUCTION_2026-10-15.md",
-          "purpose": "completed two-update complete-nine construction and failed matched generation; original three-state numerical diagnosis before further learning, native media and full MFM",
-          "blob_sha": "c4d0a0df4ceeba1bd6336a1d3a5f49c2bff396ae"
+          "purpose": "completed two-update construction and numerical diagnosis; explicit full-nine optimizer-preserving formation continuation, required native assessment and remaining full-role build",
+          "blob_sha": "b856f0b441a028ced7ee2d784fb66fcf9b0ee03c"
         },
         {
           "path": "docs/receipts/MFM_ACTUAL_BROADER_STATE_BINDING_20261015_TRACE143_PUBLIC.json",
@@ -891,13 +896,13 @@
         },
         {
           "path": "scripts/mfm/train_native_joint_formation.py",
-          "purpose": "direct complete lexical/reference/copy fit over independently admitted material, new named AdamW, one-bank consumption, complete boundary cursor/state restart and raw generated consumer; no default production schedule",
-          "blob_sha": "9348150bbe9e14d1a50a1fba930f1050cb8566bd"
+          "purpose": "complete lexical/reference/copy learner with exact ordinary restart and opt-in exhausted-parent continuation preserving Adam/RNG/history; strict export/reload and bound separate native-assessment requirement",
+          "blob_sha": "31d815ebfd21ff74f2dc4898dd8ce7b2530e746b"
         },
         {
           "path": "tests/governance/test_mfm_native_joint_training.py",
           "purpose": "complete author-conversion/world-cut-variant/native-field/owned-update/restart controls and supplied P2 refusal; fixture and real-material scope kept separate",
-          "blob_sha": "a59da3d89bce95e0f986e6a53552656a29484164"
+          "blob_sha": "d11131b2ec09e17ce8674698e061d8caebe52aec"
         },
         {
           "path": "docs/MFM_FULL_SOURCE_TEXT_CONSTRUCTION_2026-10-13.md",
@@ -1698,7 +1703,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "f12e664c70ebbf237aec361b886e88a4cbe518ae",
+      "commit": "6b014168643650596d468e3d0bc8ef5d56bc4002",
       "files": [
         {
           "path": "docs/fable-builder/FBM_ROLES_AND_OBJECTIVES.md",
@@ -1783,7 +1788,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "ada5d6264d29583a71114cd2a5e5fd8433dee3d3"
+          "blob_sha": "51b5898d81b4216f0bcb21e4c39e48b1ec8bef92"
         },
         {
           "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
@@ -1798,7 +1803,7 @@
         {
           "path": "docs/fable-builder/MFM_JOINT_LEARNING_AND_FIXED_REVIEW_CAPTURE_2026-10-13.md",
           "purpose": "complete original review/custody and actual joint objective/full-component construction with coherent canonical binding diagnosis; procedure only",
-          "blob_sha": "fa6b2d3748750b3e87d62787e8cb150d91bf72ad"
+          "blob_sha": "5d14a6ed42a0f6351d4a5ecdaadd3fbf005c9d87"
         }
       ]
     }
