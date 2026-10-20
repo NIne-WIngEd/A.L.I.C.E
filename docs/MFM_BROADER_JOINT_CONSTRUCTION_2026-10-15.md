@@ -1,6 +1,6 @@
 # Broader chronological formation construction
 
-[TRACE153](receipts/MFM_JOINT_CONSTRUCTION_AND_MATCHED_GENERATION_20261019_TRACE153_PUBLIC.json) records the verified completed construction and the next matched all-nine assessment dispatch. Actual eighteen generated results remain pending.
+[TRACE154](receipts/MFM_COMPLETE_ASSESSMENT_AND_LEARNING_DIAGNOSIS_20261020_TRACE154_PUBLIC.json) records the completed matched assessment and verified checkpoint custody. Both the seed and joint update2 fail complete-decision alignment on all nine original cases. No native grounded proposals were produced, and reference/copy prediction was never reached.
 
 The two-update construction recorded in TRACE152 has now completed. Both updates
 visited all nine complete cases, all 138 Adam counters advanced from one to two,
@@ -9,8 +9,10 @@ lexical/reference/copy losses fell from 16.2263/1.8523/13.3431 to
 12.2396/1.7018/9.4981. These are teacher-fit observations, not a formation pass.
 The built-in first generation emitted only a `value_text` object and failed the
 complete decision contract before reference/copy prediction. The original result
-is preserved; [ordered diagnosis](MFM_JOINT_GENERATION_DIAGNOSIS_2026-10-19.md)
-defines the required matched all-nine observation before further construction.
+is preserved; the complete matched observation confirms the same failure class
+in all eighteen results. [Ordered diagnosis](MFM_JOINT_GENERATION_DIAGNOSIS_2026-10-19.md)
+now compares original gold-token behavior across seed, checkpoint1 and update2
+and checks teacher/incremental agreement before further construction.
 
 The earlier receipt paragraphs below preserve their historical observations.
 Their pending statuses are superseded by the current completed-state account above.
@@ -122,9 +124,11 @@ terminal evidence. Whole-update observations were 1,407.503 and 1,412.864 second
 peak allocations were 9,392,367,616 and 11,621,595,136 bytes. These include bounded
 operator observation, exclude checkpoint/export/generation, and do not establish
 future throughput. Both updates observed the efficient attention operator.
-Preserve the invalid first-case generation and all subsequent outputs. Inspect raw
-native generation across all nine complete cases before selecting further teaching or
-architectural work. The built-in first-case generation is insufficient. Checkpoint 1 may
+The complete matched assessment preserves every raw native result and confirms
+an early lexical departure before reference/copy prediction. It does not yet
+identify a numerical cause. Compare original full teacher losses and matched
+gold-prefix logits across all three saved states before selecting further
+teaching or architectural work. Checkpoint 1 may
 continue to update 2 under this immutable recipe; exhausted checkpoint 2 cannot be
 extended by changing its budget. Choose any longer fit or continuation contract from
 the actual evidence.
