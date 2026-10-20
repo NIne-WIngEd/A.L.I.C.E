@@ -38,6 +38,9 @@ SOURCE_FEATURE_PROFILES = {'j6-firstparty-successor':'j6-source-only',
 BROADER_SUCCESSOR_AUTHORING_SCHEMA = 'mfm-native-joint-broader-model-author-conversion-v1'
 RECIPE_SCHEMA = 'mfm-native-joint-fit-recipe-v1'
 METADATA_RECIPE_SCHEMA = 'mfm-native-joint-fit-recipe-v2'
+SUCCESSOR_RECIPE_SCHEMA = 'mfm-native-joint-fit-recipe-v3'
+SUCCESSOR_CONTRACT_SCHEMA = 'mfm-native-joint-successor-contract-v1'
+DEFERRED_GENERATION_POLICY = 'defer-all-case-native-assessment-v1'
 METADATA_CONSUMER_PROFILE = 'frozen-bank-tokenizer-metadata-v1'
 METADATA_VERIFIER_FILE_SHA256 = '7848c5f2b12db7d08fc1ff41df5680d9b7d25b4101e6dad54e6eb4c558e0c7d5'
 CHECKPOINT_SCHEMA = 'mfm-native-joint-owned-checkpoint-v1'
@@ -1324,12 +1327,12 @@ def _consumer_recipe(record, profile):
     _need(type(record) is dict and profile in (None, METADATA_CONSUMER_PROFILE),
           'explicit prepared consumer profile differs')
     if profile is None:
-        _need(record.get('schema') == RECIPE_SCHEMA and
+        _need(record.get('schema') in (RECIPE_SCHEMA, SUCCESSOR_RECIPE_SCHEMA) and
               'prepared_consumer' not in record,
               'complete-clone default requires original recipe v1')
         return None
     custody = record.get('prepared_consumer')
-    _need(record.get('schema') == METADATA_RECIPE_SCHEMA and
+    _need(record.get('schema') in (METADATA_RECIPE_SCHEMA, SUCCESSOR_RECIPE_SCHEMA) and
           type(custody) is dict and set(custody) == {
               'profile', 'metadata_verifier_file_sha256', 'asset_roster_sha256'} and
           custody['profile'] == profile and
@@ -1449,8 +1452,15 @@ def _bind_processor_custody(metadata, processor):
 
 def _recipe(record, *, program_sha256, admission_sha256,
             feature_roster_sha256, seed_manifest_sha256,
-            prepared_consumer_profile=None):
+            prepared_consumer_profile=None,
+            successor_contract_file_sha256=None, expected_trainer_file_sha256=None):
     custody = _consumer_recipe(record, prepared_consumer_profile)
+    successor = successor_contract_file_sha256 is not None
+    if successor:
+        require_sha256(successor_contract_file_sha256, 'successor contract FILE')
+        _need(record.get('successor_contract_file_sha256') == successor_contract_file_sha256 and
+              record.get('generation_policy') == DEFERRED_GENERATION_POLICY,
+              'explicit successor recipe/assessment policy differs')
     _need(type(record) is dict and set(record) == {
         'schema', 'program_sha256', 'admission_sha256',
         'feature_roster_sha256', 'seed_manifest_sha256', 'case_order',
@@ -1459,8 +1469,10 @@ def _recipe(record, *, program_sha256, admission_sha256,
         'device', 'seed', 'checkpoint_every_updates', 'precision',
         'term_weights', 'mass_policy', 'update_policy', 'runtime',
         'trainer_file_sha256', 'generation_max_new_tokens'} |
-        ({'prepared_consumer'} if custody is not None else set()) and
-        record['schema'] == (METADATA_RECIPE_SCHEMA if custody is not None else RECIPE_SCHEMA) and
+        ({'prepared_consumer'} if custody is not None else set()) |
+        ({'successor_contract_file_sha256', 'generation_policy'} if successor else set()) and
+        record['schema'] == (SUCCESSOR_RECIPE_SCHEMA if successor else
+            METADATA_RECIPE_SCHEMA if custody is not None else RECIPE_SCHEMA) and
         (record['program_sha256'], record['admission_sha256'],
          record['feature_roster_sha256'], record['seed_manifest_sha256']) ==
         (program_sha256, admission_sha256,
@@ -1496,8 +1508,200 @@ def _recipe(record, *, program_sha256, admission_sha256,
         set(record['runtime']) == {'torch_version', 'transformers_version'} and
         record['runtime']['torch_version'] == torch.__version__ and
         record['runtime']['transformers_version'] == version('transformers') and
-        record['trainer_file_sha256'] == _file_sha256(__file__),
+        record['trainer_file_sha256'] == (expected_trainer_file_sha256
+            if expected_trainer_file_sha256 is not None else _file_sha256(__file__)),
         'immutable actual joint objective/schedule recipe differs')
+
+
+def _read_only_mount(path):
+    """Production successors consume a read-only filesystem, without a write probe."""
+    return (hasattr(os, 'statvfs') and
+            bool(os.statvfs(path).f_flag & getattr(os, 'ST_RDONLY', 1)))
+
+
+def _successor_parent_path(value, output):
+    path = Path(value)
+    _need(path.is_absolute() and not any(p.is_symlink() or
+          getattr(p, 'is_junction', lambda: False)() for p in (path, *path.parents)),
+          'successor parent path alias refused')
+    path = path.resolve(strict=True)
+    _need(not path.is_relative_to(output) and not output.is_relative_to(path) and
+          _read_only_mount(path), 'successor parent must be external and read-only')
+    return path
+
+
+def _bracket_successor(successor):
+    record = successor['record']
+    _need(_file_sha256(successor['path']) == successor['file_sha256'] and
+          _file_sha256(record['parent_recipe']['path']) == record['parent_recipe']['sha256'] and
+          all(_file_sha256(successor['checkpoint'] / name) == pin
+              for name, pin in record['parent_checkpoint']['files'].items()),
+          'successor parent checkpoint FILE or recipe changed')
+
+
+def _successor_contract(path, expected_file_sha256, *, recipe, output,
+                        prepared_consumer_profile):
+    """Bind an immutable exhausted parent; no tensors or live state are loaded."""
+    record = _json_file(path, expected_file_sha256)
+    _need(set(record) == {'schema', 'parent_recipe', 'parent_checkpoint',
+          'parent_trainer_file_sha256', 'parent_update_index', 'parent_consumed_cases',
+          'parent_history_sha256', 'assessment', 'record_sha256'} and
+          record['schema'] == SUCCESSOR_CONTRACT_SCHEMA and
+          record['record_sha256'] == canonical_sha256(
+              {k: v for k, v in record.items() if k != 'record_sha256'}),
+          'sealed successor contract differs')
+    _recipe(recipe, program_sha256=recipe['program_sha256'],
+        admission_sha256=recipe['admission_sha256'], feature_roster_sha256=recipe['feature_roster_sha256'],
+        seed_manifest_sha256=recipe['seed_manifest_sha256'],
+        prepared_consumer_profile=prepared_consumer_profile,
+        successor_contract_file_sha256=expected_file_sha256)
+    parent_ref, checkpoint_ref = record['parent_recipe'], record['parent_checkpoint']
+    _need(type(parent_ref) is dict and set(parent_ref) == {'path', 'sha256'} and
+          type(checkpoint_ref) is dict and set(checkpoint_ref) == {'path', 'files'} and
+          type(checkpoint_ref['files']) is dict and set(checkpoint_ref['files']) ==
+              {'checkpoint.json', 'weights.safetensors', 'trainer.pt'},
+          'successor complete parent references differ')
+    for pin in (parent_ref['sha256'], record['parent_trainer_file_sha256'],
+                record['parent_history_sha256'], *checkpoint_ref['files'].values()):
+        require_sha256(pin, 'successor parent FILE/history')
+    output = Path(output).resolve(strict=False)
+    parent_path = _successor_parent_path(parent_ref['path'], output)
+    checkpoint = _successor_parent_path(checkpoint_ref['path'], output)
+    _need(parent_path.is_file() and checkpoint.is_dir() and
+          {p.name for p in checkpoint.iterdir()} == set(checkpoint_ref['files']) and
+          all((checkpoint / name).is_file() and not (checkpoint / name).is_symlink()
+              for name in checkpoint_ref['files']), 'successor parent file roster differs')
+    parent = _json_file(parent_path, parent_ref['sha256'])
+    _recipe(parent, program_sha256=recipe['program_sha256'],
+        admission_sha256=recipe['admission_sha256'], feature_roster_sha256=recipe['feature_roster_sha256'],
+        seed_manifest_sha256=recipe['seed_manifest_sha256'],
+        prepared_consumer_profile=prepared_consumer_profile,
+        successor_contract_file_sha256=(parent.get('successor_contract_file_sha256')
+            if parent.get('schema') == SUCCESSOR_RECIPE_SCHEMA else None),
+        expected_trainer_file_sha256=record['parent_trainer_file_sha256'])
+    mutable = {'schema', 'trainer_file_sha256', 'update_budget', 'checkpoint_every_updates',
+               'successor_contract_file_sha256', 'generation_policy'}
+    _need(canonical_sha256({k:v for k,v in parent.items() if k not in mutable}) ==
+          canonical_sha256({k:v for k,v in recipe.items() if k not in mutable}) and
+          recipe['accumulation_cases'] == len(recipe['case_order']),
+          'successor must preserve the complete parent objective/optimizer/material schedule')
+    successor = {'record': record, 'file_sha256': expected_file_sha256,
+        'path': Path(path), 'checkpoint': checkpoint, 'parent_recipe': parent}
+    _bracket_successor(successor)
+    metadata = _json_file(checkpoint / 'checkpoint.json', checkpoint_ref['files']['checkpoint.json'])
+    _need(metadata.get('schema') == CHECKPOINT_SCHEMA and
+          (metadata['recipe_sha256'], metadata['program_sha256'],
+           metadata['admission_sha256'], metadata['feature_roster_sha256']) ==
+              (parent_ref['sha256'], recipe['program_sha256'],
+               recipe['admission_sha256'], recipe['feature_roster_sha256']) and
+          metadata['case_order_sha256'] == canonical_sha256(recipe['case_order']) and
+          metadata['weight_file_sha256'] == checkpoint_ref['files']['weights.safetensors'] and
+          metadata['trainer_file_sha256'] == checkpoint_ref['files']['trainer.pt'] and
+          type(record['parent_update_index']) is int and
+          record['parent_update_index'] == metadata['update_index'] == parent['update_budget'] and
+          type(record['parent_consumed_cases']) is int and
+          record['parent_consumed_cases'] == metadata['consumed_cases'] ==
+              record['parent_update_index'] * recipe['accumulation_cases'] and
+          metadata['next_case_index'] == 0 and
+          recipe['update_budget'] > record['parent_update_index'] and
+          canonical_sha256(metadata['history']) == record['parent_history_sha256'] and
+          len(metadata['history']) == record['parent_update_index'],
+          'successor exhausted parent cursor/history differs')
+    assessment = record['assessment']
+    _need(type(assessment) is dict and set(assessment) == {'policy', 'case_order_sha256',
+          'feature_roster_sha256', 'seed_manifest_sha256', 'interface_pins_sha256', 'max_new_tokens'} and
+          assessment['policy'] == 'separate-immutable-all-case-native-v1' and
+          assessment['case_order_sha256'] == canonical_sha256(recipe['case_order']) and
+          assessment['feature_roster_sha256'] == recipe['feature_roster_sha256'] and
+          assessment['seed_manifest_sha256'] == recipe['seed_manifest_sha256'] and
+          type(assessment['max_new_tokens']) is int and
+          assessment['max_new_tokens'] == recipe['generation_max_new_tokens'],
+          'successor immutable complete native assessment requirement differs')
+    require_sha256(assessment['interface_pins_sha256'], 'assessment native interfaces')
+    successor['metadata'] = metadata
+    return successor
+
+
+def _restore_successor(successor, *, model, optimizer, recipe, recipe_sha256,
+                       output, resume_checkpoint=None, resume_checkpoint_file_sha256=None):
+    """Validate the parent prefix before invoking the unchanged strict restorer."""
+    _bracket_successor(successor)
+    output = Path(output).resolve(strict=False)
+    if resume_checkpoint is None:
+        _need(not output.exists() and resume_checkpoint_file_sha256 is None,
+              'new successor output must be absent')
+        checkpoint = successor['checkpoint']
+        expected = successor['record']['parent_checkpoint']['files']['checkpoint.json']
+        restore_recipe = successor['record']['parent_recipe']['sha256']
+        metadata = successor['metadata']
+    else:
+        checkpoint = Path(resume_checkpoint).resolve(strict=True)
+        _need(output.is_dir() and checkpoint.parent == output,
+              'successor restart checkpoint must be inside its output')
+        expected = resume_checkpoint_file_sha256
+        metadata = _json_file(checkpoint / 'checkpoint.json', expected)
+        restore_recipe = recipe_sha256
+    prefix = successor['record']['parent_update_index']
+    _need(type(metadata.get('history')) is list and
+          canonical_sha256(metadata['history'][:prefix]) == successor['record']['parent_history_sha256'],
+          'successor parent history prefix differs')
+    _need(type(metadata.get('update_index')) is int and
+          prefix <= metadata['update_index'] < recipe['update_budget'],
+          'successor restart has no remaining owned updates')
+    return _restore_checkpoint(checkpoint, model=model, optimizer=optimizer,
+        recipe_sha256=restore_recipe, program_sha256=recipe['program_sha256'],
+        admission_sha256=recipe['admission_sha256'], feature_roster_sha256=recipe['feature_roster_sha256'],
+        expected_checkpoint_file_sha256=expected, case_order=recipe['case_order'],
+        accumulation_cases=recipe['accumulation_cases'])
+
+
+def _builtin_generation_required(successor):
+    return successor is None
+
+
+def _restore_fit_checkpoint(*, model, optimizer, recipe, recipe_sha256, output,
+                            resume_checkpoint=None, resume_checkpoint_file_sha256=None,
+                            successor=None):
+    if successor is not None:
+        return _restore_successor(successor, model=model, optimizer=optimizer,
+            recipe=recipe, recipe_sha256=recipe_sha256, output=output,
+            resume_checkpoint=resume_checkpoint,
+            resume_checkpoint_file_sha256=resume_checkpoint_file_sha256)
+    checkpoint = Path(resume_checkpoint).resolve(strict=True)
+    _need(checkpoint.parent == output and output.is_dir(),
+          'restart checkpoint must be inside this fit output')
+    state = _restore_checkpoint(checkpoint, model=model,
+        optimizer=optimizer, recipe_sha256=recipe_sha256,
+        program_sha256=recipe['program_sha256'],
+        admission_sha256=recipe['admission_sha256'],
+        feature_roster_sha256=recipe['feature_roster_sha256'],
+        expected_checkpoint_file_sha256=resume_checkpoint_file_sha256,
+        case_order=recipe['case_order'],
+        accumulation_cases=recipe['accumulation_cases'])
+    _need(state['update_index'] < recipe['update_budget'],
+          'restart has no remaining owned updates')
+    return state
+
+
+def _checkpoint_due(update_index, recipe, successor):
+    origin = 0 if successor is None else successor['record']['parent_update_index']
+    return ((update_index - origin) % recipe['checkpoint_every_updates'] == 0 or
+            update_index == recipe['update_budget'])
+
+
+def _deferred_assessment(output, *, successor, recipe_sha256, component_paths):
+    record = {'schema': 'mfm-native-joint-separate-assessment-pending-v1',
+        'fit_completed': True, 'assessment_completed': False,
+        'builtin_generation_performed': False, 'qualification': 'none',
+        'successor_contract_file_sha256': successor['file_sha256'],
+        'parent_checkpoint_file_sha256': successor['record']['parent_checkpoint']['files']['checkpoint.json'],
+        'recipe_file_sha256': recipe_sha256,
+        'components': {Path(p).name: _file_sha256(p) for p in component_paths},
+        'requirement': deepcopy(successor['record']['assessment'])}
+    record['record_sha256'] = canonical_sha256(record)
+    with (Path(output) / 'assessment-pending.json').open('xb') as stream:
+        stream.write(canonical_json_bytes(record))
+    return record
 
 
 def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
@@ -1514,7 +1718,9 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
                            seed_source_pins, recipe_path, recipe_file_sha256,
                            output_dir, resume_checkpoint=None,
                            resume_checkpoint_file_sha256=None,
-                           prepared_consumer_profile=None):
+                           prepared_consumer_profile=None,
+                           successor_contract_path=None,
+                           successor_contract_file_sha256=None):
     """Fit the new joint stage from exact original FileRefs and frozen source.
 
     No candidate is qualified here. Paired construction records never grant
@@ -1630,11 +1836,21 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
                   for item in train_rows),
               'J6 requires exact admitted v3 model-author train originals')
     recipe = _json_file(recipe_path, recipe_file_sha256)
+    _need((successor_contract_path is None) ==
+          (successor_contract_file_sha256 is None),
+          'successor contract path and external FILE pin are required together')
     _recipe(recipe, program_sha256=program_file_sha256,
             admission_sha256=admission_manifest_sha256,
             feature_roster_sha256=feature_roster_sha256,
             seed_manifest_sha256=seed_manifest_sha256,
-            prepared_consumer_profile=prepared_consumer_profile)
+            prepared_consumer_profile=prepared_consumer_profile,
+            successor_contract_file_sha256=successor_contract_file_sha256)
+    successor = (None if successor_contract_path is None else _successor_contract(
+        successor_contract_path, successor_contract_file_sha256, recipe=recipe,
+        output=output, prepared_consumer_profile=prepared_consumer_profile))
+    if successor is not None and resume_checkpoint is None:
+        _need(not output.exists() and resume_checkpoint_file_sha256 is None,
+              'new successor output must be absent')
     _need(recipe['case_order'] == [row['case_id'] for row in program['cases']],
           'actual case order differs from immutable fit recipe')
     # Corpus authority precedes processor and any feature tensor/model load.
@@ -1675,6 +1891,10 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
     processor = AutoProcessor.from_pretrained(str(prepared),
         local_files_only=True, trust_remote_code=False)
     active_interfaces = joint_source._interface_pins()
+    if successor is not None:
+        _need(canonical_sha256(active_interfaces) ==
+              successor['record']['assessment']['interface_pins_sha256'],
+              'successor assessment native interface closure differs')
     feature_exporter_sha256 = _file_sha256(features.__file__)
     cases = []
     j6_materials = []
@@ -1795,23 +2015,27 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
     history = []
     start_update = 0
     consumed_cases = 0
-    if resume_checkpoint is not None:
-        checkpoint = Path(resume_checkpoint).resolve(strict=True)
-        _need(checkpoint.parent == output and output.is_dir(),
-              'restart checkpoint must be inside this fit output')
-        state = _restore_checkpoint(checkpoint, model=model,
-            optimizer=optimizer, recipe_sha256=recipe_file_sha256,
-            program_sha256=program_file_sha256,
-            admission_sha256=admission_manifest_sha256,
-            feature_roster_sha256=feature_roster_sha256,
-            expected_checkpoint_file_sha256=resume_checkpoint_file_sha256,
-            case_order=recipe['case_order'],
-            accumulation_cases=recipe['accumulation_cases'])
+    if successor is not None or resume_checkpoint is not None:
+        state = _restore_fit_checkpoint(model=model, optimizer=optimizer,
+            recipe=recipe, recipe_sha256=recipe_file_sha256, output=output,
+            resume_checkpoint=resume_checkpoint,
+            resume_checkpoint_file_sha256=resume_checkpoint_file_sha256,
+            successor=successor)
         start_update = state['update_index']
         consumed_cases = state['consumed_cases']
         history = deepcopy(state['history'])
-        _need(start_update < recipe['update_budget'],
-              'restart has no remaining owned updates')
+        if successor is not None and resume_checkpoint is None:
+            output.mkdir()
+            semantics = {'schema': 'mfm-native-joint-successor-observation-semantics-v1',
+                'successor_contract_file_sha256': successor_contract_file_sha256,
+                'recipe_file_sha256': recipe_file_sha256,
+                'parent_history_sha256': successor['record']['parent_history_sha256'],
+                'loss_measurement_phase': 'pre-update',
+                'meaning': 'Each case loss precedes its enclosing completed Adam update; history prefix is unchanged.',
+                'separate_native_assessment_required': True}
+            semantics['record_sha256'] = canonical_sha256(semantics)
+            with (output / 'training-observation-semantics.json').open('xb') as stream:
+                stream.write(canonical_json_bytes(semantics))
     else:
         _need(resume_checkpoint_file_sha256 is None and not output.exists(),
               'new fit output must be absent and not claim restart')
@@ -1828,8 +2052,7 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
             'next_case_index': consumed_cases % len(cases),
             'completed_passes': consumed_cases // len(cases),
             'cases': observations})
-        if (update_index % recipe['checkpoint_every_updates'] == 0 or
-                update_index == recipe['update_budget']):
+        if _checkpoint_due(update_index, recipe, successor):
             _save_checkpoint(output / f'checkpoint-update-{update_index:06d}',
                 model=model, optimizer=optimizer, update_index=update_index,
                 consumed_cases=consumed_cases, case_order=recipe['case_order'],
@@ -1838,6 +2061,10 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
                 admission_sha256=admission_manifest_sha256,
                 feature_roster_sha256=feature_roster_sha256,
                 history=history)
+    if successor is not None:
+        _bracket_successor(successor)
+        _need(_file_sha256(recipe_path) == recipe_file_sha256,
+              'successor child recipe changed during owned fit')
     _verified_fit_prepared(first, receipt_path, prepared,
         prepared_receipt_file_sha256, prepared_receipt_sha256,
         parent_source_receipt_sha256, roster=roster, recipe=recipe,
@@ -1921,6 +2148,20 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
         'native_joint_trainer_runtime': deepcopy(recipe['runtime']),
         'native_joint_private_original_modules':
             deepcopy(program.get('private_original_modules', {}))}
+    if successor is not None:
+        lineage = {'contract_file_sha256': successor_contract_file_sha256,
+            'contract_record_sha256': successor['record']['record_sha256'],
+            'parent_recipe_file_sha256': successor['record']['parent_recipe']['sha256'],
+            'parent_trainer_file_sha256': successor['record']['parent_trainer_file_sha256'],
+            'parent_checkpoint_files': deepcopy(successor['record']['parent_checkpoint']['files']),
+            'parent_update_index': successor['record']['parent_update_index'],
+            'additional_completed_updates': recipe['update_budget'] - successor['record']['parent_update_index'],
+            'parent_history_sha256': successor['record']['parent_history_sha256'],
+            'loss_measurement_phase': 'pre-update',
+            'generation_policy': recipe['generation_policy'],
+            'required_assessment': deepcopy(successor['record']['assessment'])}
+        provenance['successor'] = lineage
+        trained_source_pins['native_joint_successor'] = deepcopy(lineage)
     if consumer_metadata is not None:
         custody = _bind_processor_custody(consumer_metadata, processor)
         provenance['processor_custody'] = custody
@@ -1941,6 +2182,13 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
         expected_provenance_sha256=canonical_sha256(provenance),
         expected_source_pins=trained_source_pins,
         expected_evidence_scope='unqualified_training')
+    if not _builtin_generation_required(successor):
+        pending = _deferred_assessment(output, successor=successor,
+            recipe_sha256=recipe_file_sha256, component_paths=component_paths)
+        return {'component_paths': tuple(str(path) for path in component_paths),
+                'history': history, 'admission_audit': audit,
+                'corpus_id': admission.corpus_id, 'generated_consumer': None,
+                'assessment_pending': pending, 'evidence_scope': 'unqualified_training'}
     first_case = cases[0]
     first_lower = first_case['joined']['lowered']
     reloaded.to(device).eval()

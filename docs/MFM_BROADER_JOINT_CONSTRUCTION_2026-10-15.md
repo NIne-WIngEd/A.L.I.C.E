@@ -1,18 +1,39 @@
 # Broader chronological formation construction
 
+[TRACE155](receipts/MFM_LEARNING_DIAGNOSIS_AND_FORMATION_CONTINUATION_20261020_TRACE155_PUBLIC.json)
+records the completed diagnostic and verified Drive archive, the implemented
+optimizer-preserving successor, five focused native controls, the actual small
+fit through export/reload and seven cold-package negative controls. One private
+offline continuation has been submitted and read back as RUNNING with its exact
+source and inputs. Its planned eight additional complete-nine updates, full-size
+checkpoint restore and later all-nine native assessment remain unverified.
+
 [TRACE154](receipts/MFM_COMPLETE_ASSESSMENT_AND_LEARNING_DIAGNOSIS_20261020_TRACE154_PUBLIC.json) records the completed matched assessment and verified checkpoint custody. Both the seed and joint update2 fail complete-decision alignment on all nine original cases. No native grounded proposals were produced, and reference/copy prediction was never reached.
+
+The subsequent numerical diagnostic completed all 27 case measurements and
+54 matched-prefix comparisons. The correct early formation token gains
+probability on all nine cases after each update but still loses to the inherited
+task token. This supports unfinished task transfer, not a measured disagreement
+between the training and native generation paths. The next construction continues
+from update2 through a separately sealed parent/optimizer contract, preserving
+the exhausted parent recipe. Eight additional complete-nine updates are selected
+for this block, with two saved checkpoints and a final strict component reload.
+Unchanged all-nine native generation remains a separately required assessment;
+no model qualification follows from numerical parity or a checkpoint export.
 
 The two-update construction recorded in TRACE152 has now completed. Both updates
 visited all nine complete cases, all 138 Adam counters advanced from one to two,
 and the final exported component passed its strict native reload. Equal-case mean
 lexical/reference/copy losses fell from 16.2263/1.8523/13.3431 to
-12.2396/1.7018/9.4981. These are teacher-fit observations, not a formation pass.
+12.2396/1.7018/9.4981 **before** updates one and two respectively. The later
+diagnostic measures final update2 at 12.0091/3.3876/7.1688: reference loss has
+regressed on seven of eight reference-supervised cases. These are teacher-fit
+observations, not a formation pass or proof of gradient conflict.
 The built-in first generation emitted only a `value_text` object and failed the
 complete decision contract before reference/copy prediction. The original result
 is preserved; the complete matched observation confirms the same failure class
 in all eighteen results. [Ordered diagnosis](MFM_JOINT_GENERATION_DIAGNOSIS_2026-10-19.md)
-now compares original gold-token behavior across seed, checkpoint1 and update2
-and checks teacher/incremental agreement before further construction.
+records the completed three-state comparison and the evidence-led continuation.
 
 The earlier receipt paragraphs below preserve their historical observations.
 Their pending statuses are superseded by the current completed-state account above.
@@ -125,13 +146,14 @@ peak allocations were 9,392,367,616 and 11,621,595,136 bytes. These include boun
 operator observation, exclude checkpoint/export/generation, and do not establish
 future throughput. Both updates observed the efficient attention operator.
 The complete matched assessment preserves every raw native result and confirms
-an early lexical departure before reference/copy prediction. It does not yet
-identify a numerical cause. Compare original full teacher losses and matched
-gold-prefix logits across all three saved states before selecting further
-teaching or architectural work. Checkpoint 1 may
-continue to update 2 under this immutable recipe; exhausted checkpoint 2 cannot be
-extended by changing its budget. Choose any longer fit or continuation contract from
-the actual evidence.
+an early lexical departure before reference/copy prediction. The subsequent
+three-state numerical diagnostic supports unfinished formation-task transfer:
+all measured training/native prefix paths agree and gold probability improves,
+but the old task remains the greedy winner. The next explicit successor preserves
+checkpoint2 weights, moments, counters, RNG and cumulative history under a new
+recipe with a finite additional budget. Ordinary resume of the exhausted recipe
+still refuses. All three objectives and complete native generation must be
+observed; neither lower aggregate loss nor an output-shape repair establishes fit.
 Training fit and deterministic development remain separate from independent
 evidence. Do not replay S5 or adopt block encoding, offload or a new attention
 backend merely because a complete source is longer.

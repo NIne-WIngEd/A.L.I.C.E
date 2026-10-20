@@ -1,5 +1,98 @@
 # Completed joint construction and generated formation
 
+## Completed numerical diagnosis and construction decision — 2026-10-20
+
+[TRACE155](receipts/MFM_LEARNING_DIAGNOSIS_AND_FORMATION_CONTINUATION_20261020_TRACE155_PUBLIC.json)
+binds the result, archived originals and reviewed successor dispatch. Five focused
+native controls pass, including exact optimizer continuation and an exhausted v3
+parent reused by a later stage. A separate actual small-model fit exercises strict
+restore, updates, export and reload before the sealed assessment-pending return;
+its authority/source/mount boundaries are explicit fixtures. Cold delivery checks
+preserve all 104 interfaces and exercise seven refusal controls. Production
+source/input readback reports RUNNING; full-size runtime behavior, completed new
+updates and generated formation remain pending.
+
+The fixed three-state diagnostic completed with exit 0 in 2,181.555 seconds.
+All 27 case records and all 54 matched-prefix comparisons passed the declared
+absolute/relative tolerance of 1e-4; the largest absolute logit difference was
+3.695488e-5. The original eighteen first greedy choices were reproduced. These
+results support the following ordered diagnosis; the earlier assessment and
+its original failing outputs remain preserved below.
+
+1. **Validate the evidence.** The diagnostic uses the actual full mixed labels,
+   unchanged native decoder/objectives and all nine complete sources at seed,
+   checkpoint1 and update2. It checks the complete teacher path against the
+   shorter native path at the same supplied prefix, with source/model/RNG/mode
+   brackets. This is a measurement intervention, not repaired generation.
+   Checkpoint1 still has no observed native generated output.
+2. **Connect it to the goal.** MFM must produce complete source-grounded formation
+   proposals before its reference/copy producers and independent memory gates can
+   do their jobs. A successful numerical diagnostic is not successful formation.
+3. **Trace the architecture.** The S5-derived lexical producer starts with a
+   strongly learned previous task. Two complete-nine joint updates train its new
+   complete decision wire alongside new reference and whole-copy heads. Complete
+   labels, causal masking and matched-prefix execution are consistent with the
+   intended training/consumer path at the measured points.
+4. **Locate the departure.** At query index 1, gold token 2763 gains probability
+   on every case after each update, but token 2394 remains the winner at all three
+   states. Equal-case mean gold log probability improves from -19.6576 to -18.3004
+   to -17.5039, while its mean margin to the best other token remains -17.5008 at
+   update2. The supported proximate cause is unfinished transfer to the formation
+   task, with the inherited task still dominant at the first structural choice.
+   The evidence does not prove that further training alone will finish it, that
+   model capacity is sufficient, or that source conditioning is faithful.
+5. **Understand the failed piece.** Equal-case lexical losses are
+   16.2263 → 12.2396 → 12.0091; reference losses are
+   1.8523 → 1.7018 → 3.3876; whole-copy losses are
+   13.3431 → 9.4981 → 7.1688. The initial training report recorded losses
+   **before** each update: its second row describes checkpoint1, not update2.
+   Reference loss worsens after the second update on seven of eight cases with
+   reference supervision; the remaining case has no reference requests. Scalar
+   loss regression alone does not establish conflicting gradient directions.
+6. **Choose a coherent correction.** Continue the owned formation learner from
+   checkpoint2 through an explicit successor contract. Preserve weights, all Adam
+   moments and counters, parameter order, RNG and complete cumulative history.
+   Seal the parent recipe/checkpoint separately from the new recipe; ordinary
+   resume must still reject an exhausted recipe. Keep sources, full targets,
+   objective weights, case masses, architecture and native consumer unchanged.
+7. **Consult applicable mechanisms.** The pinned
+   [PyTorch 2.11 optimizer implementation](https://github.com/pytorch/pytorch/blob/v2.11.0/torch/optim/optimizer.py)
+   matches optimizer state to current parameters by order without independently
+   verifying their identity. The existing strict parameter-order and moment
+   checks therefore remain necessary. The current frontier-watch intake preserves
+   future multimodal/task-source binding and governed memory requirements; it
+   supplies no reason to replace this decoder. Gradient surgery and scheduled
+   sampling remain unadopted: these measurements do not establish their assumed
+   failure mechanisms.
+8. **Verify and return to the full build.** Test exact tiny-model continuation
+   against an uninterrupted control, parent tampering, exhausted ordinary resume,
+   child resume and assessment deferral. Validate the actual packaged trainer
+   entry before dispatch. Production continuation must preserve the original
+   sources and all three loss observations, export resumable checkpoints, and
+   reload the final component. A separate unchanged all-nine native assessment
+   must observe complete generated behavior before any fit claim. If results
+   contradict this diagnosis, revisit the responsible mechanism rather than
+   stacking a new optimization trick.
+
+The selected next construction block contains eight additional complete-nine
+updates (absolute updates 3–10), with checkpoints after four and eight additional
+updates. This retains the measured two-checkpoint/final-component output geometry.
+At the observed approximately 23.5 minutes per update it forecasts about 3.1 hours
+of update work, excluding admission/export; this is a scheduling estimate, not a
+timeout or a claim that ten updates finish learning. Save and reload the trained
+component before the separately required all-nine native assessment. Its original
+8,192-token budget remains unchanged; variable generation time must not prevent
+durable training outputs. Qualification stays pending until actual behavior is
+observed, including reference/copy selection and complete consumer acceptance.
+
+This is a construction block within the full build, not its completion. Fit to
+one connected teaching family must precede broader authorized formation material,
+distinct development families, native-media formation and the accepted-memory →
+judgment/action → outcome → governed-revision loop. S5 remains preserved and the
+full-system stress draft stays parked.
+
+## Preserved assessment and initial diagnostic plan
+
 The owned lexical/reference/whole-copy construction completed both planned
 nine-case updates, exported both checkpoints and strictly reloaded the final
 component. All 138 Adam counters advanced from one to two. Those construction

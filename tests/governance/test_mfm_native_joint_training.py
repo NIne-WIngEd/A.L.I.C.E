@@ -736,6 +736,214 @@ class JointOwnedUpdateTests(unittest.TestCase):
                 torch.testing.assert_close(value, original[name], atol=0, rtol=0)
 
 
+class JointSuccessorTests(unittest.TestCase):
+    _fixtures = joint_fixture.JointLearningTests._fixtures
+    setUpClass = classmethod(joint_fixture.JointLearningTests.setUpClass.__func__)
+    setUp = joint_fixture.JointLearningTests.setUp
+    packet = joint_fixture.JointLearningTests.packet
+    record = joint_fixture.JointLearningTests.record
+
+    def successor(self, root):
+        from scripts.mfm import train_native_joint_formation as fit
+        self.assertTrue(callable(getattr(fit, '_successor_contract', None)),
+                        'missing explicit successor contract boundary')
+        packet = self.packet()
+        lower = {key: packet[key] for key in ('alignment', 'inventory', 'decision',
+            'target_view', 'authored_ordinals', 'authored_copy_tuples')}
+        lower.update(case_id='fixture-one', world_sha256='a'*64,
+            cut_sha256='b'*64, variant_key='authored-one')
+        rows = [{'joined': {'lowered': lower, 'source_states': packet['base_states'],
+                             'source_mask': packet['source_mask']}}]
+        parent = dict(schema=fit.RECIPE_SCHEMA, program_sha256='1'*64,
+            admission_sha256='2'*64, feature_roster_sha256='3'*64,
+            seed_manifest_sha256='4'*64, case_order=['fixture-one'], update_budget=2,
+            accumulation_cases=1, learning_rate=1e-3, weight_decay=0,
+            adam_betas=[0.9, 0.999], adam_eps=1e-8, device='cpu', seed=53,
+            checkpoint_every_updates=1, precision='owned-fp32-source-bf16',
+            term_weights={'lexical':1, 'reference':1, 'copy':1},
+            mass_policy='equal-world-equal-cut-equal-variant',
+            update_policy='frozen-order-case-window-admitted-mass',
+            runtime={'torch_version':torch.__version__, 'transformers_version':fit.version('transformers')},
+            trainer_file_sha256='9'*64,
+            generation_max_new_tokens=self.model.config.max_target_tokens)
+        parent_root=root/'parent';parent_root.mkdir()
+        parent_recipe=parent_root/'recipe.json';parent_recipe.write_bytes(canonical_json_bytes(parent))
+        optimizer=torch.optim.AdamW(self.model.parameters(),lr=1e-3,weight_decay=0,
+                                    betas=(0.9,0.999),eps=1e-8)
+        history=[]
+        for index in (1,2):
+            observations=fit._fit_update(self.model,self.processor,rows,rows,optimizer,device=torch.device('cpu'))
+            history.append({'update_index':index,'next_case_index':0,'completed_passes':index,'cases':observations})
+        checkpoint=parent_root/'checkpoint-2'
+        pins=dict(recipe_sha256=sha256(parent_recipe.read_bytes()).hexdigest(),
+            program_sha256=parent['program_sha256'],admission_sha256=parent['admission_sha256'],
+            feature_roster_sha256=parent['feature_roster_sha256'])
+        fit._save_checkpoint(checkpoint,model=self.model,optimizer=optimizer,update_index=2,
+            consumed_cases=2,case_order=parent['case_order'],history=history,**pins)
+        files={name:sha256((checkpoint/name).read_bytes()).hexdigest()
+               for name in ('checkpoint.json','weights.safetensors','trainer.pt')}
+        contract={'schema':'mfm-native-joint-successor-contract-v1',
+            'parent_recipe':{'path':str(parent_recipe),'sha256':pins['recipe_sha256']},
+            'parent_checkpoint':{'path':str(checkpoint),'files':files},
+            'parent_trainer_file_sha256':parent['trainer_file_sha256'],
+            'parent_update_index':2,'parent_consumed_cases':2,
+            'parent_history_sha256':canonical_sha256(history),
+            'assessment':{'policy':'separate-immutable-all-case-native-v1',
+                'case_order_sha256':canonical_sha256(parent['case_order']),
+                'feature_roster_sha256':parent['feature_roster_sha256'],
+                'seed_manifest_sha256':parent['seed_manifest_sha256'],
+                'interface_pins_sha256':'5'*64,'max_new_tokens':parent['generation_max_new_tokens']}}
+        contract['record_sha256']=canonical_sha256(contract)
+        path=root/'successor.json';path.write_bytes(canonical_json_bytes(contract))
+        child={**deepcopy(parent),'schema':'mfm-native-joint-fit-recipe-v3','update_budget':4,
+            'checkpoint_every_updates':1,'successor_contract_file_sha256':sha256(path.read_bytes()).hexdigest(),
+            'generation_policy':'defer-all-case-native-assessment-v1',
+            'trainer_file_sha256':sha256(Path(fit.__file__).read_bytes()).hexdigest()}
+        return fit,rows,optimizer,history,parent,child,path,contract
+
+    def test_successor_restores_parent_moments_rng_history_and_child_resume(self):
+        from cognitive_kernel.formation_joint_learning import FormationJointLearning
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            fit,rows,optimizer,history,parent,child,path,contract=self.successor(root)
+            self.assertNotEqual(parent['trainer_file_sha256'],child['trainer_file_sha256'])
+            child_recipe_path=root/'child-recipe.json';child_recipe_path.write_bytes(canonical_json_bytes(child))
+            child_sha=sha256(child_recipe_path.read_bytes()).hexdigest()
+            output=root/'child'
+            with patch.object(fit,'_read_only_mount',return_value=True):
+                bound=fit._successor_contract(path,child['successor_contract_file_sha256'],
+                    recipe=child,output=output,prepared_consumer_profile=None)
+            uninterrupted=fit._fit_update(self.model,self.processor,rows,rows,optimizer,device=torch.device('cpu'))
+            expected_rng=torch.random.get_rng_state().clone()
+            fresh=FormationJointLearning(self.model.config)
+            fresh_optimizer=torch.optim.AdamW(fresh.parameters(),lr=1e-3,weight_decay=0,
+                                              betas=(0.9,0.999),eps=1e-8)
+            state=fit._restore_successor(bound,model=fresh,optimizer=fresh_optimizer,
+                recipe=child,recipe_sha256=child_sha,output=output)
+            self.assertEqual(state['history'],history)
+            restarted=fit._fit_update(fresh,self.processor,rows,rows,fresh_optimizer,device=torch.device('cpu'))
+            self.assertEqual(restarted,uninterrupted)
+            self.assertTrue(torch.equal(expected_rng,torch.random.get_rng_state()))
+            for name,value in self.model.state_dict().items():
+                torch.testing.assert_close(value,fresh.state_dict()[name],atol=0,rtol=0)
+            original_state=optimizer.state_dict();restored_state=fresh_optimizer.state_dict()
+            self.assertEqual(original_state['param_groups'],restored_state['param_groups'])
+            for index,values in original_state['state'].items():
+                for name,value in values.items():
+                    torch.testing.assert_close(value,restored_state['state'][index][name],atol=0,rtol=0)
+            output.mkdir();child_history=history+[{'update_index':3,'next_case_index':0,
+                'completed_passes':3,'cases':restarted}]
+            cp=output/'checkpoint-update-000003'
+            fit._save_checkpoint(cp,model=fresh,optimizer=fresh_optimizer,update_index=3,consumed_cases=3,
+                case_order=child['case_order'],history=child_history,recipe_sha256=child_sha,
+                program_sha256=child['program_sha256'],admission_sha256=child['admission_sha256'],
+                feature_roster_sha256=child['feature_roster_sha256'])
+            final=FormationJointLearning(self.model.config)
+            final_optimizer=torch.optim.AdamW(final.parameters(),lr=1e-3,weight_decay=0,
+                                              betas=(0.9,0.999),eps=1e-8)
+            restored=fit._restore_successor(bound,model=final,optimizer=final_optimizer,
+                recipe=child,recipe_sha256=child_sha,output=output,resume_checkpoint=cp,
+                resume_checkpoint_file_sha256=sha256((cp/'checkpoint.json').read_bytes()).hexdigest())
+            self.assertEqual(restored['history'],child_history)
+            for name,value in fresh.state_dict().items():
+                torch.testing.assert_close(value,final.state_dict()[name],atol=0,rtol=0)
+            # Resealing a child history cannot rewrite the immutable parent prefix.
+            changed=json.loads((cp/'checkpoint.json').read_bytes());changed['history'][0]['cases'][0]['lexical_loss']+=1
+            (cp/'checkpoint.json').write_bytes(canonical_json_bytes(changed))
+            with patch.object(final,'load_state_dict') as model_load,patch.object(final_optimizer,'load_state_dict') as optimizer_load:
+                with self.assertRaisesRegex(ValueError,'parent history prefix'):
+                    fit._restore_successor(bound,model=final,optimizer=final_optimizer,recipe=child,
+                        recipe_sha256=child_sha,output=output,resume_checkpoint=cp,
+                        resume_checkpoint_file_sha256=sha256((cp/'checkpoint.json').read_bytes()).hexdigest())
+                model_load.assert_not_called();optimizer_load.assert_not_called()
+            # An exhausted v3 stage is a valid immutable direct parent for the
+            # following stage; earlier ancestry stays linked through its recipe.
+            fourth=fit._fit_update(fresh,self.processor,rows,rows,fresh_optimizer,device=torch.device('cpu'))
+            complete_history=child_history+[{'update_index':4,'next_case_index':0,
+                'completed_passes':4,'cases':fourth}]
+            cp4=output/'checkpoint-update-000004'
+            fit._save_checkpoint(cp4,model=fresh,optimizer=fresh_optimizer,update_index=4,consumed_cases=4,
+                case_order=child['case_order'],history=complete_history,recipe_sha256=child_sha,
+                program_sha256=child['program_sha256'],admission_sha256=child['admission_sha256'],
+                feature_roster_sha256=child['feature_roster_sha256'])
+            next_contract={**deepcopy(contract),
+                'parent_recipe':{'path':str(child_recipe_path),'sha256':child_sha},
+                'parent_checkpoint':{'path':str(cp4),'files':{name:sha256((cp4/name).read_bytes()).hexdigest()
+                    for name in ('checkpoint.json','weights.safetensors','trainer.pt')}},
+                'parent_trainer_file_sha256':child['trainer_file_sha256'],
+                'parent_update_index':4,'parent_consumed_cases':4,
+                'parent_history_sha256':canonical_sha256(complete_history)}
+            next_contract['record_sha256']=canonical_sha256({k:v for k,v in next_contract.items() if k!='record_sha256'})
+            next_path=root/'next-contract.json';next_path.write_bytes(canonical_json_bytes(next_contract))
+            next_recipe={**deepcopy(child),'update_budget':6,
+                'successor_contract_file_sha256':sha256(next_path.read_bytes()).hexdigest()}
+            with patch.object(fit,'_read_only_mount',return_value=True):
+                next_parent=fit._successor_contract(next_path,next_recipe['successor_contract_file_sha256'],
+                    recipe=next_recipe,output=root/'next',prepared_consumer_profile=None)
+            self.assertEqual(next_parent['metadata']['history'],complete_history)
+
+    def test_successor_contract_requires_explicit_recipe_parent_files_and_readonly(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            fit,rows,optimizer,history,parent,child,path,contract=self.successor(root)
+            kwargs=dict(program_sha256=child['program_sha256'],admission_sha256=child['admission_sha256'],
+                feature_roster_sha256=child['feature_roster_sha256'],seed_manifest_sha256=child['seed_manifest_sha256'])
+            with self.assertRaises(ValueError):fit._recipe(child,**kwargs)
+            fit._recipe(child,successor_contract_file_sha256=child['successor_contract_file_sha256'],**kwargs)
+            with patch.object(fit,'_read_only_mount',return_value=False):
+                with self.assertRaisesRegex(ValueError,'read-only'):
+                    fit._successor_contract(path,child['successor_contract_file_sha256'],recipe=child,
+                        output=root/'child',prepared_consumer_profile=None)
+            checkpoint=Path(contract['parent_checkpoint']['path'])
+            with (checkpoint/'trainer.pt').open('ab') as stream:stream.write(b'changed')
+            with patch.object(fit,'_read_only_mount',return_value=True),patch.object(torch,'load') as load:
+                with self.assertRaisesRegex(ValueError,'parent checkpoint FILE'):
+                    fit._successor_contract(path,child['successor_contract_file_sha256'],recipe=child,
+                        output=root/'child',prepared_consumer_profile=None)
+                load.assert_not_called()
+
+    def test_successor_deferred_assessment_is_sealed_and_default_policy_unchanged(self):
+        from scripts.mfm import train_native_joint_formation as fit
+        self.assertTrue(callable(getattr(fit,'_deferred_assessment',None)),
+                        'missing explicit separate assessment receipt')
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            artifacts=[]
+            for name in ('component.safetensors','config.json','component.json'):
+                p=root/name;p.write_bytes(b'tiny-physical-reloaded-component-fixture');artifacts.append(p)
+            contract={'record':{'assessment':{'policy':'separate-immutable-all-case-native-v1'},
+                'parent_checkpoint':{'files':{'checkpoint.json':'2'*64}}},'file_sha256':'1'*64}
+            with patch.object(self.model,'generate_original_copy_decision',side_effect=AssertionError('deferred generation ran')):
+                pending=fit._deferred_assessment(root,successor=contract,recipe_sha256='3'*64,
+                    component_paths=artifacts)
+            self.assertFalse(pending['assessment_completed']);self.assertTrue(pending['fit_completed'])
+            self.assertFalse(pending['builtin_generation_performed'])
+            self.assertEqual(pending['record_sha256'],canonical_sha256({k:v for k,v in pending.items() if k!='record_sha256'}))
+            self.assertEqual(json.loads((root/'assessment-pending.json').read_bytes()),pending)
+            self.assertTrue(fit._builtin_generation_required(None))
+            self.assertFalse(fit._builtin_generation_required(contract))
+
+    def test_ordinary_exhausted_checkpoint_and_relative_checkpoint_cadence(self):
+        from scripts.mfm import train_native_joint_formation as fit
+        self.assertTrue(callable(getattr(fit,'_restore_fit_checkpoint',None)),
+                        'missing shared ordinary/successor restore boundary')
+        self.assertTrue(callable(getattr(fit,'_checkpoint_due',None)),
+                        'missing stage-relative checkpoint cadence')
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            fit,rows,optimizer,history,parent,child,path,contract=self.successor(root)
+            checkpoint=Path(contract['parent_checkpoint']['path'])
+            with self.assertRaisesRegex(ValueError,'restart has no remaining owned updates'):
+                fit._restore_fit_checkpoint(model=self.model,optimizer=optimizer,recipe=parent,
+                    recipe_sha256=contract['parent_recipe']['sha256'],output=checkpoint.parent,
+                    resume_checkpoint=checkpoint,resume_checkpoint_file_sha256=
+                        contract['parent_checkpoint']['files']['checkpoint.json'])
+            schedule={**child,'update_budget':10,'checkpoint_every_updates':4}
+            bound={'record':{'parent_update_index':2}}
+            self.assertEqual([i for i in range(3,11) if fit._checkpoint_due(i,schedule,bound)],[6,10])
+            self.assertEqual([i for i in range(1,11) if fit._checkpoint_due(i,schedule,None)],[4,8,10])
+
+
 class JointBoundaryTests(unittest.TestCase):
     def test_private_original_successor_modules_are_exact_physical_files(self):
         from scripts.mfm.train_native_joint_formation import _private_original_modules
