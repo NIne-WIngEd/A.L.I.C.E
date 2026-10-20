@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "16d14a47f5279a5c9088c3acc2df384d48df7aab",
+      "commit": "57119a89f7326637d98a2e91d92899515fe55386",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -40,14 +40,19 @@
           "blob_sha": "ee76d7bf78bad07e3bed869bd39e4e28507dd08b"
         },
         {
+          "path": "docs/receipts/MFM_COMPLETE_ASSESSMENT_AND_LEARNING_DIAGNOSIS_20261020_TRACE154_PUBLIC.json",
+          "purpose": "all eighteen original native outputs fail complete-decision alignment; verified checkpoint and assessment-original Drive custody; read-only three-state numerical diagnosis dispatched, full MFM unfinished",
+          "blob_sha": "498f09bf8298c04e080f99c494543c923ef904cc"
+        },
+        {
           "path": "docs/receipts/MFM_JOINT_CONSTRUCTION_AND_MATCHED_GENERATION_20261019_TRACE153_PUBLIC.json",
-          "purpose": "completed two complete-nine owned updates, preserved first generated alignment failure and matched all-nine seed/trained assessment dispatch; actual eighteen outcomes and full MFM remain pending",
+          "purpose": "historical completed two-update construction and matched assessment dispatch; actual assessment results supersede its pending snapshot in TRACE154",
           "blob_sha": "a4b8e6d67de357c372f7fb3f8f9206a5b13825ad"
         },
         {
           "path": "docs/MFM_JOINT_GENERATION_DIAGNOSIS_2026-10-19.md",
-          "purpose": "ordered diagnosis separating successful construction from invalid generation; matched unchanged-consumer observation before further fitting",
-          "blob_sha": "1c5436fd998b07dca8b3c984fee464c007a65379"
+          "purpose": "ordered diagnosis of complete matched native failure; original mixed labels, early divergence and three-state teacher/incremental comparison before further fitting",
+          "blob_sha": "b2ebbf969e464870ef81a200ba487dad894822e0"
         },
         {
           "path": "docs/receipts/MFM_FULL_ENTRY_AND_JOINT_DISPATCH_20261018_TRACE152_PUBLIC.json",
@@ -816,8 +821,8 @@
         },
         {
           "path": "docs/MFM_BROADER_JOINT_CONSTRUCTION_2026-10-15.md",
-          "purpose": "current complete-nine joint construction, preserved104-interface inherited state, completed frozen source bank and initial Kaggle dispatch; broader learning, native media and full MFM remain pending",
-          "blob_sha": "693c0d00641351119ff895217274446f2eb8fe9a"
+          "purpose": "completed two-update complete-nine construction and failed matched generation; original three-state numerical diagnosis before further learning, native media and full MFM",
+          "blob_sha": "c4d0a0df4ceeba1bd6336a1d3a5f49c2bff396ae"
         },
         {
           "path": "docs/receipts/MFM_ACTUAL_BROADER_STATE_BINDING_20261015_TRACE143_PUBLIC.json",
@@ -1693,7 +1698,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "3fd41a5b16d581954abd841e3af1aa670e208cfb",
+      "commit": "f12e664c70ebbf237aec361b886e88a4cbe518ae",
       "files": [
         {
           "path": "docs/fable-builder/FBM_ROLES_AND_OBJECTIVES.md",
@@ -1778,7 +1783,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "d883650d152888e9f21f31e82768ef2dd8c9a449"
+          "blob_sha": "ada5d6264d29583a71114cd2a5e5fd8433dee3d3"
         },
         {
           "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
@@ -1793,7 +1798,7 @@
         {
           "path": "docs/fable-builder/MFM_JOINT_LEARNING_AND_FIXED_REVIEW_CAPTURE_2026-10-13.md",
           "purpose": "complete original review/custody and actual joint objective/full-component construction with coherent canonical binding diagnosis; procedure only",
-          "blob_sha": "00bceea476a2252bfa915a6ede4d02e19758e2b7"
+          "blob_sha": "fa6b2d3748750b3e87d62787e8cb150d91bf72ad"
         }
       ]
     }
