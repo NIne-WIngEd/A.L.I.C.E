@@ -161,3 +161,36 @@ reconcile the existing object and restore it explicitly without uploading the
 tensor again. This is construction-method evidence only, with no independent
 gold, promotion or memory-write authority. The trace preserves the earlier
 105-row history.
+
+TRACE155 records the completed numerical comparison with 43 recovered files, 27 case
+measurements and 54 sampled prefix checks. Correct early-token probability
+improves on every case at each update while the inherited wrong token remains
+the winner. Sampled numerical agreement rules out that execution-path mismatch
+as the explanation for the observed departure; it does not prove that additional
+training alone suffices or that capacity, semantic teaching and grounding are
+adequate. Preserve regression in reference loss and the distinction between
+pre-update training observations and post-update diagnostic states.
+
+The reusable next construction method is explicit optimizer-preserving stage
+continuation. Bind the direct parent recipe, complete checkpoint, cursor and
+history separately from the child recipe. Retain exact parameter order, moments,
+counters and RNG; reject altered history before mutating live state. An exhausted
+ordinary recipe remains exhausted. Keep the full sources, objectives and case
+masses fixed for the current supported continuation. Save and strictly reload the
+trained component before a separately required all-case native assessment, whose
+inputs, interfaces and original token budget are bound in the continuation
+contract. Pending generation must stay visibly pending; export cannot become a
+formation pass. Finite construction blocks reflect measured compute/storage, not
+an invented convergence guarantee or an arbitrary timeout. Continue the broader
+formation build from actual outcomes, preserving native-media and full cognitive
+integration requirements and independent accepted-memory authority.
+
+The implementation preserves the original ordinary resume and generation paths.
+Five focused native controls and a separate genuine small-model full fit establish
+the continuation mechanics within explicit authority/source/mount fixtures. Seven
+cold-package refusal controls and independent source review bind delivery to the
+same trainer. Exact private source/input readback reports RUNNING, with actual
+full-size restoration, eight additional updates and native generation still
+pending. The 69-member diagnostic archive and recovery catalog have verified whole
+same-ID Drive readbacks. These records append after the unchanged 106-row history;
+none supplies independent learned gold or memory-write authority.
