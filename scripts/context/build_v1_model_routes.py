@@ -28,6 +28,8 @@ ROUTES = {
         "branch": "research/mfm-v1-licensed-base-20260930",
         "files": {
             "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md": "V1 source direction and qualification limits",
+            "docs/receipts/MFM_JOINT_CONSTRUCTION_AND_MATCHED_GENERATION_20261019_TRACE153_PUBLIC.json": "completed two complete-nine owned updates, preserved first generated alignment failure and matched all-nine seed/trained assessment dispatch; actual eighteen outcomes and full MFM remain pending",
+            "docs/MFM_JOINT_GENERATION_DIAGNOSIS_2026-10-19.md": "ordered diagnosis separating successful construction from invalid generation; matched unchanged-consumer observation before further fitting",
             "docs/receipts/MFM_FULL_ENTRY_AND_JOINT_DISPATCH_20261018_TRACE152_PUBLIC.json": "terminal successful unchanged full-nine CPU trainer admission and exact private Kaggle successor dispatch; GPU execution, joint checkpoints and learned formation remain pending",
             "docs/receipts/MFM_PACKAGE_ADMISSION_REPAIR_20261018_TRACE151_PUBLIC.json": "historical pre-update packaging failure and repaired writer, cold-consumer validation and noninterfering logs; terminal admission and successor dispatch recorded in TRACE152",
             "docs/MFM_PACKAGE_ADMISSION_DIAGNOSIS_2026-10-18.md": "ordered eight-step diagnosis of artifact serialization, a test that rewrote input, and console mirroring; exact nine-source trainer admission scope and limits",
