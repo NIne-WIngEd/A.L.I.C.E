@@ -144,3 +144,20 @@ Distinguish whole-file identity from a canonical sealed record that excludes its
 After actual admission, bind one private code creation/readback and one accepted push to the exact reviewed package. Read back source, image, input identities and exact unordered attachment membership/multiplicity; preserve strict chronological training-case order. Record RUNNING as dispatch evidence, with consumer body hashes, actual runtime, seed load and complete update checkpoints still pending. Append this method after the unchanged 103-row prefix. The two-complete-nine lexical/reference/whole-copy objective and S5 remain unchanged; this capture supplies no learning or full MFM claim.
 
 TRACE153 separates a completed owned joint construction from an invalid generated action. Verify terminal execution, all-case update order, Adam counters and checkpoint source bindings. Preserve the earliest generated failure and identify later stages that were not reached. Falling teacher losses are not generated formation. Before further fitting, compare the complete original case roster against its matched zero-joint seed through the unchanged consumer, retaining every raw output and model/source/RNG bracket. Physical admission, tiny neural controls, provider dispatch, native contract validity, semantic correctness and full-role qualification remain separate claims. Use the existing whole-file custody mechanism in parallel; keep production tensors off the PC. Preserve S5 and the exhausted recipe, and let actual complete observations determine the next construction.
+
+TRACE154 replaces the pending matched observation with its complete original
+result: both the seed and joint update2 fail complete-decision alignment on every
+case, before reference/copy prediction. Preserve all outputs and distinguish the
+independently checked metadata from GPU execution attestations. Verify the actual
+full target packet before blaming supervision. A lower aggregate teacher-forced
+loss can coexist with a wrong early greedy choice; compare seed, checkpoint1 and
+update2 using gold-token loss, first divergence, controlled prefixes and
+teacher-forced/incremental parity before changing training or architecture.
+Checkpoint1 supplies gold-prefix measurements only; it has no new native-output
+claim. Preserve source/model/RNG brackets and the exhausted recipe; numerical
+evidence must determine the next correction. In parallel, distinguish upload
+acceptance from complete same-ID restoration: retain an interrupted readback,
+reconcile the existing object and restore it explicitly without uploading the
+tensor again. This is construction-method evidence only, with no independent
+gold, promotion or memory-write authority. The trace preserves the earlier
+105-row history.
