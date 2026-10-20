@@ -1,5 +1,20 @@
 # Broader chronological formation construction
 
+[TRACE153](receipts/MFM_JOINT_CONSTRUCTION_AND_MATCHED_GENERATION_20261019_TRACE153_PUBLIC.json) records the verified completed construction and the next matched all-nine assessment dispatch. Actual eighteen generated results remain pending.
+
+The two-update construction recorded in TRACE152 has now completed. Both updates
+visited all nine complete cases, all 138 Adam counters advanced from one to two,
+and the final exported component passed its strict native reload. Equal-case mean
+lexical/reference/copy losses fell from 16.2263/1.8523/13.3431 to
+12.2396/1.7018/9.4981. These are teacher-fit observations, not a formation pass.
+The built-in first generation emitted only a `value_text` object and failed the
+complete decision contract before reference/copy prediction. The original result
+is preserved; [ordered diagnosis](MFM_JOINT_GENERATION_DIAGNOSIS_2026-10-19.md)
+defines the required matched all-nine observation before further construction.
+
+The earlier receipt paragraphs below preserve their historical observations.
+Their pending statuses are superseded by the current completed-state account above.
+
 [TRACE152](receipts/MFM_FULL_ENTRY_AND_JOINT_DISPATCH_20261018_TRACE152_PUBLIC.json) closes actual full-nine entry admission and records the resumed construction. Terminal accounting and the original operation agree on COMPLETED, exit 0:0, after 1:43:31; all 33 recovered originals were rehashed. The unchanged trainer consumed nine real source-bank joins covering 410,994 positions and reverified all 19 original bank files, totaling 3,170,947,900 bytes. All 104 interfaces and canonical seed configuration passed. The diagnostic recipe changed only runtime and device to CPU, and the trace stopped at line 1777 before model construction. It performed no seed-weight load, optimizer creation, GPU execution or learning. Original program bytes and paths, source/corpus and S5 remain preserved.
 
 The first local acceptance checker compared a whole-file digest with a sealed-record digest and falsely rejected the completed operation. Its failure and diagnosis remain preserved. The corrected checker verifies physical bytes and canonical record identity independently, including an explicit control that the two digests differ. This was an observer failure, not a Magnolia execution failure.
@@ -100,12 +115,14 @@ remains immutable.
 
 ## Remaining construction
 
-The complete target-free source bank now has durable custody and verified private
-delivery metadata. The initial two-update construction has been dispatched; require
-actual consumer whole-body and teaching admission, allocation, complete-nine backward,
-Adam, checkpoint and terminal evidence. Compare the first update with the second
-moment-bearing update using actual timings, CUDA peaks and bounded operator captures.
-Preserve original failures and all outputs if the observation is incomplete. Inspect raw
+The complete target-free source bank has durable custody and verified private
+delivery. The initial two-update construction completed actual consumer whole-body
+and teaching admission, allocation, complete-nine backward, Adam, checkpoints and
+terminal evidence. Whole-update observations were 1,407.503 and 1,412.864 seconds;
+peak allocations were 9,392,367,616 and 11,621,595,136 bytes. These include bounded
+operator observation, exclude checkpoint/export/generation, and do not establish
+future throughput. Both updates observed the efficient attention operator.
+Preserve the invalid first-case generation and all subsequent outputs. Inspect raw
 native generation across all nine complete cases before selecting further teaching or
 architectural work. The built-in first-case generation is insufficient. Checkpoint 1 may
 continue to update 2 under this immutable recipe; exhausted checkpoint 2 cannot be
