@@ -1,5 +1,19 @@
 # Broader chronological formation construction
 
+The 2026-10-21 recovery supersedes the pending continuation snapshot below:
+all eight additional complete-nine updates finished, reaching cumulative10
+updates/90 case visits, with checkpoints6/10 and a final exported component.
+The actual child exited0 after22,756.125seconds. The independent metadata/source
+audit passes197 checks; preserved history, optimizer counters and lineage agree.
+Lower pre-update losses are progress within teaching material, not generated
+formation or full MFM qualification. [TRACE156](receipts/MFM_CONTINUATION_COMPLETE_AND_NATIVE_ASSESSMENT_20261021_TRACE156_PUBLIC.json)
+records the next complete native assessment, dispatched once and read back as
+RUNNING with exact source and inputs. It generates nine fresh child outputs and
+retains nine exact parent2 observations for comparison. The48-object primary
+Drive backup includes recipe, contract and source; live transfer admission passed,
+but whole same-object restoration and catalog verification remain pending.
+The earlier TRACE155 dispatch snapshot below is historical.
+
 [TRACE155](receipts/MFM_LEARNING_DIAGNOSIS_AND_FORMATION_CONTINUATION_20261020_TRACE155_PUBLIC.json)
 records the completed diagnostic and verified Drive archive, the implemented
 optimizer-preserving successor, five focused native controls, the actual small

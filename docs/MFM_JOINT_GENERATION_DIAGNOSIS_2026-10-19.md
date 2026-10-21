@@ -1,5 +1,40 @@
 # Completed joint construction and generated formation
 
+## Completed formation continuation — 2026-10-21
+
+The reviewed successor completed all eight additional complete-nine updates,
+absolute indices 3–10, with child exit zero after 22,756.125 seconds. The original
+parent2 history, all 138 optimizer counters, checkpoints6/10, final component,
+separately pending assessment, 104 interfaces and runtime records agree in the
+197-check metadata/source audit. Tensor contents, RNG/moment restoration and
+strict final reload remain source-bound remote execution attestations; production
+tensors were not downloaded to the PC. No runtime failure calls for a training
+restart or migration to Magnolia.
+
+Recorded pre-update equal-case means changed as follows: lexical12.0091→9.5239,
+reference3.3876→1.5334, whole-copy7.1688→1.3923 and total22.5655→12.4496. Copy and
+total decline at every recorded step; lexical rises before update8, and reference
+before updates5/9. The final observation precedes update10 and therefore measures
+checkpoint9, not final checkpoint10. These are teaching-family observations,
+not evidence of generated formation fit or independent qualification.
+
+[TRACE156](receipts/MFM_CONTINUATION_COMPLETE_AND_NATIVE_ASSESSMENT_20261021_TRACE156_PUBLIC.json)
+records the completed continuation and next assessment, dispatched once and read
+back as RUNNING with its exact source and inputs. It uses the unchanged all-nine
+native consumer bound to actual child artifacts, with the original8192-token
+budget and nine retained parent2 observations distinguished from fresh generation.
+Raw proposal,
+source-reference and exact-copy behavior must be checked against authored source
+material after recovery; valid format and lower loss alone cannot establish fit.
+Full MFM, broader transfer, native media and the governed outcome loop remain
+unfinished. S5 is preserved and the full-system stress draft stays parked.
+
+The complete checkpoint/source/recipe backup has passed live owner and capacity
+admission and started through temporary Magnolia storage to primary Drive.
+Its48 unique originals,53 logical restoration paths and additional catalog still
+require complete same-object restoration verification. Admission is not durable
+custody. Earlier sections retain their historical status at the recorded date.
+
 ## Completed numerical diagnosis and construction decision — 2026-10-20
 
 [TRACE155](receipts/MFM_LEARNING_DIAGNOSIS_AND_FORMATION_CONTINUATION_20261020_TRACE155_PUBLIC.json)
