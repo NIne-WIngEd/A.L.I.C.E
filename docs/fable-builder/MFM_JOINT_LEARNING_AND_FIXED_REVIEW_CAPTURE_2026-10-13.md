@@ -1,5 +1,26 @@
 # Joint learning and complete fixed-review construction method
 
+The 2026-10-21 formation continuation completes eight further full-nine updates
+through cumulative10. Preserve the distinction between a completed outer job,
+the actual child exit, full checkpoint lineage, pre-update observations, and
+generated behavior. The197-check metadata/source audit closes the first four;
+the required native assessment remains a separate execution. Tensor contents
+and runtime restore/reload are source-bound remote attestations, not local model
+verification. An expired monitoring credential and unsupported optional output
+version label must not be diagnosed as training failures. Recovery uses the
+same account and exact-source brackets, without replaying training. Archive the
+successor recipe, contract and executed source with checkpoint tensors so a
+weight backup is not misrepresented as a complete resumable artifact.
+
+TRACE156 records the complete construction audit and the next native assessment,
+whose exact source/inputs were read back as RUNNING after one private dispatch.
+Nine fresh child outputs and nine retained parent2 observations remain distinct.
+Source, recipe and contract closure is included in the48-object/53-logical-path
+Drive transfer. Its96-check independent readiness review and live owner/capacity
+admission do not replace pending whole-object and catalog restoration verification.
+These are construction-method traces; no generated behavior pass or full-role
+qualification is inferred.
+
 TRACE128 captures the complete original S5/seed fixed observation and finite unchanged-policy interpretation: 150 calibration plus 862 audit outputs, exact physical input/line/output joins, explicitly descriptive fact/assertion decisions, exposure caveats and post-finalization condition mapping. It preserves the root's vacuous missing-pin-field receipt and replaces its overclaim with a mandatory-roster whole-custody check. Three separate original evidence bodies have complete authenticated Drive readback. No evaluator platform, independent gold, audit tuning or full-MFM pass is inferred.
 
 TRACE129 captures the actual numerical producer: one complete own-decoder hidden packet supplies lexical/reference/whole-copy-tuple objectives, explicit externally bound labels, source detach and genuine owned gradients. Whole state export/reload binds actual typed configuration, manifest/provenance, physical transitive consumer source closure and real generated compilation/grounding. Original changed-label/config/grounder failures and the follow-up same numeric-equality pattern remain before corrected refusals. Final 12 root controls and the independent original probes are mechanical evidence; existing parent controls stay separately composed.
