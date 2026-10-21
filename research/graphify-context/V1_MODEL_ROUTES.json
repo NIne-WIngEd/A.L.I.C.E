@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "a5eb0d54ad2df3ddf1d9b52233a9f45d7dc44e99",
+      "commit": "9f705e5d123560b7febde9e2e2a94e62b91abca5",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -40,8 +40,13 @@
           "blob_sha": "ee76d7bf78bad07e3bed869bd39e4e28507dd08b"
         },
         {
+          "path": "docs/receipts/MFM_CONTINUATION_COMPLETE_AND_NATIVE_ASSESSMENT_20261021_TRACE156_PUBLIC.json",
+          "purpose": "completed cumulative10 full-nine formation updates with197-check metadata audit; exact native assessment dispatched and48-object source/checkpoint Drive transfer started; behavior and durable completion pending",
+          "blob_sha": "cfd99a0bf42b2bf60c6c65477e0857f72fb539da"
+        },
+        {
           "path": "docs/receipts/MFM_LEARNING_DIAGNOSIS_AND_FORMATION_CONTINUATION_20261020_TRACE155_PUBLIC.json",
-          "purpose": "completed27case/54probe diagnosis and verified Drive originals; exact optimizer-preserving continuation reviewed and dispatched, new full-size updates and all-nine native behavior pending",
+          "purpose": "historical completed numerical diagnosis and optimizer-preserving continuation dispatch; completed training and next native assessment supersede the pending snapshot in TRACE156",
           "blob_sha": "64975a6f091d0e3c6f922bab9a93e269997d0bf8"
         },
         {
@@ -56,8 +61,8 @@
         },
         {
           "path": "docs/MFM_JOINT_GENERATION_DIAGNOSIS_2026-10-19.md",
-          "purpose": "completed27case/54probe numerical diagnosis, unfinished formation-task transfer and explicit optimizer-preserving continuation; all-nine native behavior and full MFM remain unfinished",
-          "blob_sha": "5aba9f854b0becf962a900d3cddf5dda13473b50"
+          "purpose": "completed numerical diagnosis and cumulative10 formation updates; pre-update objective trends, native assessment dispatch and remaining full MFM qualification boundaries",
+          "blob_sha": "86e0a8a6475e7c82afa23eb51089e2b2853ea6a1"
         },
         {
           "path": "docs/receipts/MFM_FULL_ENTRY_AND_JOINT_DISPATCH_20261018_TRACE152_PUBLIC.json",
@@ -826,8 +831,8 @@
         },
         {
           "path": "docs/MFM_BROADER_JOINT_CONSTRUCTION_2026-10-15.md",
-          "purpose": "completed two-update construction and numerical diagnosis; explicit full-nine optimizer-preserving formation continuation, required native assessment and remaining full-role build",
-          "blob_sha": "b856f0b441a028ced7ee2d784fb66fcf9b0ee03c"
+          "purpose": "completed cumulative10 full-nine formation updates and checkpoint audit; actual native assessment dispatched, complete source/checkpoint custody started and broader full-role build unfinished",
+          "blob_sha": "82772b18c7f65f7ddd500c89b527bcf275032344"
         },
         {
           "path": "docs/receipts/MFM_ACTUAL_BROADER_STATE_BINDING_20261015_TRACE143_PUBLIC.json",
@@ -1703,7 +1708,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "6b014168643650596d468e3d0bc8ef5d56bc4002",
+      "commit": "8bfb90506f37a1ccdfd3971e7a9b251c9081e273",
       "files": [
         {
           "path": "docs/fable-builder/FBM_ROLES_AND_OBJECTIVES.md",
@@ -1788,7 +1793,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "51b5898d81b4216f0bcb21e4c39e48b1ec8bef92"
+          "blob_sha": "4c2a4ab564a3e42cd80df347fabfa5860e93cc7f"
         },
         {
           "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
@@ -1803,7 +1808,7 @@
         {
           "path": "docs/fable-builder/MFM_JOINT_LEARNING_AND_FIXED_REVIEW_CAPTURE_2026-10-13.md",
           "purpose": "complete original review/custody and actual joint objective/full-component construction with coherent canonical binding diagnosis; procedure only",
-          "blob_sha": "5d14a6ed42a0f6351d4a5ecdaadd3fbf005c9d87"
+          "blob_sha": "9254e8411b60d3d032794cda10fc88c9f76c3261"
         }
       ]
     }
