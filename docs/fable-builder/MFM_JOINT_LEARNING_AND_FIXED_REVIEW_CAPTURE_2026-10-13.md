@@ -215,3 +215,114 @@ full-size restoration, eight additional updates and native generation still
 pending. The 69-member diagnostic archive and recovery catalog have verified whole
 same-ID Drive readbacks. These records append after the unchanged 106-row history;
 none supplies independent learned gold or memory-write authority.
+
+TRACE157 records the completed checkpoint-10 native assessment: zero of nine
+grounded decisions despite successful execution and improving teaching losses.
+Validate the original consumer failure and complete authored controls before
+attributing it to architecture. Trace actual task context, complete target
+construction, shared gradients and the saved optimizer state. A persistent greedy
+winner does not establish stagnant gold likelihood, missing conditioning or
+harmful interference.
+
+Use full-roster loss/probability and gradient attribution to resolve the next
+construction choice. Aggregate original case masses before comparing directions;
+differentiate the actual total objective independently. Include saved Adam moments
+when examining a prospective update, and compare that numerical calculation with
+an actual optimizer on a tiny real-model control in the pinned runtime. Local
+derivatives do not prove a finite update or generated formation improvement. Keep
+all sources, objectives, failures and the native consumer intact; do not repair
+only the opening token or insert the expected structure into model output.
+
+Broader fictional-source authoring may proceed independently. Distinguish a new
+world from renamed characters in a hardcoded composer, preserve event and recorded
+times and attribution, and do not call another same-generator family independent
+gold. Authored source packets remain separate from accepted corpus and learned
+capability until their actual preparation and admission complete.
+
+Operational failures have separate causes and evidence. An expired local login
+refusal occurs before any provider request. A completed upload followed by failed
+readback can be reconciled and restored by its accepted identity without another
+tensor upload. On NFS, an exclusive lock needs a writable descriptor even when no
+file bytes are written. Verify actual exclusion and unchanged originals as well
+as offline recovery controls. These methods preserve construction; they are not
+evidence that memory formation works. Append after the unchanged 108-row history.
+
+Source packaging must bind both transport and decoded originals. The first
+attribution submission exceeded Kaggle's source-size limit because a previously
+compressed payload was emitted as plain base64. Preserve that failure, restore
+the matched gzip writer/reader and verify every decoded original is unchanged.
+Reject oversized UTF-8 source before creating a single-use claim or submitting.
+An HTTP rejection can leave a saved draft: the exact browser version panel
+showed zero versions and an inactive session. Neither a403 nor a listing with
+redacted private rows establishes absence. Reconcile that state, then verify
+the corrected first version's exact source and inputs independently.
+
+Native material preparation must bind a coherent runtime independently of its
+historical teaching world. The retained metadata bytes had multiple links from
+a later control task; a strict single-link consumer correctly refused them.
+Use independent exact-byte working copies, keeping the original names intact.
+The next boundary exposed live source drift: two of 152 pinned files had later
+schema dispatch changes. Recover the exact historical implementation into a
+private explicit import set, preserving all source hashes and import order,
+instead of updating expected hashes to fit whichever files happen to be live.
+The pure geometry contracts remain usable; this historical runtime does not
+authorize newer corpus-policy admission. Verify the whole closure before actual
+native observation and bracket it afterward. Preserve both original failures.
+
+New longitudinal teaching material should advance missing behavior, not just
+grow a row count. Preserve event/recorded time, scope, evidence availability,
+reported versus actual state, partial outcomes and withdrawal. Complete semantic
+targets and explicit source choices precede native target geometry. Reuse the
+generic frozen-source exporter, while adding an honest observed-world data
+profile for later training. Changed data and interface ancestry require an
+explicit child transition; they are not a budget-only continuation.
+
+Completed attribution supports unchanged additional formation learning. All nine
+whole-target likelihoods improve from checkpoint 2 to 10 and all 18 matched-prefix
+checks pass. Preserve the 306 token likelihood regressions and worse teacher-forced
+EOS confidence. The raw joint gradient locally opposes early-token CE, yet the
+actual saved-moment AdamW direction predicts improvement in all measured losses
+and the early margin. Do not replace an adaptive optimizer's observed direction
+with an unpreconditioned cosine argument, or attribute a nonlinear adaptive update
+uniquely to one loss head. Local derivatives still require finite verification.
+
+Continue the unchanged full objective and saved state for 16 complete-nine
+updates, with checkpoints 18 and 26. Budget using actual whole-run overhead as
+well as update timing: the previous 3.05 hours outside update calls materially
+changes the forecast. This retains the same two-checkpoint storage scale and
+avoids repeated setup while remaining within observed free compute and the
+provider limit. It is not a convergence guarantee, custom timeout or permission
+to skip full native assessment. Preserve post-checkpoint versus pre-update metric
+identity when comparing the next results.
+
+Observed-world admission should bind the producer that actually created the
+material. Keep the original four-field author target distinct from the corpus's
+six-field standalone target; their FILE hashes are different even when the
+conversion preserves every semantic field. Join that conversion, original author
+input/output, complete reference choices and literal occurrences at the trainer.
+Validate every source before opening any author record. Reuse native source and
+causal metadata already bound by the new profile instead of manufacturing a
+historical migration or duplicating the old fifteen-file container.
+
+Bridge admission must preserve identity as well as bytes: join each opened
+source ID to the corpus manifest and its rights receipt. A coherently relabeled
+manifest and rights record can agree with one another while naming a different
+source. Join the corpus source family to the composition's actual declaration,
+keeping it distinct from source-author family. Bind the actual conversion
+producer through its preserved construction result and per-case originals;
+syntactically valid hash text is not a producer binding. Reconstruct complete
+target semantics independently of those provenance checks.
+
+Adding a schema dispatch changes the imported interface closure. Byte-identical
+historical lowering results establish a useful regression property, but do not
+make the new closure equal to the parent's 104-file closure. Keep both source
+identities and require an explicit data-phase transition before loading the
+production parent into that new training path.
+
+For small diagnostic archives, the current Drive connector can upload a local
+file directly into the existing authorized folder. Retrieve that actual object
+by its returned ID and verify the whole archive and every member before calling
+the backup complete. This avoids a separate compute-host relay for small files;
+it does not grant cleanup authority for other material or prove large-model
+transfer capacity. The attribution archive's 72 members, including 60 provider
+originals, passed the same-ID whole restore. No production tensors reached the PC.
