@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "9f705e5d123560b7febde9e2e2a94e62b91abca5",
+      "commit": "5653736f545c9c1c8d5d8006af0f1fa152eed9b1",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -40,8 +40,48 @@
           "blob_sha": "ee76d7bf78bad07e3bed869bd39e4e28507dd08b"
         },
         {
+          "path": "docs/receipts/MFM_CHECKPOINT10_DIAGNOSIS_AND_ATTRIBUTION_20261022_TRACE157_PUBLIC.json",
+          "purpose": "completed native assessment0/9 grounded; completed full-roster checkpoint10 attribution supports unchanged update11-26 continuation; source/checkpoint and assessment Drive custody verified; broader Rill native teaching and source-feature construction",
+          "blob_sha": "603bc865da24ae649bb83a1fbb229c439c611396"
+        },
+        {
+          "path": "docs/MFM_CHECKPOINT10_FORMATION_DIAGNOSIS_2026-10-21.md",
+          "purpose": "ordered native formation failure diagnosis, full-target learning and saved-Adam attribution, research basis and remaining full MFM obligations",
+          "blob_sha": "52bcaa2284e1424fccba576b41679692067bd53d"
+        },
+        {
+          "path": "docs/MFM_OBSERVED_WORLD_TRAINING_2026-10-22.md",
+          "purpose": "broader chronological formation teaching, actual source and author admission, direct existing training inputs and explicit future data-phase/interface transition",
+          "blob_sha": "0e2eb5d9f580d1e81d7b8b1d5749a7b1de8b273e"
+        },
+        {
+          "path": "scripts/mfm/formation_observed_world_paired_teaching.py",
+          "purpose": "source-first observed world and original model-author material admission; exact prefixes, permissions and separate original versus standalone target identities",
+          "blob_sha": "0a90966b8b6f8beeb0b7430095abf83afd0e68fc"
+        },
+        {
+          "path": "scripts/mfm/formation_observed_world_target_alignment.py",
+          "purpose": "complete saved native target geometry and explicit authored reference/copy choices under the observed-world profile",
+          "blob_sha": "b46c58e8383313d149f1d34a179e062ff918cede"
+        },
+        {
+          "path": "tests/governance/test_mfm_observed_world_pairing.py",
+          "purpose": "real complete nine-cut material controls and source, target, choice, development and FINAL refusal boundaries",
+          "blob_sha": "f809c0ba63d2a907ab34cdc39e31a0dea92c5af4"
+        },
+        {
+          "path": "tests/governance/test_mfm_observed_world_lowering.py",
+          "purpose": "all-nine native-choice parity, original-copy roundtrip and historical lowerer regression checks",
+          "blob_sha": "f7f64892e4a808247b95d5cb8fcdebb1f4b307e0"
+        },
+        {
+          "path": "tests/governance/test_mfm_observed_world_training.py",
+          "purpose": "direct source-first trainer admission, original source and rights identity, source family and explicit conversion-producer provenance controls",
+          "blob_sha": "b3fbfae51f9fd18cbfae74c84884aba454efd132"
+        },
+        {
           "path": "docs/receipts/MFM_CONTINUATION_COMPLETE_AND_NATIVE_ASSESSMENT_20261021_TRACE156_PUBLIC.json",
-          "purpose": "completed cumulative10 full-nine formation updates with197-check metadata audit; exact native assessment dispatched and48-object source/checkpoint Drive transfer started; behavior and durable completion pending",
+          "purpose": "historical cumulative10 updates and assessment/custody dispatch; failed behavior and verified custody superseded by TRACE157",
           "blob_sha": "cfd99a0bf42b2bf60c6c65477e0857f72fb539da"
         },
         {
@@ -62,7 +102,7 @@
         {
           "path": "docs/MFM_JOINT_GENERATION_DIAGNOSIS_2026-10-19.md",
           "purpose": "completed numerical diagnosis and cumulative10 formation updates; pre-update objective trends, native assessment dispatch and remaining full MFM qualification boundaries",
-          "blob_sha": "86e0a8a6475e7c82afa23eb51089e2b2853ea6a1"
+          "blob_sha": "fd3e555f6f51e2ce4a318b3fc9163bd752898407"
         },
         {
           "path": "docs/receipts/MFM_FULL_ENTRY_AND_JOINT_DISPATCH_20261018_TRACE152_PUBLIC.json",
@@ -437,7 +477,7 @@
         {
           "path": "scripts/mfm/formation_reference_target_alignment.py",
           "purpose": "distinct complete original-pair reference view, explicit ordinal teaching and exact actual generated whole-wire geometry",
-          "blob_sha": "a584c32ff14ad89c222460cd3052a9d5ff0e43f5"
+          "blob_sha": "e8bc9c259ab0ac7e63cf3e07a08e0ec15d8e2409"
         },
         {
           "path": "tests/governance/test_mfm_reference_specialist.py",
@@ -832,7 +872,7 @@
         {
           "path": "docs/MFM_BROADER_JOINT_CONSTRUCTION_2026-10-15.md",
           "purpose": "completed cumulative10 full-nine formation updates and checkpoint audit; actual native assessment dispatched, complete source/checkpoint custody started and broader full-role build unfinished",
-          "blob_sha": "82772b18c7f65f7ddd500c89b527bcf275032344"
+          "blob_sha": "8bfc8f681f6495c27dfee05df9579752eb3ba116"
         },
         {
           "path": "docs/receipts/MFM_ACTUAL_BROADER_STATE_BINDING_20261015_TRACE143_PUBLIC.json",
@@ -902,7 +942,7 @@
         {
           "path": "scripts/mfm/train_native_joint_formation.py",
           "purpose": "complete lexical/reference/copy learner with exact ordinary restart and opt-in exhausted-parent continuation preserving Adam/RNG/history; strict export/reload and bound separate native-assessment requirement",
-          "blob_sha": "31d815ebfd21ff74f2dc4898dd8ce7b2530e746b"
+          "blob_sha": "de69e108d553a4379115cd47d87b8e81cbca19c5"
         },
         {
           "path": "tests/governance/test_mfm_native_joint_training.py",
@@ -1012,7 +1052,7 @@
         {
           "path": "scripts/mfm/formation_original_copy_target_alignment.py",
           "purpose": "complete reference/copy marker roster, authored ordinal and exact declaration supervision admission",
-          "blob_sha": "b73864155d0937bd0c0c52aeb2cc88ae9c30d0bd"
+          "blob_sha": "93978b041a917e67fa279e45dcbd72b8d2221898"
         },
         {
           "path": "tests/governance/test_mfm_original_copy_specialist.py",
@@ -1708,7 +1748,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "8bfb90506f37a1ccdfd3971e7a9b251c9081e273",
+      "commit": "bcd462b5bb93f41a56f79b5b63e3337c8e89bb45",
       "files": [
         {
           "path": "docs/fable-builder/FBM_ROLES_AND_OBJECTIVES.md",
@@ -1793,7 +1833,7 @@
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261004_MFM_FIT_FAILURE_ROOT_ANALYSIS.jsonl",
           "purpose": "completed fit versus failed formation, actual native reference assembly and original-copy construction methods; procedure only",
-          "blob_sha": "4c2a4ab564a3e42cd80df347fabfa5860e93cc7f"
+          "blob_sha": "90a410ebc9ccbeabcdb0eebd041abf27acb9cb59"
         },
         {
           "path": "docs/fable-builder/MFM_NATIVE_ORIGINAL_COPY_SOURCE_CAPTURE_2026-10-13.md",
@@ -1808,7 +1848,7 @@
         {
           "path": "docs/fable-builder/MFM_JOINT_LEARNING_AND_FIXED_REVIEW_CAPTURE_2026-10-13.md",
           "purpose": "complete original review/custody and actual joint objective/full-component construction with coherent canonical binding diagnosis; procedure only",
-          "blob_sha": "9254e8411b60d3d032794cda10fc88c9f76c3261"
+          "blob_sha": "9e44137c86fd2be62c3c0ca5db114d5604de4093"
         }
       ]
     }
