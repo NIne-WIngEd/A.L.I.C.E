@@ -32,9 +32,12 @@ from scripts.mfm import formation_source_alignment as source
 PROGRAM_SCHEMA = 'mfm-native-joint-fit-program-v1'
 J6_PROGRAM_SCHEMA = 'mfm-native-joint-j6-fit-program-v2'
 BROADER_PROGRAM_SCHEMA = 'mfm-native-joint-broader-fit-program-v3'
-FULL_SOURCE_PROFILES = ('j6-firstparty-successor','broader-firstparty-successor')
+OBSERVED_WORLD_PROFILE = 'observed-world-firstparty'
+FULL_SOURCE_PROFILES = ('j6-firstparty-successor','broader-firstparty-successor',
+                        OBSERVED_WORLD_PROFILE)
 SOURCE_FEATURE_PROFILES = {'j6-firstparty-successor':'j6-source-only',
-                           'broader-firstparty-successor':'broader-source-only'}
+                           'broader-firstparty-successor':'broader-source-only',
+                           OBSERVED_WORLD_PROFILE:'j6-source-only'}
 BROADER_SUCCESSOR_AUTHORING_SCHEMA = 'mfm-native-joint-broader-model-author-conversion-v1'
 RECIPE_SCHEMA = 'mfm-native-joint-fit-recipe-v1'
 METADATA_RECIPE_SCHEMA = 'mfm-native-joint-fit-recipe-v2'
@@ -253,7 +256,13 @@ def _lower_full_source_case(frozen,accepted,pair,source_descriptor,processor,
             'original_pair_sha256': pair['record_sha256'],
             'world_sha256': frozen['world_sha256'],
             'mass_world_id': world_id, 'cut_sha256': frozen['cut_sha256'],
-            'material15_file_sha256': material15_file_sha256,
+            **({'source_manifest_file_sha256': frozen['source_manifest_file_sha256'],
+                'variant_key': frozen['variant_key'],
+                'source_observation_file_sha256': frozen['source_observation_file_sha256'],
+                'whole_world_sha256': frozen['whole_world_sha256'],
+                'whole_world_file_sha256': frozen['whole_world_file_sha256']}
+               if profile == OBSERVED_WORLD_PROFILE else
+               {'material15_file_sha256': material15_file_sha256}),
             'source_file_sha256': frozen['source_file_sha256'],
             'source_alignment_sha256': joint['record_sha256'],
             'source_cache': deepcopy(joint['cache']),
@@ -278,7 +287,9 @@ def _full_source_view(frozen,example,pair):
           frozen['world_sha256'] == source_freeze['world_sha256'] and
           frozen['cut_sha256'] == source_freeze['cut_sha256'],
           'whole J6 source/native/world/cut differs')
-    world_id = frozen['split_row']['lineage']['world']
+    world_key = ('world_id' if frozen.get('schema') ==
+                 'mfm-paired-observed-world-input-v1' else 'world')
+    world_id = frozen['split_row']['lineage'][world_key]
     require_identifier(world_id, 'J6 connected world ID')
     binding = {'caller_sha256': caller['record_sha256'],
                'candidate_inventory_sha256': joint['candidate_inventory_sha256'],
@@ -325,6 +336,206 @@ def lower_broader_original_case(*,frozen,accepted,pair,source_descriptor,
     lowered.update(source_observation_file_sha256=frozen['source_observation_file_sha256'],
       source_observation_record_sha256=frozen['source_observation_record_sha256'],
       whole_world_sha256=frozen['whole_world_sha256'],whole_world_file_sha256=frozen['whole_world_file_sha256'])
+    return lowered
+
+
+def _observed_source_descriptor(material_root, frozen, j5_source):
+    """Use the actual generic v6 source FILE, without a historical container."""
+    from scripts.mfm import formation_observed_world_paired_teaching as observed
+    ref = frozen['source_originals']['source']
+    raw = observed.read_original(material_root, ref)
+    _need(observed.legacy.original_json(raw) == frozen['source'] and
+          sha256(raw).hexdigest() == frozen['source_file_sha256'] and
+          _file_sha256(j5_source.__file__) == observed.legacy.SOURCE_J5_FILE,
+          'observed source FILE/nested source/J5 differs')
+    return {'case_id': frozen['split_row']['case_id'], 'profile': 'j6-source-only',
+        'source_file': str((Path(material_root).resolve(strict=True) / ref['path']).resolve(strict=True)),
+        'source_file_sha256': frozen['source_file_sha256'],
+        'source_record_sha256': frozen['source']['record_sha256'],
+        'j5_file_sha256': observed.legacy.SOURCE_J5_FILE,
+        'proposed_max_source_tokens': frozen['proposed_max_source_tokens']}
+
+
+def read_observed_source(material_root, frozen_ref, *, j5_source):
+    """Admit the real complete source/manifest and return its feature descriptor.
+
+    The observed source contract reopens the original world, causal prefix,
+    permission/proof/delivery metadata, full native batch/joint alignment,
+    processor/runtime and code bindings. No author or corpus reader is called.
+    """
+    from scripts.mfm import formation_joint_input_v6 as j6
+    from scripts.mfm import formation_observed_world_paired_teaching as observed
+    root = Path(material_root).resolve(strict=True)
+    _, frozen = _material_json(root, frozen_ref)
+    observed.validate_input(j5_source, j6, frozen, material_root=root,
+        expected_input_sha256=frozen['record_sha256'])
+    return frozen, _observed_source_descriptor(root, frozen, j5_source)
+
+
+def _observed_source_family(material_root, frozen):
+    from scripts.mfm import formation_observed_world_paired_teaching as observed
+    manifest = observed.pinned(bytes.fromhex(frozen['source_manifest_hex']),
+        frozen['source_manifest_file_sha256'], observed.MANIFEST)
+    composition = observed.json_original(material_root, manifest['composition_manifest'])
+    observed._record(composition)
+    family = composition['construction_author']['source_family']
+    require_identifier(family, 'observed composition source family')
+    return family
+
+
+def _observed_construction_result(material_root, result_ref):
+    """Read the explicit actual producer receipt after source admission."""
+    from scripts.mfm import formation_observed_world_paired_teaching as observed
+    _need(material_root is not None and result_ref is not None,
+          'observed material root and pair-construction FileRef are required')
+    root = Path(material_root).resolve(strict=True)
+    _, result = _material_json(root, result_ref)
+    observed._record(result, 'mfm-observed-world-pair-construction-result-v1')
+    rows = result.get('cases')
+    _need(result.get('status') == 'completed' and type(rows) is list and rows and
+          result.get('case_count') == len(rows) and
+          len({row['case_id'] for row in rows}) == len(rows) and
+          result.get('source_phase_before_author_readers') is True and
+          result.get('all_saved_pairs_reopened_and_validated') is True and
+          type(result.get('code_files')) is dict and result['code_files'],
+          'observed complete pair-construction result differs')
+    return result
+
+
+def _observed_result_member(material_root, result_ref, ref):
+    from scripts.mfm import formation_observed_world_paired_teaching as observed
+    observed._name(ref['path'])
+    relative = (Path(result_ref['path']).parent / ref['path']).as_posix()
+    combined = {**ref, 'path': relative}
+    return combined, observed.read_original(material_root, combined)
+
+
+def _observed_construction_case(material_root, result_ref, result, frozen, accepted, pair):
+    """Bind receipt membership to the actual complete original objects."""
+    from scripts.mfm import formation_observed_world_paired_teaching as observed
+    case_id = frozen['split_row']['case_id']
+    matches = [row for row in result['cases'] if row['case_id'] == case_id]
+    _need(len(matches) == 1, 'observed pair-construction case membership differs')
+    row = matches[0]
+    _need(row['profile'] == OBSERVED_WORLD_PROFILE and row['variant_key'] == frozen['variant_key'] and
+          row['max_target_tokens'] == pair['max_target_tokens'] and
+          result['source_manifest']['file_sha256'] == frozen['source_manifest_file_sha256'],
+          'observed pair-construction source/profile/target budget differs')
+    for key, value in (('source_input', frozen), ('target', accepted), ('pair', pair)):
+        _, raw = _observed_result_member(material_root, result_ref, row[key])
+        _need(observed.legacy.original_json(raw) == value,
+              'observed pair-construction exact per-case original differs')
+    return row
+
+
+def _observed_lowered_metadata(frozen, accepted, pair, descriptor, view, joint, world_id, source_family):
+    return {'profile': OBSERVED_WORLD_PROFILE, 'case_id': frozen['split_row']['case_id'],
+        'variant_key': frozen['variant_key'], 'source_family': source_family,
+        'original_frozen_sha256': frozen['record_sha256'],
+        'original_target_file_sha256': accepted['original_target_file_sha256'],
+        'original_pair_sha256': pair['record_sha256'], 'world_sha256': frozen['world_sha256'],
+        'cut_sha256': frozen['cut_sha256'], 'mass_world_id': world_id,
+        'source_manifest_file_sha256': frozen['source_manifest_file_sha256'],
+        'source_file_sha256': frozen['source_file_sha256'],
+        'source_alignment_sha256': joint['record_sha256'], 'source_cache': deepcopy(joint['cache']),
+        'source_descriptor': deepcopy(descriptor),
+        'source_observation_file_sha256': frozen['source_observation_file_sha256'],
+        'whole_world_sha256': frozen['whole_world_sha256'],
+        'whole_world_file_sha256': frozen['whole_world_file_sha256'],
+        'authored_ordinals': deepcopy(view['authored_ordinals']),
+        'authored_copy_tuples': deepcopy(view['authored_copy_tuples'])}
+
+
+def preflight_observed_author_metadata(*, material_root, case_rows, j5_source,
+        admission_manifest_path, admission_manifest_sha256, owner_authorization_ref,
+        pair_construction_ref):
+    """Join one complete observed train world to its actual corpus authority.
+
+    All physical sources precede every authored FileRef and corpus admission
+    (which itself opens labels). No processor, features, model or state load.
+    The historical executable fit-program/transition contracts are separate.
+    """
+    from scripts.mfm import formation_observed_world_paired_teaching as observed
+    from scripts.mfm import formation_observed_world_target_alignment as target
+    keys = {'case_id', 'profile', 'variant_key', 'frozen', 'accepted', 'pair', 'max_target_tokens'}
+    _need(type(case_rows) is list and case_rows and all(type(row) is dict and
+          set(row) == keys and row['profile'] == OBSERVED_WORLD_PROFILE and
+          type(row['max_target_tokens']) is int and row['max_target_tokens'] > 0
+          for row in case_rows), 'complete observed source/author case references required')
+    for row in case_rows:
+        _need(require_identifier(row['case_id'], 'observed case ID') == row['case_id'] and
+              require_identifier(row['variant_key'], 'observed variant') == row['variant_key'],
+              'observed case and variant identities must be canonical')
+    _need(len({row['case_id'] for row in case_rows}) == len(case_rows),
+          'observed metadata requires unique case identities')
+    root = Path(material_root).resolve(strict=True)
+    sources = []
+    for row in case_rows:
+        frozen, descriptor = read_observed_source(root, row['frozen'], j5_source=j5_source)
+        _need(frozen['split_row']['split'] == 'train' and
+              frozen['split_row']['case_id'] == row['case_id'] and
+              frozen['variant_key'] == row['variant_key'],
+              'observed complete train source/case/variant required before author reads')
+        sources.append((row, frozen, descriptor))
+    # Full observed manifests already bind split and ancestry. Enforce their
+    # complete ordered roster here rather than admitting a selected easy cut.
+    _need(len({f['source_manifest_file_sha256'] for _, f, _ in sources}) == 1 and
+          len({f['split_row']['lineage']['world_id'] for _, f, _ in sources}) == 1,
+          'observed metadata requires one complete source-manifest train world')
+    first = sources[0][1]
+    manifest = observed.pinned(bytes.fromhex(first['source_manifest_hex']),
+        first['source_manifest_file_sha256'], observed.MANIFEST)
+    _need([row['case_id'] for row in case_rows] == [row['case_id'] for row in manifest['cases']] and
+          all(row['split'] == 'train' for row in manifest['cases']) and
+          len({(f['cut_sha256'], row['variant_key']) for row, f, _ in sources}) == len(sources),
+          'observed complete train roster or unique cut/variant differs')
+    source_family = _observed_source_family(root, first)
+    result = _observed_construction_result(root, pair_construction_ref)
+    _need([row['case_id'] for row in result['cases']] == [row['case_id'] for row in case_rows],
+          'observed pair-construction complete ordered roster differs')
+    cases = []
+    for row, frozen, descriptor in sources:
+        accepted = _material_json(root, row['accepted'])[1]
+        pair = _material_json(root, row['pair'])[1]
+        example, _ = observed.require_complete_labels(frozen, accepted)
+        target.validate_pair(pair, frozen, accepted, expected_pair_sha256=pair['record_sha256'])
+        _need(row['max_target_tokens'] == pair['max_target_tokens'],
+              'observed original and mixed-wire target budgets differ')
+        constructed = _observed_construction_case(root, pair_construction_ref, result, frozen, accepted, pair)
+        for supplied, produced in (('frozen','source_input'), ('accepted','target'), ('pair','pair')):
+            ref, _ = _observed_result_member(root, pair_construction_ref, constructed[produced])
+            _need(row[supplied]['path'] == ref['path'] and
+                  row[supplied].get('sha256', row[supplied].get('file_sha256')) == ref['file_sha256'],
+                  'observed case FileRef differs from exact construction membership')
+        _, view, joint, world_id = _full_source_view(frozen, example, pair)
+        lowered = _observed_lowered_metadata(frozen, accepted, pair, descriptor, view, joint, world_id, source_family)
+        cases.append({'frozen': frozen, 'accepted': accepted, 'pair': pair,
+                      'joined': {'lowered': lowered}})
+    preflight_admitted_author_cases(admission_manifest_path=admission_manifest_path,
+        admission_manifest_sha256=admission_manifest_sha256,
+        owner_authorization_ref=owner_authorization_ref, cases=cases,
+        observed_material_root=root, observed_pair_construction_ref=pair_construction_ref)
+    return cases
+
+
+def lower_observed_original_case(*, material_root, frozen, accepted, pair,
+        source_descriptor, j5_source, processor, max_target_tokens):
+    """Lower complete observed authored choices through the existing math."""
+    from scripts.mfm import formation_joint_input_v6 as j6
+    from scripts.mfm import formation_observed_world_paired_teaching as observed
+    from scripts.mfm import formation_observed_world_target_alignment as target
+    observed.validate_input(j5_source, j6, frozen, material_root=material_root,
+        expected_input_sha256=frozen['record_sha256'])
+    _need(frozen['split_row']['split'] == 'train' and
+          source_descriptor == _observed_source_descriptor(material_root, frozen, j5_source) and
+          type(max_target_tokens) is int and max_target_tokens == pair['max_target_tokens'],
+          'observed train source FILE/case/J5/maximum or target budget differs')
+    source_family = _observed_source_family(material_root, frozen)
+    example, _ = observed.require_complete_labels(frozen, accepted)
+    target.validate_pair(pair, frozen, accepted, expected_pair_sha256=pair['record_sha256'])
+    lowered = _lower_full_source_case(frozen, accepted, pair, source_descriptor,
+        processor, max_target_tokens, None, profile=OBSERVED_WORLD_PROFILE, example=example)
+    lowered['source_family'] = source_family
     return lowered
 
 
@@ -393,7 +604,8 @@ def preflight_admitted_cases(*,admission_manifest_path,admission_manifest_sha256
 
 
 def preflight_admitted_author_cases(*, admission_manifest_path, admission_manifest_sha256,
-                             owner_authorization_ref, cases):
+                             owner_authorization_ref, cases,
+                             observed_material_root=None, observed_pair_construction_ref=None):
     """Join every train original to independently admitted physical originals.
 
     P2's original supplied records remain fixed false; only a separately
@@ -437,8 +649,7 @@ def preflight_admitted_author_cases(*, admission_manifest_path, admission_manife
               frozen['split_row']['split'] == 'train',
               'admitted train case and original lowerer differ')
         seen.add(case_id)
-        _need(lowered['profile'] in ('j4-p1', 'j5-p2',
-                                      'j6-firstparty-successor','broader-firstparty-successor'),
+        _need(lowered['profile'] in ('j4-p1', 'j5-p2', *FULL_SOURCE_PROFILES),
               'unknown original source profile')
         caller = (frozen['source']['caller'] if lowered['profile'] in
                   FULL_SOURCE_PROFILES else frozen['caller'])
@@ -446,13 +657,19 @@ def preflight_admitted_author_cases(*, admission_manifest_path, admission_manife
         expected_sources = sorted(sha256(raw).hexdigest() for _, raw in opened)
         admitted = admitted_by_id[case_id]
         _need(expected_sources == sorted(ref.sha256 for ref in admitted.source_payloads)
-              and admitted.target_payload.sha256 == lowered['original_target_file_sha256'],
+              and (lowered['profile'] == OBSERVED_WORLD_PROFILE or
+                   admitted.target_payload.sha256 == lowered['original_target_file_sha256']),
               'independently admitted physical source/target bytes differ')
         admitted_row = source_rows[case_id]
         _need(type(admitted_row) is dict and
               admitted_row['author_id'] == admitted_row['target_provenance']['producer_id'] and
               admitted_row['host_family'] == context.base.scope.host_instance_id,
               'admitted original host/author and conversion producer differ')
+        if lowered['profile'] == OBSERVED_WORLD_PROFILE:
+            _validate_observed_admitted_author(admission, admitted, admitted_row,
+                frozen, accepted, pair, lowered, context, opened, manifest,
+                observed_material_root, observed_pair_construction_ref)
+            continue
         if lowered['profile'] in FULL_SOURCE_PROFILES:
             _validate_model_author_originals(accepted,lowered['profile'])
         conversion_ref = admitted_row['target_provenance']['conversion']
@@ -534,10 +751,120 @@ def preflight_admitted_author_cases(*, admission_manifest_path, admission_manife
     return admission, audit
 
 
+def _validate_observed_admitted_author(admission, admitted, row, frozen, accepted,
+        pair, lowered, context, opened, corpus_manifest, material_root, result_ref):
+    """Bind genuine original authorship and the distinct standalone conversion."""
+    from scripts.mfm import formation_observed_world_paired_teaching as observed
+    from scripts.mfm import formation_observed_world_target_alignment as target
+    from cognitive_kernel import formation_learning_v16 as learning
+    _need(material_root is not None and result_ref is not None,
+          'observed material root and pair-construction FileRef are required')
+    source_family = _observed_source_family(material_root, frozen)
+    _need(row['source_family'] == lowered['source_family'] == source_family,
+          'observed corpus source family differs from pinned composition')
+    opened_ids = [ref for ref, _ in opened]
+    rights = [_material_json(admission.root, {'path': ref.path, 'sha256': ref.sha256})[1]
+              for ref in admitted.rights_receipts]
+    _need([item['source_id'] for item in row['sources']] == opened_ids and
+          [item['source_id'] for item in rights] == opened_ids,
+          'observed corpus/rights source identities differ from actual caller')
+    result = _observed_construction_result(material_root, result_ref)
+    constructed = _observed_construction_case(material_root, result_ref, result, frozen, accepted, pair)
+    example, _ = observed.require_complete_labels(frozen, accepted)
+    target.validate_pair(pair, frozen, accepted, expected_pair_sha256=pair['record_sha256'])
+    author_raw = bytes.fromhex(accepted['author_manifest_hex'])
+    author = observed.pinned(author_raw, accepted['author_manifest_file_sha256'], observed.AUTHOR_MANIFEST)
+    originals = {key: bytes.fromhex(value) for key, value in accepted['original_material_hex'].items()}
+    original_case = observed.legacy.original_json(originals['case'])
+    original_target = observed.legacy.original_json(originals['target'])
+    semantic = observed.legacy.original_json(originals['raw_semantic'])
+    provenance = row['target_provenance']; refs = author['materials']
+    _need(corpus_manifest['schema'] == 'mfm-v16-owner-teacher-corpus-v3' and
+          row['target_origin'] == 'owner-authorized-model-author' and
+          provenance['input']['sha256'] == refs['source_view']['file_sha256'] and
+          provenance['output']['sha256'] == refs['raw_semantic']['file_sha256'] and
+          provenance['producer_version'] == accepted['author_producer_version'] and
+          row['author_id'] == semantic['author_id'] == accepted['author_id'] and
+          row['generator_family'] == semantic['generator_family'] == frozen['split_row']['lineage']['generator_family'] and
+          semantic['source_author_family'] == frozen['split_row']['lineage']['source_author_family'] and
+          semantic['world_id'] == lowered['mass_world_id'] == frozen['split_row']['lineage']['world_id'] and
+          semantic['generation_kind'] == 'stochastic-model-authored' and
+          semantic['authenticated_service'] is False and semantic['independent_gold'] is False and
+          row['parent_case_ids'] == ([] if original_case['lineage']['parent_case_id'] is None else
+                                    [original_case['lineage']['parent_case_id']]),
+          'observed actual author input/output/producer or connected ancestry differs')
+    for role, ref in (('source_view', provenance['input']), ('raw_semantic', provenance['output'])):
+        _need(_material_bytes(admission.root, ref)[1] == originals[role],
+              'observed corpus author original bytes differ')
+    _, standalone = _material_json(admission.root,
+        {'path': admitted.target_payload.path, 'sha256': admitted.target_payload.sha256})
+    expected_target = {'schema': learning.TARGET_SCHEMA_V16, 'context': original_case['context'],
+        'source_ids': [item['ref_id'] for item in original_case['sources']],
+        **{key: original_target[key] for key in ('proposals', 'dispositions', 'adjudications')}}
+    _need(standalone == expected_target and standalone['context'] == context.record() and
+          standalone['source_ids'] == [ref for ref, _ in opened] and
+          [ref.sha256 for ref in admitted.source_payloads] == [sha256(raw).hexdigest() for _, raw in opened] and
+          sha256(originals['target']).hexdigest() == lowered['original_target_file_sha256'],
+          'observed derived standalone target or ordered original source body differs')
+    _, conversion = _material_json(admission.root, provenance['conversion'])
+    _, original_conversion_raw = _observed_result_member(material_root, result_ref,
+        constructed['standalone_target_conversion'])
+    _need(_material_bytes(admission.root, provenance['conversion'])[1] == original_conversion_raw,
+          'observed standalone conversion differs from actual construction original')
+    conversion_keys = {'schema','case_id','author_manifest','author_case_original','author_target_original',
+        'derived_standalone_target','author_producer_version','conversion_id','conversion_producer_file_sha256',
+        'conversion','semantic_changes','original_author_file_claimed','independent_gold','corpus_admitted',
+        'training_authorized','record_sha256'}
+    _need(set(conversion) == conversion_keys and
+          conversion['schema'] == 'mfm-observed-world-standalone-target-conversion-v1' and
+          conversion['record_sha256'] == canonical_sha256({k:v for k,v in conversion.items() if k!='record_sha256'}) and
+          conversion['case_id'] == row['case_id'] and
+          conversion['author_case_original'] == refs['case'] and conversion['author_target_original'] == refs['target'] and
+          conversion['author_producer_version'] == accepted['author_producer_version'] and
+          conversion['conversion_id'] == accepted['conversion_id'] and
+          conversion['semantic_changes'] is False and conversion['original_author_file_claimed'] is False and
+          conversion['independent_gold'] is False and conversion['corpus_admitted'] is False and
+          conversion['training_authorized'] is False,
+          'observed explicit original-to-standalone conversion differs')
+    require_sha256(conversion['conversion_producer_file_sha256'], 'observed standalone conversion producer FILE')
+    producer_paths = [path for path, pin in result['code_files'].items()
+                      if pin == conversion['conversion_producer_file_sha256']]
+    _need(len(producer_paths) == 1, 'observed standalone converter producer is not uniquely bound')
+    producer_path = producer_paths[0].replace('\\', '/')
+    physical, producer_raw = _material_bytes(material_root,
+        {'path': producer_path, 'sha256': conversion['conversion_producer_file_sha256']})
+    observed.legacy._ordinary(physical)
+    _need(sha256(producer_raw).hexdigest() == conversion['conversion_producer_file_sha256'] and
+          conversion['author_manifest'] == constructed['author_manifest'] and
+          conversion['derived_standalone_target'] == constructed['standalone_target'],
+          'observed actual converter/author/standalone construction provenance differs')
+    for ref in (conversion['author_manifest'], conversion['derived_standalone_target']):
+        _need(type(ref) is dict and set(ref) == {'path','bytes','file_sha256'} and
+              type(ref['bytes']) is int and ref['bytes'] >= 0, 'observed conversion physical reference differs')
+        observed._name(ref['path']); require_sha256(ref['file_sha256'], 'observed conversion FILE')
+    target_raw = _material_bytes(admission.root,
+        {'path': admitted.target_payload.path, 'sha256': admitted.target_payload.sha256})[1]
+    _need(conversion['author_manifest']['file_sha256'] == accepted['author_manifest_file_sha256'] and
+          conversion['author_manifest']['bytes'] == len(author_raw) and
+          conversion['derived_standalone_target']['file_sha256'] == admitted.target_payload.sha256 and
+          conversion['derived_standalone_target']['bytes'] == len(target_raw),
+          'observed original author and derived standalone FILE identities differ')
+    _, view, joint, world_id = _full_source_view(frozen, example, pair)
+    _need(lowered['authored_ordinals'] == view['authored_ordinals'] and
+          lowered['authored_copy_tuples'] == view['authored_copy_tuples'] and
+          lowered['source_alignment_sha256'] == joint['record_sha256'] and
+          lowered['original_pair_sha256'] == pair['record_sha256'] and
+          lowered['source_manifest_file_sha256'] == frozen['source_manifest_file_sha256'] and
+          lowered['source_file_sha256'] == frozen['source_file_sha256'] and
+          lowered['mass_world_id'] == world_id and lowered['variant_key'] == frozen['variant_key'],
+          'observed complete pair/reference/literal/source lowering differs')
+
+
 def _validate_model_author_originals(accepted,profile):
     """Bind training provenance to embedded original bytes, never declarations."""
     from scripts.mfm import formation_paired_teaching_v6 as original
-    _need(profile in FULL_SOURCE_PROFILES,'physical model-author profile differs')
+    _need(profile in ('j6-firstparty-successor','broader-firstparty-successor'),
+          'physical historical model-author profile differs')
     draft_raw=bytes.fromhex(accepted['raw_author_draft_hex'])
     support_raw=bytes.fromhex(accepted['raw_support_hex'])
     annotation_raw=bytes.fromhex(accepted['raw_annotation_hex'])
@@ -1752,6 +2079,10 @@ def fit_joint_from_program(*, program_path, program_file_sha256, material_root,
           prepared not in output.parents,
           'joint fit output must be outside immutable material/source roots')
     program = _json_file(program_path, program_file_sha256)
+    _need(type(program.get('cases')) is not list or not any(
+          type(row) is dict and row.get('profile') == OBSERVED_WORLD_PROFILE
+          for row in program['cases']),
+          'observed-world material requires an explicit new data-phase/interface transition')
     j6_program = program.get('schema') == J6_PROGRAM_SCHEMA
     broader_program=program.get('schema')==BROADER_PROGRAM_SCHEMA
     full_program=j6_program or broader_program

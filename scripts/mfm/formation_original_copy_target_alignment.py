@@ -33,7 +33,11 @@ def original_copy_decision_view(example,complete_pair,frozen_input,*,pair_sha256
     ref=reference_alignment.reference_decision_view(example,complete_pair,frozen_input,pair_sha256=pair_sha256,
         frozen_input_sha256=frozen_input_sha256,inventory=inventory['reference_inventory'],
         local_uncertainty_refs=local_uncertainty_refs)
-    if frozen_input['schema'] in (reference_alignment.j6_target.paired.INPUT,
+    if frozen_input['schema'] == reference_alignment.observed_target.paired.INPUT:
+        declarations=reference_alignment.observed_choices(complete_pair,frozen_input)['literal_declarations']
+        literals=reference_alignment.j6_target.literal_rows(
+            complete_pair['geometry'],complete_pair['tokens'],frozen_input,declarations)
+    elif frozen_input['schema'] in (reference_alignment.j6_target.paired.INPUT,
                                   reference_alignment.broader_target.paired.INPUT):
         choices=(reference_alignment.broader_choices if frozen_input['schema']==
           reference_alignment.broader_target.paired.INPUT else reference_alignment.j6_choices)

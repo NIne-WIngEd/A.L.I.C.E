@@ -16,7 +16,14 @@ records the future first-party-base route. It does not supersede the licensed
 pretrained-base V1 decision. The native conditional-language foundation has
 completed S5 (20 epochs/45,760 steps), and the owned lexical/reference/copy
 formation learner has completed ten complete-nine joint updates as of
-2026-10-21. Complete native behavior assessment remains required; these stages
+2026-10-21. The complete native assessment subsequently finished, with zero of
+nine source-grounded decisions: lexical generation failed before reference/copy
+prediction. [Checkpoint-10 diagnosis](MFM_CHECKPOINT10_FORMATION_DIAGNOSIS_2026-10-21.md)
+records the completed full-roster attribution: all nine complete-target losses
+and early gold likelihoods improve, but native formation remains unqualified.
+The selected next learning block preserves checkpoint 10's optimizer and full
+objective through update 26; broader longitudinal source/target construction
+proceeds independently through an explicit observed-world admission. These stages
 do not qualify a complete MFM or a scratch-trained replacement base. See the
 [current joint construction](MFM_BROADER_JOINT_CONSTRUCTION_2026-10-15.md), the
 [current roots and capability audit](MFM_ROOTS_ALIGNMENT_AUDIT_2026-10-10.md)

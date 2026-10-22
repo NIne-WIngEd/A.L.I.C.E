@@ -13,6 +13,7 @@ from . import formation_joint_target_alignment as original, formation_target_ali
 from . import formation_source_alignment as source, formation_paired_teaching as paired
 from . import formation_joint_target_alignment_v6 as j6_target
 from . import formation_broader_target_alignment as broader_target
+from . import formation_observed_world_target_alignment as observed_target
 
 VIEW_SCHEMA = 'mfm-formation-reference-target-view-v1'
 ALIGNMENT_SCHEMA = 'mfm-formation-reference-decision-token-alignment-v1'
@@ -21,6 +22,7 @@ PROFILES = {
     'mfm-paired-supplied-j5-input-v1': ('mfm-joint-caller-input-alignment-v5', 'mfm-paired-supplied-j5-joint-target-geometry-v1'),
     j6_target.paired.INPUT: ('mfm-joint-caller-input-alignment-v6', j6_target.PAIR),
     broader_target.paired.INPUT: ('mfm-joint-caller-input-alignment-v6', broader_target.PAIR),
+    observed_target.paired.INPUT: ('mfm-joint-caller-input-alignment-v6', observed_target.PAIR),
 }
 
 
@@ -30,7 +32,8 @@ def _seal(row):
 
 def source_parts(frozen_input):
     """Select actual source locations; full original/material admission is upstream."""
-    if frozen_input.get('schema') not in (j6_target.paired.INPUT, broader_target.paired.INPUT):
+    if frozen_input.get('schema') not in (j6_target.paired.INPUT, broader_target.paired.INPUT,
+                                         observed_target.paired.INPUT):
         return frozen_input['caller'], frozen_input['joint']
     need = references._require
     saved = frozen_input['source']
@@ -84,6 +87,33 @@ def broader_choices(complete_pair,frozen_input):
     return choice
 
 
+def observed_choices(complete_pair, frozen_input):
+    """Bind the new external-choice envelope; original author admission is upstream."""
+    need = references._require
+    need(frozen_input.get('schema') == observed_target.paired.INPUT and
+         complete_pair.get('schema') == observed_target.PAIR and
+         complete_pair.get('processor_reexecuted_for_target') is False and
+         complete_pair.get('native_target_observation_consumed') is True and
+         complete_pair.get('original_author_contract') == observed_target.paired.AUTHOR_CONTRACT,
+         'observed original pair/source/author profile differs')
+    choice = observed_target.paired.pinned(bytes.fromhex(complete_pair['original_choice_hex']),
+        complete_pair['choice_file_sha256'], observed_target.CHOICES)
+    need(set(choice) == {'schema','input_freeze_sha256','target_record_sha256','author_id',
+         'author_provenance_file_sha256','field_annotations','literal_declarations',
+         'whole_literal_inventory_complete','record_sha256'} and
+         choice == complete_pair['choice_packet'] and
+         type(choice['author_id']) is str and bool(choice['author_id']) and
+         choice['input_freeze_sha256'] == frozen_input['record_sha256'] and
+         choice['target_record_sha256'] == complete_pair['target_record_sha256'] and
+         choice['author_provenance_file_sha256'] == complete_pair['author_provenance_file_sha256'] and
+         choice['whole_literal_inventory_complete'] is True and
+         complete_pair['source_file_sha256'] == frozen_input['source_file_sha256'] and
+         complete_pair['source_cache'] == frozen_input['source_cache'] and
+         complete_pair['native_batch'] == frozen_input['native_batch'],
+         'observed original complete choice/source/ancestry binding differs')
+    return choice
+
+
 def reference_decision_view(example, complete_pair, frozen_input, *, pair_sha256, frozen_input_sha256,
                             inventory, local_uncertainty_refs=()):
     """Consume explicitly supplied complete pairs without inferring any ordinal.
@@ -121,7 +151,10 @@ def reference_decision_view(example, complete_pair, frozen_input, *, pair_sha256
     need(rows == rebuilt and inputs[1:] == labels[:-1] == [r['token_id'] for r in rows] and
          len(inputs) == len(labels) == len(rows) + 1 and inputs[0] == wrapper['bos_token_id'] and
          labels[-1] == wrapper['eos_token_id'], 'complete original target shift differs')
-    if frozen_input['schema'] in (j6_target.paired.INPUT,broader_target.paired.INPUT):
+    if frozen_input['schema'] == observed_target.paired.INPUT:
+        choice = observed_choices(complete_pair, frozen_input)
+        normative = j6_target.field_rows(geometry, frozen_input, choice['field_annotations'])
+    elif frozen_input['schema'] in (j6_target.paired.INPUT,broader_target.paired.INPUT):
         choice = (broader_choices if frozen_input['schema']==broader_target.paired.INPUT else
                   j6_choices)(complete_pair, frozen_input)
         normative = j6_target.field_rows(geometry, frozen_input, choice['field_annotations'])

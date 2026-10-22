@@ -1,5 +1,14 @@
 # Broader chronological formation construction
 
+The completed checkpoint-10 assessment supersedes the pending snapshot below:
+execution succeeded, but all nine native decisions failed before reference/copy
+prediction. The 518-check source/evidence audit preserves all original failures.
+[Checkpoint-10 diagnosis](MFM_CHECKPOINT10_FORMATION_DIAGNOSIS_2026-10-21.md)
+defines the next complete-roster likelihood and gradient attribution, using saved
+Adam moments without changing the model. Further training or architecture changes
+depend on that evidence. Broader authorized teaching and distinct development
+material can be constructed independently; neither is independent evaluation gold.
+
 The 2026-10-21 recovery supersedes the pending continuation snapshot below:
 all eight additional complete-nine updates finished, reaching cumulative10
 updates/90 case visits, with checkpoints6/10 and a final exported component.
@@ -181,3 +190,42 @@ MFM proposes formation and cannot authorize its own memory.
 The selected backend stack and the full release requirements remain unchanged.
 Storage custody is recorded separately: completed S5 and native seed backups do
 not establish model learning or automatically authorize deleting active data.
+# Additional longitudinal teaching construction, 22 October
+
+A newly authored fictional world now has 18 original sources, nine chronological
+cuts and 51 persisted experience entries. Its actual store/replay paths and all
+nine complete targets have been checked: 41 proposals, 329 explicit reference
+choices and nine exact literal choices. This remains same-generator training
+material; new characters do not make it independent development evidence.
+
+The histories preserve separate event and knowledge times, attributed reports,
+partial mission outcomes, missing bodies, negotiated reminders, source-supported
+corrections and incomplete deletion. Source construction and full target
+authoring remain separately attributable. No accepted memory write or model
+behavior is claimed by those structural checks.
+
+The existing native source and reference/copy geometry can process this material
+without changing the formation objective. Historical pair profiles encode their
+specific reading-room roster and must remain intact. The next data phase needs a
+manifest-bound observed-world profile, complete physical source/target admission
+and an explicit checkpoint/interface transition. Merely adding cases to the old
+budget-only successor would violate its unchanged-material contract. Frozen
+source features can proceed through the existing generic `j6-source-only`
+exporter independently of checkpoint-10 learning attribution. TRACE157 records
+the actual completion boundary; preparation is not training or capacity proof.
+
+The actual observed profile now contains all nine complete source/target pairs,
+506,808 source positions and 17,052 canonical target labels. Corpus-v3 admits
+the nine training cases alongside nine unchanged diagnostic development cases;
+FINAL remains unopened. All nine saved reference/copy outputs and semantic
+roundtrips pass, with 30 lowerer controls including historical output parity.
+The direct trainer admission joins these physical sources to corpus permissions,
+original authorship and the explicit target conversion. Its completed evidence
+and limits are recorded in TRACE157 and
+[`MFM_OBSERVED_WORLD_TRAINING_2026-10-22.md`](MFM_OBSERVED_WORLD_TRAINING_2026-10-22.md).
+
+This new material has not been trained. Its 106-file model interface closure
+differs from the frozen 104-file continuation runtime. Checkpoint 26 must be
+assessed with its own delivered source. The subsequent broader data phase must
+explicitly preserve the parent weights, optimizer policy and cumulative history
+while introducing the new source and teaching lineage.

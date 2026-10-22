@@ -1,5 +1,18 @@
 # Completed joint construction and generated formation
 
+## Completed checkpoint-10 assessment — recovered 2026-10-21
+
+The assessment completed with exit 0 in 1,705.429 seconds. All nine complete native
+decisions failed: eight at alignment and one at parsing, before reference/copy
+prediction. All reached EOS after 24–37 tokens under the unchanged 8,192-token
+budget. The first divergence remains query 1. The 518-check audit validates the
+original evidence and complete authored structural controls. This is a model
+behavior failure; it does not establish a runtime problem or a unique training
+cause. [The ordered current diagnosis](MFM_CHECKPOINT10_FORMATION_DIAGNOSIS_2026-10-21.md)
+defines full-target numerical and gradient attribution at the saved checkpoint,
+followed by evidence-led construction. TRACE157 records its execution status and
+backup recovery. The older RUNNING and pending snapshots below are historical.
+
 ## Completed formation continuation — 2026-10-21
 
 The reviewed successor completed all eight additional complete-nine updates,
