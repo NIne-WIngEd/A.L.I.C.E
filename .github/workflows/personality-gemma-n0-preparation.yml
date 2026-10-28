@@ -7,6 +7,7 @@ on:
     paths:
       - "src/alice_foundation/**"
       - "src/alice_personality/**"
+      - "src/cognitive_kernel/personality_experience.py"
       - "scripts/eipm/gemma_n0/**"
       - "scripts/eipm/n1/**"
       - "evaluation/eipm/gemma_n0/**"
@@ -21,6 +22,8 @@ jobs:
   public-fixtures:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      PYTHONPATH: src
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
