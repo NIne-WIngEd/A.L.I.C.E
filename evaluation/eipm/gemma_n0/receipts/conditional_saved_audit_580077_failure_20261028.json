@@ -1,0 +1,51 @@
+{
+  "diagnosis": [
+    "1. Terminal accounting and sanitized traceback identify the exact pin mode assertion, not a failed personality measurement. Original public stdout digest matches the pinned source. No audit result was published.",
+    "2. The read is intended to discriminate target/learning explanations for completed negative job579741. This deployment failure supplies no new behavioral conclusion.",
+    "3. The worker uses one protected-input pin routine for code, summaries, protected artifacts and the scheduler log. Scheduler output ownership/permissions have a different producer from protected model artifacts.",
+    "4. Worker99 calls pin69 for original public stdout: mode0664 is confirmed; the routine requires0600. This is the first failure, after plan/final-state admissions. Prior local descriptor tests did not verify remote log mode.",
+    "5. Private pin checks preserve owner custody and must remain unchanged. The needed log is already-public complete progress evidence, bound by an exact published digest.",
+    "6. Preserve original log, job and worker. Stage a distinct exact-byte owner0600 input copy and use a distinct r2 run name. Keep all private reader checks and scientific calculations unchanged.",
+    "7. Existing artifact-custody guidance requires role-specific exact-byte staging. Official Slurm sbatch documentation states scheduler-created stdout/stderr permissions are controlled by submission umask; a script umask is not evidence of existing log mode.",
+    "8. Verify original-to-r2 code equivalence except name/input path, original log hash, all80 progress records, and actual staged owner/mode/hash before submission. Prior39tests/10subtests remain valid for identical algorithms; full private result remains required."
+  ],
+  "expected_reader_file_mode": "0600",
+  "failed_path_role": "original public scheduler stdout",
+  "job_id": 580077,
+  "new_forwards": 0,
+  "new_gradient_steps": 0,
+  "observed_file_mode": "0664",
+  "observed_file_sha256": "c378363ada61702cb89a6ed48b82d5aa619fdc8cb719d93a2a7a5a776215cc50",
+  "owner": "mxrayan",
+  "preserved_public_recovery_files": {
+    "accounting": {
+      "bytes": 370,
+      "path": "C:\\Users\\rayns\\Documents\\Codex\\2026-10-02\\ok\\work\\receipts\\conditional-saved-audit-580077-final-accounting-20261028.txt",
+      "sha256": "7366cf1e6ad2ea248c4ae06af880399ab882c781e958ada84045dfc9a8cecd89"
+    },
+    "stderr": {
+      "bytes": 0,
+      "path": "C:\\Users\\rayns\\Documents\\Codex\\2026-10-02\\ok\\work\\receipts\\conditional-saved-audit-580077-final-stderr-20261028.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 1045,
+      "path": "C:\\Users\\rayns\\Documents\\Codex\\2026-10-02\\ok\\work\\receipts\\conditional-saved-audit-580077-final-stdout-20261028.txt",
+      "sha256": "06d588e98fc10c1c603bf6d3a576e6019aa08d91eeabcb316ec154e778146074"
+    },
+    "summary": {
+      "bytes": 0,
+      "path": "C:\\Users\\rayns\\Documents\\Codex\\2026-10-02\\ok\\work\\receipts\\conditional-saved-audit-580077-final-summary-20261028.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "private_file_permissions_weakened": false,
+  "recorded_at_utc": "2026-10-28T21:14:50.808806+00:00",
+  "research_refs": [
+    "https://slurm.schedmd.com/sbatch.html"
+  ],
+  "schema": "alice-personality-saved-audit-failure-review-v1",
+  "source_summary_changed": false,
+  "source_worker_sha256": "3a2a02a69f26be1cb9f7d355d403ad62c4a3b7bfe9b55c2497b884cb3a6aaee5",
+  "state": "FAILED_2_0_BEFORE_BEHAVIORAL_READ"
+}

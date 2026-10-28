@@ -1,0 +1,19 @@
+{
+  "failed_job_preserved": 580077,
+  "only_worker_changes": [
+    "distinct run name",
+    "exact public stdout owner-copy path"
+  ],
+  "original_private_pin_mode_check_unchanged": true,
+  "public_progress_input_sha256": "c378363ada61702cb89a6ed48b82d5aa619fdc8cb719d93a2a7a5a776215cc50",
+  "source_job_id": 579741,
+  "source_sha256": {
+    "scripts/eipm/gemma_n0/conditional_saved_audit.py": "fbb253cbc09e63fb52069371e87c86811800d6d7776b1a44751e92af38cf5605",
+    "scripts/eipm/gemma_n0/cumulative_result_analysis.py": "8e0982e758ad81d735c474101fdd2e271d4dee3e124d33fc7f1e129e0c50b6c7",
+    "scripts/eipm/gemma_n0/live_namespace_custody.py": "7bde912edf49ffd1227f47d2bbf77068d6c0d79c7f65159b9e49a36522505533",
+    "scripts/eipm/gemma_n0/magnolia_conditional_learning_20261025.py": "dcb10bed56daa4d54605e072349b331c84921d42369f81f5a491172b70712689",
+    "scripts/eipm/gemma_n0/magnolia_conditional_saved_audit_r2_20261028.py": "dfb261165a3f06dc8077ecf748d852671a02bbb6236b388c55e0b6e65b1ad793",
+    "scripts/eipm/gemma_n0/magnolia_conditional_saved_audit_r2_20261028.sbatch": "2ae2b8dea17b98d435995109cede7bed572fb5a90cb55a0b0ed53f10fb317ada",
+    "tests/personality/test_conditional_saved_audit.py": "bf5498ad9eab75a9c796420599cfb520cd481bc10f38fc114483f7b35de02130"
+  }
+}
