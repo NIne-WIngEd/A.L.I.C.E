@@ -100,7 +100,7 @@ Read: mandatory full-v1 baseline; frontier-watch execution guardrail; October 29
 
 ## Corroboration / screened out
 
-- Microsoft, *Long-Term Agent Memory through Complementary Curation and Consolidation* (https://arxiv.org/abs/2610.39313, Oct 29): structured derived memory with episodic source, consolidation and answer comparison reinforces existing Curator + canonical evidence/source-native approach. LoCoMo results vary by generator and full-context can outperform compressed memory. **Already covered/corroboration**, not a new cognitive plane or database decision.
+- Microsoft, *Long-Term Agent Memory through Complementary Curation and Consolidation* (https://arxiv.org/abs/2610.39790, Oct 29): structured derived memory with episodic source, consolidation and answer comparison reinforces existing Curator + canonical evidence/source-native approach. LoCoMo results vary by generator and full-context can outperform compressed memory. **Already covered/corroboration**, not a new cognitive plane or database decision.
 - *MUSE: Multi-Level Memory with Selective Runtime Injection for Scientific Coding Agents* (arXiv:2610.38332): procedural memory use boundaries in narrow coding task; overlaps MemCryst/HaMo/DiscernMem. **Already covered**.
 - *HEDGE: Gated Hypergraph Memory for Scalable Multi-Agent Debate* (arXiv:2610.38902): alternative memory representation for debate; no directly unexpressible associative relation in existing Cognitive Multi-Graph. **Future challenger only on actual current workload blocker**, otherwise not actionable.
 - Do not relabel October 20–29 studies (including MUTE, REALM, AdaMM, StateWise, memory tax, PIP-ToM, DiscernMem, Concordat) as new.
