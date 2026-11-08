@@ -1,0 +1,61 @@
+{
+  "corrected_job": 577144,
+  "corrected_result": "COMPLETED_0_0",
+  "eight_steps": [
+    {
+      "evidence": "Original refusal at worker line83 after strict complete model fingerprint, native checkpoint chain and full response receipt equality passed. Public real-model control: raw mapping != parsed JSON, exact canonical bytes equal.",
+      "step": 1
+    },
+    {
+      "claim": "Reconstructed native N1/N2 state must reproduce the connected response and complete portable decision, enabling real outcome-based N3. This does not qualify personality capability.",
+      "step": 2
+    },
+    {
+      "architecture": "Native packet contains tuple candidate/concept metadata; decision_to_mapping retains it, canonical serialization writes JSON arrays; json.loads returns lists.",
+      "step": 3
+    },
+    {
+      "cause": "Faulty raw Python container equality at the serialized boundary. response receipt including full nativepacket fingerprint was already identical; no learned state divergence observed.",
+      "step": 4
+    },
+    {
+      "responsibility": "The recovery controller compares retained transport data; it must retain complete numeric/metadata equality and exact native model/packet hashes, without granting source or acceptance authority.",
+      "step": 5
+    },
+    {
+      "correction": "Preserve original worker/logs. New r2 compares complete canonical JSON bytes and separately checks exact nativepacket fingerprint; no model/source/target/runtime change or relaxed numerical tolerance.",
+      "step": 6
+    },
+    {
+      "research": "Project source-native postcondition and complete-output doctrine; Python3.11 JSON encoders/decoders document tuple/list to array and array to list; native codec canonical/fingerprint already implement transport normalization.",
+      "step": 7
+    },
+    {
+      "step": 8,
+      "verification": "Public actual-model control reproduces original container mismatch, exact serialized equality and numeric tamper rejection. Guarded577144 reloads complete actual tensors and nativechain, reproduces original response, full canonicaldecision and nativepacketfingerprint in90sec."
+    }
+  ],
+  "full_personality_complete": false,
+  "n0_approved": false,
+  "original_job": 577143,
+  "original_logs_sha256": {
+    "err": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "out": "13b8b434a212dea02d59ac34db7d82a93388165e27a30d1f51d68b678fcc0b99"
+  },
+  "original_result": "FAILED_2_0",
+  "owner_fidelity_approved": false,
+  "private_payload_in_git": false,
+  "public_control": {
+    "exact_canonical_equal": true,
+    "numeric_tamper_refused": true,
+    "raw_python_equal": false
+  },
+  "research_refs": [
+    "https://docs.python.org/3.11/library/json.html",
+    "src/alice_personality/identity/codec.py",
+    "research/frontier-watch@bd04f9c6147ab27178508f3bd45e50cffaeca19f"
+  ],
+  "schema": "alice-personality-reload-evidence-diagnosis-v1",
+  "scientific_revision": "333fcd0c8239fc81a6459b13d53bbe592b33fda6",
+  "verified_reload_receipt_sha256": "c0fda252a67d70afee384b3823c5d1c041ce3c14822cb6bab34948713d1349eb"
+}

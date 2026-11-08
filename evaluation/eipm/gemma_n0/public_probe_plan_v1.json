@@ -1,0 +1,140 @@
+{
+  "schema": "alice-personality-gemma-n0-public-probe-plan-v1",
+  "plan_id": "personality-n0-public-forward-diagnostic-v1",
+  "qualification": "unqualified",
+  "source_class": "public_fictional_development_fixture",
+  "purpose": "Observe complete raw-text token features on public EIPM semantic fixtures. This is neither personality judgment nor a behavioral competence or inherited-influence qualification.",
+  "fixture_contract": {
+    "required_fields": ["probe_id", "family", "pair_id", "text", "scope_note"],
+    "extra_fields_allowed": false,
+    "authoritative_identity_targets": false,
+    "raw_text_only": true,
+    "chat_template": false,
+    "generation": false,
+    "truncation": false,
+    "store_hidden_states": false,
+    "maximum_examples": 32,
+    "maximum_utf8_bytes_per_example": 16384
+  },
+  "examples": [
+    {
+      "probe_id": "negation",
+      "family": "negation_and_conditional",
+      "pair_id": null,
+      "text": "The invitation says that the meeting is not cancelled. Having an invitation does not mean that a guest has permission to publish the discussion.",
+      "scope_note": "Negation and distinct permissions; no identity target or answer label."
+    },
+    {
+      "probe_id": "conditional",
+      "family": "negation_and_conditional",
+      "pair_id": null,
+      "text": "If the public workshop is postponed, keep the registration. If it is cancelled, request a refund. Its current status has not been confirmed.",
+      "scope_note": "Conditional branches and missing current evidence; no prescribed personal verdict."
+    },
+    {
+      "probe_id": "relation-attribution",
+      "family": "relation_and_source_attribution",
+      "pair_id": null,
+      "text": "In this fictional example, Person A reports that Person B prefers quiet rooms. Person C doubts that report. Person A has not stated their own preference.",
+      "scope_note": "Separate reporter, subject, disagreement and unknown preference."
+    },
+    {
+      "probe_id": "uncertainty",
+      "family": "uncertainty_and_unknown",
+      "pair_id": null,
+      "text": "One fictional diary entry mentions a joke. No other reactions are available. Whether its author usually enjoys that kind of humor is unknown.",
+      "scope_note": "Sparse source support and explicit unknowns; not a learned character target."
+    },
+    {
+      "probe_id": "candidate-rule-shorter",
+      "family": "candidate_comparison",
+      "pair_id": "candidate-rule-intervention",
+      "text": "Compare two fictional plans only under the stated rule: prefer the shorter trip when costs are equal. Plan A costs 20 units and takes 15 minutes. Plan B costs 20 units and takes 40 minutes.",
+      "scope_note": "A supplied comparison rule is semantic material, not an authoritative personal value."
+    },
+    {
+      "probe_id": "candidate-rule-longer",
+      "family": "candidate_comparison",
+      "pair_id": "candidate-rule-intervention",
+      "text": "Compare two fictional plans only under the stated rule: prefer the longer trip when costs are equal. Plan A costs 20 units and takes 15 minutes. Plan B costs 20 units and takes 40 minutes.",
+      "scope_note": "Relevant counterpart changes only the supplied comparison rule; no qualification scoring."
+    },
+    {
+      "probe_id": "contradiction-correction",
+      "family": "contradiction_and_correction",
+      "pair_id": null,
+      "text": "A fictional note from Monday says that the library closes at six. A correction on Tuesday says that it now closes at seven. The correction does not establish when Monday's note became outdated.",
+      "scope_note": "Current correction versus historical uncertainty; no memory-formation proposal or gold target."
+    },
+    {
+      "probe_id": "privacy-context",
+      "family": "privacy_relationship_and_pragmatics",
+      "pair_id": null,
+      "text": "In a fictional conversation, a speaker permits discussing a public schedule but asks that a private address remain private. A request to summarize the schedule does not expand that permission.",
+      "scope_note": "Abstract consent context with no actual private address or source."
+    },
+    {
+      "probe_id": "relationship-context",
+      "family": "privacy_relationship_and_pragmatics",
+      "pair_id": null,
+      "text": "Two fictional collaborators agreed to give direct feedback when asked to test a plan. Today one asks for reassurance instead. Their earlier agreement and today's request concern different interaction contexts.",
+      "scope_note": "Relationship and expression context without assigning an identity or generating a reply."
+    },
+    {
+      "probe_id": "pragmatic-context",
+      "family": "privacy_relationship_and_pragmatics",
+      "pair_id": null,
+      "text": "A fictional speaker says, 'That went wonderfully,' immediately after describing a failed rehearsal. The remark may be ironic; the words alone do not settle the speaker's intent.",
+      "scope_note": "Literal wording, possible pragmatics and uncertainty remain distinct."
+    },
+    {
+      "probe_id": "wording-helpful",
+      "family": "matched_wording",
+      "pair_id": "same-content-expression",
+      "text": "Please help compare these fictional plans. They have equal cost; the stated preference is for the shorter trip. Plan A takes 15 minutes and Plan B takes 40 minutes.",
+      "scope_note": "Generic helpful framing paired with direct wording of the same content; diagnostic only."
+    },
+    {
+      "probe_id": "wording-direct",
+      "family": "matched_wording",
+      "pair_id": "same-content-expression",
+      "text": "Compare these fictional plans. They have equal cost; the stated preference is for the shorter trip. Plan A takes 15 minutes and Plan B takes 40 minutes.",
+      "scope_note": "Direct wording paired with the same supplied comparison content; no style target."
+    },
+    {
+      "probe_id": "irrelevant-wording",
+      "family": "irrelevant_and_relevant_counterparts",
+      "pair_id": "candidate-rule-intervention",
+      "text": "Compare two fictional plans only under the stated rule: prefer the shorter trip when costs are equal. Plan A costs 20 units and takes 15 minutes. Plan B costs 20 units and takes 40 minutes. The example's title is written in blue.",
+      "scope_note": "Irrelevant wording contrast against candidate-rule-shorter; no invariance pass is inferred from features."
+    }
+  ],
+  "future_qualification": {
+    "numeric_thresholds": null,
+    "sealed_final_cases_opened": false,
+    "required_evidence": [
+      "independently_held_out_cases_with_authorized_source_and_split_lineage",
+      "trained_N1_N2_N3_and_EIPM_full_path",
+      "independent_targets_and_preregistered_scoring",
+      "qualified_runtime_and_phase_exclusion_receipts"
+    ],
+    "mandatory_gate_families": [
+      {
+        "family": "semantic_and_evidence_competence",
+        "scope": "Negation, conditional meaning, relation/source attribution, comparison rules, corrections and calibrated unknowns. Public shape diagnostics cannot establish competence."
+      },
+      {
+        "family": "inherited_generic_assistant_influence",
+        "scope": "Matched content with helpful/direct framing, agreement pressure and instruction conflict; determine whether pretrained priors override supported personal judgment."
+      },
+      {
+        "family": "personal_state_causality_and_specificity",
+        "scope": "Relevant source/state interventions versus irrelevant changes through trained personal stages and the same-selected-evidence withheld-update ablation."
+      },
+      {
+        "family": "identity_role_and_expression_ownership",
+        "scope": "Source-person, host, relationship and assistant-self separation; grounded judgment and expression remain attributable to personal stages across replaceable feature providers."
+      }
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "actual_responses_reviewed": 20,
+  "ambiguous_partial_and_contraindicated_responses_retained": true,
+  "available_target_case_counts": {
+    "co_valid_probabilities": 20,
+    "contraindications": 20,
+    "head:communication": 20,
+    "head:drift": 20,
+    "head:emotion": 4,
+    "head:relationship": 14,
+    "head:stance": 20,
+    "head:values": 20,
+    "uncertainty": 20
+  },
+  "confidence_used_as_gold": false,
+  "independent_qualification_claim": false,
+  "numeric_targets": "Provisional primary developmental judgments, not empirical outcome frequencies.",
+  "original_job": 577095,
+  "original_source_splits_unchanged": true,
+  "other_teacher_used": false,
+  "outcome_derivatives_have_explicit_calibration_parents": true,
+  "owner_acceptance": false,
+  "parent_packet_index_sha256": "abdcfbda3337ddaa50bc0f6a5500debc3a3cc5b841f686bf2685bc01f30b76ce",
+  "primary_packet_index_sha256": "606340e69fba169e2d131caa2352f41d2efa4575c7d09a0dc4f0731c7e4b82b7",
+  "primary_teacher": "Owner-designated Codex root",
+  "private_payload_in_git": false,
+  "schema": "alice-personality-primary-actual-n3-summary-v1",
+  "shared_teacher_and_checkpoint_ancestry_disclosed": true,
+  "source_and_target_free_document_bytes_unchanged": true,
+  "spoken_fidelity_verified": false,
+  "unavailable_fields": [
+    "owner_fidelity_uncertainty",
+    "failure_tail_risk",
+    "evidence_sufficiency",
+    "numeric_voice",
+    "voice_control_confidence"
+  ],
+  "wrong_selected_responses_replaced_as_observed": false
+}

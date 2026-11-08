@@ -1,0 +1,80 @@
+{
+  "actual_guarded_inventory_job": 576892,
+  "attempts": [
+    {
+      "elapsed_seconds": 78742,
+      "end_local": "2026-10-05T12:10:42-05:00",
+      "node": "node023",
+      "state": "NODE_FAIL",
+      "submit_local": "2026-10-04T14:18:20-05:00"
+    },
+    {
+      "elapsed_seconds": 6,
+      "exit_code": "2:0",
+      "node": "node049",
+      "state": "FAILED",
+      "submit_local": "2026-10-05T12:10:42-05:00"
+    }
+  ],
+  "closed_documents": 60,
+  "inventory_file_sha256": "2551d8b60cffbcd08d2d5d8cc536e5a5934a5d6396f0372e946490c3241b65f0",
+  "mandatory_skill": "C:/Users/rayns/.codex/skills/diagonosis/SKILL.md",
+  "model_or_curriculum_failure_established": false,
+  "n0_approved": false,
+  "original_artifacts_modified": false,
+  "original_job": 576704,
+  "owner": "mxrayan",
+  "owner_approved": false,
+  "owner_continuation_plan_sha256": "1af51526d19901b60debd9a063c0993a149bdc869faecdcd6df80fe380c3e26c",
+  "owner_successor_job": 576893,
+  "private_payload_exported": false,
+  "published_checkpoints": 0,
+  "published_responses": 0,
+  "qualification": "UNQUALIFIED",
+  "recovered_entries": 643,
+  "retained_feature_bytes": 10790098211,
+  "schema": "alice-personality-interruption-diagnosis-v1",
+  "scientific_successor_code": "333fcd0c8239fc81a6459b13d53bbe592b33fda6",
+  "source_case_recipe_architecture_changed": false,
+  "steps": [
+    {
+      "evidence_validation": "Default latest-only accounting hid the original 21:52:22 node-failed attempt; duplicates and original immutable submission resolve the contradiction. Empty logs are preserved.",
+      "step": 1
+    },
+    {
+      "goal": "Construct actual ALICE governing interpretation/judgment and connected responses for separate N3 teaching. Scheduler loss alone tests none of those learned capabilities.",
+      "step": 2
+    },
+    {
+      "architecture": "Original full source producer completed and closed its store/session. The immutable job-ID wrapper is incompatible with automatic restart from the beginning and truncating logs.",
+      "step": 3
+    },
+    {
+      "location": "Original infrastructure NODE_FAIL, followed by restart. Existing original output necessarily refuses restart before training. No surviving console proves whether an earlier shell check also failed; no model exception is established.",
+      "step": 4
+    },
+    {
+      "responsibility": "Keep source/session custody and occupied-output protection. Closed replay validates original input/code/runtime/store/token/mask/frame membership; it does not create a new publisher interval.",
+      "step": 5
+    },
+    {
+      "correction": "Use no-requeue and append logs, explicit refusal reasons, new immutable output and owner-plan pins for completed features. Resume construction from source closure without reloading Gemma or inventing saved optimizer progress.",
+      "step": 6
+    },
+    {
+      "research": [
+        "https://slurm.schedmd.com/sbatch.html",
+        "https://slurm.schedmd.com/sacct.html",
+        "research/frontier-watch@bd04f9c6147ab27178508f3bd45e50cffaeca19f",
+        "existing actual FrozenFrameProducer.replay and paired FBM source-custody/outcome methods"
+      ],
+      "step": 7
+    },
+    {
+      "step": 8,
+      "verification": "158 affected tests/38 subtests passed. Actual sealed fictional-store replay reaches admitted N1/N2 optimization and the real response consumer; changed documents, rebound metadata, corrupt/unsealed/wrong-source stores refuse. Forced restart refuses before private I/O. Actual owner continuation remains pending."
+    }
+  ],
+  "timestamp_utc": "2026-10-07T04:07:23.549294Z",
+  "unpublished_optimizer_progress": "UNKNOWN"
+}

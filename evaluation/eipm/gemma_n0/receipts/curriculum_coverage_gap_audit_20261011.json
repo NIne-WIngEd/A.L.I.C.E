@@ -1,0 +1,174 @@
+{
+  "full_personality_qualified": false,
+  "historical_calibration_teaching": {
+    "case_count": 20,
+    "case_file_sha256": "493eb6d87b0de50abf84810158b260b1bbd18df9ce85d8b2eb8389005b42d79a",
+    "counts_are_effective_optimizer_coverage": false,
+    "counts_by_phase": {
+      "calibration": {
+        "co_valid_probabilities": 20,
+        "contraindications": 20,
+        "head:communication": 82,
+        "head:drift": 20,
+        "head:emotion": 4,
+        "head:relationship": 14,
+        "head:stance": 140,
+        "head:values": 32,
+        "uncertainty": 20
+      }
+    },
+    "label_counts": {
+      "communication": 6,
+      "drift": 1,
+      "emotion": 2,
+      "relationship": 1,
+      "stance": 7,
+      "values": 4,
+      "voice": 1
+    },
+    "nonzero_annotation_certainty_by_phase": {
+      "calibration": {
+        "co_valid_probabilities": 20,
+        "contraindications": 20,
+        "head:communication": 82,
+        "head:drift": 20,
+        "head:emotion": 4,
+        "head:relationship": 14,
+        "head:stance": 140,
+        "head:values": 32,
+        "uncertainty": 20
+      }
+    },
+    "qualification": false
+  },
+  "model_changed": false,
+  "n0_approved": false,
+  "original_reference_counts_in_current_documents": {
+    "ASYN_BASE": 20,
+    "E0": 65,
+    "EINF": 1
+  },
+  "original_split_counts": {
+    "train": 2556
+  },
+  "other_teacher_used": false,
+  "private_meanings_exported": false,
+  "receipt_sha256": "b0ec15bf1a31b9f52ac96e9d8886c5e5ffb78e8459e8035563f21ac719fa101a",
+  "root_only_private_review": true,
+  "schema": "alice-personality-curriculum-gap-evidence-v1",
+  "scope": "Structural evidence only; no unseen source-policy coverage or behavioral learning is inferred.",
+  "source_complete_authoring_sha256": "f88a5718b8cdd9c0ebd70c1334cbabd40a198937e96179504970dbf5f566452a",
+  "source_count": 2556,
+  "source_counts": {
+    "ASYN_BASE": 822,
+    "ASYN_CONTEXT": 15,
+    "ASYN_DIRECT": 1009,
+    "ASYN_TARGETED": 119,
+    "ASYN_VOICE": 96,
+    "E0": 290,
+    "EINF": 205
+  },
+  "source_package_sha256": "3867ff04d1e326086b9086b2f106b9156b3a3ec8d637d3161e7bf01616183ee9",
+  "trained_curriculum": {
+    "case_count": 80,
+    "case_file_sha256": "95b8311fbf6130f0fe2bbd0b4ffe4c206be390b5edee77f3d2ea44195e553cfc",
+    "counts_are_effective_optimizer_coverage": false,
+    "counts_by_phase": {
+      "n1": {
+        "concept_applicability": 80,
+        "concept_source_support": 478,
+        "provenance": 5236
+      },
+      "n2": {
+        "co_valid_probabilities": 120,
+        "contraindications": 120,
+        "head:communication": 131,
+        "head:drift": 46,
+        "head:emotion": 38,
+        "head:relationship": 80,
+        "head:stance": 840,
+        "head:values": 127,
+        "preferences": 120
+      }
+    },
+    "label_counts": {
+      "communication": 6,
+      "drift": 1,
+      "emotion": 2,
+      "relationship": 1,
+      "stance": 7,
+      "values": 4,
+      "voice": 1
+    },
+    "nonzero_annotation_certainty_by_phase": {
+      "n1": {
+        "concept_applicability": 80,
+        "concept_source_support": 478,
+        "provenance": 5236
+      },
+      "n2": {
+        "co_valid_probabilities": 120,
+        "contraindications": 120,
+        "head:communication": 131,
+        "head:drift": 46,
+        "head:emotion": 38,
+        "head:relationship": 80,
+        "head:stance": 840,
+        "head:values": 127,
+        "preferences": 120
+      }
+    },
+    "qualification": false
+  },
+  "unlaunched_conditional_repair": {
+    "case_count": 160,
+    "case_file_sha256": "eada2e86d78b8f912112ccf5ba44b04410de79326e5b0067643dfa174e4cbda6",
+    "counts_are_effective_optimizer_coverage": false,
+    "counts_by_phase": {
+      "n1": {
+        "concept_applicability": 168,
+        "concept_source_support": 1036,
+        "provenance": 10472
+      },
+      "n2": {
+        "co_valid_probabilities": 240,
+        "contraindications": 240,
+        "head:communication": 327,
+        "head:drift": 66,
+        "head:emotion": 104,
+        "head:relationship": 184,
+        "head:stance": 1680,
+        "head:values": 281,
+        "preferences": 240
+      }
+    },
+    "label_counts": {
+      "communication": 6,
+      "drift": 1,
+      "emotion": 2,
+      "relationship": 1,
+      "stance": 7,
+      "values": 4,
+      "voice": 1
+    },
+    "nonzero_annotation_certainty_by_phase": {
+      "n1": {
+        "concept_applicability": 168,
+        "concept_source_support": 1036,
+        "provenance": 10472
+      },
+      "n2": {
+        "co_valid_probabilities": 240,
+        "contraindications": 240,
+        "head:communication": 327,
+        "head:drift": 66,
+        "head:emotion": 104,
+        "head:relationship": 184,
+        "head:stance": 1680,
+        "head:values": 281,
+        "preferences": 240
+      }
+    },
+    "qualification": false
+  }
+}
