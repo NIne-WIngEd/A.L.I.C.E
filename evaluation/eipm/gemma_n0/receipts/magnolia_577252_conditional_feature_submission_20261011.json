@@ -1,0 +1,31 @@
+{
+  "actual_frozen_features_pending": true,
+  "allocation": {
+    "cpus": 1,
+    "memory_gib": 120,
+    "owner": "mxrayan",
+    "partition": "node",
+    "time_hours": 36
+  },
+  "budget_reason": "80 complete TRAIN frames versus10actual frames in577240 at2h44m31s.36h allows conservative full-source checks and160materializations;20unchanged CAL documents are not produced or optimized.",
+  "exact_worker_pin_enforced_before_private_entry": true,
+  "flora_work": false,
+  "full_broader_curriculum_complete": false,
+  "job_id": 577252,
+  "local_preflight_receipt_sha256": "f2f7fedf620d51a2d00553b37fc5b9c7d1db57eb52955f195f70e1cf56c3f659",
+  "n0_approved": false,
+  "owner": "mxrayan",
+  "packet_index_sha256": "8468b2ff22417384e86f24716a286c986e7fa5b0df9b71ddb9ef19a9961edc75",
+  "personality_approved": false,
+  "private_gradient_steps": 0,
+  "public_worker_and_wrapper_review_complete": true,
+  "receipt_sha256": "3505f6e8bf09cd8de5fde79453105a0c00f0816bc035bd3255f07a90a1853a65",
+  "reviewed_cases": 160,
+  "schema": "alice-personality-conditional-owner-feature-submission-v1",
+  "scientific_core_commit": "333fcd0c8239fc81a6459b13d53bbe592b33fda6",
+  "submission_status": "SUBMITTED_NOT_COMPLETED",
+  "train_documents": 80,
+  "unchanged_calibration_documents_excluded_from_feature_production": 20,
+  "worker_sha256": "7a222e99318e0230233c268419a6c9502fb891bfc933008b85e3e5220dff1cad",
+  "wrapper_sha256": "5629f7245550b53b398fa788233326c07ca31bb1f63c95bf0d0376d3e148eaf1"
+}

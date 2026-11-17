@@ -1,0 +1,29 @@
+{
+  "actual_log_pinned_reader_verified_records": 80,
+  "actual_log_verification_sha256": "5ae2a39ac959912bea207f8397705e6f2e985ada685264e18aeaa19fd476bc22",
+  "blockers": 0,
+  "dispatch_requires_actual_owner_mode_hash_for_every_staged_input": true,
+  "initial_local_log_invocation_rejected_before_read": "relative parent path; corrected to explicit absolute input without code change",
+  "n0_approved": false,
+  "only_worker_changes": [
+    "run name",
+    "prepared identical public log path"
+  ],
+  "parent_verification_sha256": "a5ef8a0b74e0c8064d3a98187e19f7868f0cc9ceb46f51ac69b1aa5fe4029392",
+  "personality_approved": false,
+  "private_checks_unchanged": true,
+  "reviewer": "conditional_result_review_20261028",
+  "runtime_completion_verified": false,
+  "schema": "alice-personality-saved-audit-r2-verification-v1",
+  "source_sha256": {
+    "scripts/eipm/gemma_n0/conditional_saved_audit.py": "fbb253cbc09e63fb52069371e87c86811800d6d7776b1a44751e92af38cf5605",
+    "scripts/eipm/gemma_n0/cumulative_result_analysis.py": "8e0982e758ad81d735c474101fdd2e271d4dee3e124d33fc7f1e129e0c50b6c7",
+    "scripts/eipm/gemma_n0/live_namespace_custody.py": "7bde912edf49ffd1227f47d2bbf77068d6c0d79c7f65159b9e49a36522505533",
+    "scripts/eipm/gemma_n0/magnolia_conditional_learning_20261025.py": "dcb10bed56daa4d54605e072349b331c84921d42369f81f5a491172b70712689",
+    "scripts/eipm/gemma_n0/magnolia_conditional_saved_audit_r2_20261028.py": "dfb261165a3f06dc8077ecf748d852671a02bbb6236b388c55e0b6e65b1ad793",
+    "scripts/eipm/gemma_n0/magnolia_conditional_saved_audit_r2_20261028.sbatch": "2ae2b8dea17b98d435995109cede7bed572fb5a90cb55a0b0ed53f10fb317ada",
+    "tests/personality/test_conditional_saved_audit.py": "bf5498ad9eab75a9c796420599cfb520cd481bc10f38fc114483f7b35de02130"
+  },
+  "unchanged_analysis_local_subtests": 10,
+  "unchanged_analysis_local_tests": 39
+}

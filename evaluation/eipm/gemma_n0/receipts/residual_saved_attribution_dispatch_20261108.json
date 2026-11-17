@@ -1,0 +1,37 @@
+{
+  "at_utc": "2026-11-08T08:14:08.116388+00:00",
+  "controller_sha256": "964be830f252d433483346888fbc0f65bb9598ca6e923c1edec5aa5f58b3b9c8",
+  "job_id": 581351,
+  "n0_approved": false,
+  "new_full_native_forwards": 0,
+  "new_private_gradient_steps": 0,
+  "owner": "mxrayan",
+  "personality_approved": false,
+  "public_summary": "/homes/01/mxrayan/rayan-compute/jobs/rayan-residual-saved-attribution-20261108.json",
+  "saved_branch_readout_replays": 160,
+  "source_job_id": 580417,
+  "source_sha256": {
+    "scripts/eipm/gemma_n0/conditional_judgment_residual.py": "18d0b08b01c53856390ad8bb428215b271575b360e707537b726a9c274eab759",
+    "scripts/eipm/gemma_n0/conditional_residual_saved_attribution.py": "152ce596c6209776ca12f811fa742d364edfe1ea5cc312fcce6c346a34a8670c",
+    "scripts/eipm/gemma_n0/live_namespace_custody.py": "7bde912edf49ffd1227f47d2bbf77068d6c0d79c7f65159b9e49a36522505533",
+    "scripts/eipm/gemma_n0/magnolia_conditional_residual_20261104.py": "b8c8876da08f3f19e2a0017c81ffdd318d340ed29995f388a80f65b1427e41ee",
+    "scripts/eipm/gemma_n0/magnolia_residual_saved_attribution_20261108.py": "34a3cfdc599ccc890b3109a0f3434bda0827f6eff4ecd0df2d695481b1f33d5b",
+    "scripts/eipm/gemma_n0/magnolia_residual_saved_attribution_20261108.sbatch": "10a72f0ed25b9e6b3e7f87c9d8a4344b05e2bb7a4eab235eebb4036a2cd3ed30",
+    "tests/personality/test_conditional_residual_saved_attribution.py": "1dd8aa94764d937bc714bbbe3713a246c4a24f2d577e2fcd37959299b356f642"
+  },
+  "staged_public_sha256": {
+    "/homes/01/mxrayan/rayan-compute/jobs/rayan-residual-saved-attribution-20261108-extension.py": "18d0b08b01c53856390ad8bb428215b271575b360e707537b726a9c274eab759",
+    "/homes/01/mxrayan/rayan-compute/jobs/rayan-residual-saved-attribution-20261108-helper.py": "152ce596c6209776ca12f811fa742d364edfe1ea5cc312fcce6c346a34a8670c",
+    "/homes/01/mxrayan/rayan-compute/jobs/rayan-residual-saved-attribution-20261108-live.py": "7bde912edf49ffd1227f47d2bbf77068d6c0d79c7f65159b9e49a36522505533",
+    "/homes/01/mxrayan/rayan-compute/jobs/rayan-residual-saved-attribution-20261108-source-stdout.txt": "15f41ec5f708e3a654a70fb5929472446a1a3f667de4a8ad469ed170e8c29582",
+    "/homes/01/mxrayan/rayan-compute/jobs/rayan-residual-saved-attribution-20261108-source.py": "b8c8876da08f3f19e2a0017c81ffdd318d340ed29995f388a80f65b1427e41ee",
+    "/homes/01/mxrayan/rayan-compute/jobs/rayan-residual-saved-attribution-20261108.py": "34a3cfdc599ccc890b3109a0f3434bda0827f6eff4ecd0df2d695481b1f33d5b",
+    "/homes/01/mxrayan/rayan-compute/jobs/rayan-residual-saved-attribution-20261108.sbatch": "10a72f0ed25b9e6b3e7f87c9d8a4344b05e2bb7a4eab235eebb4036a2cd3ed30"
+  },
+  "state": "SUBMITTED_RESULT_PENDING",
+  "stderr": "/homes/01/mxrayan/rayan-compute/rayan-personality/slurm/rayan-residual-saved-attribution-20261108-581351.err",
+  "stdout": "/homes/01/mxrayan/rayan-compute/rayan-personality/slurm/rayan-residual-saved-attribution-20261108-581351.out",
+  "submission_command": "sbatch --parsable --output=/homes/01/mxrayan/rayan-compute/rayan-personality/slurm/rayan-residual-saved-attribution-20261108-%j.out --error=/homes/01/mxrayan/rayan-compute/rayan-personality/slurm/rayan-residual-saved-attribution-20261108-%j.err /homes/01/mxrayan/rayan-compute/jobs/rayan-residual-saved-attribution-20261108.sbatch",
+  "submission_rule": "At most one attempt. Recover accounting on uncertain result; never retry.",
+  "verification_sha256": "880a73d4a5d067733bb7048d4c326f0b2083549b2f0fec3c2e5e7aeeb3b9b5b2"
+}

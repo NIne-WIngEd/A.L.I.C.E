@@ -1,0 +1,36 @@
+{
+  "all_9_job_579741_sources_unchanged": true,
+  "blockers": 0,
+  "local_subtests_passed": 10,
+  "local_tests_passed": 39,
+  "model_fix_claimed": false,
+  "n0_approved": false,
+  "new_training_authorized_by_this_receipt": false,
+  "original_model_sources_unchanged": true,
+  "original_pre_review_tests_did_not_cover_three_reviewed_defects": true,
+  "original_pre_review_tests_passed": 36,
+  "personality_approved": false,
+  "preserved_red_log_sha256": "21de4f9b54de52dab37c1f227735812c0ce49fb2be7a63e1d80db82d737ec760",
+  "private_execution_verified": false,
+  "review_scope": "saved producer schemas, native loss participation, isolation, descriptor custody, no model calls",
+  "reviewed_corrections": [
+    "Rewind actual _PinnedFile descriptor left at EOF by verification",
+    "Check native unavailable None/None facts before numeric validation",
+    "Match native preference CE whole-row certainty and pair BCE per-fact certainty; expose heterogeneous rows"
+  ],
+  "reviewer": "conditional_result_review_20261028",
+  "schema": "alice-personality-saved-audit-verification-v1",
+  "source_pin_refresh_only_after_last_green": "worker helper digest literal; wrapper worker digest; source receipt",
+  "source_sha256": {
+    "docs/superpowers/plans/2026-10-28-conditional-learning-saved-audit.md": "64cb8d912589c257f788d3cfcb886cf23e546491d0c14c49d737263f4ae9f418",
+    "scripts/eipm/gemma_n0/conditional_saved_audit.py": "fbb253cbc09e63fb52069371e87c86811800d6d7776b1a44751e92af38cf5605",
+    "scripts/eipm/gemma_n0/cumulative_result_analysis.py": "8e0982e758ad81d735c474101fdd2e271d4dee3e124d33fc7f1e129e0c50b6c7",
+    "scripts/eipm/gemma_n0/live_namespace_custody.py": "7bde912edf49ffd1227f47d2bbf77068d6c0d79c7f65159b9e49a36522505533",
+    "scripts/eipm/gemma_n0/magnolia_conditional_learning_20261025.py": "dcb10bed56daa4d54605e072349b331c84921d42369f81f5a491172b70712689",
+    "scripts/eipm/gemma_n0/magnolia_conditional_saved_audit_20261028.py": "3a2a02a69f26be1cb9f7d355d403ad62c4a3b7bfe9b55c2497b884cb3a6aaee5",
+    "scripts/eipm/gemma_n0/magnolia_conditional_saved_audit_20261028.sbatch": "bb395971d0a51d4e4225abb2f3aec7944462f1a1781bffd8521a0398f0990034",
+    "tests/personality/test_conditional_saved_audit.py": "bf5498ad9eab75a9c796420599cfb520cd481bc10f38fc114483f7b35de02130"
+  },
+  "test_log_sha256": "cd17aa85599a332f21c9113e80bc8bb32410aa93f21292d52b591dd5d029ab19",
+  "verified_at_utc": "2026-10-28T21:10:44.640375+00:00"
+}

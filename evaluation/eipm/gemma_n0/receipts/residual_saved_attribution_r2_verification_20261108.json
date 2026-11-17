@@ -1,0 +1,54 @@
+{
+  "at_utc": "2026-11-08T08:21:11.392019+00:00",
+  "blockers": 0,
+  "controller_sha256": "5ed5d768276791306e296717efcc03aaffa7500875ed73d5d84c90bd331776b5",
+  "counts_overlap": true,
+  "diagnosis": "Full comparison audit found two JSON/tensor nested-plan crossings; canonical whole manifest/plan metadata, strict tensors and optimizer states.",
+  "dispatch_ready": true,
+  "external_teacher": false,
+  "failed_reader_job_preserved": 581351,
+  "failed_reader_worker_sha256": "34a3cfdc599ccc890b3109a0f3434bda0827f6eff4ecd0df2d695481b1f33d5b",
+  "independent_review_scope": "Final r2 exact-source review: all8pins, full writer manifest projection, actual retained-scope/native-writer regression, original failed reader and wrapper/controller.",
+  "independent_reviewer": "residual_result_review_20261108",
+  "metadata_recovery_tests": 9,
+  "n0_approved": false,
+  "new_training": false,
+  "observed_test_summaries": {
+    "residual-local-verification-20261108.txt": "79 passed, 22 subtests passed",
+    "residual-saved-attribution-affected-r2-20261108.txt": "34 passed, 4 subtests passed",
+    "residual-saved-attribution-final-20261108.txt": "7 passed",
+    "residual-saved-attribution-governance-20261108.txt": "four separately observed exit codes [0,0,0,0]"
+  },
+  "original_failure_logs": {
+    "residual-saved-attribution-blocked-red-20261108.txt": "48a20735bfab2f26252b33377ef8116d653b0cf976ba87d191d9ff2da3569a08",
+    "residual-saved-attribution-red-20261108.txt": "365575268ba56b2d466c3a438b814a3e60ea95c1d3b593b38d6b8962a3b10f36",
+    "residual-saved-attribution-schema-red-20261108.txt": "1d132646598a1828bed3df6c084bfa6ba282b568787c0103cf975ee09999bfd2",
+    "residual-saved-metadata-red-20261108.txt": "18991ae906a8baa2b73eb79a6499a6a66d65406b376a6376638451611ce8a28f"
+  },
+  "personality_approved": false,
+  "private_execution_verified": false,
+  "resolved_findings": [
+    "Native unavailable candidate logits must stay masked; reproduced with nonzero scalar bias.",
+    "Snapshot JSON recipe and torch export tuple/list forms require canonical comparison; reproduced with actual two-arm writer outputs.",
+    "Float64 moment inversion reduces arithmetic error but does not bound already-rounded moment error.",
+    "Real retained_parent_scope tuple crosses both final plan and snapshot plan JSON boundaries; actual native writer regression reproduces and rejects changed scientific values."
+  ],
+  "source_models_modified": false,
+  "source_sha256": {
+    "scripts/eipm/gemma_n0/conditional_judgment_residual.py": "18d0b08b01c53856390ad8bb428215b271575b360e707537b726a9c274eab759",
+    "scripts/eipm/gemma_n0/conditional_residual_saved_attribution.py": "152ce596c6209776ca12f811fa742d364edfe1ea5cc312fcce6c346a34a8670c",
+    "scripts/eipm/gemma_n0/live_namespace_custody.py": "7bde912edf49ffd1227f47d2bbf77068d6c0d79c7f65159b9e49a36522505533",
+    "scripts/eipm/gemma_n0/magnolia_conditional_residual_20261104.py": "b8c8876da08f3f19e2a0017c81ffdd318d340ed29995f388a80f65b1427e41ee",
+    "scripts/eipm/gemma_n0/magnolia_residual_saved_attribution_r2_20261108.py": "c59545130d32893a48d5ea2df22011cc415a58ba97655a475cf19de8b6b1ed90",
+    "scripts/eipm/gemma_n0/magnolia_residual_saved_attribution_r2_20261108.sbatch": "4a7070c531b38c22e580a649c5482273ecbd942defd05d54a3c6ab115c09c195",
+    "tests/personality/test_conditional_residual_saved_attribution.py": "1dd8aa94764d937bc714bbbe3713a246c4a24f2d577e2fcd37959299b356f642",
+    "tests/personality/test_residual_saved_metadata_recovery.py": "777bd9dd25eb2c35dcc0e371083b4bd0dd39d30782e67db3a44b8d0d98c77dcf"
+  },
+  "verification_logs": {
+    "residual-local-verification-20261108.txt": "ed0fc53ee3bb7b5913d1ab07738f065cb8404eb0c3c45169a7cceb45016b00e0",
+    "residual-saved-attribution-affected-r2-20261108.txt": "ebb76b81608bfd0c65a2204c20bff0d3298029fbe1e2ed0daca67bf09d947853",
+    "residual-saved-attribution-final-20261108.txt": "cde287a472e35799736a172074a72b50ab9b027d47fac3b6455c15b5a79c0f74",
+    "residual-saved-attribution-governance-20261108.txt": "afdba37cf9009d77d49c53ac961650c602c1027e837c629c809b8405f7fad4d2",
+    "residual-saved-metadata-green-20261108.txt": "c1e41bb2d872baecef06cc0cb5c6a6e5a481a97f8250391604d3fd547483defd"
+  }
+}

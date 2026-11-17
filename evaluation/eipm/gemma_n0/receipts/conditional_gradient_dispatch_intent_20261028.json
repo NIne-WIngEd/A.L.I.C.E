@@ -1,0 +1,39 @@
+{
+  "at_utc": "2026-10-28T21:48:17.488076+00:00",
+  "full_cases": 216,
+  "full_groups": 40,
+  "new_optimizer_steps": 0,
+  "owner": "mxrayan",
+  "source_job_id": 579741,
+  "source_sha256": {
+    "docs/superpowers/plans/2026-10-28-personality-gradient-attribution.md": "c2c2b36c24b3e922f9eec06378737c7e92ced95a9911ef9e00b5046d9df2e25f",
+    "scripts/eipm/gemma_n0/conditional_gradient_attribution.py": "6088c6aaa99c8a7842fed04a0323ba9bb2bf0eb26502ab2fe2575bfe831040dc",
+    "scripts/eipm/gemma_n0/conditional_learning_readonly_context.py": "6e449a5c02df6bd374daa9bae553e0895be62b33da323176ff8efd75aee1f1ce",
+    "scripts/eipm/gemma_n0/magnolia_conditional_gradient_attribution_20261028.py": "733bf155c62255ee2afa4cbc29cf8faaa05208e8454ac85b90e6ace707361724",
+    "scripts/eipm/gemma_n0/magnolia_conditional_gradient_attribution_20261028.sbatch": "af47043185831ad525b5267d8e06de2829ed043ef39c8c6147997c7b2bd40c51",
+    "tests/personality/test_conditional_gradient_attribution.py": "49a4c2f4da953b603776c4a3d003c03f88bd88382c6aa7291a12beb03f07bbb8"
+  },
+  "staged_inputs": {
+    "rayan-conditional-gradient-attribution-20261028-analysis.py": {
+      "owner_mode": "mxrayan:600",
+      "sha256": "6088c6aaa99c8a7842fed04a0323ba9bb2bf0eb26502ab2fe2575bfe831040dc"
+    },
+    "rayan-conditional-gradient-attribution-20261028-context.py": {
+      "owner_mode": "mxrayan:600",
+      "sha256": "6e449a5c02df6bd374daa9bae553e0895be62b33da323176ff8efd75aee1f1ce"
+    },
+    "rayan-conditional-gradient-attribution-20261028-source-stdout.txt": {
+      "owner_mode": "mxrayan:600",
+      "sha256": "c378363ada61702cb89a6ed48b82d5aa619fdc8cb719d93a2a7a5a776215cc50"
+    },
+    "rayan-conditional-gradient-attribution-20261028.py": {
+      "owner_mode": "mxrayan:600",
+      "sha256": "733bf155c62255ee2afa4cbc29cf8faaa05208e8454ac85b90e6ace707361724"
+    },
+    "rayan-conditional-gradient-attribution-20261028.sbatch": {
+      "owner_mode": "mxrayan:600",
+      "sha256": "af47043185831ad525b5267d8e06de2829ed043ef39c8c6147997c7b2bd40c51"
+    }
+  },
+  "verification_sha256": "84a02c866138aa1e501534747a042415f8418b5c2e158d882283b7e6e2794e4e"
+}

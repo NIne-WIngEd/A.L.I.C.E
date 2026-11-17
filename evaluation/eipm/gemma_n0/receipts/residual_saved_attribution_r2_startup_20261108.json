@@ -1,0 +1,32 @@
+{
+  "at_utc": "2026-11-08T08:22:20.722361+00:00",
+  "behavioral_qualification": false,
+  "exit_code": "0:0",
+  "files": {
+    "accounting": {
+      "bytes": 335,
+      "path": "C:\\Users\\rayns\\Documents\\Codex\\2026-10-02\\ok\\work\\receipts\\residual-saved-581352-accounting-20261108.txt",
+      "sha256": "f16764e053b5c9cb41c8342adbb75e31578712aaf2f306928a281647e23c5c23"
+    },
+    "stderr": {
+      "bytes": 0,
+      "path": "C:\\Users\\rayns\\Documents\\Codex\\2026-10-02\\ok\\work\\receipts\\residual-saved-581352-stderr-20261108.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 185,
+      "path": "C:\\Users\\rayns\\Documents\\Codex\\2026-10-02\\ok\\work\\receipts\\residual-saved-581352-stdout-20261108.txt",
+      "sha256": "f0f33c171cc99da66cdb457b7110b87acf1ca2ad812bdb66a06c60ba61d8a974"
+    },
+    "summary": {
+      "bytes": 0,
+      "path": "C:\\Users\\rayns\\Documents\\Codex\\2026-10-02\\ok\\work\\receipts\\residual-saved-581352-summary-20261108.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "job_id": 581352,
+  "job_state": "RUNNING",
+  "owner": "mxrayan",
+  "public_only": true,
+  "source_job_id": 580417
+}
