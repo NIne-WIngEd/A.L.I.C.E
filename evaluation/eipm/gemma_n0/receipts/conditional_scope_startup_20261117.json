@@ -1,0 +1,27 @@
+{
+  "accounting": "JobID|User|State|ExitCode|Elapsed|NodeList|MaxRSS\n582305|mxrayan|RUNNING|0:0|00:00:14|node002|\n582305.batch||RUNNING|0:0|00:00:14|node002|\n582305.extern||RUNNING|0:0|00:00:14|node002|\n",
+  "at_utc": "2026-11-17T17:23:09.869955+00:00",
+  "controller": "JobId=582305 JobName=rayan-conditional-scope UserId=mxrayan(1905) GroupId=users(100) MCS_label=N/A Priority=1192 Nice=0 Account=bgorg QOS=normal JobState=RUNNING Reason=None Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:15 TimeLimit=5-00:00:00 TimeMin=N/A SubmitTime=2026-11-17T11:22:53 EligibleTime=2026-11-17T11:22:53 AccrueTime=2026-11-17T11:22:53 StartTime=2026-11-17T11:22:54 EndTime=2026-11-22T11:22:54 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-11-17T11:22:54 Scheduler=Main Partition=node AllocNode:Sid=login02:29070 ReqNodeList=(null) ExcNodeList=node016 NodeList=node002 BatchHost=node002 NumNodes=1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* TRES=cpu=1,mem=120G,node=1,billing=19 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=120G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/homes/01/mxrayan/rayan-compute/jobs/rayan-conditional-scope-20261117.sbatch WorkDir=/homes/01/mxrayan StdErr=/homes/01/mxrayan/rayan-compute/rayan-personality/slurm/rayan-conditional-scope-20261117-582305.err StdIn=/dev/null StdOut=/homes/01/mxrayan/rayan-compute/rayan-personality/slurm/rayan-conditional-scope-20261117-582305.out Power= \n",
+  "job_id": 582305,
+  "job_state": "RUNNING",
+  "measurement_result_verified": false,
+  "n0_approved": false,
+  "observation_sha256": {
+    "conditional-scope-582305-startup-accounting-20261117.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "conditional-scope-582305-startup-accounting-20261117.stdout": "75e677f0affdda25a9ad1dd2977c1afae3cac5371b703a3d22704b53c0ae2856",
+    "conditional-scope-582305-startup-controller-20261117.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "conditional-scope-582305-startup-controller-20261117.stdout": "2f886e373ef1287be8470b452e2728715f35578070ae1163eabc246080b19910",
+    "conditional-scope-582305-startup-stderr-20261117.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "conditional-scope-582305-startup-stderr-20261117.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "conditional-scope-582305-startup-stdout-20261117.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "conditional-scope-582305-startup-stdout-20261117.stdout": "f0f33c171cc99da66cdb457b7110b87acf1ca2ad812bdb66a06c60ba61d8a974",
+    "conditional-scope-582305-startup-summary_presence-20261117.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "conditional-scope-582305-startup-summary_presence-20261117.stdout": "5ad38304b535c2987dbd24657c1a11b884984ff600d9f389deb0d4e634fee792"
+  },
+  "observed_once": true,
+  "owner": "mxrayan",
+  "personality_approved": false,
+  "stderr": "",
+  "stdout_tail": "{\"host_gid\": 100, \"host_netns\": \"net:[4026531956]\", \"host_uid\": 1905, \"interfaces\": [\"lo\"], \"isolated_netns\": \"net:[4026532988]\", \"stage\": \"namespace\", \"state\": \"ISOLATED_UNQUALIFIED\"}\n",
+  "summary_presence": "absent"
+}
