@@ -1,0 +1,36 @@
+{
+  "actual_durable_ledger_and_reopen": true,
+  "actual_optimized_public_native_decision": true,
+  "actual_private_execution_or_causal_credit": false,
+  "all_15_running_job_source_pins_unchanged": true,
+  "at_utc": "2026-11-17T18:09:00.446796+00:00",
+  "automatic_n3_teaching": false,
+  "exit_code": 0,
+  "independent_review_blockers": 0,
+  "log_sha256": "18f1a342e78f5b11db6ed5e1a24e02d635fa8d47b349914cdfcd8c50a3535037",
+  "n0_approved": false,
+  "new_remote_compute": false,
+  "personality_approved": false,
+  "preserved_failure_logs": {
+    "personality-results-lifecycle-red-20261117.txt": "b17b0886877d1ac715c38294aa822eafbf04ad570036038eada9bdc5b7ef8e48",
+    "personality-results-red-20261117.txt": "ef5acfe7457cb037aa010c0fa26b9e48793725fa8639c053f0754a04c2a03770",
+    "personality-results-red-correct-import-20261117.txt": "1d220ee3f5c34f47f4a261c4f18745ba0d015bce0ddc1cdf924b708cf0120c15",
+    "personality-results-red-valid-fixture-20261117.txt": "2e7bad5eb60676222eefca50e90e0259d3872a0f08409a420abf84f835e2a8a5",
+    "personality-results-timezone-red-20261117.txt": "97769f258e1b807be1559b61547d7ef1b0001904e1deb3cfe3ec545aa8a23ff1"
+  },
+  "production_runtime_activation": false,
+  "result_capsule_is_explicit_public_report": true,
+  "review_receipt_sha256": "177667a8c2aee4d00bb9d24814b4f43bcbdaf19fb90b41da3f92f529e9749388",
+  "running_job_id": 582305,
+  "running_job_polled_or_modified": false,
+  "source_sha256": {
+    "src/cognitive_kernel/contracts.py": "97a51ec61a6122e843669b5d497ba5b139be2ea20cfda4e622207a47bb609e6e",
+    "src/cognitive_kernel/experience.py": "2efedf5602991a3383e35c4b6b35f21198ec109ce971d05a06755349e50337cf",
+    "src/cognitive_kernel/ledger_store.py": "45a6056a196d619d080706ecfa3f176e321ec8500991844319b44cf3e16db0ca",
+    "src/cognitive_kernel/personality_experience.py": "2be50fcc1c6b51640519fa419a6f59b7e701de53529dbc69416c10b6b45fe62f",
+    "src/cognitive_kernel/personality_results.py": "a15ac66285633fd51cdcba7c0b14895cb95170059679c180f8819f38e23577ee",
+    "src/cognitive_kernel/results.py": "7a0c1c88e5fc949d103787df89b416f963bf267eb296352459a7e82f317da4a9",
+    "tests/personality/test_personality_results.py": "ab24cd21f68b7af18c1fb1ade6012797dec9f1933af40be896c2650897c0f879"
+  },
+  "test_result": "44 passed in 103.20s (0:01:43)"
+}
