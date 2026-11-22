@@ -1,0 +1,40 @@
+{
+  "at_utc": "2026-11-22T05:21:39.905032+00:00",
+  "launch_controller_sha256": "8edcb25ff1f1b4b1cb583c72eec19692ff62f052d726fedb0e3e4cb998563735",
+  "new_optimization_authorized": false,
+  "original_failed_sources_preserved": true,
+  "protected_reader_permission_check_unchanged": true,
+  "public_stdout_bytes": 177337,
+  "public_stdout_sha256": "05a6fbc8b03b401a039655dedd6e08e22b819992eedcf6550ea2ba5384701ed3",
+  "source_sha256": {
+    "evaluation/eipm/gemma_n0/receipts/conditional_scope_interruption_20261121.json": "6f0b96854a5a34cfaca11d7ea6b6dc31fff63a55705fe753adf243fbef8e1c2b",
+    "evaluation/eipm/gemma_n0/receipts/conditional_scope_owner_plan_20261117.json": "4576e244d1667bfca025bc256af9a191d50d76109e081f3c066d411a60a4ab39",
+    "evaluation/eipm/gemma_n0/receipts/conditional_scope_recovery_failure_582473_20261121.json": "c8034c4c773596bf88f0982a0ba112fd03259093865a1775f3f0700e3b991ddc",
+    "scripts/eipm/gemma_n0/conditional_judgment_residual.py": "18d0b08b01c53856390ad8bb428215b271575b360e707537b726a9c274eab759",
+    "scripts/eipm/gemma_n0/conditional_scope_experiment.py": "2498165c7053ef318e0cf6a016166de4d74fb467263099d39264ced18cf27e5e",
+    "scripts/eipm/gemma_n0/conditional_scope_teaching.py": "e11d0d189084dbe8bad7ee66b12e89ce919eb741ea1a5aa6c0574629352b59fd",
+    "scripts/eipm/gemma_n0/live_namespace_custody.py": "7bde912edf49ffd1227f47d2bbf77068d6c0d79c7f65159b9e49a36522505533",
+    "scripts/eipm/gemma_n0/magnolia_conditional_scope_20261117.py": "48456f8f4a0d0c8d7c40f88045b077986069b2f5b82a1f675a54ee114f30bcca",
+    "scripts/eipm/gemma_n0/magnolia_conditional_scope_20261117.sbatch": "ed0b1bca158d76fba705ae501922a27f7e7b821b3354de464ab04b700c408ad3",
+    "scripts/eipm/gemma_n0/magnolia_conditional_scope_recovery_20261121.py": "cb37c3f3732f0050a4901590ba69bda321ae2796b7d284a15eef41e72c904351",
+    "scripts/eipm/gemma_n0/magnolia_conditional_scope_recovery_20261121.sbatch": "1ad2ec3b1fc58c8f8fd4f636f76f5b7ecd0b3c8558120471eb5d202f93463a7b",
+    "scripts/eipm/gemma_n0/magnolia_conditional_scope_recovery_r2_20261121.py": "27dc6d3f5317c24debb2445354f6afcaa5aa7c0abe07f5ba197e5c14b1213f25",
+    "scripts/eipm/gemma_n0/magnolia_conditional_scope_recovery_r2_20261121.sbatch": "1ee392cf90026e4543114ef1d27a8d18a20007df4d3ddc623b4a811dec95926f",
+    "tests/personality/test_conditional_judgment_residual.py": "19dec28b1b40f54d24ea31d6adb24bca67113bd26b4e01c16a056f8a11ebfdc3",
+    "tests/personality/test_conditional_residual_experiment.py": "a45853ebf641374099b6dce1142c7b788a488c930e398742360df4b1a0761101",
+    "tests/personality/test_conditional_residual_worker.py": "038b5689f4ff5a23fc5fa7f11fc870bb16cd971fd46c25a02275689e7b9d075b",
+    "tests/personality/test_conditional_scope_experiment.py": "1fb49bfadc21c26888d88b046c4e30048009cc05ff6a89e5e3ce279929fe9be2",
+    "tests/personality/test_conditional_scope_metadata.py": "f966de9323a22c56812e3429a184c86af5dcfd0d899a695ffdb3dfc3c6536de2",
+    "tests/personality/test_conditional_scope_recovery.py": "26807ff0e9ec21c63e925177115636a326541b8dacb9796b5fc1ed41833d98e2",
+    "tests/personality/test_conditional_scope_recovery_r2.py": "e56de0f40c28f9b6e683e0001f131dcf703f578909281ac2985c9bbe2f5a6c7c",
+    "tests/personality/test_conditional_scope_worker.py": "65a42721ca5f18b648502b901efe1138065088cf4f9b23e21974f62d3ccdf793",
+    "tests/personality/test_conditional_teaching.py": "79fda51fd5ea823e023236dae981929751f5a303b406e327f415313a40deadca",
+    "tests/personality/test_residual_saved_metadata_recovery.py": "777bd9dd25eb2c35dcc0e371083b4bd0dd39d30782e67db3a44b8d0d98c77dcf"
+  },
+  "verified_logs": {
+    "scope-recovery-r2-final-20261121.txt": {
+      "result": "28 passed, 19 subtests passed in 95.04s (0:01:35)",
+      "sha256": "53e18f3a632741caf661f393016669cef2fe2d51bc0864328d579d1c21613dcb"
+    }
+  }
+}

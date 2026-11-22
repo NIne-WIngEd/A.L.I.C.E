@@ -1,0 +1,46 @@
+{
+  "at_utc": "2026-11-22T05:19:42.202442+00:00",
+  "checkpoint_tensors_loaded": false,
+  "controller": "JobId=582473 JobName=rayan-scope-recover UserId=mxrayan(1905) GroupId=users(100) MCS_label=N/A Priority=1087 Nice=0 Account=bgorg QOS=normal JobState=FAILED Reason=NonZeroExitCode Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=2:0 RunTime=00:01:25 TimeLimit=5-00:00:00 TimeMin=N/A SubmitTime=2026-11-21T23:10:46 EligibleTime=2026-11-21T23:10:46 AccrueTime=2026-11-21T23:10:46 StartTime=2026-11-21T23:10:46 EndTime=2026-11-21T23:12:11 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-11-21T23:10:46 Scheduler=Main Partition=node AllocNode:Sid=login01:104094 ReqNodeList=(null) ExcNodeList=node[002,016] NodeList=node001 BatchHost=node001 NumNodes=1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* TRES=cpu=1,mem=120G,node=1,billing=19 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=120G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/homes/01/mxrayan/rayan-compute/jobs/rayan-conditional-scope-recovery-20261121.sbatch WorkDir=/homes/01/mxrayan StdErr=/homes/01/mxrayan/rayan-compute/rayan-personality/slurm/rayan-conditional-scope-recovery-20261121-582473.err StdIn=/dev/null StdOut=/homes/01/mxrayan/rayan-compute/rayan-personality/slurm/rayan-conditional-scope-recovery-20261121-582473.out Power= \n",
+  "correction": "Stage exact original public stdout as a new owner-only artifact with unchanged external SHA. Preserve original log mode/content and strict reader.",
+  "execution_result": "FAILED_2_0",
+  "expected_artifact_mode": "0600",
+  "failed_operation": "owner-only artifact pin attempted on original public scheduler stdout",
+  "failure": {
+    "exception_chain": [
+      {
+        "errno": null,
+        "exception_type": "AssertionError",
+        "public_code_frames": [
+          {
+            "function": "<module>",
+            "line": 1247,
+            "module": "rayan-conditional-scope-recovery-20261121.py"
+          },
+          {
+            "function": "run",
+            "line": 419,
+            "module": "rayan-conditional-scope-recovery-20261121.py"
+          },
+          {
+            "function": "pin",
+            "line": 397,
+            "module": "rayan-conditional-scope-recovery-20261121.py"
+          }
+        ]
+      }
+    ],
+    "state": "PAIRED_COMPARISON_REFUSED"
+  },
+  "job_id": 582473,
+  "n0_approved": false,
+  "new_training_updates": 0,
+  "observed_original_log_mode": "0664",
+  "observed_original_log_owner": "mxrayan",
+  "original_log_bytes": 177337,
+  "personality_approved": false,
+  "prior_successful_implementation": "magnolia_residual_saved_attribution_r2_20261108.py and launch_residual_saved_attribution_r2_20261108.py",
+  "schema": "alice-personality-recovery-public-log-mode-failure-v1",
+  "source_worker_sha256": "cb37c3f3732f0050a4901590ba69bda321ae2796b7d284a15eef41e72c904351",
+  "stdout_file_sha256": "fd8b4e4625705fc3a515d36ca43fefa747ddd7ed2b482e54d1c21a5fbeb56fe8"
+}

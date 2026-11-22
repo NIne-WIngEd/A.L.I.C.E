@@ -1,0 +1,40 @@
+{
+  "at_utc": "2026-11-22T05:24:03.110796+00:00",
+  "behavioral_result_verified": false,
+  "controller": "JobId=582474 JobName=rayan-scope-recover-r2 UserId=mxrayan(1905) GroupId=users(100) MCS_label=N/A Priority=1087 Nice=0 Account=bgorg QOS=normal JobState=RUNNING Reason=None Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:21 TimeLimit=5-00:00:00 TimeMin=N/A SubmitTime=2026-11-21T23:23:39 EligibleTime=2026-11-21T23:23:39 AccrueTime=2026-11-21T23:23:39 StartTime=2026-11-21T23:23:40 EndTime=2026-11-26T23:23:40 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-11-21T23:23:40 Scheduler=Main Partition=node AllocNode:Sid=login01:109649 ReqNodeList=(null) ExcNodeList=node[002,016] NodeList=node001 BatchHost=node001 NumNodes=1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* TRES=cpu=1,mem=120G,node=1,billing=19 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=120G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/homes/01/mxrayan/rayan-compute/jobs/rayan-conditional-scope-recovery-r2-20261121.sbatch WorkDir=/homes/01/mxrayan StdErr=/homes/01/mxrayan/rayan-compute/rayan-personality/slurm/rayan-conditional-scope-recovery-r2-20261121-582474.err StdIn=/dev/null StdOut=/homes/01/mxrayan/rayan-compute/rayan-personality/slurm/rayan-conditional-scope-recovery-r2-20261121-582474.out Power= \n",
+  "isolation_observed": true,
+  "job_id": 582474,
+  "job_state": "RUNNING",
+  "last_public_event": {
+    "host_gid": 100,
+    "host_netns": "net:[4026531956]",
+    "host_uid": 1905,
+    "interfaces": [
+      "lo"
+    ],
+    "isolated_netns": "net:[4026532988]",
+    "stage": "namespace",
+    "state": "ISOLATED_UNQUALIFIED"
+  },
+  "n0_approved": false,
+  "owner": "mxrayan",
+  "personality_approved": false,
+  "public_event_count": 1,
+  "public_observations": {
+    "controller": {
+      "bytes": 1350,
+      "sha256": "05d2b6e1cae949eba75c8eab191bc599e81d768a2abffa5388136706ab12389a"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 185,
+      "sha256": "f0f33c171cc99da66cdb457b7110b87acf1ca2ad812bdb66a06c60ba61d8a974"
+    }
+  },
+  "refusal_observed": false,
+  "snapshot_recovery_verified": false,
+  "stderr": ""
+}
