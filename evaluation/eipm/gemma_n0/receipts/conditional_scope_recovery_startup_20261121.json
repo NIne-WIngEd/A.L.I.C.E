@@ -1,0 +1,26 @@
+{
+  "accounting": "Unavailable earlier this turn; not retried",
+  "at_utc": "2026-11-22T05:10:51.056686+00:00",
+  "behavioral_result_verified": false,
+  "controller": "JobId=582473 JobName=rayan-scope-recover UserId=mxrayan(1905) GroupId=users(100) MCS_label=N/A Priority=1087 Nice=0 Account=bgorg QOS=normal JobState=RUNNING Reason=Prolog Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:02 TimeLimit=5-00:00:00 TimeMin=N/A SubmitTime=2026-11-21T23:10:46 EligibleTime=2026-11-21T23:10:46 AccrueTime=2026-11-21T23:10:46 StartTime=2026-11-21T23:10:46 EndTime=2026-11-26T23:10:46 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-11-21T23:10:46 Scheduler=Main Partition=node AllocNode:Sid=login01:104094 ReqNodeList=(null) ExcNodeList=node[002,016] NodeList=node001 BatchHost=node001 NumNodes=1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* TRES=cpu=1,mem=120G,node=1,billing=19 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=120G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/homes/01/mxrayan/rayan-compute/jobs/rayan-conditional-scope-recovery-20261121.sbatch WorkDir=/homes/01/mxrayan StdErr=/homes/01/mxrayan/rayan-compute/rayan-personality/slurm/rayan-conditional-scope-recovery-20261121-582473.err StdIn=/dev/null StdOut=/homes/01/mxrayan/rayan-compute/rayan-personality/slurm/rayan-conditional-scope-recovery-20261121-582473.out Power= \n",
+  "job_id": 582473,
+  "job_state": "RUNNING",
+  "n0_approved": false,
+  "observation_sha256": {
+    "scope-recovery-582473-startup-controller-20261121.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scope-recovery-582473-startup-controller-20261121.stdout": "16ac869067a5ed1401938f9d861504211172e3bc725253180958def9fd993f46",
+    "scope-recovery-582473-startup-stderr-20261121.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scope-recovery-582473-startup-stderr-20261121.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scope-recovery-582473-startup-stdout-20261121.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scope-recovery-582473-startup-stdout-20261121.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scope-recovery-582473-startup-summary_presence-20261121.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scope-recovery-582473-startup-summary_presence-20261121.stdout": "5ad38304b535c2987dbd24657c1a11b884984ff600d9f389deb0d4e634fee792"
+  },
+  "observed_once": true,
+  "owner": "mxrayan",
+  "personality_approved": false,
+  "snapshot_recovery_verified": false,
+  "stderr": "",
+  "stdout_tail": "",
+  "summary_presence": "absent"
+}

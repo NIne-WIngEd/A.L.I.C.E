@@ -1,0 +1,39 @@
+{
+  "at_utc": "2026-11-22T05:08:19.115667+00:00",
+  "launch_controller_sha256": "735b3ac092649fa708d3b5c11b24bd502858b0918fb1f349f001ff0e0c4132f0",
+  "new_optimization_authorized": false,
+  "original_scientific_sources_unchanged": true,
+  "recovery_plan_sha256": "4bbd1313b1be1ee5879f9e54b8f58c40bb07beace5d8ed242f3ebb41f30b6075",
+  "recovery_snapshot_sha256": "c067841abba00dcc0f2928fb1c3b3b3146506849e716a7f3b2ab88d81484290b",
+  "source_sha256": {
+    "evaluation/eipm/gemma_n0/receipts/conditional_scope_interruption_20261121.json": "6f0b96854a5a34cfaca11d7ea6b6dc31fff63a55705fe753adf243fbef8e1c2b",
+    "evaluation/eipm/gemma_n0/receipts/conditional_scope_owner_plan_20261117.json": "4576e244d1667bfca025bc256af9a191d50d76109e081f3c066d411a60a4ab39",
+    "scripts/eipm/gemma_n0/conditional_judgment_residual.py": "18d0b08b01c53856390ad8bb428215b271575b360e707537b726a9c274eab759",
+    "scripts/eipm/gemma_n0/conditional_scope_experiment.py": "2498165c7053ef318e0cf6a016166de4d74fb467263099d39264ced18cf27e5e",
+    "scripts/eipm/gemma_n0/conditional_scope_teaching.py": "e11d0d189084dbe8bad7ee66b12e89ce919eb741ea1a5aa6c0574629352b59fd",
+    "scripts/eipm/gemma_n0/live_namespace_custody.py": "7bde912edf49ffd1227f47d2bbf77068d6c0d79c7f65159b9e49a36522505533",
+    "scripts/eipm/gemma_n0/magnolia_conditional_scope_20261117.py": "48456f8f4a0d0c8d7c40f88045b077986069b2f5b82a1f675a54ee114f30bcca",
+    "scripts/eipm/gemma_n0/magnolia_conditional_scope_20261117.sbatch": "ed0b1bca158d76fba705ae501922a27f7e7b821b3354de464ab04b700c408ad3",
+    "scripts/eipm/gemma_n0/magnolia_conditional_scope_recovery_20261121.py": "cb37c3f3732f0050a4901590ba69bda321ae2796b7d284a15eef41e72c904351",
+    "scripts/eipm/gemma_n0/magnolia_conditional_scope_recovery_20261121.sbatch": "1ad2ec3b1fc58c8f8fd4f636f76f5b7ecd0b3c8558120471eb5d202f93463a7b",
+    "tests/personality/test_conditional_judgment_residual.py": "19dec28b1b40f54d24ea31d6adb24bca67113bd26b4e01c16a056f8a11ebfdc3",
+    "tests/personality/test_conditional_residual_experiment.py": "a45853ebf641374099b6dce1142c7b788a488c930e398742360df4b1a0761101",
+    "tests/personality/test_conditional_residual_worker.py": "038b5689f4ff5a23fc5fa7f11fc870bb16cd971fd46c25a02275689e7b9d075b",
+    "tests/personality/test_conditional_scope_experiment.py": "1fb49bfadc21c26888d88b046c4e30048009cc05ff6a89e5e3ce279929fe9be2",
+    "tests/personality/test_conditional_scope_metadata.py": "f966de9323a22c56812e3429a184c86af5dcfd0d899a695ffdb3dfc3c6536de2",
+    "tests/personality/test_conditional_scope_recovery.py": "26807ff0e9ec21c63e925177115636a326541b8dacb9796b5fc1ed41833d98e2",
+    "tests/personality/test_conditional_scope_worker.py": "65a42721ca5f18b648502b901efe1138065088cf4f9b23e21974f62d3ccdf793",
+    "tests/personality/test_conditional_teaching.py": "79fda51fd5ea823e023236dae981929751f5a303b406e327f415313a40deadca",
+    "tests/personality/test_residual_saved_metadata_recovery.py": "777bd9dd25eb2c35dcc0e371083b4bd0dd39d30782e67db3a44b8d0d98c77dcf"
+  },
+  "verified_logs": {
+    "conditional-scope-local-verification-20261121.txt": {
+      "result": "68 passed, 31 subtests passed in 96.74s (0:01:36)",
+      "sha256": "6ac97ee101f1c242c3362131aaeac87c5c54235dd74d9c4ff6d388e753bf3b13"
+    },
+    "scope-recovery-revised-final-20261121.txt": {
+      "result": "27 passed, 19 subtests passed in 41.43s",
+      "sha256": "3213cd8aac226ef9d7314b2daa0df53ee187931d5cc3b44c5cdfc2b5ae11fcea"
+    }
+  }
+}

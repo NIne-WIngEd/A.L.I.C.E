@@ -1,2 +1,7 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Preserve immutable receipt bytes already bound into the November 21 dispatch.
+/evaluation/eipm/gemma_n0/receipts/conditional_scope_interruption_20261121.json -text whitespace=cr-at-eol
+/evaluation/eipm/gemma_n0/receipts/conditional_scope_recovery_verification_20261121.json -text whitespace=cr-at-eol
+/evaluation/eipm/gemma_n0/receipts/conditional_scope_recovery_startup_20261121.json -text whitespace=cr-at-eol
