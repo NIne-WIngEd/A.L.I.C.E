@@ -1,0 +1,1615 @@
+{
+  "accounting_available": false,
+  "all_objective_fields": [
+    {
+      "after_mean_case_loss": 0.6006379559636116,
+      "arm": "control",
+      "available_facts": 428,
+      "before_mean_case_loss": 0.5996152494102717,
+      "case_count": 80,
+      "field": "candidate_pair_probabilities",
+      "group": "broader/n2",
+      "improved_cases": 46,
+      "mean_case_loss_change": 0.0010227065533399582,
+      "unchanged_cases": 0,
+      "worsened_cases": 34
+    },
+    {
+      "after_mean_case_loss": 0.1325715608894825,
+      "arm": "control",
+      "available_facts": 160,
+      "before_mean_case_loss": 0.1442496913485229,
+      "case_count": 80,
+      "field": "co_valid_probabilities",
+      "group": "broader/n2",
+      "improved_cases": 9,
+      "mean_case_loss_change": -0.011678130459040403,
+      "unchanged_cases": 0,
+      "worsened_cases": 71
+    },
+    {
+      "after_mean_case_loss": 0.9677046976983548,
+      "arm": "control",
+      "available_facts": 134,
+      "before_mean_case_loss": 1.1248996078968048,
+      "case_count": 80,
+      "field": "concept_pointers",
+      "group": "broader/n2",
+      "improved_cases": 23,
+      "mean_case_loss_change": -0.15719491019845008,
+      "unchanged_cases": 0,
+      "worsened_cases": 57
+    },
+    {
+      "after_mean_case_loss": 0.23876388947246596,
+      "arm": "control",
+      "available_facts": 160,
+      "before_mean_case_loss": 0.3145125564769842,
+      "case_count": 80,
+      "field": "contraindications",
+      "group": "broader/n2",
+      "improved_cases": 16,
+      "mean_case_loss_change": -0.07574866700451821,
+      "unchanged_cases": 0,
+      "worsened_cases": 64
+    },
+    {
+      "after_mean_case_loss": 1.6234612241387367,
+      "arm": "control",
+      "available_facts": 134,
+      "before_mean_case_loss": 1.3165945887565613,
+      "case_count": 80,
+      "field": "evidence_pointers",
+      "group": "broader/n2",
+      "improved_cases": 18,
+      "mean_case_loss_change": 0.30686663538217546,
+      "unchanged_cases": 0,
+      "worsened_cases": 62
+    },
+    {
+      "after_mean_case_loss": 0.1193851999938488,
+      "arm": "control",
+      "available_facts": 10,
+      "before_mean_case_loss": 0.24992493242025376,
+      "case_count": 10,
+      "field": "evidence_sufficiency",
+      "group": "broader/n2",
+      "improved_cases": 10,
+      "mean_case_loss_change": -0.13053973242640496,
+      "unchanged_cases": 0,
+      "worsened_cases": 0
+    },
+    {
+      "after_mean_case_loss": 0.0013589763136353991,
+      "arm": "control",
+      "available_facts": 88,
+      "before_mean_case_loss": 0.01139741229962965,
+      "case_count": 56,
+      "field": "head:communication",
+      "group": "broader/n2",
+      "improved_cases": 54,
+      "mean_case_loss_change": -0.010038435985994252,
+      "unchanged_cases": 0,
+      "worsened_cases": 2
+    },
+    {
+      "after_mean_case_loss": 0.0036900949300616047,
+      "arm": "control",
+      "available_facts": 20,
+      "before_mean_case_loss": 0.34121866671775936,
+      "case_count": 20,
+      "field": "head:drift",
+      "group": "broader/n2",
+      "improved_cases": 13,
+      "mean_case_loss_change": -0.33752857178769774,
+      "unchanged_cases": 0,
+      "worsened_cases": 7
+    },
+    {
+      "after_mean_case_loss": 3.7818609981017787e-07,
+      "arm": "control",
+      "available_facts": 46,
+      "before_mean_case_loss": 1.9118126808528113e-06,
+      "case_count": 22,
+      "field": "head:emotion",
+      "group": "broader/n2",
+      "improved_cases": 22,
+      "mean_case_loss_change": -1.5336265810426333e-06,
+      "unchanged_cases": 0,
+      "worsened_cases": 0
+    },
+    {
+      "after_mean_case_loss": 0.01928784989286214,
+      "arm": "control",
+      "available_facts": 12,
+      "before_mean_case_loss": 0.0026036881026811898,
+      "case_count": 8,
+      "field": "head:relationship",
+      "group": "broader/n2",
+      "improved_cases": 0,
+      "mean_case_loss_change": 0.01668416179018095,
+      "unchanged_cases": 0,
+      "worsened_cases": 8
+    },
+    {
+      "after_mean_case_loss": 1.9089549779891968,
+      "arm": "control",
+      "available_facts": 240,
+      "before_mean_case_loss": 2.255239151418209,
+      "case_count": 80,
+      "field": "head:stance",
+      "group": "broader/n2",
+      "improved_cases": 56,
+      "mean_case_loss_change": -0.3462841734290123,
+      "unchanged_cases": 0,
+      "worsened_cases": 24
+    },
+    {
+      "after_mean_case_loss": 0.03330602175675523,
+      "arm": "control",
+      "available_facts": 220,
+      "before_mean_case_loss": 0.09606920612546113,
+      "case_count": 78,
+      "field": "head:values",
+      "group": "broader/n2",
+      "improved_cases": 74,
+      "mean_case_loss_change": -0.0627631843687059,
+      "unchanged_cases": 0,
+      "worsened_cases": 4
+    },
+    {
+      "after_mean_case_loss": 0.9960300117731095,
+      "arm": "control",
+      "available_facts": 80,
+      "before_mean_case_loss": 0.9877203866839409,
+      "case_count": 80,
+      "field": "preferences",
+      "group": "broader/n2",
+      "improved_cases": 43,
+      "mean_case_loss_change": 0.008309625089168549,
+      "unchanged_cases": 0,
+      "worsened_cases": 37
+    },
+    {
+      "after_mean_case_loss": 0.38947096914052964,
+      "arm": "control",
+      "available_facts": 10,
+      "before_mean_case_loss": 0.4614828139543533,
+      "case_count": 10,
+      "field": "uncertainty",
+      "group": "broader/n2",
+      "improved_cases": 5,
+      "mean_case_loss_change": -0.0720118448138237,
+      "unchanged_cases": 0,
+      "worsened_cases": 5
+    },
+    {
+      "after_mean_case_loss": 0.5437400255884443,
+      "arm": "control",
+      "available_facts": 14,
+      "before_mean_case_loss": 0.6349714568683079,
+      "case_count": 7,
+      "field": "value_tradeoff_probabilities",
+      "group": "broader/n2",
+      "improved_cases": 5,
+      "mean_case_loss_change": -0.09123143127986363,
+      "unchanged_cases": 0,
+      "worsened_cases": 2
+    },
+    {
+      "after_mean_case_loss": 0.40330525296740233,
+      "arm": "control",
+      "available_facts": 240,
+      "before_mean_case_loss": 0.4739816869958304,
+      "case_count": 80,
+      "field": "co_valid_probabilities",
+      "group": "conditional/n2",
+      "improved_cases": 45,
+      "mean_case_loss_change": -0.07067643402842805,
+      "unchanged_cases": 0,
+      "worsened_cases": 35
+    },
+    {
+      "after_mean_case_loss": 0.17191061592893675,
+      "arm": "control",
+      "available_facts": 240,
+      "before_mean_case_loss": 0.21199761108146048,
+      "case_count": 80,
+      "field": "contraindications",
+      "group": "conditional/n2",
+      "improved_cases": 20,
+      "mean_case_loss_change": -0.040086995152523744,
+      "unchanged_cases": 0,
+      "worsened_cases": 60
+    },
+    {
+      "after_mean_case_loss": 0.019768214024315965,
+      "arm": "control",
+      "available_facts": 327,
+      "before_mean_case_loss": 0.030630903439123357,
+      "case_count": 80,
+      "field": "head:communication",
+      "group": "conditional/n2",
+      "improved_cases": 17,
+      "mean_case_loss_change": -0.010862689414807392,
+      "unchanged_cases": 0,
+      "worsened_cases": 63
+    },
+    {
+      "after_mean_case_loss": 0.0071072673826064504,
+      "arm": "control",
+      "available_facts": 66,
+      "before_mean_case_loss": 0.00993320202676976,
+      "case_count": 54,
+      "field": "head:drift",
+      "group": "conditional/n2",
+      "improved_cases": 17,
+      "mean_case_loss_change": -0.0028259346441633104,
+      "unchanged_cases": 0,
+      "worsened_cases": 37
+    },
+    {
+      "after_mean_case_loss": 3.50211048242554e-07,
+      "arm": "control",
+      "available_facts": 104,
+      "before_mean_case_loss": 1.8387047523735328e-06,
+      "case_count": 71,
+      "field": "head:emotion",
+      "group": "conditional/n2",
+      "improved_cases": 71,
+      "mean_case_loss_change": -1.4884937041309789e-06,
+      "unchanged_cases": 0,
+      "worsened_cases": 0
+    },
+    {
+      "after_mean_case_loss": 0.16606541604269295,
+      "arm": "control",
+      "available_facts": 184,
+      "before_mean_case_loss": 0.3334332247017301,
+      "case_count": 80,
+      "field": "head:relationship",
+      "group": "conditional/n2",
+      "improved_cases": 20,
+      "mean_case_loss_change": -0.1673678086590371,
+      "unchanged_cases": 0,
+      "worsened_cases": 60
+    },
+    {
+      "after_mean_case_loss": 1.0082541665993632,
+      "arm": "control",
+      "available_facts": 240,
+      "before_mean_case_loss": 1.0249729125527665,
+      "case_count": 80,
+      "field": "head:stance",
+      "group": "conditional/n2",
+      "improved_cases": 38,
+      "mean_case_loss_change": -0.016718745953403412,
+      "unchanged_cases": 0,
+      "worsened_cases": 42
+    },
+    {
+      "after_mean_case_loss": 0.292417332912737,
+      "arm": "control",
+      "available_facts": 281,
+      "before_mean_case_loss": 0.2778025704581523,
+      "case_count": 80,
+      "field": "head:values",
+      "group": "conditional/n2",
+      "improved_cases": 50,
+      "mean_case_loss_change": 0.014614762454584707,
+      "unchanged_cases": 0,
+      "worsened_cases": 30
+    },
+    {
+      "after_mean_case_loss": 0.47383867959783854,
+      "arm": "control",
+      "available_facts": 80,
+      "before_mean_case_loss": 0.41219815758977346,
+      "case_count": 80,
+      "field": "preferences",
+      "group": "conditional/n2",
+      "improved_cases": 47,
+      "mean_case_loss_change": 0.06164052200806509,
+      "unchanged_cases": 0,
+      "worsened_cases": 33
+    },
+    {
+      "after_mean_case_loss": 0.050746597535908225,
+      "arm": "control",
+      "available_facts": 120,
+      "before_mean_case_loss": 0.09681329061277211,
+      "case_count": 40,
+      "field": "co_valid_probabilities",
+      "group": "original/n2",
+      "improved_cases": 9,
+      "mean_case_loss_change": -0.04606669307686388,
+      "unchanged_cases": 0,
+      "worsened_cases": 31
+    },
+    {
+      "after_mean_case_loss": 0.024120423954445868,
+      "arm": "control",
+      "available_facts": 120,
+      "before_mean_case_loss": 0.08548752958886326,
+      "case_count": 40,
+      "field": "contraindications",
+      "group": "original/n2",
+      "improved_cases": 9,
+      "mean_case_loss_change": -0.061367105634417385,
+      "unchanged_cases": 0,
+      "worsened_cases": 31
+    },
+    {
+      "after_mean_case_loss": 0.038292831063517954,
+      "arm": "control",
+      "available_facts": 131,
+      "before_mean_case_loss": 0.06077564241822984,
+      "case_count": 40,
+      "field": "head:communication",
+      "group": "original/n2",
+      "improved_cases": 11,
+      "mean_case_loss_change": -0.022482811354711883,
+      "unchanged_cases": 0,
+      "worsened_cases": 29
+    },
+    {
+      "after_mean_case_loss": 0.007066749365014189,
+      "arm": "control",
+      "available_facts": 46,
+      "before_mean_case_loss": 0.013527396339614986,
+      "case_count": 34,
+      "field": "head:drift",
+      "group": "original/n2",
+      "improved_cases": 17,
+      "mean_case_loss_change": -0.006460646974600796,
+      "unchanged_cases": 0,
+      "worsened_cases": 17
+    },
+    {
+      "after_mean_case_loss": 3.449134944524055e-07,
+      "arm": "control",
+      "available_facts": 38,
+      "before_mean_case_loss": 1.831565227941169e-06,
+      "case_count": 33,
+      "field": "head:emotion",
+      "group": "original/n2",
+      "improved_cases": 33,
+      "mean_case_loss_change": -1.4866517334887634e-06,
+      "unchanged_cases": 0,
+      "worsened_cases": 0
+    },
+    {
+      "after_mean_case_loss": 0.01618380661820993,
+      "arm": "control",
+      "available_facts": 80,
+      "before_mean_case_loss": 0.1333767213014653,
+      "case_count": 40,
+      "field": "head:relationship",
+      "group": "original/n2",
+      "improved_cases": 8,
+      "mean_case_loss_change": -0.11719291468325536,
+      "unchanged_cases": 0,
+      "worsened_cases": 32
+    },
+    {
+      "after_mean_case_loss": 0.7859392832964659,
+      "arm": "control",
+      "available_facts": 120,
+      "before_mean_case_loss": 0.8531851818552241,
+      "case_count": 40,
+      "field": "head:stance",
+      "group": "original/n2",
+      "improved_cases": 18,
+      "mean_case_loss_change": -0.0672458985587582,
+      "unchanged_cases": 0,
+      "worsened_cases": 22
+    },
+    {
+      "after_mean_case_loss": 0.014470071665709839,
+      "arm": "control",
+      "available_facts": 127,
+      "before_mean_case_loss": 0.08109673882136122,
+      "case_count": 40,
+      "field": "head:values",
+      "group": "original/n2",
+      "improved_cases": 37,
+      "mean_case_loss_change": -0.06662666715565138,
+      "unchanged_cases": 0,
+      "worsened_cases": 3
+    },
+    {
+      "after_mean_case_loss": 0.08767068885326808,
+      "arm": "control",
+      "available_facts": 40,
+      "before_mean_case_loss": 0.1265531746979832,
+      "case_count": 40,
+      "field": "preferences",
+      "group": "original/n2",
+      "improved_cases": 27,
+      "mean_case_loss_change": -0.03888248584471512,
+      "unchanged_cases": 0,
+      "worsened_cases": 13
+    },
+    {
+      "after_mean_case_loss": 0.06067095627076924,
+      "arm": "control",
+      "available_facts": 16,
+      "before_mean_case_loss": 0.02579799620434642,
+      "case_count": 16,
+      "field": "co_valid_probabilities",
+      "group": "voice/n2",
+      "improved_cases": 0,
+      "mean_case_loss_change": 0.03487296006642282,
+      "unchanged_cases": 0,
+      "worsened_cases": 16
+    },
+    {
+      "after_mean_case_loss": 0.014326037315186113,
+      "arm": "control",
+      "available_facts": 16,
+      "before_mean_case_loss": 0.006568960263393819,
+      "case_count": 16,
+      "field": "contraindications",
+      "group": "voice/n2",
+      "improved_cases": 0,
+      "mean_case_loss_change": 0.007757077051792294,
+      "unchanged_cases": 0,
+      "worsened_cases": 16
+    },
+    {
+      "after_mean_case_loss": 0.0,
+      "arm": "control",
+      "available_facts": 16,
+      "before_mean_case_loss": 0.0,
+      "case_count": 16,
+      "field": "preferences",
+      "group": "voice/n2",
+      "improved_cases": 0,
+      "mean_case_loss_change": 0.0,
+      "unchanged_cases": 16,
+      "worsened_cases": 0
+    },
+    {
+      "after_mean_case_loss": 0.564098984003067,
+      "arm": "control",
+      "available_facts": 95,
+      "before_mean_case_loss": 0.562852006405592,
+      "case_count": 16,
+      "field": "voice_control_confidence",
+      "group": "voice/n2",
+      "improved_cases": 2,
+      "mean_case_loss_change": 0.0012469775974750519,
+      "unchanged_cases": 0,
+      "worsened_cases": 14
+    },
+    {
+      "after_mean_case_loss": 0.034093287715222687,
+      "arm": "control",
+      "available_facts": 95,
+      "before_mean_case_loss": 0.03078560106223449,
+      "case_count": 16,
+      "field": "voice_control_values",
+      "group": "voice/n2",
+      "improved_cases": 6,
+      "mean_case_loss_change": 0.0033076866529881954,
+      "unchanged_cases": 0,
+      "worsened_cases": 10
+    },
+    {
+      "after_mean_case_loss": 0.5996126160025597,
+      "arm": "intervention",
+      "available_facts": 428,
+      "before_mean_case_loss": 0.5996152494102717,
+      "case_count": 80,
+      "field": "candidate_pair_probabilities",
+      "group": "broader/n2",
+      "improved_cases": 44,
+      "mean_case_loss_change": -2.633407711982727e-06,
+      "unchanged_cases": 0,
+      "worsened_cases": 36
+    },
+    {
+      "after_mean_case_loss": 0.14418797702528535,
+      "arm": "intervention",
+      "available_facts": 160,
+      "before_mean_case_loss": 0.1442496913485229,
+      "case_count": 80,
+      "field": "co_valid_probabilities",
+      "group": "broader/n2",
+      "improved_cases": 6,
+      "mean_case_loss_change": -6.171432323753834e-05,
+      "unchanged_cases": 0,
+      "worsened_cases": 74
+    },
+    {
+      "after_mean_case_loss": 1.0984669245779515,
+      "arm": "intervention",
+      "available_facts": 134,
+      "before_mean_case_loss": 1.1248996078968048,
+      "case_count": 80,
+      "field": "concept_pointers",
+      "group": "broader/n2",
+      "improved_cases": 64,
+      "mean_case_loss_change": -0.02643268331885338,
+      "unchanged_cases": 0,
+      "worsened_cases": 16
+    },
+    {
+      "after_mean_case_loss": 0.3148150001768954,
+      "arm": "intervention",
+      "available_facts": 160,
+      "before_mean_case_loss": 0.3145125564769842,
+      "case_count": 80,
+      "field": "contraindications",
+      "group": "broader/n2",
+      "improved_cases": 66,
+      "mean_case_loss_change": 0.0003024436999112368,
+      "unchanged_cases": 0,
+      "worsened_cases": 14
+    },
+    {
+      "after_mean_case_loss": 1.2972689874470233,
+      "arm": "intervention",
+      "available_facts": 134,
+      "before_mean_case_loss": 1.3165945887565613,
+      "case_count": 80,
+      "field": "evidence_pointers",
+      "group": "broader/n2",
+      "improved_cases": 56,
+      "mean_case_loss_change": -0.019325601309537886,
+      "unchanged_cases": 0,
+      "worsened_cases": 24
+    },
+    {
+      "after_mean_case_loss": 0.24980877339839935,
+      "arm": "intervention",
+      "available_facts": 10,
+      "before_mean_case_loss": 0.24992493242025376,
+      "case_count": 10,
+      "field": "evidence_sufficiency",
+      "group": "broader/n2",
+      "improved_cases": 9,
+      "mean_case_loss_change": -0.00011615902185440064,
+      "unchanged_cases": 0,
+      "worsened_cases": 1
+    },
+    {
+      "after_mean_case_loss": 0.01137261142321222,
+      "arm": "intervention",
+      "available_facts": 88,
+      "before_mean_case_loss": 0.01139741229962965,
+      "case_count": 56,
+      "field": "head:communication",
+      "group": "broader/n2",
+      "improved_cases": 50,
+      "mean_case_loss_change": -2.4800876417430118e-05,
+      "unchanged_cases": 0,
+      "worsened_cases": 6
+    },
+    {
+      "after_mean_case_loss": 0.3421593681705417,
+      "arm": "intervention",
+      "available_facts": 20,
+      "before_mean_case_loss": 0.34121866671775936,
+      "case_count": 20,
+      "field": "head:drift",
+      "group": "broader/n2",
+      "improved_cases": 0,
+      "mean_case_loss_change": 0.0009407014527823776,
+      "unchanged_cases": 0,
+      "worsened_cases": 20
+    },
+    {
+      "after_mean_case_loss": 1.911122178005991e-06,
+      "arm": "intervention",
+      "available_facts": 46,
+      "before_mean_case_loss": 1.9118126808528113e-06,
+      "case_count": 22,
+      "field": "head:emotion",
+      "group": "broader/n2",
+      "improved_cases": 22,
+      "mean_case_loss_change": -6.90502846819899e-10,
+      "unchanged_cases": 0,
+      "worsened_cases": 0
+    },
+    {
+      "after_mean_case_loss": 0.0026004482933785766,
+      "arm": "intervention",
+      "available_facts": 12,
+      "before_mean_case_loss": 0.0026036881026811898,
+      "case_count": 8,
+      "field": "head:relationship",
+      "group": "broader/n2",
+      "improved_cases": 8,
+      "mean_case_loss_change": -3.239809302613139e-06,
+      "unchanged_cases": 0,
+      "worsened_cases": 0
+    },
+    {
+      "after_mean_case_loss": 2.254409985244274,
+      "arm": "intervention",
+      "available_facts": 240,
+      "before_mean_case_loss": 2.255239151418209,
+      "case_count": 80,
+      "field": "head:stance",
+      "group": "broader/n2",
+      "improved_cases": 56,
+      "mean_case_loss_change": -0.0008291661739349365,
+      "unchanged_cases": 0,
+      "worsened_cases": 24
+    },
+    {
+      "after_mean_case_loss": 0.09605375814657563,
+      "arm": "intervention",
+      "available_facts": 220,
+      "before_mean_case_loss": 0.09606920612546113,
+      "case_count": 78,
+      "field": "head:values",
+      "group": "broader/n2",
+      "improved_cases": 64,
+      "mean_case_loss_change": -1.544797888551003e-05,
+      "unchanged_cases": 0,
+      "worsened_cases": 14
+    },
+    {
+      "after_mean_case_loss": 0.9877167418599129,
+      "arm": "intervention",
+      "available_facts": 80,
+      "before_mean_case_loss": 0.9877203866839409,
+      "case_count": 80,
+      "field": "preferences",
+      "group": "broader/n2",
+      "improved_cases": 40,
+      "mean_case_loss_change": -3.6448240280151366e-06,
+      "unchanged_cases": 0,
+      "worsened_cases": 40
+    },
+    {
+      "after_mean_case_loss": 0.4615306079387665,
+      "arm": "intervention",
+      "available_facts": 10,
+      "before_mean_case_loss": 0.4614828139543533,
+      "case_count": 10,
+      "field": "uncertainty",
+      "group": "broader/n2",
+      "improved_cases": 2,
+      "mean_case_loss_change": 4.7793984413146974e-05,
+      "unchanged_cases": 0,
+      "worsened_cases": 8
+    },
+    {
+      "after_mean_case_loss": 0.6351361572742462,
+      "arm": "intervention",
+      "available_facts": 14,
+      "before_mean_case_loss": 0.6349714568683079,
+      "case_count": 7,
+      "field": "value_tradeoff_probabilities",
+      "group": "broader/n2",
+      "improved_cases": 0,
+      "mean_case_loss_change": 0.00016470040593828474,
+      "unchanged_cases": 0,
+      "worsened_cases": 7
+    },
+    {
+      "after_mean_case_loss": 0.473269637033809,
+      "arm": "intervention",
+      "available_facts": 240,
+      "before_mean_case_loss": 0.4739816869958304,
+      "case_count": 80,
+      "field": "co_valid_probabilities",
+      "group": "conditional/n2",
+      "improved_cases": 45,
+      "mean_case_loss_change": -0.0007120499620214104,
+      "unchanged_cases": 0,
+      "worsened_cases": 35
+    },
+    {
+      "after_mean_case_loss": 0.21206388001446613,
+      "arm": "intervention",
+      "available_facts": 240,
+      "before_mean_case_loss": 0.21199761108146048,
+      "case_count": 80,
+      "field": "contraindications",
+      "group": "conditional/n2",
+      "improved_cases": 69,
+      "mean_case_loss_change": 6.626893300563098e-05,
+      "unchanged_cases": 0,
+      "worsened_cases": 11
+    },
+    {
+      "after_mean_case_loss": 0.0306322235848711,
+      "arm": "intervention",
+      "available_facts": 327,
+      "before_mean_case_loss": 0.030630903439123357,
+      "case_count": 80,
+      "field": "head:communication",
+      "group": "conditional/n2",
+      "improved_cases": 56,
+      "mean_case_loss_change": 1.320145747740753e-06,
+      "unchanged_cases": 0,
+      "worsened_cases": 24
+    },
+    {
+      "after_mean_case_loss": 0.010004843567946443,
+      "arm": "intervention",
+      "available_facts": 66,
+      "before_mean_case_loss": 0.00993320202676976,
+      "case_count": 54,
+      "field": "head:drift",
+      "group": "conditional/n2",
+      "improved_cases": 29,
+      "mean_case_loss_change": 7.164154117668254e-05,
+      "unchanged_cases": 15,
+      "worsened_cases": 10
+    },
+    {
+      "after_mean_case_loss": 1.8383013210194816e-06,
+      "arm": "intervention",
+      "available_facts": 104,
+      "before_mean_case_loss": 1.8387047523735328e-06,
+      "case_count": 71,
+      "field": "head:emotion",
+      "group": "conditional/n2",
+      "improved_cases": 71,
+      "mean_case_loss_change": -4.0343135405121976e-10,
+      "unchanged_cases": 0,
+      "worsened_cases": 0
+    },
+    {
+      "after_mean_case_loss": 0.33335057026561116,
+      "arm": "intervention",
+      "available_facts": 184,
+      "before_mean_case_loss": 0.3334332247017301,
+      "case_count": 80,
+      "field": "head:relationship",
+      "group": "conditional/n2",
+      "improved_cases": 44,
+      "mean_case_loss_change": -8.265443611890077e-05,
+      "unchanged_cases": 0,
+      "worsened_cases": 36
+    },
+    {
+      "after_mean_case_loss": 1.0248436189140193,
+      "arm": "intervention",
+      "available_facts": 240,
+      "before_mean_case_loss": 1.0249729125527665,
+      "case_count": 80,
+      "field": "head:stance",
+      "group": "conditional/n2",
+      "improved_cases": 37,
+      "mean_case_loss_change": -0.00012929363874718546,
+      "unchanged_cases": 0,
+      "worsened_cases": 43
+    },
+    {
+      "after_mean_case_loss": 0.2778078358649509,
+      "arm": "intervention",
+      "available_facts": 281,
+      "before_mean_case_loss": 0.2778025704581523,
+      "case_count": 80,
+      "field": "head:values",
+      "group": "conditional/n2",
+      "improved_cases": 47,
+      "mean_case_loss_change": 5.265406798571348e-06,
+      "unchanged_cases": 0,
+      "worsened_cases": 33
+    },
+    {
+      "after_mean_case_loss": 0.4121465919271941,
+      "arm": "intervention",
+      "available_facts": 80,
+      "before_mean_case_loss": 0.41219815758977346,
+      "case_count": 80,
+      "field": "preferences",
+      "group": "conditional/n2",
+      "improved_cases": 59,
+      "mean_case_loss_change": -5.1565662579378115e-05,
+      "unchanged_cases": 0,
+      "worsened_cases": 21
+    },
+    {
+      "after_mean_case_loss": 0.09678069890942424,
+      "arm": "intervention",
+      "available_facts": 120,
+      "before_mean_case_loss": 0.09681329061277211,
+      "case_count": 40,
+      "field": "co_valid_probabilities",
+      "group": "original/n2",
+      "improved_cases": 7,
+      "mean_case_loss_change": -3.2591703347861764e-05,
+      "unchanged_cases": 0,
+      "worsened_cases": 33
+    },
+    {
+      "after_mean_case_loss": 0.08543526798021048,
+      "arm": "intervention",
+      "available_facts": 120,
+      "before_mean_case_loss": 0.08548752958886326,
+      "case_count": 40,
+      "field": "contraindications",
+      "group": "original/n2",
+      "improved_cases": 39,
+      "mean_case_loss_change": -5.226160865277052e-05,
+      "unchanged_cases": 0,
+      "worsened_cases": 1
+    },
+    {
+      "after_mean_case_loss": 0.060778514393314255,
+      "arm": "intervention",
+      "available_facts": 131,
+      "before_mean_case_loss": 0.06077564241822984,
+      "case_count": 40,
+      "field": "head:communication",
+      "group": "original/n2",
+      "improved_cases": 25,
+      "mean_case_loss_change": 2.8719750844174996e-06,
+      "unchanged_cases": 0,
+      "worsened_cases": 15
+    },
+    {
+      "after_mean_case_loss": 0.01363684109716868,
+      "arm": "intervention",
+      "available_facts": 46,
+      "before_mean_case_loss": 0.013527396339614986,
+      "case_count": 34,
+      "field": "head:drift",
+      "group": "original/n2",
+      "improved_cases": 22,
+      "mean_case_loss_change": 0.000109444757553694,
+      "unchanged_cases": 6,
+      "worsened_cases": 6
+    },
+    {
+      "after_mean_case_loss": 1.8311985224334586e-06,
+      "arm": "intervention",
+      "available_facts": 38,
+      "before_mean_case_loss": 1.831565227941169e-06,
+      "case_count": 33,
+      "field": "head:emotion",
+      "group": "original/n2",
+      "improved_cases": 33,
+      "mean_case_loss_change": -3.6670550771029383e-10,
+      "unchanged_cases": 0,
+      "worsened_cases": 0
+    },
+    {
+      "after_mean_case_loss": 0.13330017353582663,
+      "arm": "intervention",
+      "available_facts": 80,
+      "before_mean_case_loss": 0.1333767213014653,
+      "case_count": 40,
+      "field": "head:relationship",
+      "group": "original/n2",
+      "improved_cases": 20,
+      "mean_case_loss_change": -7.654776563867927e-05,
+      "unchanged_cases": 0,
+      "worsened_cases": 20
+    },
+    {
+      "after_mean_case_loss": 0.8530434114160016,
+      "arm": "intervention",
+      "available_facts": 120,
+      "before_mean_case_loss": 0.8531851818552241,
+      "case_count": 40,
+      "field": "head:stance",
+      "group": "original/n2",
+      "improved_cases": 20,
+      "mean_case_loss_change": -0.00014177043922245503,
+      "unchanged_cases": 0,
+      "worsened_cases": 20
+    },
+    {
+      "after_mean_case_loss": 0.08107705736765639,
+      "arm": "intervention",
+      "available_facts": 127,
+      "before_mean_case_loss": 0.08109673882136122,
+      "case_count": 40,
+      "field": "head:values",
+      "group": "original/n2",
+      "improved_cases": 30,
+      "mean_case_loss_change": -1.9681453704833984e-05,
+      "unchanged_cases": 0,
+      "worsened_cases": 10
+    },
+    {
+      "after_mean_case_loss": 0.12646297771425452,
+      "arm": "intervention",
+      "available_facts": 40,
+      "before_mean_case_loss": 0.1265531746979832,
+      "case_count": 40,
+      "field": "preferences",
+      "group": "original/n2",
+      "improved_cases": 36,
+      "mean_case_loss_change": -9.019698372867425e-05,
+      "unchanged_cases": 1,
+      "worsened_cases": 3
+    },
+    {
+      "after_mean_case_loss": 0.025849785073660314,
+      "arm": "intervention",
+      "available_facts": 16,
+      "before_mean_case_loss": 0.02579799620434642,
+      "case_count": 16,
+      "field": "co_valid_probabilities",
+      "group": "voice/n2",
+      "improved_cases": 0,
+      "mean_case_loss_change": 5.17888693138957e-05,
+      "unchanged_cases": 0,
+      "worsened_cases": 16
+    },
+    {
+      "after_mean_case_loss": 0.0065746169711928815,
+      "arm": "intervention",
+      "available_facts": 16,
+      "before_mean_case_loss": 0.006568960263393819,
+      "case_count": 16,
+      "field": "contraindications",
+      "group": "voice/n2",
+      "improved_cases": 0,
+      "mean_case_loss_change": 5.656707799062133e-06,
+      "unchanged_cases": 0,
+      "worsened_cases": 16
+    },
+    {
+      "after_mean_case_loss": 0.0,
+      "arm": "intervention",
+      "available_facts": 16,
+      "before_mean_case_loss": 0.0,
+      "case_count": 16,
+      "field": "preferences",
+      "group": "voice/n2",
+      "improved_cases": 0,
+      "mean_case_loss_change": 0.0,
+      "unchanged_cases": 16,
+      "worsened_cases": 0
+    },
+    {
+      "after_mean_case_loss": 0.5628475844860077,
+      "arm": "intervention",
+      "available_facts": 95,
+      "before_mean_case_loss": 0.562852006405592,
+      "case_count": 16,
+      "field": "voice_control_confidence",
+      "group": "voice/n2",
+      "improved_cases": 16,
+      "mean_case_loss_change": -4.421919584274292e-06,
+      "unchanged_cases": 0,
+      "worsened_cases": 0
+    },
+    {
+      "after_mean_case_loss": 0.030785293667577207,
+      "arm": "intervention",
+      "available_facts": 95,
+      "before_mean_case_loss": 0.03078560106223449,
+      "case_count": 16,
+      "field": "voice_control_values",
+      "group": "voice/n2",
+      "improved_cases": 9,
+      "mean_case_loss_change": -3.073946572840214e-07,
+      "unchanged_cases": 0,
+      "worsened_cases": 7
+    }
+  ],
+  "at_utc": "2026-11-24T06:54:42.839790+00:00",
+  "behavioral_verdict": "FAIL_NO_USEFUL_NATURAL_CONDITIONAL_JUDGMENT",
+  "comparisons": {
+    "control": {
+      "corrected": {
+        "first_half": {
+          "co_valid_probabilities": {
+            "after_both_contexts_correct": 38,
+            "after_errors": 4,
+            "after_mean_target_signed_condition_delta": null,
+            "available_binary_facts": 160,
+            "before_both_contexts_correct": 38,
+            "before_errors": 4,
+            "before_mean_target_signed_condition_delta": null,
+            "harms": 0,
+            "mean_absolute_error_change": -1.1306633041385794e-06,
+            "pairs_with_available_facts_in_both_contexts": 40,
+            "repairs": 0,
+            "source_pairs": 40
+          },
+          "contraindications": {
+            "after_both_contexts_correct": 31,
+            "after_errors": 18,
+            "after_mean_target_signed_condition_delta": null,
+            "available_binary_facts": 160,
+            "before_both_contexts_correct": 31,
+            "before_errors": 18,
+            "before_mean_target_signed_condition_delta": null,
+            "harms": 0,
+            "mean_absolute_error_change": 8.797971531748771e-07,
+            "pairs_with_available_facts_in_both_contexts": 40,
+            "repairs": 0,
+            "source_pairs": 40
+          },
+          "preferences": {
+            "after_both_contexts_correct": 0,
+            "after_correct_changed_target_direction": 43,
+            "after_correct_top_sets": 17,
+            "after_mean_target_signed_condition_delta": 2.571837976574898e-05,
+            "before_both_contexts_correct": 0,
+            "before_correct_changed_target_direction": 44,
+            "before_correct_top_sets": 17,
+            "before_mean_target_signed_condition_delta": 2.392427995800972e-05,
+            "changed_target_comparisons": 80,
+            "changed_top_sets": 0,
+            "context_harms": 0,
+            "context_repairs": 0,
+            "contexts": 80,
+            "pair_harms": 0,
+            "pair_repairs": 0,
+            "rank_is_not_probability_calibration": true,
+            "source_pairs": 40
+          }
+        },
+        "full": {
+          "co_valid_probabilities": {
+            "after_both_contexts_correct": 38,
+            "after_errors": 4,
+            "after_mean_target_signed_condition_delta": null,
+            "available_binary_facts": 160,
+            "before_both_contexts_correct": 38,
+            "before_errors": 4,
+            "before_mean_target_signed_condition_delta": null,
+            "harms": 0,
+            "mean_absolute_error_change": -9.763435627974105e-07,
+            "pairs_with_available_facts_in_both_contexts": 40,
+            "repairs": 0,
+            "source_pairs": 40
+          },
+          "contraindications": {
+            "after_both_contexts_correct": 31,
+            "after_errors": 18,
+            "after_mean_target_signed_condition_delta": null,
+            "available_binary_facts": 160,
+            "before_both_contexts_correct": 31,
+            "before_errors": 18,
+            "before_mean_target_signed_condition_delta": null,
+            "harms": 0,
+            "mean_absolute_error_change": -9.163632057607174e-07,
+            "pairs_with_available_facts_in_both_contexts": 40,
+            "repairs": 0,
+            "source_pairs": 40
+          },
+          "preferences": {
+            "after_both_contexts_correct": 0,
+            "after_correct_changed_target_direction": 43,
+            "after_correct_top_sets": 17,
+            "after_mean_target_signed_condition_delta": 2.6337802410125732e-05,
+            "before_both_contexts_correct": 0,
+            "before_correct_changed_target_direction": 44,
+            "before_correct_top_sets": 17,
+            "before_mean_target_signed_condition_delta": 2.392427995800972e-05,
+            "changed_target_comparisons": 80,
+            "changed_top_sets": 0,
+            "context_harms": 0,
+            "context_repairs": 0,
+            "contexts": 80,
+            "pair_harms": 0,
+            "pair_repairs": 0,
+            "rank_is_not_probability_calibration": true,
+            "source_pairs": 40
+          }
+        },
+        "second_half": {
+          "co_valid_probabilities": {
+            "after_both_contexts_correct": 38,
+            "after_errors": 4,
+            "after_mean_target_signed_condition_delta": null,
+            "available_binary_facts": 160,
+            "before_both_contexts_correct": 38,
+            "before_errors": 4,
+            "before_mean_target_signed_condition_delta": null,
+            "harms": 0,
+            "mean_absolute_error_change": 1.6599733498878777e-07,
+            "pairs_with_available_facts_in_both_contexts": 40,
+            "repairs": 0,
+            "source_pairs": 40
+          },
+          "contraindications": {
+            "after_both_contexts_correct": 31,
+            "after_errors": 18,
+            "after_mean_target_signed_condition_delta": null,
+            "available_binary_facts": 160,
+            "before_both_contexts_correct": 31,
+            "before_errors": 18,
+            "before_mean_target_signed_condition_delta": null,
+            "harms": 0,
+            "mean_absolute_error_change": -1.798383891582489e-06,
+            "pairs_with_available_facts_in_both_contexts": 40,
+            "repairs": 0,
+            "source_pairs": 40
+          },
+          "preferences": {
+            "after_both_contexts_correct": 0,
+            "after_correct_changed_target_direction": 43,
+            "after_correct_top_sets": 17,
+            "after_mean_target_signed_condition_delta": 2.458966337144375e-05,
+            "before_both_contexts_correct": 0,
+            "before_correct_changed_target_direction": 44,
+            "before_correct_top_sets": 17,
+            "before_mean_target_signed_condition_delta": 2.392427995800972e-05,
+            "changed_target_comparisons": 80,
+            "changed_top_sets": 0,
+            "context_harms": 0,
+            "context_repairs": 0,
+            "contexts": 80,
+            "pair_harms": 0,
+            "pair_repairs": 0,
+            "rank_is_not_probability_calibration": true,
+            "source_pairs": 40
+          }
+        }
+      },
+      "gate": 0.00010548409773036838,
+      "natural": {
+        "co_valid_probabilities": {
+          "after_both_contexts_correct": 38,
+          "after_errors": 4,
+          "after_mean_target_signed_condition_delta": null,
+          "available_binary_facts": 160,
+          "before_both_contexts_correct": 37,
+          "before_errors": 6,
+          "before_mean_target_signed_condition_delta": null,
+          "harms": 0,
+          "mean_absolute_error_change": 0.020451394525389334,
+          "pairs_with_available_facts_in_both_contexts": 40,
+          "repairs": 2,
+          "source_pairs": 40
+        },
+        "contraindications": {
+          "after_both_contexts_correct": 31,
+          "after_errors": 18,
+          "after_mean_target_signed_condition_delta": null,
+          "available_binary_facts": 160,
+          "before_both_contexts_correct": 34,
+          "before_errors": 12,
+          "before_mean_target_signed_condition_delta": null,
+          "harms": 8,
+          "mean_absolute_error_change": 0.024898153735557572,
+          "pairs_with_available_facts_in_both_contexts": 40,
+          "repairs": 2,
+          "source_pairs": 40
+        },
+        "preferences": {
+          "after_both_contexts_correct": 0,
+          "after_correct_changed_target_direction": 44,
+          "after_correct_top_sets": 17,
+          "after_mean_target_signed_condition_delta": 2.392427995800972e-05,
+          "before_both_contexts_correct": 0,
+          "before_correct_changed_target_direction": 43,
+          "before_correct_top_sets": 25,
+          "before_mean_target_signed_condition_delta": 1.7869099974632263e-05,
+          "changed_target_comparisons": 80,
+          "changed_top_sets": 42,
+          "context_harms": 18,
+          "context_repairs": 10,
+          "contexts": 80,
+          "pair_harms": 0,
+          "pair_repairs": 0,
+          "rank_is_not_probability_calibration": true,
+          "source_pairs": 40
+        }
+      }
+    },
+    "intervention": {
+      "corrected": {
+        "first_half": {
+          "co_valid_probabilities": {
+            "after_both_contexts_correct": 37,
+            "after_errors": 6,
+            "after_mean_target_signed_condition_delta": null,
+            "available_binary_facts": 160,
+            "before_both_contexts_correct": 37,
+            "before_errors": 6,
+            "before_mean_target_signed_condition_delta": null,
+            "harms": 0,
+            "mean_absolute_error_change": -1.508306922914926e-07,
+            "pairs_with_available_facts_in_both_contexts": 40,
+            "repairs": 0,
+            "source_pairs": 40
+          },
+          "contraindications": {
+            "after_both_contexts_correct": 34,
+            "after_errors": 12,
+            "after_mean_target_signed_condition_delta": null,
+            "available_binary_facts": 160,
+            "before_both_contexts_correct": 34,
+            "before_errors": 12,
+            "before_mean_target_signed_condition_delta": null,
+            "harms": 0,
+            "mean_absolute_error_change": -2.73084151558578e-07,
+            "pairs_with_available_facts_in_both_contexts": 40,
+            "repairs": 0,
+            "source_pairs": 40
+          },
+          "preferences": {
+            "after_both_contexts_correct": 0,
+            "after_correct_changed_target_direction": 43,
+            "after_correct_top_sets": 25,
+            "after_mean_target_signed_condition_delta": 1.8251314759254456e-05,
+            "before_both_contexts_correct": 0,
+            "before_correct_changed_target_direction": 43,
+            "before_correct_top_sets": 25,
+            "before_mean_target_signed_condition_delta": 1.7992034554481506e-05,
+            "changed_target_comparisons": 80,
+            "changed_top_sets": 0,
+            "context_harms": 0,
+            "context_repairs": 0,
+            "contexts": 80,
+            "pair_harms": 0,
+            "pair_repairs": 0,
+            "rank_is_not_probability_calibration": true,
+            "source_pairs": 40
+          }
+        },
+        "full": {
+          "co_valid_probabilities": {
+            "after_both_contexts_correct": 37,
+            "after_errors": 6,
+            "after_mean_target_signed_condition_delta": null,
+            "available_binary_facts": 160,
+            "before_both_contexts_correct": 37,
+            "before_errors": 6,
+            "before_mean_target_signed_condition_delta": null,
+            "harms": 0,
+            "mean_absolute_error_change": 3.064496922888793e-08,
+            "pairs_with_available_facts_in_both_contexts": 40,
+            "repairs": 0,
+            "source_pairs": 40
+          },
+          "contraindications": {
+            "after_both_contexts_correct": 34,
+            "after_errors": 12,
+            "after_mean_target_signed_condition_delta": null,
+            "available_binary_facts": 160,
+            "before_both_contexts_correct": 34,
+            "before_errors": 12,
+            "before_mean_target_signed_condition_delta": null,
+            "harms": 0,
+            "mean_absolute_error_change": -1.3665994629263878e-06,
+            "pairs_with_available_facts_in_both_contexts": 40,
+            "repairs": 0,
+            "source_pairs": 40
+          },
+          "preferences": {
+            "after_both_contexts_correct": 0,
+            "after_correct_changed_target_direction": 43,
+            "after_correct_top_sets": 25,
+            "after_mean_target_signed_condition_delta": 1.7663091421127318e-05,
+            "before_both_contexts_correct": 0,
+            "before_correct_changed_target_direction": 43,
+            "before_correct_top_sets": 25,
+            "before_mean_target_signed_condition_delta": 1.7992034554481506e-05,
+            "changed_target_comparisons": 80,
+            "changed_top_sets": 0,
+            "context_harms": 0,
+            "context_repairs": 0,
+            "contexts": 80,
+            "pair_harms": 0,
+            "pair_repairs": 0,
+            "rank_is_not_probability_calibration": true,
+            "source_pairs": 40
+          }
+        },
+        "second_half": {
+          "co_valid_probabilities": {
+            "after_both_contexts_correct": 37,
+            "after_errors": 6,
+            "after_mean_target_signed_condition_delta": null,
+            "available_binary_facts": 160,
+            "before_both_contexts_correct": 37,
+            "before_errors": 6,
+            "before_mean_target_signed_condition_delta": null,
+            "harms": 0,
+            "mean_absolute_error_change": 1.7342772480333223e-07,
+            "pairs_with_available_facts_in_both_contexts": 40,
+            "repairs": 0,
+            "source_pairs": 40
+          },
+          "contraindications": {
+            "after_both_contexts_correct": 34,
+            "after_errors": 12,
+            "after_mean_target_signed_condition_delta": null,
+            "available_binary_facts": 160,
+            "before_both_contexts_correct": 34,
+            "before_errors": 12,
+            "before_mean_target_signed_condition_delta": null,
+            "harms": 0,
+            "mean_absolute_error_change": -1.0932853911072016e-06,
+            "pairs_with_available_facts_in_both_contexts": 40,
+            "repairs": 0,
+            "source_pairs": 40
+          },
+          "preferences": {
+            "after_both_contexts_correct": 0,
+            "after_correct_changed_target_direction": 43,
+            "after_correct_top_sets": 25,
+            "after_mean_target_signed_condition_delta": 1.7389655113220215e-05,
+            "before_both_contexts_correct": 0,
+            "before_correct_changed_target_direction": 43,
+            "before_correct_top_sets": 25,
+            "before_mean_target_signed_condition_delta": 1.7992034554481506e-05,
+            "changed_target_comparisons": 80,
+            "changed_top_sets": 0,
+            "context_harms": 0,
+            "context_repairs": 0,
+            "contexts": 80,
+            "pair_harms": 0,
+            "pair_repairs": 0,
+            "rank_is_not_probability_calibration": true,
+            "source_pairs": 40
+          }
+        }
+      },
+      "gate": -0.005136880092322826,
+      "natural": {
+        "co_valid_probabilities": {
+          "after_both_contexts_correct": 37,
+          "after_errors": 6,
+          "after_mean_target_signed_condition_delta": null,
+          "available_binary_facts": 160,
+          "before_both_contexts_correct": 37,
+          "before_errors": 6,
+          "before_mean_target_signed_condition_delta": null,
+          "harms": 0,
+          "mean_absolute_error_change": 0.000138662792460309,
+          "pairs_with_available_facts_in_both_contexts": 40,
+          "repairs": 0,
+          "source_pairs": 40
+        },
+        "contraindications": {
+          "after_both_contexts_correct": 34,
+          "after_errors": 12,
+          "after_mean_target_signed_condition_delta": null,
+          "available_binary_facts": 160,
+          "before_both_contexts_correct": 34,
+          "before_errors": 12,
+          "before_mean_target_signed_condition_delta": null,
+          "harms": 0,
+          "mean_absolute_error_change": -2.0311924163252116e-05,
+          "pairs_with_available_facts_in_both_contexts": 40,
+          "repairs": 0,
+          "source_pairs": 40
+        },
+        "preferences": {
+          "after_both_contexts_correct": 0,
+          "after_correct_changed_target_direction": 43,
+          "after_correct_top_sets": 25,
+          "after_mean_target_signed_condition_delta": 1.7992034554481506e-05,
+          "before_both_contexts_correct": 0,
+          "before_correct_changed_target_direction": 43,
+          "before_correct_top_sets": 25,
+          "before_mean_target_signed_condition_delta": 1.7869099974632263e-05,
+          "changed_target_comparisons": 80,
+          "changed_top_sets": 0,
+          "context_harms": 0,
+          "context_repairs": 0,
+          "contexts": 80,
+          "pair_harms": 0,
+          "pair_repairs": 0,
+          "rank_is_not_probability_calibration": true,
+          "source_pairs": 40
+        }
+      }
+    }
+  },
+  "complete_public_result_verified": true,
+  "diagnostic_regions": {
+    "baseline": {
+      "decisive_condition": {
+        "co_valid_probabilities": {
+          "comparisons": 6,
+          "errors": 4,
+          "mean_absolute_error": 0.5820721734041095
+        },
+        "contraindications": {
+          "comparisons": 6,
+          "errors": 4,
+          "mean_absolute_error": 0.6469213341673216
+        }
+      },
+      "irrelevant_social": {
+        "co_valid_probabilities": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.08479847761373094
+        },
+        "contraindications": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.019978866601983707
+        }
+      },
+      "neutral_extra_text": {
+        "co_valid_probabilities": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.08479985670661942
+        },
+        "contraindications": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.019979808169106644
+        }
+      },
+      "original": {
+        "co_valid_probabilities": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.08485090305960814
+        },
+        "contraindications": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.019977599382400513
+        }
+      },
+      "paraphrase": {
+        "co_valid_probabilities": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.08481056897047286
+        },
+        "contraindications": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.019976488625009853
+        }
+      }
+    },
+    "control": {
+      "decisive_condition": {
+        "co_valid_probabilities": {
+          "comparisons": 6,
+          "errors": 4,
+          "mean_absolute_error": 0.5527156569766399
+        },
+        "contraindications": {
+          "comparisons": 6,
+          "errors": 4,
+          "mean_absolute_error": 0.6360152928779522
+        }
+      },
+      "irrelevant_social": {
+        "co_valid_probabilities": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.1142075064844903
+        },
+        "contraindications": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.03094545565545559
+        }
+      },
+      "neutral_extra_text": {
+        "co_valid_probabilities": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.11418043308064323
+        },
+        "contraindications": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.0309364249308904
+        }
+      },
+      "original": {
+        "co_valid_probabilities": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.11427261675756502
+        },
+        "contraindications": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.030947675307591755
+        }
+      },
+      "paraphrase": {
+        "co_valid_probabilities": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.1142341599146069
+        },
+        "contraindications": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.03094428839782874
+        }
+      }
+    },
+    "intervention": {
+      "decisive_condition": {
+        "co_valid_probabilities": {
+          "comparisons": 6,
+          "errors": 4,
+          "mean_absolute_error": 0.5816928578842635
+        },
+        "contraindications": {
+          "comparisons": 6,
+          "errors": 4,
+          "mean_absolute_error": 0.6469638766720891
+        }
+      },
+      "irrelevant_social": {
+        "co_valid_probabilities": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.08517758032879404
+        },
+        "contraindications": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.019936650060117245
+        }
+      },
+      "neutral_extra_text": {
+        "co_valid_probabilities": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.0851790091322376
+        },
+        "contraindications": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.019937589764595032
+        }
+      },
+      "original": {
+        "co_valid_probabilities": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.08523027409561716
+        },
+        "contraindications": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.019935340931018192
+        }
+      },
+      "paraphrase": {
+        "co_valid_probabilities": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.08518979105974722
+        },
+        "contraindications": {
+          "comparisons": 6,
+          "errors": 0,
+          "mean_absolute_error": 0.019934263390799362
+        }
+      }
+    }
+  },
+  "event_counts": {
+    "comparison_admitted": 1,
+    "complete_unqualified_conditional_scope_recovery_saved": 1,
+    "completed_baseline_source_rebinding": 236,
+    "completed_scope_state_recovered": 1,
+    "experimental_arm_full_native_evaluation": 472,
+    "experimental_batch_materialized": 216,
+    "experimental_diagnostic_native_evaluation": 30,
+    "namespace": 1,
+    "native_source_and_new_experiment_owner_plan_verified": 1
+  },
+  "independent_review": "Valid negative fixed-budget comparison; no evaluator defect overturns the conclusion.",
+  "job_id": 582474,
+  "local_source_pins_verified": 23,
+  "local_verification": {
+    "result": "39 passed, 19 subtests passed in 49.28s",
+    "sha256": "7e98656782d179d9d94b5ed504f4689f7dca908ceda23505d83acc8c72e06f25"
+  },
+  "model_adopted": false,
+  "n0_approved": false,
+  "new_updates": 0,
+  "personality_approved": false,
+  "private_custody": "worker_attested_with_pinned_source_and_sealed_result",
+  "result_file_sha256": "ebd06f0d9587a14c29a274248a9d7ab4bc1df0695af4b2fc91d652ec18a97839",
+  "result_seal": "e5c0e60fc206a940e18499386b2cd107a6e311a2be3123b54428b7286bcbe7a3",
+  "reused_updates": 80,
+  "scheduler_exit_code": null
+}
