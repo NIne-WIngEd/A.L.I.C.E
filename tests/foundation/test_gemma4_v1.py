@@ -335,12 +335,18 @@ class FoundationCustodyTests(unittest.TestCase):
                                              self.root / "derived.json",
                                              stage_receipt_path=stage_receipt)
 
-    def test_unexpected_source_file_and_symlink_fail_admission(self):
+    def test_unexpected_source_file_fails_admission(self):
         (self.source / "extra.txt").write_text("unexpected")
         with self.assertRaisesRegex(foundation.FoundationError, "source file set mismatch"):
             foundation.verify_source(self.source)
-        (self.source / "extra.txt").unlink()
-        (self.source / "link").symlink_to(self.source / "README.md")
+
+    def test_symlink_fails_admission(self):
+        try:
+            (self.source / "link").symlink_to(self.source / "README.md")
+        except OSError as exc:
+            if getattr(exc, 'winerror', None) == 1314:
+                self.skipTest('Windows account lacks symlink creation privilege; Linux CI exercises this custody check')
+            raise
         with self.assertRaisesRegex(foundation.FoundationError, "nonregular entry"):
             foundation.verify_source(self.source)
 

@@ -1,0 +1,33 @@
+{
+  "at_utc": "2026-11-04T06:53:22.475193+00:00",
+  "source_sha256": {
+    "scripts/eipm/gemma_n0/magnolia_conditional_residual_20261104.py": "b8c8876da08f3f19e2a0017c81ffdd318d340ed29995f388a80f65b1427e41ee",
+    "scripts/eipm/gemma_n0/magnolia_conditional_residual_20261104.sbatch": "16c7aa0c19c0bd429d45e5d25b2ba3577d7978df7b73695198b0793d14354b2b",
+    "scripts/eipm/gemma_n0/conditional_judgment_residual.py": "18d0b08b01c53856390ad8bb428215b271575b360e707537b726a9c274eab759",
+    "scripts/eipm/gemma_n0/conditional_residual_experiment.py": "82ebcff5ebe187069c417e428a8e7695dc966fd26899b43c14519ec00ec6e8c4",
+    "scripts/eipm/gemma_n0/conditional_teaching.py": "923eef65f9b37b28ade4b72fc89cfa33e4a7cecfbf53b5b408e43f8ab60862b5",
+    "scripts/eipm/gemma_n0/live_namespace_custody.py": "7bde912edf49ffd1227f47d2bbf77068d6c0d79c7f65159b9e49a36522505533",
+    "evaluation/eipm/gemma_n0/receipts/conditional_residual_owner_plan_20261104.json": "189581d00f8b15dd8ad55d61884ad614e5c106b661b463c22fb1c3f60ba721c7",
+    "tests/personality/test_conditional_judgment_residual.py": "19dec28b1b40f54d24ea31d6adb24bca67113bd26b4e01c16a056f8a11ebfdc3",
+    "tests/personality/test_conditional_residual_experiment.py": "a45853ebf641374099b6dce1142c7b788a488c930e398742360df4b1a0761101",
+    "tests/personality/test_conditional_residual_worker.py": "038b5689f4ff5a23fc5fa7f11fc870bb16cd971fd46c25a02275689e7b9d075b"
+  },
+  "verified_logs": {
+    "gradient-recalibration-verification-20261104.txt": {
+      "sha256": "4e03a894861be777fcbbb282be92b9a9379821f283f93567e0f8de7191ccf6d0",
+      "result": "54 passed, 8 subtests passed"
+    },
+    "conditional-residual-affected-verification-r2-20261104.txt": {
+      "sha256": "6ba9562d4544a762632065b5376692f8e93a334599a8c56832122ffcf9d50430",
+      "result": "72 passed, 22 subtests passed"
+    },
+    "conditional-residual-final-focused-verification-20261104.txt": {
+      "sha256": "bfea0fb084841c5ca528f3dafea2ce5b41d076959f6d157766ad64845d072b0c",
+      "result": "23 passed, 4 subtests passed"
+    },
+    "conditional-residual-report-verification-20261104.txt": {
+      "sha256": "b397efb1b71021f932b7be8c8dcf7db19bc919d59f2d65a83f9f502ead3d0d96",
+      "result": "4 passed"
+    }
+  }
+}

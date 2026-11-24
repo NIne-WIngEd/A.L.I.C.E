@@ -1,0 +1,14 @@
+{
+  "at_utc": "2026-11-08T08:11:08.631782+00:00",
+  "controller_sha256": "964be830f252d433483346888fbc0f65bb9598ca6e923c1edec5aa5f58b3b9c8",
+  "public_progress_input_sha256": "15f41ec5f708e3a654a70fb5929472446a1a3f667de4a8ad469ed170e8c29582",
+  "source_sha256": {
+    "scripts/eipm/gemma_n0/conditional_judgment_residual.py": "18d0b08b01c53856390ad8bb428215b271575b360e707537b726a9c274eab759",
+    "scripts/eipm/gemma_n0/conditional_residual_saved_attribution.py": "152ce596c6209776ca12f811fa742d364edfe1ea5cc312fcce6c346a34a8670c",
+    "scripts/eipm/gemma_n0/live_namespace_custody.py": "7bde912edf49ffd1227f47d2bbf77068d6c0d79c7f65159b9e49a36522505533",
+    "scripts/eipm/gemma_n0/magnolia_conditional_residual_20261104.py": "b8c8876da08f3f19e2a0017c81ffdd318d340ed29995f388a80f65b1427e41ee",
+    "scripts/eipm/gemma_n0/magnolia_residual_saved_attribution_20261108.py": "34a3cfdc599ccc890b3109a0f3434bda0827f6eff4ecd0df2d695481b1f33d5b",
+    "scripts/eipm/gemma_n0/magnolia_residual_saved_attribution_20261108.sbatch": "10a72f0ed25b9e6b3e7f87c9d8a4344b05e2bb7a4eab235eebb4036a2cd3ed30",
+    "tests/personality/test_conditional_residual_saved_attribution.py": "1dd8aa94764d937bc714bbbe3713a246c4a24f2d577e2fcd37959299b356f642"
+  }
+}

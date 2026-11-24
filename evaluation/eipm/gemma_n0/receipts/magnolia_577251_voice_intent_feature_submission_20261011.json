@@ -1,0 +1,30 @@
+{
+  "absolute_acoustic_gold_created": false,
+  "actual_frozen_features_pending": true,
+  "allocation": {
+    "cpus": 1,
+    "memory_gib": 120,
+    "owner": "mxrayan",
+    "partition": "node",
+    "time_hours": 12
+  },
+  "budget_reason": "Sixteen complete voice documents compared with the genuine ten-document job577240 at2h44m31s. Twelve hours allows conservative full-source verification and32 materializations without changing geometry.",
+  "exact_worker_pin_enforced_before_private_entry": true,
+  "flora_work": false,
+  "full_broader_curriculum_complete": false,
+  "job_id": 577251,
+  "local_preflight_receipt_sha256": "05c82a2330b25c4921d91db20b612b60bec75f00890f3f792dd3a35b5a829bbb",
+  "n0_approved": false,
+  "owner": "mxrayan",
+  "packet_index_sha256": "7c6c75d69f50d9c39abde4274d88e5543649a7ee69a62938242880fc0d7e1cd1",
+  "personality_approved": false,
+  "private_gradient_steps": 0,
+  "public_worker_and_wrapper_review_complete": true,
+  "receipt_sha256": "e4b46fb12c34c4ab2f7adbff67d776bc9c20c4ad868e5365fadac2319f610b11",
+  "schema": "alice-personality-voice-intent-owner-feature-submission-v1",
+  "scientific_core_commit": "333fcd0c8239fc81a6459b13d53bbe592b33fda6",
+  "spoken_fidelity_verified": false,
+  "submission_status": "SUBMITTED_NOT_COMPLETED",
+  "worker_sha256": "9e558d13b8458b75c5badb288a1db4cc7fcb5fee878c68b744c1ac671bcf6c2c",
+  "wrapper_sha256": "a90fdb8111ab0e024e3e0bf8fe76587819f72a6b425ef474d34aea77499fd14c"
+}

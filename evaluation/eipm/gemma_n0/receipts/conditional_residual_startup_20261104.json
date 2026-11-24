@@ -1,0 +1,36 @@
+{
+  "accounting": "580417|mxrayan|rayan-conditional-residual|RUNNING|0:0|00:00:09|node029||2026-11-04T01:04:05|Unknown\n580417.batch||batch|RUNNING|0:0|00:00:09|node029||2026-11-04T01:04:05|Unknown\n580417.extern||extern|RUNNING|0:0|00:00:09|node029||2026-11-04T01:04:05|Unknown\n",
+  "at_utc": "2026-11-04T07:04:17.113347+00:00",
+  "files": {
+    "accounting": {
+      "bytes": 258,
+      "file": "conditional-residual-580417-startup-accounting-20261104.txt",
+      "sha256": "faf772689ac7cb3c485116b85061c19064409cfd5d99e67861c6fdbe3022ba1d"
+    },
+    "queue": {
+      "bytes": 63,
+      "file": "conditional-residual-580417-startup-queue-20261104.txt",
+      "sha256": "90107d3c94b064013eb90330246d8eb6853a77273f6a44314636f4f6e81d6d75"
+    },
+    "stderr": {
+      "bytes": 0,
+      "file": "conditional-residual-580417-startup-stderr-20261104.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 185,
+      "file": "conditional-residual-580417-startup-stdout-20261104.txt",
+      "sha256": "f0f33c171cc99da66cdb457b7110b87acf1ca2ad812bdb66a06c60ba61d8a974"
+    }
+  },
+  "job_id": 580417,
+  "job_state": "RUNNING",
+  "n0_approved": false,
+  "personality_approved": false,
+  "private_learning_result_pending": true,
+  "public_only": true,
+  "queue": "580417|mxrayan|rayan-conditional-residual|RUNNING|0:10|node029\n",
+  "refusal_report_seen": false,
+  "startup_is_not_training_success": true,
+  "stderr_empty": true
+}

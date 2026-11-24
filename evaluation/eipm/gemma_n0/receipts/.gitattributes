@@ -1,0 +1,3 @@
+# These already-dispatched artifacts are pinned by exact bytes, including CRLF.
+conditional_residual_owner_plan_20261104.json -text whitespace=cr-at-eol
+conditional_residual_source_pins_20261104.json -text whitespace=cr-at-eol

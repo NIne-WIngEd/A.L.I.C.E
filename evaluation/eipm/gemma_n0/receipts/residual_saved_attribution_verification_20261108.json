@@ -1,0 +1,46 @@
+{
+  "at_utc": "2026-11-08T08:13:20.537257+00:00",
+  "blockers": 0,
+  "controller_sha256": "964be830f252d433483346888fbc0f65bb9598ca6e923c1edec5aa5f58b3b9c8",
+  "counts_overlap": true,
+  "dispatch_ready": true,
+  "external_teacher": false,
+  "independent_review_scope": "Exact helper, worker, wrapper, launcher, seven pins and logs; no remote access or private-result claim.",
+  "independent_reviewer": "residual_result_review_20261108",
+  "n0_approved": false,
+  "new_training": false,
+  "observed_test_summaries": {
+    "residual-local-verification-20261108.txt": "79 passed, 22 subtests passed",
+    "residual-saved-attribution-affected-r2-20261108.txt": "34 passed, 4 subtests passed",
+    "residual-saved-attribution-final-20261108.txt": "7 passed",
+    "residual-saved-attribution-governance-20261108.txt": "four separately observed exit codes [0,0,0,0]"
+  },
+  "original_failure_logs": {
+    "residual-saved-attribution-blocked-red-20261108.txt": "48a20735bfab2f26252b33377ef8116d653b0cf976ba87d191d9ff2da3569a08",
+    "residual-saved-attribution-red-20261108.txt": "365575268ba56b2d466c3a438b814a3e60ea95c1d3b593b38d6b8962a3b10f36",
+    "residual-saved-attribution-schema-red-20261108.txt": "1d132646598a1828bed3df6c084bfa6ba282b568787c0103cf975ee09999bfd2"
+  },
+  "personality_approved": false,
+  "private_execution_verified": false,
+  "resolved_findings": [
+    "Native unavailable candidate logits must stay masked; reproduced with nonzero scalar bias.",
+    "Snapshot JSON recipe and torch export tuple/list forms require canonical comparison; reproduced with actual two-arm writer outputs.",
+    "Float64 moment inversion reduces arithmetic error but does not bound already-rounded moment error."
+  ],
+  "source_models_modified": false,
+  "source_sha256": {
+    "scripts/eipm/gemma_n0/conditional_judgment_residual.py": "18d0b08b01c53856390ad8bb428215b271575b360e707537b726a9c274eab759",
+    "scripts/eipm/gemma_n0/conditional_residual_saved_attribution.py": "152ce596c6209776ca12f811fa742d364edfe1ea5cc312fcce6c346a34a8670c",
+    "scripts/eipm/gemma_n0/live_namespace_custody.py": "7bde912edf49ffd1227f47d2bbf77068d6c0d79c7f65159b9e49a36522505533",
+    "scripts/eipm/gemma_n0/magnolia_conditional_residual_20261104.py": "b8c8876da08f3f19e2a0017c81ffdd318d340ed29995f388a80f65b1427e41ee",
+    "scripts/eipm/gemma_n0/magnolia_residual_saved_attribution_20261108.py": "34a3cfdc599ccc890b3109a0f3434bda0827f6eff4ecd0df2d695481b1f33d5b",
+    "scripts/eipm/gemma_n0/magnolia_residual_saved_attribution_20261108.sbatch": "10a72f0ed25b9e6b3e7f87c9d8a4344b05e2bb7a4eab235eebb4036a2cd3ed30",
+    "tests/personality/test_conditional_residual_saved_attribution.py": "1dd8aa94764d937bc714bbbe3713a246c4a24f2d577e2fcd37959299b356f642"
+  },
+  "verification_logs": {
+    "residual-local-verification-20261108.txt": "ed0fc53ee3bb7b5913d1ab07738f065cb8404eb0c3c45169a7cceb45016b00e0",
+    "residual-saved-attribution-affected-r2-20261108.txt": "ebb76b81608bfd0c65a2204c20bff0d3298029fbe1e2ed0daca67bf09d947853",
+    "residual-saved-attribution-final-20261108.txt": "cde287a472e35799736a172074a72b50ab9b027d47fac3b6455c15b5a79c0f74",
+    "residual-saved-attribution-governance-20261108.txt": "afdba37cf9009d77d49c53ac961650c602c1027e837c629c809b8405f7fad4d2"
+  }
+}

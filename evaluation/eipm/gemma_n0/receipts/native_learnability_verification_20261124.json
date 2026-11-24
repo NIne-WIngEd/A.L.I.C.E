@@ -1,0 +1,61 @@
+{
+  "at_utc": "2026-11-24T20:15:25.139247+00:00",
+  "behavioral_learning_on_private_pair_verified": false,
+  "dispatch_ready": true,
+  "independent_review_blockers": 0,
+  "launch_controller_sha256": "386f1f982e9c9e3f6e05c1319da66daf04bf482264b7a6e1bbadf77a267d120a",
+  "personality_approved": false,
+  "pin_refresher_failure": "Unanchored constant-name pattern also matched ORIGINAL_EXPERIMENT_HELPER_SHA; refused before worker write. Exact-line matching fixed; all final source pins verified.",
+  "preserved_pre_dispatch_failures": [
+    {
+      "file": "native-learnability-public-projection-red-20261124.txt",
+      "meaning": "Confirmed per-endpoint arrays escaped aggregate projection; removed before dispatch.",
+      "sha256": "cea42061b03c6d2aab96f90b411813a5126ef64c2f0ad7eab8f881a0260a9597"
+    },
+    {
+      "file": "native-learnability-final-20261124.txt",
+      "meaning": "Test process imported worker before pin refresh; fresh stable-source five-test run supersedes it.",
+      "sha256": "b2e21c027f5a047fd8f1ffb686c4af2d81f2285a42970dff6ebb07f54171260b"
+    }
+  ],
+  "review": {
+    "finding_closed": "Per-endpoint private losses and counts removed from public aggregate projection; protected complete measurements retained.",
+    "launch_controller_sha256": "386f1f982e9c9e3f6e05c1319da66daf04bf482264b7a6e1bbadf77a267d120a",
+    "reviewed_source_sha256": {
+      "evaluation/eipm/gemma_n0/receipts/native_learnability_owner_plan_20261124.json": "39a2b1794058a7d413d89afc667c8e04bd6b37f2eefb684f29da510d3e386843",
+      "scripts/eipm/gemma_n0/magnolia_native_learnability_20261124.py": "3e0c08225e819a3cc91653f579cd03bd9ec714270c9b41e7873946bbf2b7e83f",
+      "scripts/eipm/gemma_n0/magnolia_native_learnability_20261124.sbatch": "a3b0cb6a5d6cc6584a814bb82b126d27c7776923eb9724564b593eea16510889",
+      "scripts/eipm/gemma_n0/native_contextual_learnability.py": "6a86ce126c929db6d1f37deb2e0d60e243b05f9409c236d03fa539411d8aa690",
+      "tests/personality/test_native_contextual_learnability.py": "52511b106ec0541363ef4fc859ce1e102d73472518e8d720c63d0ba211ed3e36",
+      "tests/personality/test_native_learnability_public_projection.py": "63ef5ccac4985ac0f730a40f74910af3ce3f038406f0535835464adb7e2f0475"
+    },
+    "reviewer": "scope_result_review_20261124",
+    "selection_guard": "Both selected opposing preference targets require positive reviewed certainty.",
+    "unresolved_blockers": 0,
+    "verification": "Fresh projection, selection, isolation and pin checks: 3 passed in 10.72 seconds. No private access or dispatch by reviewer."
+  },
+  "source_sha256": {
+    "docs/eipm/PERSONALITY_NATIVE_LEARNABILITY_DIAGNOSIS_2026-11-24.md": "f0d225ef4e4ace2581313e58bb01c81b00607fc25eda28227eb357a2b3e4e7f1",
+    "evaluation/eipm/gemma_n0/receipts/magnolia_582474_complete_scope_comparison_20261124.json": "ebd06f0d9587a14c29a274248a9d7ab4bc1df0695af4b2fc91d652ec18a97839",
+    "evaluation/eipm/gemma_n0/receipts/native_learnability_owner_plan_20261124.json": "39a2b1794058a7d413d89afc667c8e04bd6b37f2eefb684f29da510d3e386843",
+    "scripts/eipm/gemma_n0/conditional_judgment_residual.py": "18d0b08b01c53856390ad8bb428215b271575b360e707537b726a9c274eab759",
+    "scripts/eipm/gemma_n0/conditional_scope_teaching.py": "e11d0d189084dbe8bad7ee66b12e89ce919eb741ea1a5aa6c0574629352b59fd",
+    "scripts/eipm/gemma_n0/live_namespace_custody.py": "7bde912edf49ffd1227f47d2bbf77068d6c0d79c7f65159b9e49a36522505533",
+    "scripts/eipm/gemma_n0/magnolia_native_learnability_20261124.py": "3e0c08225e819a3cc91653f579cd03bd9ec714270c9b41e7873946bbf2b7e83f",
+    "scripts/eipm/gemma_n0/magnolia_native_learnability_20261124.sbatch": "a3b0cb6a5d6cc6584a814bb82b126d27c7776923eb9724564b593eea16510889",
+    "scripts/eipm/gemma_n0/native_contextual_learnability.py": "6a86ce126c929db6d1f37deb2e0d60e243b05f9409c236d03fa539411d8aa690",
+    "scripts/eipm/gemma_n0/paired_learning_experiment.py": "d3d9b52b7abbd702fd55fd39ab2c0e72c19b122d500f39953c8f5cfcba042bd2",
+    "tests/personality/test_native_contextual_learnability.py": "52511b106ec0541363ef4fc859ce1e102d73472518e8d720c63d0ba211ed3e36",
+    "tests/personality/test_native_learnability_public_projection.py": "63ef5ccac4985ac0f730a40f74910af3ce3f038406f0535835464adb7e2f0475"
+  },
+  "verified_logs": {
+    "native-learnability-final-pinned-20261124.txt": {
+      "result": "5 passed in 41.56s",
+      "sha256": "4c437ae2116d0ce539d26a5818deb4fb5d813ab71cbff4fed29a5ef3e1d6b086"
+    },
+    "scope-result-local-verification-20261124.txt": {
+      "result": "39 passed, 19 subtests passed in 49.28s",
+      "sha256": "7e98656782d179d9d94b5ed504f4689f7dca908ceda23505d83acc8c72e06f25"
+    }
+  }
+}

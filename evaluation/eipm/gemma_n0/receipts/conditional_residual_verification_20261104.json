@@ -1,0 +1,91 @@
+{
+  "at_utc": "2026-11-04T07:03:11.806045+00:00",
+  "builder_weights_updated": false,
+  "controller_review_correction": "Review located missing durable-intent sync and a reviewed-pin race. Correction preserves owner/isolation and intended exact sources; actual exclusive synced write and final source review passed. No submission attempt occurred before correction.",
+  "dispatch_ready": true,
+  "governance": [
+    {
+      "exit_code": 0,
+      "validator": "validate_phase0"
+    },
+    {
+      "exit_code": 0,
+      "validator": "validate_governance_v1"
+    },
+    {
+      "exit_code": 0,
+      "validator": "validate_owner_directives_v1"
+    },
+    {
+      "exit_code": 0,
+      "validator": "validate_product_family"
+    }
+  ],
+  "governance_log_sha256": "158c4609151068fc568b77070310cc9a8ce897d27088fafa0dd6157d588cd592",
+  "independent_review_blockers": 0,
+  "independent_review_findings_resolved": [
+    "Individual context repairs, harms and changed top sets retained even when totals cancel; preserved RED then four reporting tests passed.",
+    "One original baseline equivalence forward and two total equivalence forwards explicitly counted.",
+    "Intent flush/fsync verified by actual local write; exclusive existing-intent refusal verified.",
+    "Each upload uses captured reviewed digest before/after upload and for remote equality, not a refreshed unreviewed digest."
+  ],
+  "independent_review_scope": "Full experimental architecture, helper, worker, corrected transition reporting and exact source/log pins; separate single-submit controller reviewed. No private reads or execution by reviewer.",
+  "independent_reviewer": "gradient_result_review_20261104",
+  "launch_controller_sha256": "caf4f5ff0e3f221b1f3b23719d9fe743e008b933d1540b921c7995e511c1657d",
+  "limits": [
+    "Public contract and controlled public learning checks do not establish private learning or full personality.",
+    "Original canonical model and historical checkpoints are unchanged; experimental migration is explicit.",
+    "Native adoption, actual outcome calibration, independent N0/personality qualification and full integrated behavior remain open."
+  ],
+  "local_failures_preserved": {
+    "conditional-residual-affected-verification-20261104.txt": "46763e065772a6d384b75967254aa5d86a1e71d239a3fd73232e26acf4c7253c",
+    "conditional-residual-experiment-red-20261104.txt": "7ae4379c9f606f97d346bc87e7b3fa0c810c0c0909d7fb461896c5e4e1ce1662",
+    "conditional-residual-governance-capture-failure-20261104.json": "1efd703b298baf50cfa9e6ecb0d4ad92575ed659caa5252cd94741978c22b9d6",
+    "conditional-residual-red-20261104.txt": "dc08d96db7be9909db41568f3e88b678a343586fb24bdbaa533c089d1a6024cf",
+    "conditional-residual-transitions-red-20261104.txt": "f96cb75bd3c4201e1d6d760f4dec7524fe6ff098bb92cf42ced2f417d8ec8d5d",
+    "conditional-residual-worker-red-20261104.txt": "b93001493cfd50db3265b589aa7a8c14ee9735763f45823a7788d09d32e14b5e"
+  },
+  "n0_approved": false,
+  "native_core_unchanged": true,
+  "original_worker_sha256": "dcb10bed56daa4d54605e072349b331c84921d42369f81f5a491172b70712689",
+  "personality_approved": false,
+  "private_execution_verified": false,
+  "private_learning_passed": false,
+  "recording_setup_correction": "The final governance recording command had an incorrect relative log path. This is not model failure or passing evidence. Original error and eight-step diagnosis preserved; four unchanged validators reran with absolute log and explicit return-code capture.",
+  "schema": "alice-personality-conditional-residual-verification-v1",
+  "source_gradient_job": 580081,
+  "source_gradient_result_canonical_seal": "b716b9878433d2931c2f655e357dab45d8dafc4ea01d513c5689ea3a4fcb1e9b",
+  "source_gradient_result_sha256": "ca6e88aad9ebf6571c44dbdd5c29c6f8da3249a331ab295fd4aa940574d5a318",
+  "source_gradient_review_sha256": "e6fbac2ba68aeb1f945cf40959fe8304e84493072fa4012b8587fe24329a508d",
+  "source_sha256": {
+    "evaluation/eipm/gemma_n0/receipts/conditional_residual_owner_plan_20261104.json": "189581d00f8b15dd8ad55d61884ad614e5c106b661b463c22fb1c3f60ba721c7",
+    "scripts/eipm/gemma_n0/conditional_judgment_residual.py": "18d0b08b01c53856390ad8bb428215b271575b360e707537b726a9c274eab759",
+    "scripts/eipm/gemma_n0/conditional_residual_experiment.py": "82ebcff5ebe187069c417e428a8e7695dc966fd26899b43c14519ec00ec6e8c4",
+    "scripts/eipm/gemma_n0/conditional_teaching.py": "923eef65f9b37b28ade4b72fc89cfa33e4a7cecfbf53b5b408e43f8ab60862b5",
+    "scripts/eipm/gemma_n0/live_namespace_custody.py": "7bde912edf49ffd1227f47d2bbf77068d6c0d79c7f65159b9e49a36522505533",
+    "scripts/eipm/gemma_n0/magnolia_conditional_residual_20261104.py": "b8c8876da08f3f19e2a0017c81ffdd318d340ed29995f388a80f65b1427e41ee",
+    "scripts/eipm/gemma_n0/magnolia_conditional_residual_20261104.sbatch": "16c7aa0c19c0bd429d45e5d25b2ba3577d7978df7b73695198b0793d14354b2b",
+    "tests/personality/test_conditional_judgment_residual.py": "19dec28b1b40f54d24ea31d6adb24bca67113bd26b4e01c16a056f8a11ebfdc3",
+    "tests/personality/test_conditional_residual_experiment.py": "a45853ebf641374099b6dce1142c7b788a488c930e398742360df4b1a0761101",
+    "tests/personality/test_conditional_residual_worker.py": "038b5689f4ff5a23fc5fa7f11fc870bb16cd971fd46c25a02275689e7b9d075b"
+  },
+  "test_counts_overlap_and_must_not_be_summed": true,
+  "verified_logs": {
+    "conditional-residual-affected-verification-r2-20261104.txt": {
+      "result": "72 passed, 22 subtests passed",
+      "sha256": "6ba9562d4544a762632065b5376692f8e93a334599a8c56832122ffcf9d50430"
+    },
+    "conditional-residual-final-focused-verification-20261104.txt": {
+      "result": "23 passed, 4 subtests passed",
+      "sha256": "bfea0fb084841c5ca528f3dafea2ce5b41d076959f6d157766ad64845d072b0c"
+    },
+    "conditional-residual-report-verification-20261104.txt": {
+      "result": "4 passed",
+      "sha256": "b397efb1b71021f932b7be8c8dcf7db19bc919d59f2d65a83f9f502ead3d0d96"
+    },
+    "gradient-recalibration-verification-20261104.txt": {
+      "result": "54 passed, 8 subtests passed",
+      "sha256": "4e03a894861be777fcbbb282be92b9a9379821f283f93567e0f8de7191ccf6d0"
+    }
+  }
+}

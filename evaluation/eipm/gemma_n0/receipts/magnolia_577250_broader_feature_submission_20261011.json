@@ -1,0 +1,28 @@
+{
+  "actual_frozen_features_pending": true,
+  "allocation": {
+    "cpus": 1,
+    "memory_gib": 120,
+    "owner": "mxrayan",
+    "partition": "node",
+    "time_hours": 36
+  },
+  "budget_reason": "80 full documents versus verified ten-document authentic job577240 at2h44m31s. Eight times that conservative unshared workload is about22h;36h allows full source verification and160 actual materializations. Feature-store deduplication reduces repeated input work. No truncation or reduced geometry.",
+  "exact_worker_pin_enforced_before_private_entry": true,
+  "flora_work": false,
+  "full_broader_curriculum_complete": false,
+  "job_id": 577250,
+  "local_preflight_receipt_sha256": "21118d7afdefd7dc8bc39a8d36e0858df71dc2d78aa07ff3477d48a901811309",
+  "n0_approved": false,
+  "owner": "mxrayan",
+  "packet_index_sha256": "4365809309f1f8df6fb59d46ded9bf017e68f3abe3d25eb49c7770f72e725cf0",
+  "personality_approved": false,
+  "private_gradient_steps": 0,
+  "public_four_case_store_materialization_fixture_passed": true,
+  "receipt_sha256": "dff1eceb048e3dc4568a8256864cc5d9c4a909acd7a6921e412cf5504dc96907",
+  "schema": "alice-personality-broader-owner-feature-submission-v1",
+  "scientific_core_commit": "333fcd0c8239fc81a6459b13d53bbe592b33fda6",
+  "submission_status": "SUBMITTED_NOT_COMPLETED",
+  "worker_sha256": "b4b509131a8e05204fa579658ea723cb05f5bcdc54e7988221703ee1e7226ed7",
+  "wrapper_sha256": "dc9ab6a2451d415d9a31fb6e1643d69246c6978f861aa1c22c9127e91c8eb0cd"
+}

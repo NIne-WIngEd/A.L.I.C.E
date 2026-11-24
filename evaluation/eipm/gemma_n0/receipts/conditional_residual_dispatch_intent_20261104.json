@@ -1,0 +1,29 @@
+{
+  "at_utc": "2026-11-04T07:04:02.930659+00:00",
+  "launch_controller_sha256": "caf4f5ff0e3f221b1f3b23719d9fe743e008b933d1540b921c7995e511c1657d",
+  "owner": "mxrayan",
+  "rule": "Submission attempted at most once; recover accounting if result is unknown.",
+  "source_sha256": {
+    "evaluation/eipm/gemma_n0/receipts/conditional_residual_owner_plan_20261104.json": "189581d00f8b15dd8ad55d61884ad614e5c106b661b463c22fb1c3f60ba721c7",
+    "scripts/eipm/gemma_n0/conditional_judgment_residual.py": "18d0b08b01c53856390ad8bb428215b271575b360e707537b726a9c274eab759",
+    "scripts/eipm/gemma_n0/conditional_residual_experiment.py": "82ebcff5ebe187069c417e428a8e7695dc966fd26899b43c14519ec00ec6e8c4",
+    "scripts/eipm/gemma_n0/conditional_teaching.py": "923eef65f9b37b28ade4b72fc89cfa33e4a7cecfbf53b5b408e43f8ab60862b5",
+    "scripts/eipm/gemma_n0/live_namespace_custody.py": "7bde912edf49ffd1227f47d2bbf77068d6c0d79c7f65159b9e49a36522505533",
+    "scripts/eipm/gemma_n0/magnolia_conditional_residual_20261104.py": "b8c8876da08f3f19e2a0017c81ffdd318d340ed29995f388a80f65b1427e41ee",
+    "scripts/eipm/gemma_n0/magnolia_conditional_residual_20261104.sbatch": "16c7aa0c19c0bd429d45e5d25b2ba3577d7978df7b73695198b0793d14354b2b",
+    "tests/personality/test_conditional_judgment_residual.py": "19dec28b1b40f54d24ea31d6adb24bca67113bd26b4e01c16a056f8a11ebfdc3",
+    "tests/personality/test_conditional_residual_experiment.py": "a45853ebf641374099b6dce1142c7b788a488c930e398742360df4b1a0761101",
+    "tests/personality/test_conditional_residual_worker.py": "038b5689f4ff5a23fc5fa7f11fc870bb16cd971fd46c25a02275689e7b9d075b"
+  },
+  "staged_public_sha256": {
+    "/homes/01/mxrayan/rayan-compute/jobs/rayan-conditional-residual-20261104-extension.py": "18d0b08b01c53856390ad8bb428215b271575b360e707537b726a9c274eab759",
+    "/homes/01/mxrayan/rayan-compute/jobs/rayan-conditional-residual-20261104-helper.py": "82ebcff5ebe187069c417e428a8e7695dc966fd26899b43c14519ec00ec6e8c4",
+    "/homes/01/mxrayan/rayan-compute/jobs/rayan-conditional-residual-20261104-live.py": "7bde912edf49ffd1227f47d2bbf77068d6c0d79c7f65159b9e49a36522505533",
+    "/homes/01/mxrayan/rayan-compute/jobs/rayan-conditional-residual-20261104-owner-plan.json": "189581d00f8b15dd8ad55d61884ad614e5c106b661b463c22fb1c3f60ba721c7",
+    "/homes/01/mxrayan/rayan-compute/jobs/rayan-conditional-residual-20261104-teaching.py": "923eef65f9b37b28ade4b72fc89cfa33e4a7cecfbf53b5b408e43f8ab60862b5",
+    "/homes/01/mxrayan/rayan-compute/jobs/rayan-conditional-residual-20261104.py": "b8c8876da08f3f19e2a0017c81ffdd318d340ed29995f388a80f65b1427e41ee",
+    "/homes/01/mxrayan/rayan-compute/jobs/rayan-conditional-residual-20261104.sbatch": "16c7aa0c19c0bd429d45e5d25b2ba3577d7978df7b73695198b0793d14354b2b"
+  },
+  "submission_command": "sbatch --parsable --output=/homes/01/mxrayan/rayan-compute/rayan-personality/slurm/rayan-conditional-residual-20261104-%j.out --error=/homes/01/mxrayan/rayan-compute/rayan-personality/slurm/rayan-conditional-residual-20261104-%j.err /homes/01/mxrayan/rayan-compute/jobs/rayan-conditional-residual-20261104.sbatch",
+  "verification_receipt_sha256": "439e8d5a63b075d03d77c64fff0d62c7968cc9d5b9c157a0d75a75ec0e9df571"
+}
